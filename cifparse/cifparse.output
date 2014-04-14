@@ -1,0 +1,278 @@
+Grammar
+
+    0 $accept: Datablocks $end
+
+    1 Datablocks: Lines
+    2           | Datablocks Datablock
+
+    3 Datablock: DatablockName Lines
+
+    4 Lines: /* empty */
+    5      | Lines Line
+
+    6 Line: ItemName Value
+    7     | ItemNameList ValueList
+
+    8 ItemNameList: Loop ItemName
+    9             | ItemNameList ItemName
+
+   10 ValueList: Value
+   11          | ValueList Value
+
+   12 ItemName: ITEMNAME
+
+   13 Loop: LOOP
+
+   14 Value: VALUE
+   15      | UNKNOWN
+   16      | MISSING
+
+   17 DatablockName: DATABLOCK
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+ITEMNAME (258) 12
+VALUE (259) 14
+LOOP (260) 13
+DATABLOCK (261) 17
+UNKNOWN (262) 15
+MISSING (263) 16
+
+
+Nonterminals, with rules where they appear
+
+$accept (9)
+    on left: 0
+Datablocks (10)
+    on left: 1 2, on right: 0 2
+Datablock (11)
+    on left: 3, on right: 2
+Lines (12)
+    on left: 4 5, on right: 1 3 5
+Line (13)
+    on left: 6 7, on right: 5
+ItemNameList (14)
+    on left: 8 9, on right: 7 9
+ValueList (15)
+    on left: 10 11, on right: 7 11
+ItemName (16)
+    on left: 12, on right: 6 8 9
+Loop (17)
+    on left: 13, on right: 8
+Value (18)
+    on left: 14 15 16, on right: 6 10 11
+DatablockName (19)
+    on left: 17, on right: 3
+
+
+state 0
+
+    0 $accept: . Datablocks $end
+
+    $default  reduce using rule 4 (Lines)
+
+    Datablocks  go to state 1
+    Lines       go to state 2
+
+
+state 1
+
+    0 $accept: Datablocks . $end
+    2 Datablocks: Datablocks . Datablock
+
+    $end       shift, and go to state 3
+    DATABLOCK  shift, and go to state 4
+
+    Datablock      go to state 5
+    DatablockName  go to state 6
+
+
+state 2
+
+    1 Datablocks: Lines .
+    5 Lines: Lines . Line
+
+    ITEMNAME  shift, and go to state 7
+    LOOP      shift, and go to state 8
+
+    $default  reduce using rule 1 (Datablocks)
+
+    Line          go to state 9
+    ItemNameList  go to state 10
+    ItemName      go to state 11
+    Loop          go to state 12
+
+
+state 3
+
+    0 $accept: Datablocks $end .
+
+    $default  accept
+
+
+state 4
+
+   17 DatablockName: DATABLOCK .
+
+    $default  reduce using rule 17 (DatablockName)
+
+
+state 5
+
+    2 Datablocks: Datablocks Datablock .
+
+    $default  reduce using rule 2 (Datablocks)
+
+
+state 6
+
+    3 Datablock: DatablockName . Lines
+
+    $default  reduce using rule 4 (Lines)
+
+    Lines  go to state 13
+
+
+state 7
+
+   12 ItemName: ITEMNAME .
+
+    $default  reduce using rule 12 (ItemName)
+
+
+state 8
+
+   13 Loop: LOOP .
+
+    $default  reduce using rule 13 (Loop)
+
+
+state 9
+
+    5 Lines: Lines Line .
+
+    $default  reduce using rule 5 (Lines)
+
+
+state 10
+
+    7 Line: ItemNameList . ValueList
+    9 ItemNameList: ItemNameList . ItemName
+
+    ITEMNAME  shift, and go to state 7
+    VALUE     shift, and go to state 14
+    UNKNOWN   shift, and go to state 15
+    MISSING   shift, and go to state 16
+
+    ValueList  go to state 17
+    ItemName   go to state 18
+    Value      go to state 19
+
+
+state 11
+
+    6 Line: ItemName . Value
+
+    VALUE    shift, and go to state 14
+    UNKNOWN  shift, and go to state 15
+    MISSING  shift, and go to state 16
+
+    Value  go to state 20
+
+
+state 12
+
+    8 ItemNameList: Loop . ItemName
+
+    ITEMNAME  shift, and go to state 7
+
+    ItemName  go to state 21
+
+
+state 13
+
+    3 Datablock: DatablockName Lines .
+    5 Lines: Lines . Line
+
+    ITEMNAME  shift, and go to state 7
+    LOOP      shift, and go to state 8
+
+    $default  reduce using rule 3 (Datablock)
+
+    Line          go to state 9
+    ItemNameList  go to state 10
+    ItemName      go to state 11
+    Loop          go to state 12
+
+
+state 14
+
+   14 Value: VALUE .
+
+    $default  reduce using rule 14 (Value)
+
+
+state 15
+
+   15 Value: UNKNOWN .
+
+    $default  reduce using rule 15 (Value)
+
+
+state 16
+
+   16 Value: MISSING .
+
+    $default  reduce using rule 16 (Value)
+
+
+state 17
+
+    7 Line: ItemNameList ValueList .
+   11 ValueList: ValueList . Value
+
+    VALUE    shift, and go to state 14
+    UNKNOWN  shift, and go to state 15
+    MISSING  shift, and go to state 16
+
+    $default  reduce using rule 7 (Line)
+
+    Value  go to state 22
+
+
+state 18
+
+    9 ItemNameList: ItemNameList ItemName .
+
+    $default  reduce using rule 9 (ItemNameList)
+
+
+state 19
+
+   10 ValueList: Value .
+
+    $default  reduce using rule 10 (ValueList)
+
+
+state 20
+
+    6 Line: ItemName Value .
+
+    $default  reduce using rule 6 (Line)
+
+
+state 21
+
+    8 ItemNameList: Loop ItemName .
+
+    $default  reduce using rule 8 (ItemNameList)
+
+
+state 22
+
+   11 ValueList: ValueList Value .
+
+    $default  reduce using rule 11 (ValueList)

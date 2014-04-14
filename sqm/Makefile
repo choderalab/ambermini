@@ -82,7 +82,7 @@ QMOBJ = qm2_allocate_e_repul.o qm2_calc_charges.o qm2_calc_dipole.o \
 install: sqm$(SFX)
 	mv sqm$(SFX) $(BINDIR)
 
-sqm$(SFX): $(SQMOBJ) $(QMOBJ) netlib sys
+sqm$(SFX): $(SQMOBJ) $(QMOBJ) sys
 	$(FC) $(FPPFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o sqm$(SFX) $(SQMOBJ) $(QMOBJ) \
 		-L$(LIBDIR) $(FLIBSF) ../lib/sys.a $(LDFLAGS) $(AMBERLDFLAGS)
 
@@ -100,11 +100,6 @@ $(LIBDIR)/libsqm.a: $(QMOBJ) $(LIBQMOBJ)
 
 sys:
 	cd ../lib; $(MAKE) sys.a
-
-netlib:
-	cd ../lapack; $(MAKE) $(LAPACK)
-	cd ../blas; $(MAKE) $(BLAS)
-	cd ../arpack && $(MAKE) install
 
 clean:
 	/bin/rm -f *.o  *.mod *.d sqm$(SFX)

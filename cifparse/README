@@ -1,0 +1,20 @@
+  This is a slightly modified version of the "cifparse" library from
+the Nucleic Acid Database.  It is based on cifparse-prod-v2.  The "real"
+version of this, along with documentation, is available from:
+
+    http://sw-tools.pdb.org/apps/CIFPARSE/index.html
+
+  This library is used read and write (primitive) mmCIF-formatted files in
+NAB, using the "getcif" and "putcif" modules.
+
+  This is only a temporary expedient to "get started" with the mmCIF format.
+In particular, the "getcif" function ignores much of what might be in an
+mmCIF file, and the "putcif" function writes out an incomplete (but
+hopefully useable) file.
+
+  The "cif2cif.c" code gives an idea of how the library is used: it simply
+reads an mmCIF file on stdin, creating an in-memory version of the data,
+then writes this back out to stdout.
+
+  Thanks to John Westbrook for valuable advice, and for permission to 
+re-distribute this library.

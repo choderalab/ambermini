@@ -1,20 +1,14 @@
-#!/usr/bin/env python
-
-import os, sys
-from optparse import OptionParser
-
-CONFIG_H = """\
-#  Amber configuration file, created with: %(command)s
+#  Amber configuration file, created with: ./configure --prefix /home/swails/testinstall --yacc /usr/bin/yacc
 
 ###############################################################################
 
 # (1)  Location of the installation
 
-BASEDIR=%(basedir)s
-BINDIR=%(basedir)s/bin
-LIBDIR=%(basedir)s/lib
-INCDIR=%(basedir)s/include
-DATDIR=%(basedir)s/dat
+BASEDIR=/home/swails/src/anteamber
+BINDIR=/home/swails/src/anteamber/bin
+LIBDIR=/home/swails/src/anteamber/lib
+INCDIR=/home/swails/src/anteamber/include
+DATDIR=/home/swails/src/anteamber/dat
 
 ###############################################################################
 
@@ -24,7 +18,7 @@ DATDIR=%(basedir)s/dat
 #      NAB programs simply by including them on the command line; libraries
 #      included in FLIBS are always searched.)
 
-FLIBS= %(mathlib)s -larpack -llapack -lblas  -lgfortran -w 
+FLIBS=  -larpack -llapack -lblas  -lgfortran -w 
 FLIBSF= -larpack -llapack -lblas   
 ###############################################################################
 
@@ -56,19 +50,19 @@ SHELL=/bin/sh
 #   It can be used to build debug versions, invoke special features, etc.
 #   Example:  make AMBERBUILDFLAGS='-O0 -g' sander
 #
-CC=%(cc)s
+CC=gcc
 CFLAGS= -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE
 CNOOPTFLAGS=
-COPTFLAGS=%(copt)s
+COPTFLAGS=-O3
 
-CXX=%(cxx)s
-CPLUSPLUS=%(cxx)s
+CXX=g++
+CPLUSPLUS=g++
 CXXFLAGS=  
 CXXNOOPTFLAGS=
-CXXOPTFLAGS=%(cxxopt)s
+CXXOPTFLAGS=-O3
 
 LEX=   flex
-YACC=  %(yacc)s
+YACC=  /usr/bin/yacc
 AR=    ar rv
 M4=    m4
 RANLIB=ranlib
@@ -103,10 +97,10 @@ CP=cp
 
 #  Information about Fortran compilation:
 
-FC=%(fc)s
+FC=gfortran
 FFLAGS=  $(LOCALFLAGS) $(CUSTOMBUILDFLAGS) -I$(INCDIR) $(NETCDFINC)  $(AMBERBUILDFLAGS)
 FNOOPTFLAGS= -O0
-FOPTFLAGS= %(fcopt)s
+FOPTFLAGS= -O3
 AMBERFFLAGS=$(AMBERBUILDFLAGS)
 FREEFORMAT_FLAG= -ffree-form
 LM=-lm
@@ -120,49 +114,4 @@ XHOME= /usr
 XLIBS= -L/usr/lib64 -L/usr/lib
 MAKE_XLEAP=skip_xleap
 
-PREFIX=%(prefix)s
-"""
-
-def which(prog):
-    """ Determine if a program exists """
-    def is_exe(fname):
-        return os.path.exists(fname) and os.access(fname, os.X_OK)
-    fpath, fname = os.path.split(prog)
-    if fpath:
-        if is_exe(prog): return prog
-
-    for path in os.environ['PATH'].split(os.pathsep):
-        exe_file = os.path.join(path, prog)
-        if is_exe(exe_file):
-            return exe_file
-    return None
-
-# Get the working directory
-cwd = os.path.abspath(os.path.dirname(sys.argv[0]))
-options = dict(basedir=cwd, cc='gcc', cxx='g++', copt='-O3', cxxopt='-O3',
-               fc='gfortran', fcopt='-O3', mathlib='')
-
-parser = OptionParser()
-parser.add_option('--prefix', dest='prefix', default='/usr/local',
-                  help='Directory to install programs and files to.')
-parser.add_option('--yacc', dest='yacc', default=None,
-                  help='Which YACC implementation to use. Looks for bison '
-                  'first then looks for yacc if not given')
-
-opt, arg = parser.parse_args()
-
-if opt.yacc is None:
-    yacc = which('bison')
-    if yacc is None:
-        yacc = which('yacc')
-        if yacc is None:
-            sys.exit('YACC cannot be found!')
-else:
-    yacc = opt.yacc
-
-options['prefix'] = opt.prefix
-options['yacc'] = yacc
-options['command'] = ' '.join(sys.argv)
-
-with open(os.path.join(cwd, 'config.h'), 'w') as f:
-    f.write(CONFIG_H % options)
+PREFIX=/home/swails/testinstall

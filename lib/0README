@@ -1,0 +1,29 @@
+Resizing:
+
+	No resizing is done in lib.
+
+Files:
+
+vector.h	vector compile directives for vector machines
+
+amopen.f	machine dependent wrapper for open()
+util.f   	machine dependent rewind/close
+mexit.f		machine dependent exit - alerts opsystem shell to errors
+
+rfree.f  	free format reader 
+rgroup.f 	group input reader
+namlst90.f	machine independent namelist routine by Nelson & Beebe
+openda.f	open prep dbase for read or write
+
+ddotp.f		dot product, uses BLAS if present
+eis.f		Eispack version of Givens routine, uses LAPACK if present
+ligenb.f	Givens Householder matrix diag for linear array
+matinv.f	matrix inversion
+random.f	Marsaglia's random number generator
+
+Sander files not used by other progs (maybe should be):
+
+nonbon.f 	nonbonded routine
+getcor.f	read coords
+grdmax.f	choose maximum value & index from array (max gradient atom)
+rdparm.f	read parm topology file
