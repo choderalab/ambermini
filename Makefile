@@ -28,6 +28,9 @@ sqm::
 
 libs::
 	cd cifparse && $(MAKE) install
+	cd blas && $(MAKE) install
+	cd lapack && $(MAKE) install
+	cd arpack && $(MAKE) install
 
 clean:
 	-cd antechamber && $(MAKE) clean

@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import with_statement
 
 import os, sys
 from optparse import OptionParser
@@ -24,7 +25,7 @@ DATDIR=%(basedir)s/dat
 #      NAB programs simply by including them on the command line; libraries
 #      included in FLIBS are always searched.)
 
-FLIBS= -L%(mathlib)s -larpack -llapack -lblas  -lgfortran -w 
+FLIBS= -L../lib -larpack -llapack -lblas  -lgfortran -w 
 FLIBSF= -larpack -llapack -lblas   
 ###############################################################################
 
@@ -148,9 +149,6 @@ parser.add_option('--prefix', dest='prefix', default='/usr/local',
 parser.add_option('--yacc', dest='yacc', default=None,
                   help='Which YACC implementation to use. Looks for byacc '
                   'first then looks for yacc if not given')
-parser.add_option('--with-mathlibs', dest='mathlibs', default='', metavar='DIR',
-                  help='Location where math libraries are located. Need '
-                  'libblas, liblapack, and libarpack')
 
 opt, arg = parser.parse_args()
 
@@ -166,7 +164,6 @@ else:
 options['prefix'] = opt.prefix
 options['yacc'] = yacc
 options['command'] = ' '.join(sys.argv)
-options['mathlib'] = opt.mathlibs
 
 with open(os.path.join(cwd, 'config.h'), 'w') as f:
     f.write(CONFIG_H % options)

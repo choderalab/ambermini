@@ -1,3 +1,9 @@
 .*.swp
 bin/
 *.o
+config.h
+sqm/*.mod
+lib/*.a
+leap/src/leap/helptext.c
+leap/src/leap/parser.c
+leap/src/leap/utilMakeHelp
