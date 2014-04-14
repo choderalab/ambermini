@@ -38,3 +38,4 @@ clean:
 
 uninstall:
 	cd $(PREFIX)/bin && rm -f $(PROGS)
+	rm -fr $(PREFIX)/share/amber
