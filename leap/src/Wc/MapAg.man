@@ -1,0 +1,222 @@
+.COMMENT SCCS_data: %Z% %M% %I% %E% %U%
+.TH "MapAg" 3 "13 May 1993"
+.SH NAME
+MapAg \- Mapping Agent Object (hash,sparse array,dictionary,association)
+.SH SYNOPSIS
+.ta 1.5i 2.5i
+.nf
+.ft B
+#include <X11/Wc/MapAg.h>
+
+char *a, *b, *c, *data;
+MapAg agent = MapAg_New();
+
+MapAg_Define( agent, a, b, c, data );
+data = MapAg_Find( agent, a, b, c );
+
+MapAg_Free( agent );
+.fi
+.ft R
+
+.SH LINK BY
+.RS
+.nf
+.ft B
+example% ld -o xprog xprog.o <widgetLib> -lWc <dynLinkLib> -lXmu -lXt -lX11
+example% ld -o prog prog.o <otherLibs> -lWc
+.ft R
+.RE
+.LP 
+On SunOS or SVR4 machines, the <dynLinkLib> is named -ldl.
+Other architectures cannot use the dynamic linking capabilites of
+Wcl, and therefore do not need any dynamic link library.
+.SH DEPENDENCIES
+.LP
+.I MapAg
+Mapping Agents are implemented within
+.I Wcl.
+They are heavily used by Wcl, but are themselves independent from Wcl
+and any other X libraries.  It is very simple to extract the MapAg.c,
+MapAg.h, and MapAgP.h files from the Wcl distribution and use Mapping
+Agents separately.
+
+Since Mapping Agents are implemented entirely within an X and Wcl
+independent file, it is possible for clients to link against libWcl and
+end up with only MapAg.o in the address space without getting the rest
+of Wcl or needing any other X libraries (depending on target machine
+arcitecture).
+.SH FOR SPECIFIC DETAIL
+.LP
+The include files MapAg.h and MapAgP.h are heavily commented and
+provide prototypes for all functions.  In fact, much of the infomation
+in this file is taken directly from the include and source files.  The
+include files and the source are the final arbiter of truth.
+
+Also, you may want to look at how Wcl uses Mapping Agents internally:
+grep for MapAg in the Wcl source directory.
+.SH DESCRIPTION
+.LP
+.I MapAg
+implements objects which are Mapping Agents.  A Mapping Agent performs
+a unique mapping between an ordered triple of values (a,b,c) and a
+fourth value (data).  The values are declared `char*' at the calling
+interface, but they are only evaluated internally as pointer sized
+ordered sets of bits.
+
+Mapping Agents are optimized for rapid lookup, fairly rapid forgetting,
+and occaisionally slow remembering.  An adaptive hashing algorithm is
+used.  Lookups usually take 12 or less RISC instructions.  Forgetting
+involves a lookup and a call to free() which means a few more instructions.
+
+Remembering a mapping in the first place is slower, because a malloc()
+is done which may result in a system call to sbrk() which of course may
+result in the thread releasing the processor for awhile (scheduling
+latency).  Since remembering is a rare situation, and is usually
+related to the creation of other objects in the system (and therefore,
+other opportunities for the thread to become suspended), Mapping Agents
+take advantage of the situation and perform some activities which can
+greatly improve lookup performance.
+
+Specifically, a Mapping Agent keeps track of collisions.  When `too
+many' collisions occur, the mapping agent will try to determine a
+better hashing algorithm which will reduce collisions.  When `too many'
+things are remembered, the hash table is also expanded.
+
+The hash table starts out small, and so there are several opportunities
+to tune the hashing function early, when there are not many mappings yet
+defined.  Each time the table is grown it is doubled in size, so frequent
+copying of the hash table is avoided.
+
+Mapping Agents are objects which are implemented in C.  This implementation
+allows several programming techniques which are not available in most
+OOPLs including C++ and Objective-C.  The reason C was used was:
+.TP 1.
+As an example of OOP in C which cannot be done in C++.
+.TP 2.
+Maximum portablility (distributed within Wcl).
+.TP 3.
+Efficient state variable behaviors without logical branching.  Only
+straight-line or looping code is fast with pipelined architectures.
+.TP 4.
+Binary encapsulationa so clients do not have to be re-compiled if
+the implementation changes (you can't do this with C++).
+.SH DECLARATIONS
+.LP
+There are two ways of declaring Mapping Agents: the right way and the
+static way.
+
+The right way is to declare a pointer to a Mapping Agent which does not
+have logical scope: i.e., as a file static, as a global, or better, as
+a member of an object (a struct in C).  This pointer is then
+initialized by a call to MapAg_New().  This scenario is shown in the
+SYNOPSIS above.  Clients using Mapping Agents in this way are insulated
+from changes to the private implementation of Mapping Agents.
+.nf
+    MapAg agent; 
+    agent = MapAg_New();
+.fi
+.LP
+.I MapAg
+is an opaque pointer to a C struct.  MapAg_New() allocates the struct
+on the heap and initializes it.
+
+The static way is not generally recommended as it breaks the principle
+of binary encapsulation.  In other words, if you do it this way, you
+need to re-compile if the Mapping Agent implementation changes (generally,
+on every new release).  This is as bad as using C++!
+.nf
+    static MapAgRec agentRec = MapAg_STATIC;
+    static MapAg    agent    = &agentRec;
+.fi
+.LP
+The macro MapAg_STATIC is defined in MapAgP.h.  This is a warning to
+the client: using this macro means you are dependent upon the internal
+implementation of Mapping Agents.  You might as well be a complete loser
+and use C++!
+
+Static allocation and initialization is provided for backward compatibility
+with older releases of MapAg, and for the way they are used in Wcl.  If
+Wcl was re-implemented, it would have a single library initialization
+routine.  Unfortunately, Wcl does not: there are many ways control can
+be transferred to Wcl, and many of these ways result in Mapping Agents
+being accessed.  Therefore, the Mapping Agents must be ready to use before
+any Wcl entry point is called.  Without forcing Wcl clients to re-compiled!
+
+Note that if Wcl and Mapping Agents were implemented in C++, then static
+constructors would be called for static Mapping Agents.  This means the
+client source code would not change, but the clients would need to be
+re-compiled with each new release of Wcl.  This is of course unacceptable
+(and is the major reason C++ is not acceptable for implementing libraries
+or other forms of re-usable code).
+
+Wcl uses static initilization of some of its mapping agents, but this is
+OK since Wcl is certainly re-built when Mapping Agents change (hey, its
+my code, I can be effected by my changes!).
+
+You, as a client, should try hard to avoid using MapAg_STATIC.
+.SH METHODS
+.LP
+Note that a 
+.I MapAg
+must be initialized (MapAg_New or MapAg_STATIC)
+before any operation can be performed on it (before it can be passed
+to any function implementing its methods).  Note that all these methods
+take a 
+.I MapAg
+as the first argument.
+
+All of these methods are in fact implemented as macros.  The macro
+casts the (a,b,c) and data arguments to char* before invoking the
+actual functions.  This is for notational convenience when using
+ANSI C or C++.  The Mapping Agent does not care about the type of these
+arguments, and so it is annoying for the client to cast its own useful
+data types to char* just to make a compiler happy.  The compiler is
+our tool, we are not the compiler's tool.
+
+The macros also provide support for assertions (see assert(3)).  If
+a client source file is compiled with ASSERTIONS defined (usually
+with -DASSERTIONS as an argument to the C compiler) then all accesses
+to any
+.I MapAg
+will ensure that the
+.I MapAg
+is in a consistent state.
+.TP
+.B MapAg MapAg_New()
+This is used to create a new MapAg object. The object is instantiated
+on the heap. The returned MapAg is actually an opaque pointer to the
+new MapAg instance.
+.TP
+.B void MapAg_Define( MapAg, char* a, char* b, char* c, char* data )
+This is used to define a mapping from (a,b,c) to (data). The arguments
+(a,b,c,data) can in fact be anything which fints into a char*: on most
+machines this includes char, short, int, long, float, and any pointer.
+.TP
+.B char* MapAg_Find( MapAg, char* a, char* b, char* c )
+This is used to find the (data) value which has most recently been
+defined as being mapped from (a,b,c).  If nothing has been mapped
+to (a,b,c) then a NULL is returned.
+.TP
+.B void MapAg_Forget( MapAg, char* a, char* b, char* c )
+This is used to forget any mapping from (a,b,c) to anything.  This
+is often used when the object pointed to by (data) is deleted.
+.TP
+.B void MapAg_Purge( MapAg, char* data )
+This is used to purge all mappings from any (a,b,c) to this (data).
+This is often used when the object pointed to by (data) is deleted,
+and there are many mappings to (data) maintained by the MapAg.
+.TP
+.B void MapAg_Free( MapAg )
+This is used to free an instance of a MapAg. All mappings are forgotten,
+all data de-allocated from the heap. The MapAg value must never again be
+used by the application.
+.SH "SEE ALSO"
+.BI Wcl (3)
+.SH BUGS
+.SH AUTHOR
+MapAg was written by David E. Smyth.
+
+Mr. Smyth (David.Smyth@devvax.jpl.nasa.gov) is currently at Jet
+Propulsion Laboratories, Pasadena California.  He is continuing the
+development of the Wcl distribution with numerous enhancements,
+examples, documentation, integration, testing, and overall support.

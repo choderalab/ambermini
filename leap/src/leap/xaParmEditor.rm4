@@ -1,0 +1,136 @@
+!#####################################################################
+!#####################################################################
+!#####################################################################
+!#####################################################################
+!#####################################################################
+!
+!	Define how the parmEditor (XAPE) window will look. 
+!	This dialog narrows down the number of parameter sets
+
+!	Author:		David A. Rivkin
+!	Date Created: 	10 August 1992
+!
+!	Buttons are aligned vertically by default.
+!
+
+define( PARMEDITWIDTH, 275)
+define( PARMBUTTONWIDTH, 250)
+
+XaLeap*parmEditor.wcClassName:			TransientShell
+XaLeap*parmEditor.wcChildren:			parmEditorForm
+XaLeap*parmEditor.wcCallback:			xtcpXACReplaceShell()\
+						XAPERegisterParmEditor
+
+XaLeap*parmEditorForm.wcClassName:		Paned
+XaLeap*parmEditorForm.orientation:		vertical
+XaLeap*parmEditorForm.internalBorderWidth:	8
+XaLeap*parmEditorForm.shadowWidth:		2
+XaLeap*parmEditorForm.wcChildren:		parmEditorBox \
+						parmEditorClose
+
+
+XaLeap*parmEditorBox.wcClassName:		Frame
+XaLeap*parmEditorBox.captionOn:			True
+XaLeap*parmEditorBox.shadowWidth:		0
+XaLeap*parmEditorBox.yFraction:			35
+XaLeap*parmEditorBox.layoutPolicy:		fraction
+XaLeap*parmEditorBox.Command.justify:		center
+XaLeap*parmEditorBox.Command.internalWidth:	20
+XaLeap*parmEditorBox.Command.font:		COMMAND_BUTTON_FONT
+XaLeap*parmEditorBox.wcChildren:		atomParms 	\
+						bondParms 	\
+						angleParms 	\
+						torsionParms 	\
+						improperParms 	\
+						hBondParms
+
+XaLeap*parmEditorBox.atomParms.top:		0
+XaLeap*parmEditorBox.atomParms.bottom:		5
+
+XaLeap*parmEditorBox.bondParms.top:		6
+XaLeap*parmEditorBox.bondParms.bottom:		11
+
+XaLeap*parmEditorBox.angleParms.top:		12
+XaLeap*parmEditorBox.angleParms.bottom:		17
+
+XaLeap*parmEditorBox.torsionParms.top:		18
+XaLeap*parmEditorBox.torsionParms.bottom:	23
+
+XaLeap*parmEditorBox.improperParms.top:		24
+XaLeap*parmEditorBox.improperParms.bottom:	29
+
+XaLeap*parmEditorBox.hBondParms.top:		30
+XaLeap*parmEditorBox.hBondParms.bottom:		35
+
+XaLeap*atomParms.wcClassName:			Command
+XaLeap*atomParms.label:				Atom Parameters
+XaLeap*atomParms.callback:			WcSetInsensitiveCB(this) \
+						XAPEEditAtomParameters
+
+
+XaLeap*bondParms.wcClassName:			Command
+XaLeap*bondParms.label:				Bond Parameters
+XaLeap*bondParms.callback:			WcSetInsensitiveCB(this) \
+						XAPEEditBondParameters 
+
+
+XaLeap*angleParms.wcClassName:			Command
+XaLeap*angleParms.label:			Angle Parameters
+XaLeap*angleParms.callback:			WcSetInsensitiveCB(this) \
+						XAPEEditAngleParameters 
+
+
+XaLeap*torsionParms.wcClassName: 		Command
+XaLeap*torsionParms.label:	 		Proper Torsion Parameters
+XaLeap*torsionParms.callback:	 		WcSetInsensitiveCB(this) \
+						XAPEEditTorsionParameters
+
+
+XaLeap*improperParms.wcClassName: 		Command
+XaLeap*improperParms.label:	 		Improper Torsion Parameters
+XaLeap*improperParms.callback:	 		WcSetInsensitiveCB(this) \
+						XAPEEditImproperParameters
+
+
+XaLeap*hBondParms.wcClassName:			Command
+XaLeap*hBondParms.label:			Hydrogen Bond Parameters
+XaLeap*hBondParms.callback:			WcSetInsensitiveCB(this) \
+						XAPEEditHBondParameters
+
+
+XaLeap*parmEditorClose.wcClassName:		Form
+XaLeap*parmEditorClose.wcChildren:		close
+XaLeap*parmEditorClose.shadowWidth:		0
+XaLeap*parmEditorClose.showGrip:		0
+XaLeap*parmEditorClose.skipAdjust:		True
+XaLeap*parmEditorClose.hSpace:			10
+
+XaLeap*parmEditorForm*close.wcClassName:	Command
+XaLeap*parmEditorForm*close.label:		Close
+XaLeap*parmEditorForm*close.callback:		XAPEEditDone WcDestroyCB(~)
+
+
+
+!
+!	Define warning dialog boxes
+!
+!	No parameters warning dialog
+!
+
+WARN_DIALOG_BOX( aParmNoParmsShell, atomParms, No Atom Parameters, There are no atom parameters defined for this PARMSET.\nDo you wish to add parameters now?\n, XAPENewAtomParameters XAPERaiseTable( XaLeap*aParmTableShell ),EMPTY ,)
+
+WARN_DIALOG_BOX( bParmNoParmsShell, bondParms, No Bond Parameters, There are no bond parameters defined for this PARMSET.\nDo you wish to add parameters now?\n, XAPENewBondParameters XAPERaiseTable( XaLeap*bParmTableShell ),EMPTY ,)
+
+WARN_DIALOG_BOX( vParmNoParmsShell, angleParms, No Angle Parameters, There are no angle parameters defined for this PARMSET.\nDo you wish to add parameters now?\n, XAPENewAngleParameters XAPERaiseTable( XaLeap*vParmTableShell ),EMPTY ,)
+
+WARN_DIALOG_BOX( tParmNoParmsShell, torsionParms, No Proper Torsion Parameters, There are no proper torsion parameters defined for this PARMSET.\nDo you wish to add parameters now?\n, XAPENewTorsionParameters XAPERaiseTable( XaLeap*tParmTableShell ),EMPTY ,)
+
+WARN_DIALOG_BOX( iParmNoParmsShell, improperParms, No Improper Torsion Parameters, There are no improper torsion parameters defined for this PARMSET.\nDo you wish to add parameters now?\n, XAPENewImproperParameters XAPERaiseTable( XaLeap*iParmTableShell ),EMPTY ,)
+
+WARN_DIALOG_BOX( hParmNoParmsShell, hBondParms, No Hydrogen Bond Parameters, There are no hydrogen bond parameters defined for this PARMSET.\nDo you wish to add parameters now?\n, XAPENewHBondParameters XAPERaiseTable( XaLeap*hParmTableShell ),EMPTY ,)
+
+
+
+
+
+

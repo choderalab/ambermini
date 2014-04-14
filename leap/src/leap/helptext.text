@@ -1,0 +1,2156 @@
+
+
+
+
+The following is a description of the commands that can be accessed
+using the command line interface in LEaP, or through the command
+editor in xLEaP.
+
+
+@@beginHelp:  add
+
+
+    add a b
+
+
+      UNIT/RESIDUE/ATOM          _a_
+
+      UNIT/RESIDUE/ATOM          _b_
+
+
+
+Add the object _b_ to the object _a_.   This command is used to place
+ATOMs within RESIDUEs, and RESIDUEs within UNITs.
+
+
+@@endHelp
+
+
+@@beginHelp:  addAtomTypes
+
+
+    addAtomTypes {
+        { "H"   "H" "sp3" }
+        { "HO"  "H" "sp3" }
+        ...
+    }
+ 
+Add mapping of AMBER atom type to element and hybridization. Typically in
+leaprc.
+@@endHelp
+
+@@beginHelp:  addIons
+
+    addIons unit ion1 #ion1 [ion2 #ion2]
+ 
+	UNIT			_unit_
+	UNIT			_ion1_
+	NUMBER			_#ion1_
+	UNIT			_ion2_
+	NUMBER			_#ion2_
+ 
+Adds counterions in a shell around _unit_ using a Coulombic potential
+on a grid. If _#ion1_ is 0, the _unit_ is neutralized (_ion1_ must be
+opposite in charge to _unit_, and _ion2_ cannot be specified). Otherwise,
+the specified numbers of _ion1_ [_ion2_] are added [in alternating order].
+If solvent is present, it is ignored in the charge and steric calculations,
+and if an ion has a steric conflict with a solvent molecule, the ion is
+moved to the center of said molecule, and the latter is deleted. (To
+avoid this behavior, either solvate _after_ addions, or use addIons2.)
+
+Ions must be monoatomic. Note that the one-at-a-time procedure is not
+guaranteed to globally minimize the electrostatic energy. When neutralizing
+regular-backbone nucleic acids, the first cations will generally be added 
+between phosphates, leaving the final two ions to be placed somewhere around
+the middle of the molecule.
+
+The default grid resolution is 1 Angstrom, extending from an inner radius
+of (max ion size + max solute atom size) to an outer radius 4 Angstroms
+beyond. A distance-dependent dielectric is used for speed.
+
+@@endHelp
+
+
+@@beginHelp:  addIons2
+
+    addIons2 unit ion1 #ion1 [ion2 #ion2]
+
+        UNIT                    _unit_
+        UNIT                    _ion1_
+        NUMBER                  _#ion1_
+        UNIT                    _ion2_
+        NUMBER                  _#ion2_
+
+Same as addIons, except solvent and solute are treated the same.
+
+@@endHelp
+
+
+
+@@beginHelp:  addIonsRand
+
+
+    addIonsRand unit ion1 #ion1 [ion2 #ion2] [separation]
+
+
+        UNIT      _unit_
+        UNIT      _ion1_
+        NUMBER    _#ion1_
+        UNIT      _ion2_
+        NUMBER    _#ion2_
+        NUMBER    _separation_
+
+
+Adds counterions in a shell around _unit_ by replacing random solvent
+molecules. If _#ion1_ is 0, the _unit_ is neutralized (_ion1_ must be
+opposite in charge to _unit_, and _ion2_ cannot be specified). Otherwise,
+the specified numbers of _ion1_ [_ion2_] are added [in alternating order].
+If _separation_ is specified, ions will be guaranteed to be more than that
+distance apart in Angstroms.
+
+
+Ions must be monoatomic. This procedure is much faster than addIons, as
+it does not calculate charges. Solvent must be present. It must be possible
+to position the requested number of ions with the given separation in the
+solvent.
+
+
+@@endHelp
+
+
+
+
+@@beginHelp:  addPath
+
+
+    addPath path
+
+
+      STRING                       _path_
+
+
+
+Add the directory in _path_ to the list of directories that are searched
+for files specified by other commands.
+
+
+@@endHelp
+
+
+@@beginHelp:  restrainAngle
+
+
+    restrainAngle unit a b c force angle
+
+
+      UNIT                         _unit_
+
+      ATOM                         _a_
+
+      ATOM                         _b_
+
+      ATOM                         _c_
+
+      NUMBER                       _force_
+
+      NUMBER                       _angle_
+
+
+
+Add an angle restraint to _unit_ between atoms _a_, _b_, and _c_, 
+having force constant of _force_, and equilibrium angle _angle_.
+
+
+
+@@endHelp
+
+
+@@beginHelp:  restrainBond
+
+
+    restrainBond unit a b force length
+
+
+      UNIT                         _unit_
+
+      ATOM                         _a_
+
+      ATOM                         _b_
+
+      NUMBER                       _force_
+
+      NUMBER                       _length_
+
+
+
+Add a bond (distance) restraint to _unit_ between atoms _a_ and _b_ 
+with a force constant of _force_ and an equilibrium distance of _length_.
+
+
+@@endHelp
+
+
+@@beginHelp:  restrainTorsion
+
+
+    restrainTorsion unit a b c d force phi multiplicity
+
+
+      UNIT                         _unit_
+
+      ATOM                         _a_
+
+      ATOM                         _b_
+
+      ATOM                         _c_
+
+      ATOM                         _d_
+
+      NUMBER                       _force_
+
+      NUMBER                       _phi_
+
+      NUMBER                       _multiplicity_
+
+
+
+Add a torsion restraint to _unit_ between atoms _a_, _b_, _c_, and 
+_d_, with a force constant of _force_, an equilibrium torsion angle 
+of _phi_, and a multiplicity of _multiplicity_.
+
+
+@@endHelp
+
+
+@@beginHelp: alias
+
+alias [alias[ string]]
+
+	STRING		_alias_
+	STRING		_alias_
+
+
+alias string1 command - equivalence string1 to command.
+alias string1         - delete the alias for string1.
+alias                 - report all current aliases.
+
+@@endHelp
+
+@@beginHelp:  alignAxes
+
+
+    alignAxes unit
+
+
+      UNIT                         _unit_
+
+
+
+Translate the geometric center of _unit_ to the origin and align
+the principle axes of the ATOMs within _unit_ along the coordinate
+axes.  This is done by calculating the moment of inertia of the UNIT
+using unit mass for each ATOM, and then diagonalizing the resulting 
+matrix and aligning the eigenvectors along the coordinate axes.  
+This command modifies the coordinates of the UNIT. It may be
+especially useful for preparing long solutes such as nucleic acids
+for solvation.
+
+
+@@endHelp
+
+
+@@beginHelp:  loadAmberParams
+
+
+    variable = loadAmberParams filename 
+
+      PARMSET                      _variable_
+
+      STRING                       _filename_
+
+
+
+Load an AMBER format parameter set file and place it in _variable_.
+All interactions defined in the parameter set will be contained within
+_variable_.   This command causes the loaded parameter set to be included
+in LEaP's list of parameter sets that are searched when parameters are 
+required.  General proper and improper torsion parameters are modified, 
+the AMBER general type "X" is replaced with the LEaP general type "?".
+
+
+@@endHelp
+
+
+@@beginHelp:  bond
+
+
+    bond atom1 atom2 [ order ]
+
+
+      ATOM                         _atom1_
+
+      ATOM                         _atom2_
+
+      STRING                       _order_
+
+
+
+Create a bond between _atom1_ and _atom2_.  Both of these ATOMs must
+be contained by the same UNIT. By default, the bond will be a single
+bond.  By specifying "S", "D", "T", or "A" as the optional argument
+_order_ the user can specify a single, double, triple, or aromatic
+bond.
+
+
+@@endHelp
+
+
+
+@@beginHelp:  center
+
+
+    center container
+
+      UNIT/RESIDUE/ATOM          _container_
+
+
+
+Display the coordinates of the geometric center of the ATOMs within
+_container_.
+
+
+@@endHelp
+
+
+@@beginHelp:  charge
+
+
+    charge container
+
+
+      UNIT/RESIDUE/ATOM          _container_
+
+
+
+This command calculates the total charge of the ATOMs within _container_.
+The unperturbed and perturbed total charge are displayed.
+
+
+@@endHelp
+
+
+@@beginHelp:  check
+
+
+    check unit [ parmset ]
+
+      UNIT                         _unit_
+      PARMSET/STRING		   _parmset_
+
+
+This command can be used to check the UNIT for internal inconsistencies
+that could cause problems when performing calculations.  This is
+a very useful command that should be used before a UNIT is saved
+with saveAmberParm or its variations.   
+
+With the optional parmset, all missing parameters are placed in the 
+PARMSET to allow for easy editing of those parameters.  If a string is
+passed, a PARMSET will be created with that name.
+
+Currently it checks for the following possible problems:
+
+
+   - Long bonds.
+
+
+   - Short bonds.
+
+
+   - Non-integral total charge of the UNIT.
+
+
+   - Missing types.
+
+
+   - Close contacts between non-bonded ATOMs.  A close contact is
+     less than 1.5 angstroms.
+
+
+
+@@endHelp
+
+
+@@beginHelp:  clearVariables
+
+
+    clearVariables [ list ]
+
+
+      LIST                         _list_
+
+
+
+This command removes variables from LEaP. If the _list_ argument
+is provided, then only the variables in the LIST will be removed.
+If no argument is provided then ALL variables will be removed.
+
+
+@@endHelp
+
+
+@@beginHelp:  combine
+
+
+    variable = combine list
+
+      object                       _variable_
+
+      LIST                         _list_
+
+
+
+Combine the contents of the UNITs within _list_ into a single UNIT.
+The new UNIT is placed in _variable_.   This command is similar to
+the sequence command except it does not link the ATOMs of the UNITs
+together.
+
+
+@@endHelp
+
+
+@@beginHelp:  copy
+
+
+    newvariable = copy variable
+
+
+      object                       _newvariable_
+
+      object                       _variable_
+
+
+Create an exact duplicate of the object _variable_. Changing the object
+_variable_ will not affect the object _newvariable_. 
+
+This is in contrast to the situation created by "newvariable = variable" 
+in which both names reference the same object.
+
+
+@@endHelp
+
+@@beginHelp:  crossLink
+
+
+    crossLink res1 conn1 res2 conn2
+
+
+      RESIDUE                      _res1_
+
+      STRING                       _connect1_
+
+      RESIDUE                      _res2_
+
+      STRING                       _connect2_
+
+
+
+Create a bond between ATOMs at the connection point specified by
+_conn1_ and _conn2_.   The argument _conn1_ and _conn2_ can have the
+following values:
+
+
+Name_           Alternatives__
+
+$connect0      $nend, $firstend
+
+$connect1      $cend, $lastend
+
+$connect2      $send, $disulphide
+
+$connect3
+
+$connect4
+
+$connect5
+
+
+
+@@endHelp
+
+
+@@beginHelp:  deSelect
+
+
+    deSelect obj
+
+
+      UNIT/RESIDUE/ATOM          _obj_
+
+
+
+Clears the SELECT flag on all ATOMs within _obj_.  See the 'select'
+command.
+
+@@endHelp
+
+
+@@beginHelp:  debugOff
+
+
+    debugOff filename
+
+
+      STRING                       _filename_
+
+
+
+This command is a system debugging function.  It turns off debugging
+messages from the source (.c) file _filename_.   The symbol *
+matches all files.  The default for all filenames is `off'.
+Note that system debugging is in effect only if LEaP was compiled
+with the preprocessor macro DEBUG defined.
+
+@@endHelp
+
+
+@@beginHelp:  debugOn
+
+
+    debugOn filename
+
+
+      STRING                       _filename_
+
+
+
+This command is a system debugging function.  It turns on debugging
+messages from the source (.c) file _filename_.   The symbol *
+matches all files.  The default for all filenames is `off'.
+Note that system debugging is in effect only if LEaP was compiled
+with the preprocessor macro DEBUG defined.
+
+
+@@endHelp
+
+
+@@beginHelp:  debugStatus
+
+
+    debugStatus
+
+This command is a memory debugging function.  It displays various
+messages that describe LEaP's usage of system resources.
+Note that memory debugging is in effect only if LEaP was compiled
+with the preprocessor macro MEMORY_DEBUG defined; MEMORY_DEBUG values
+range from 1 through 4 with the greatest being the most aggressive.
+
+
+@@endHelp
+
+
+@@beginHelp:  desc
+
+
+    desc variable
+
+      object                       _variable_
+
+
+
+Print a description of the object.
+
+
+@@endHelp
+
+
+@@beginHelp:  bondByDistance
+
+
+    bondByDistance container [ maxBond ]
+
+
+      UNIT/RESIDUE/ATOM		_container_
+
+      NUMBER			_maxBond_
+
+
+
+Create single bonds between all ATOMs in _container_ that are within 
+_maxBond_ angstroms of each other.   If _maxBond_ is not specified,
+a default distance of 2 angstroms used.
+
+@@endHelp
+
+
+@@beginHelp:  edit
+
+
+    edit unit-parmset
+
+      UNIT/PARMSET		_unit-parmset_
+
+
+
+In xLEaP this command creates a unit editor or parameter set editor 
+that contains the UNIT or PARMSET _unit-parmset_.   The user can view
+and edit the contents of the UNIT or PARMSET by using the mouse.  
+If _unit-parmset_ is a PARMSET, then the user may select the Atom, Bond,
+Angle, Torsion, Improper Torsion, or Hydrogen Bond Parameters to
+edit by selecting the appropriate button.
+
+In tLEaP this command prints an error message.
+
+
+@@endHelp
+
+
+
+@@beginHelp:  groupSelectedAtoms
+
+
+    groupSelectedAtoms unit name
+
+
+      UNIT                         _unit_
+
+      STRING                       _name_
+
+
+
+Create a group within _unit_ with the name _name_ using all of the
+ATOMs within the UNIT that are selected.  If the group has already
+been defined then overwrite the old group.
+
+
+@@endHelp
+
+
+@@beginHelp:  help
+
+
+    help [string]
+
+
+      STRING                       _string_
+
+
+
+This command prints a description of the command in _string_.  If
+the STRING is not given then a list of legal STRINGs is provided.
+
+
+@@endHelp
+
+
+@@beginHelp:  impose
+
+
+    impose unit seqlist internals
+
+
+      UNIT                         _unit_
+
+      LIST                         _seqlist_
+
+      LIST                         _internals_
+
+
+
+The impose command allows the user to impose internal coordinates
+on the UNIT. The list of RESIDUEs to impose the internal coordinates
+upon is in _seqlist_.  The internal coordinates to impose are in
+the LIST _internals_.
+
+The command works by looking into each RESIDUE within the UNIT that
+is listed in the _seqlist_ argument and attempts to apply each of
+the internal coordinates within _internals_.  The _seqlist_ argument
+is a LIST of NUMBERs that represent sequence numbers or ranges of
+sequence numbers.  Ranges of sequence numbers are represented by
+two-element LISTs that contain the first and last sequence number
+in the range.  The user can specify sequence number ranges that are
+larger than what is found in the UNIT. For example the range { 1 999 } 
+represents all RESIDUEs in a 200 RESIDUE UNIT.
+
+The _internals_ argument is a LIST of LISTs.  Each sublist contains
+a sequence of ATOM names which are of type STRING followed by the
+value of the internal coordinate.  See the output of help _types_ for
+details on specifying STRINGs.  Examples of the impose command are:
+
+
+impose peptide { 1 2 3 } { { $N $CA  $C $N -40.0 } { $C $N  $CA $C
+-60.0 } }
+
+
+The RESIDUEs with sequence numbers 1, 2, and 5 within the UNIT peptide
+will assume an alpha helix conformation.
+
+
+impose peptide { 1 2  { 5 10 } 12 }  { { "CA" "CB" 5.0 } }
+
+
+This will impose on the residues with sequence numbers 1, 2, 5, 6,
+7, 8, 9, 10, and 12 within the UNIT peptide a bond length of 5.0
+angstroms between the alpha and beta carbons.  RESIDUEs without an
+ATOM named $CB (like glycine)  will be unaffected.
+
+Three types of conformational change are supported; bond length changes,
+bond angle changes, and torsion angle changes.  If the conformational
+change involves a torsion angle, then all dihedrals around the central
+pair of atoms are rotated.   The entire list of internals are applied
+to each RESIDUE.
+
+@@endHelp
+
+@@beginHelp:  list
+
+    list
+
+List all of the variables currently defined.
+
+@@endHelp
+
+@@beginHelp:  loadOff
+
+    loadOff filename
+
+      STRING                       _filename_
+
+
+
+This command loads the Object File Format library within the file named 
+_filename_.  All UNITs and PARMSETs within the library will be loaded.
+The objects are loaded into LEaP under the variable names the objects 
+had when they were saved.  Variables already in existence that have the 
+same names as the objects being loaded will be overwritten.  PARMSETs
+loaded using this command are included in LEaP's library of PARMSETs
+that is searched whenever parameters are required.
+
+
+
+@@endHelp
+
+
+@@beginHelp:  loadAmberPrep
+
+
+    loadAmberPrep filename [ prefix ]
+
+
+      STRING                       _filename_
+
+      STRING                       _prefix_
+
+
+
+This command loads an AMBER PREP input file.  For each residue that
+is loaded, a new UNIT is constructed that contains a single RESIDUE
+and a variable is created with the same name as the name of the residue
+within the PREP file.   If the optional argument _prefix_ is provided
+it will be prefixed to each variable name; this feature is used to
+prefix united atom residues, which have the same names as all-atom
+residues, with the string $U to distinguish them.
+
+
+@@endHelp
+
+
+@@beginHelp:  loadMol2
+
+
+    variable = loadMol2 filename
+
+      STRING                       _filename_
+
+
+
+Load a Sybyl Mol2-format file with the file name _filename_.  The UNIT
+loaded will have the name specified for the MOLECULE in the input file.
+
+
+@@endHelp
+
+
+@@beginHelp:  loadMol3
+
+
+    variable = loadMol3 filename
+
+      STRING                       _filename_
+
+
+
+Load a Sybyl-derived Mol3-format file with the file name _filename_.
+The UNIT loaded will have the name specified for the MOLECULE in the
+input file.
+
+
+More information:
+http://q4md-forcefieldtools.org/Tutorial/leap-mol3.php
+
+
+@@endHelp
+
+
+@@beginHelp:  loadPdb
+
+
+    variable = loadPdb filename
+
+      STRING                       _filename_
+
+
+
+Load a Protein Databank format file with the file name _filename_.
+The sequence numbers of the RESIDUEs will be determined from the
+order of residues within the PDB file ATOM records.  For each 
+residue in the PDB file, LEaP searches the variables currently 
+defined for variable names that match the residue name.  If a 
+match is found, then the contents of the variable are copied into 
+the UNIT created for the PDB structure.  If no PDB `TER' card 
+separates the current residue from the previous one, a bond is 
+created between the connect1 ATOM of the previous residue and the 
+connect0 atom of the new one.  As atoms are read from the ATOM 
+records, their coordinates are written into the correspondingly 
+named ATOMs within the residue being built.  If the entire residue 
+is read and it is found that ATOM coordinates are missing, then 
+external coordinates are built from the internal coordinates that 
+were defined in the matching UNIT (residue) variable.  This allows 
+LEaP to build coordinates for hydrogens and lone pairs which are not 
+specified in PDB files.
+
+
+
+@@endHelp
+
+
+@@beginHelp:  loadPdbUsingSeq
+
+
+    loadPdbUsingSeq filename unitlist
+
+
+      STRING                       _filename_
+
+      LIST                         _unitlist_
+
+
+
+This command reads a Protein Data Bank format file from the file
+named _filename_.  This command is identical to loadPdb except it
+does not use the residue names within the PDB file.   Instead, the
+sequence is defined by the user in _unitlist_.  For more details
+see loadPdb.
+
+
+@@endHelp
+
+
+@@beginHelp:  logFile
+
+
+    logFile filename
+
+
+      STRING                       _filename_
+
+
+
+This command opens the file with the file name _filename_ as a log
+file.  User input and ALL output is written to the log file.  Output
+is written to the log file as if the verbosity level were set to 2.
+
+
+@@endHelp
+
+
+@@beginHelp:  createAtom
+
+
+    variable = createAtom name type charge
+
+
+      ATOM                         _variable_
+
+      STRING                       _name_
+
+      STRING                       _type_
+
+      NUMBER                       _charge_
+
+
+
+Return a new ATOM with _name_, _type_, and _charge_.
+
+
+@@endHelp
+
+
+
+@@beginHelp:  createResidue
+
+
+    variable = createResidue name
+
+      RESIDUE                      _variable_
+
+      STRING                       _name_
+
+
+
+Return a new and empty RESIDUE with the name _name_.
+
+
+@@endHelp
+
+
+@@beginHelp:  createUnit
+
+
+    variable = createUnit name
+
+      UNIT                         _variable_
+
+      STRING                       _name_
+
+
+
+Return a new and empty UNIT with the name _name_.
+
+
+@@endHelp
+
+
+@@beginHelp:  createParmset
+
+
+    variable = createParmset name
+
+      PARMSET			_variable_
+
+      STRING			_name_
+
+
+
+Return a new and empty PARMSET with the name _name_.
+
+
+@@endHelp
+
+
+@@beginHelp:  quit
+
+
+    quit
+
+Quit LEaP.
+
+
+@@endHelp
+
+
+@@beginHelp:  remove
+
+
+    remove a b
+
+
+      UNIT/RESIDUE/ATOM          _a_
+
+      UNIT/RESIDUE/ATOM          _b_
+
+
+
+Remove the object _b_ from the object _a_.   If _a_ is not contained
+by _b_ then an error message will be displayed.  This command is
+used to remove ATOMs from RESIDUEs, and RESIDUEs from UNITs.   If
+the object represented by _b_ is not referenced by some variable
+name then it will be destroyed.
+
+
+@@endHelp
+
+
+@@beginHelp:  deleteBond
+
+
+    deleteBond atom1 atom2
+
+
+      ATOM                         _atom1_
+
+      ATOM                         _atom2_
+
+
+
+Remove the bond between the ATOMs _atom1_ and _atom2_.   If no bond
+exists, an error will be displayed.
+
+
+@@endHelp
+
+
+@@beginHelp:  deleteRestraint
+
+
+    deleteRestraint unit a b [c [d]]
+
+
+      UNIT                         _unit_
+
+      ATOM                         _a_
+
+      ATOM                         _b_
+
+      ATOM                         _c_
+
+      ATOM                         _d_
+
+
+
+Remove a bond, angle, or torsion restraint from _unit_, depending
+on the number of ATOMs specified.
+
+
+@@endHelp
+
+
+@@beginHelp:  saveOff
+
+
+    saveOff object filename
+
+
+      object                       _object_
+
+      STRING                       _filename_
+
+
+
+The saveOff command allows the user to save UNITs, and PARMSETs to a
+file named _filename_.  The file is written using the Object File
+Format (OFF) and can accommodate an unlimited number of uniquely
+named objects.  The names by which the objects are stored are the
+variable names specified in the argument of this command.  If the
+file _filename_ already exists then the new objects will be added
+to the file.  If there are objects within the file with the same
+names as objects being saved then the old objects will be overwritten.
+The argument _object_ can be a single UNIT, a single PARMSET, or
+a LIST of mixed UNITs and PARMSETs.  
+
+
+@@endHelp
+
+
+@@beginHelp:  saveAmberParm
+
+
+    saveAmberParm     unit topologyfilename coordinatefilename
+
+
+      UNIT                         _unit_
+
+      STRING                       _topologyfilename_
+
+      STRING                       _coordinatefilename_
+
+
+
+Save the AMBER topology and coordinate files for the UNIT into the
+files named _topologyfilename_ and _coordinatefilename_ respectively.
+This command will cause LEaP to search its list of PARMSETs for 
+parameters defining all of the interactions between the ATOMs within 
+the UNIT.  This command produces a topology file and a coordinate file
+which are identical in format to those produced by the AMBER program
+PARM, and which can be read into AMBER and SPASMS for energy minimization,
+dynamics, or nmode calculations.  
+
+See also: saveAmberParmPol, saveAmberParmPert, and saveAmberParmPolPert 
+for including atomic polarizabilities and preparing free energy 
+perturbation calculations and saveAmberParmNetcdf for saving in a
+binary format.
+
+
+@@endHelp
+
+
+@@beginHelp:  saveAmberParmNetcdf
+
+
+saveAmberParmNetcdf     unit topologyfilename coordinatefilename
+
+
+UNIT                         _unit_
+
+STRING                       _topologyfilename_
+
+STRING                       _coordinatefilename_
+
+
+
+Save the AMBER topology and coordinate files for the UNIT into the
+files named _topologyfilename_ and _coordinatefilename_ respectively.
+This command will cause LEaP to search its list of PARMSETs for 
+parameters defining all of the interactions between the ATOMs within 
+the UNIT.  This command produces a topology file and a coordinate file
+which can be read into AMBER and SPASMS for energy minimization, dynamics,
+or nmode calculations.
+
+The coordinate file written will be in the binary NetCDF AMBER restart
+format, which enables the writing of larger input files and quicker I/O.
+Use saveAmberParm for the regular ASCII coordinate format.
+
+
+@@endHelp
+  
+
+@@beginHelp:  saveAmberParmPol
+
+
+    saveAmberParmPol unit topologyfilename coordinatefilename
+
+
+Like saveAmberParm, but includes atomic polarizabilities in the topology
+file for use with IPOL=1 in Sander. The polarizabilities are according 
+to atom type, and are defined in the 'mass' section of the parm.dat or 
+frcmod file. Note: charges are normally scaled when polarizabilities are
+used - see scaleCharges for an easy way of doing this.
+
+
+@@endHelp
+
+@@beginHelp:  saveAmberParmPert
+
+
+    saveAmberParmPert unit topologyfilename coordinatefilename
+
+
+      UNIT                         _unit_
+
+      STRING                       _topologyfilename_
+
+      STRING                       _coordinatefilename_
+
+
+
+Save the AMBER topology and coordinate files for the UNIT into the
+files named _topologyfilename_ and _coordinatefilename_ respectively.
+This command will cause LEaP to search its list of PARMSETs for 
+parameters defining all of the interactions between the ATOMs within 
+the UNIT - including the perturbed ATOMs (which are ignored by the
+vanilla saveAmberParm command).  This command produces a topology file 
+and a coordinate file that are identical in format to those produced by 
+the AMBER PARM program using the PERT option, and which can be read into 
+AMBER and SPASMS for free energy calculations.   
+
+
+@@endHelp
+
+@@beginHelp:  saveAmberParmPolPert
+
+
+    saveAmberParmPolPert unit topologyfilename coordinatefilename
+
+
+Like saveAmberParmPert, but includes atomic polarizabilities in the topology
+file for use with IPOL=1 in Gibbs. The polarizabilities are according to 
+atom type, and are defined in the 'mass' section of the parm.dat or frcmod 
+file. Note: charges are normally scaled when polarizabilities are used - 
+see scaleCharges for an easy way of doing this.
+
+
+@@endHelp
+
+@@beginHelp:  saveAmberPrep
+
+
+    saveAmberPrep unit filename
+
+
+      UNIT                         _unit_
+
+      STRING                       _filename_
+
+
+Save all residues in the UNIT to a prep.in file. All possible improper
+dihedrals are given for each residue, so unwanted ones need to be
+deleted from the file. 'Connect0' and 'connect1' atoms must be defined
+for each residue.
+
+
+@@endHelp
+
+
+@@beginHelp:  saveOffParm
+
+
+    This command is obsolete.
+
+
+@@endHelp
+
+@@beginHelp:  addPdbAtomMap
+
+
+    addPdbAtomMap list
+
+      LIST                         _list_
+
+
+The atom Name Map is used to try to map atom names read from PDB files 
+to atoms within residue UNITs when the atom name in the PDB file does
+not match an atom in the residue.  This enables PDB files to be read
+in without extensive editing of atom names.  The LIST is a LIST of LISTs:
+
+      { {sublist} {sublist} ... }
+
+where each sublist is of the form
+
+      { "OddAtomName" "LibAtomName" }
+
+Many `odd' atom names can map to one `standard' atom name, but any single 
+odd atom name maps only to the last standard atom name it was mapped to.
+
+@@endHelp
+
+
+@@beginHelp:  addPdbResMap
+
+
+    addPdbResMap list
+
+      LIST                         _list_
+
+
+The Name Map is used to map residue names read from PDB files to variable
+names within LEaP.  The LIST is a LIST of LISTs:
+
+      { {sublist} {sublist} ... }
+
+Each sublist contains two or three entries to add to the Name Map:
+
+      { [terminalflag] PDBName LEaPVar }
+
+where the PDBName will be mapped to the LEaPVar. The terminalflag indicates
+the special cases of terminal residues: allowable values are 0 for beginning
+residues (N-terminal for proteins, 5' for nucleic acids) and 1 for ending
+residues (C-terminal for proteins, 3' for nucleic acids).  If the 
+terminalflag is given, the PDBName->LEaPVar name map will only be applied
+for the appropriate terminal residue.  The `leaprc' file included with
+the distribution contains default mappings.
+
+
+@@endHelp
+
+
+@@beginHelp:  clearPdbAtomMap
+
+
+    clearPdbAtomMap
+
+
+Clear the Name Map used for ``second-chance'' mapping of atom names in 
+PDB files to atoms within residue UNITs.  See addPdbAtomMap.
+
+@@endHelp
+
+
+@@beginHelp:  clearPdbResMap
+
+
+    clearPdbResMap
+
+
+Clear the Name Map used to map residue names in PDB files to variable
+names within LEaP.  See addPdbResMap.
+
+
+@@endHelp
+
+@@beginHelp:  displayPdbAtomMap
+
+
+    displayPdbAtomMap
+
+
+Display the Name Map used for ``second chance'' mapping of atom names 
+in PDB files to atoms within residue UNITs.  See addPdbAtomMap.
+
+
+@@endHelp
+
+
+@@beginHelp:  displayPdbResMap
+
+
+    displayPdbResMap
+
+
+Display the Name Map used to map residue names in PDB files to variable
+names within LEaP.  See addPdbResMap.
+
+
+@@endHelp
+
+
+@@beginHelp:  savePdb
+
+
+    savePdb unit filename
+
+
+      UNIT                         _unit_
+
+      STRING                       _filename_
+
+
+
+Write UNIT to the file _filename_ as a PDB format file.
+
+
+@@endHelp
+
+
+@@beginHelp:  saveMol2
+
+
+    saveMol2 unit filename option
+
+
+      UNIT                         _unit_
+
+      STRING                       _filename_
+
+	  NUMBER                       _option_
+
+
+Write UNIT to the file _filename_ as a Mol2 format file.
+option = 0 for Default atom types 
+option = 1 for AMBER atom types
+
+
+More information:
+http://q4md-forcefieldtools.org/Tutorial/leap.php
+
+
+@@endHelp
+
+
+@@beginHelp:  saveMol3
+
+
+    saveMol3 unit filename option
+
+
+      UNIT                         _unit_
+
+      STRING                       _filename_
+
+	  NUMBER                       _option_
+
+
+Write UNIT to the file _filename_ as a Mol3 format file.
+option = 0 for Default atom types 
+option = 1 for AMBER atom types
+
+
+More information:
+http://q4md-forcefieldtools.org/Tutorial/leap-mol3.php
+
+
+@@endHelp
+
+
+@@beginHelp:  select
+
+
+    select obj
+
+
+      UNIT/RESIDUE/ATOM          _obj_
+
+
+
+Sets the SELECT flag on all ATOMs within _obj_.  See the 'deSelect'
+command.
+
+
+@@endHelp
+
+
+@@beginHelp:  sequence
+
+
+    variable = sequence list
+
+
+      LIST                         _list_
+
+
+The sequence command is used to create a new UNIT by copying the
+contents of a LIST of UNITs.  As each UNIT in the list is copied, 
+a bond is created between its head atom and the tail ATOM of the 
+previous UNIT, if both connect ATOMs are defined.  If only one of 
+the connect pair is defined, a warning is generated and no bond is 
+created.  If neither connection ATOM is defined then no bond is 
+created.  As each RESIDUE within a UNIT is copied, it is assigned a 
+sequence number reflecting the order added.  The order of RESIDUEs
+in multi-RESIDUE UNITs is maintained.
+
+This command builds reasonable starting coordinates for the new UNIT 
+by assigning internal coordinates to the linkages between the component
+UNITs and building the Cartesian coordinates from these and the
+internal coordinates of the component UNITs.
+
+
+@@endHelp
+
+
+@@beginHelp:  scaleCharges
+
+
+    scaleCharges container scale_factor
+
+
+      UNIT/RESIDUE/ATOM   _container_
+
+      NUMBER              _scale_factor_
+
+
+
+This command scales the charges in the object by _scale_factor_,
+which must be > 0.  It is useful for building systems for use
+with polarizable atoms, e.g. 
+
+> x = copy solute
+> scaleCharges x 0.8
+> y = copy WATBOX216
+> scalecharges y 0.875
+> solvatebox x y 10
+> saveamberparmpol x x.top x.crd
+
+@@endHelp
+
+
+
+@@beginHelp:  set
+
+
+   set default variable value
+
+      STRING                     _variable_
+
+      STRING                     _value_
+
+OR
+
+    set container parameter object
+
+      UNIT/RESIDUE/ATOM/STRING   _container_ 
+
+      STRING                     _parameter_
+
+      object                     _object/value_
+
+
+This command sets the values of some global parameters (when the first
+argument is "default") or sets various parameters associated with _container_.
+
+The possible variables for "set default" are:
+
+
+  PdbWriteCharges  "on"         add charges to each ATOM record 
+                   "off"        don't do this (default)
+
+
+  OldPrmtopFormat  "on"         use prmtop format from Amber6 and earlier
+                   "off"        use the new prmtop format (default)
+
+
+  Gibbs            "on"         require perturbed atoms to be set explicitly
+                                   (needed for gibbs)
+                   "off"        set perturbed if Type != PertType (default)
+                                   (OK for sander)
+
+
+  UseResIds        "on"         put cols 22-27 of the input pdb file into
+                   "off"        a RESIDUE_ID table in prmtop files; default
+                                is "off"; only works with new prmtop formats,
+                                and when a single loadPdb command is used to
+                                create a unit.
+
+
+  Charmm           "on"         include terms for CHARMM22 force fields
+                   "off"        don't include these (default)
+
+
+  DeleteExtraPointAngles
+                   "on"         delete angles and torsions relating to
+                                   extra points (default)
+                   "off"        don't delete these (for older codes only)
+
+
+  FlexibleWater    "on"         allow for flexible 3-point water models
+                   "off"        assume 3-point water models are rigid (default)
+
+
+  PBRadii          "bondi"      use Bondi radii for generalized Born
+                   "mbondi"     use H-modified Bondi radii (default)
+                   "mbondi2"    use H(N)-modified Bondi radii
+                   "mbondi3"    ArgH and AspGluO modified Bondi2 radii
+                   "parse"      Radii from the Sitkoff et al. parse parameters
+                   "pbamber"    Huo and Kollman optimized radii (old!)
+                   "amber6"     use radii that were the default in amber6
+                                   (only recommended for backwards compat.)
+
+
+  Dielectric       "distance"   use distance-dependent dielectric (default)
+                   "constant"   use constant dielectric
+
+
+  dipole_damp_factor	real
+                                sets the default value for "DIPOLE_DAMP_FACTOR" 
+                                for dipole screening factors in Thole models.
+                                Valid value > 0.0
+
+
+  sceescalefactor	real
+                                sets the default value for "SCEE_SCALE_FACTOR" 
+                                for 1-4 EEL scaling factors. Valid value > 0.0.
+                                Default=1.2.
+
+
+  scnbscalefactor	real
+                                sets the default value for "SCNB_SCALE_FACTOR" 
+                                for 1-4 NB scaling factors. Valid value > 0.0.
+                                Default=2.0.
+
+
+  CMAP             "on"         include CMAP corrections for dihedrals
+                   "off"        don't include these (default)
+
+
+  PHIPSIMAP        "on"         include residue-based PHIPSI parameters
+                   "off"        don't include these (default)
+
+
+  ipol              integer
+                                Sets the default value for IPOL.
+                                Valid values are 0 - 4.
+                                Default value is 0, meaning disabled.
+
+  nocenter         "on"	        coordinates will not be centered in the periodic simulation box
+                   "off"        coordinates will be centered (default)
+
+The more useful parameters for each type of _container_ are:
+
+
+  container    attributes           values
+
+
+  UNIT         name                 STRING
+               head, tail           ATOM [e.g. unit.1.1]
+               restype              "protein" "nucleic" "saccharide" "solvent"
+                                    "undefined" [sets all residues in UNIT]
+               cap                  LIST [center, radius: {X Y Z  R}]
+                                    or "null"
+
+
+  RESIDUE      name                 STRING
+  [e.g.        restype              [see UNIT]
+   unit.1]     connect0, connect1   ATOM [e.g. unit.1.1]
+               imagingAtom          ATOM [e.g. unit.1.1]
+
+
+  ATOM         name, pertName       STRING [<= 4 chars]
+  [e.g.        type, pertType       STRING [<= 2 chars]
+   unit.1.1]   element              STRING
+               pert                 "true" [or pert flag unset]
+               charge, pertCharge   DOUBLE
+               position             LIST [{X Y Z}]
+
+@@endHelp
+
+
+@@beginHelp:  setBox
+
+
+    setBox <unit>  vdw OR centers  [ buffer OR buffer_xyz_list ]
+
+
+The setBox command adds a periodic box to the UNIT, turning it into
+a periodic system for the simulation programs.  It does not add any
+solvent to the system. The choice of 'vdw' or 'centers' determines
+whether the box encloses the entire atoms or just the atom centers - 
+use 'centers' if the system has been previously equilibrated as a 
+periodic box. See the solvateBox command for a description of the 
+buffer variable, which extends either type of box by an arbitrary 
+amount.
+
+
+@@endHelp
+
+@@beginHelp:   showdefault
+
+
+    showDefault [ variable or all or * ]
+
+
+The showdefault command shows the values assigned to the variables by
+Set Default command. Without variable, with "all" or "*", all default
+variables are shown.
+
+
+@@endHelp
+
+
+@@beginHelp:  solvateBox
+
+
+    solvateBox solute solvent buffer [iso] [ closeness ]
+
+
+      UNIT                         _solute_
+
+      UNIT                         _solvent_
+
+      object                       _buffer_
+
+      NUMBER                       _closeness_
+
+
+
+The solvateBox command creates a solvent box around the _solute_ UNIT.
+The _solute_ UNIT is modified by the addition of _solvent_ RESIDUEs.
+
+
+The user may want to first align long solutes that are not expected
+to tumble using alignAxes, in order to minimize box volume.
+
+
+The normal choice for a TIP3 _solvent_ UNIT is WATBOX216. Note that 
+constant pressure equilibration is required to bring the artificial box 
+to reasonable density, since Van der Waals voids remain due to the
+impossibility of natural packing of solvent around the solute and at
+the edges of the box.
+
+
+The solvent box UNIT is copied and repeated in all three spatial directions 
+to create a box containing the entire solute and a buffer zone defined 
+by the _buffer_ argument. The _buffer_ argument defines the distance, 
+in angstroms, between the wall of the box and the closest ATOM in the 
+solute.  
+
+
+If the buffer argument is a single NUMBER, then the buffer distance is
+the same for the x, y, and z directions, unless the 'iso' option is used
+to make the box isometric, with the shortest box clearance = buffer. If
+'iso' is used, the solute is rotated to orient the principal axes,
+otherwise it is just centered on the origin.
+
+
+If the buffer argument is a LIST of three NUMBERS, then the NUMBERs are 
+applied to the x, y, and z axes respectively. As the larger box is created 
+and superimposed on the solute, solvent molecules overlapping the solute 
+are removed.
+
+
+The optional _closeness_ parameter can be used to control the extent to
+which _solvent_ ATOMs overlap _solute_ ATOMs.  The default value of
+the _closeness_ argument is 1.0, which allows no overlap.  Smaller 
+values allow solvent ATOMs to overlap _solute_ ATOMs by (1 - closeness) *
+R*ij, where R*ij is the sum of the Van der Waals radii of solute and
+solvent atoms.  Values greater than 1 enforce a minimum gap between 
+solvent and solute of (closeness - 1) * R*ij.
+
+
+This command modifies the _solute_ UNIT in several ways.  First, the 
+coordinates of the ATOMs are modified to move the center of a box 
+enclosing the Van der Waals radii of the atoms to the origin.  Secondly, 
+the UNIT is modified by the addition of _solvent_ RESIDUEs copied from 
+the _solvent_ UNIT. Finally, the box parameter of the new system (still 
+named for the _solute_) is modified to reflect the fact that a periodic, 
+rectilinear solvent box has been created around it.
+
+@@endHelp
+
+
+
+@@beginHelp:  solvateOct
+
+
+    solvateOct solute solvent buffer [iso] [ closeness ]
+
+
+      UNIT                         _solute_
+
+      UNIT                         _solvent_
+
+      object                       _buffer_
+
+      NUMBER                       _closeness_
+
+
+
+The solvateOct command is the same as solvateBox, except the corners
+of the box are sliced off, resulting in a truncated octahedron, which
+typically gives a more uniform distribution of solvent around the
+solute. 
+ 
+
+In solvateOct, when a LIST is given for the buffer argument, four
+numbers are given instead of three, where the fourth is the diagonal
+clearance. If 0.0 is given as the fourth number, the diagonal clearance 
+resulting from the application of the x,y,z clearances is reported. If 
+a non-0 value is given, this may require scaling up the other clearances,
+which is also reported. Similarly, if a single number is given, any 
+scaleup of the x,y,z buffer to accommodate the diagonal clip is reported.
+
+
+If the 'iso' option is used, the isometric truncated octahedron is
+rotated to an orientation used by the PME code, and the box and angle
+dimensions output by the saveAmberParm* commands are adjusted for PME
+code imaging.
+
+@@endHelp
+
+
+
+@@beginHelp:  solvateCap
+
+
+    solvateCap solute solvent position radius [ closeness ]
+
+
+      UNIT                         _solute_
+
+      UNIT                         _solvent_
+
+      object                       _position_
+
+      NUMBER                       _radius_
+
+      NUMBER                       _closeness_
+
+
+The _solvateCap_ command creates a solvent cap around the _solute_ UNIT
+or a part thereof.  The _solute_ UNIT is modified by the addition of 
+_solvent_ RESIDUEs.
+
+The normal choice for a TIP3 _solvent_ UNIT is WATBOX216. The _solvent_ 
+box is repeated in all three spatial directions and _solvent_ RESIDUEs 
+selected to create a solvent sphere with a radius of _radius_ Angstroms.
+
+
+The _position_ argument defines where the center of the solvent cap
+is to be placed.   If _position_ is a UNIT, RESIDUE, ATOM, or a LIST
+of UNITs, RESIDUEs, or ATOMs, then the geometric center of the ATOMs
+within the object will be used as the center of the solvent cap sphere.
+If _position_ is a LIST containing three NUMBERs then the _position_
+argument will be treated as a vector that defines the position of
+the solvent cap sphere center.
+
+
+The optional _closeness_ parameter can be used to control the extent to
+which _solvent_ ATOMs overlap _solute_ ATOMs.  The default value of
+the _closeness_ argument is 1.0, which allows no overlap.  Smaller 
+values allow solvent ATOMs to overlap _solute_ ATOMs by (1 - closeness) *
+R*ij, where R*ij is the sum of the Van der Waals radii of solute and
+solvent atoms.  Values greater than 1 enforce a minimum gap between 
+solvent and solute of (closeness - 1) * R*ij.
+
+
+This command modifies the _solute_ UNIT in several ways.  First,
+the UNIT is modified by the addition of _solvent_ RESIDUEs copied
+from the _solvent_ UNIT. Secondly, the cap parameter of the UNIT
+_solute_ is modified to reflect the fact that a solvent cap has been
+created around the solute.
+
+
+@@endHelp
+
+
+@@beginHelp:  solvateDontClip
+
+
+    solvateDontClip solute solvent buffer [ closeness ]
+
+
+      UNIT                         _solute_
+
+      UNIT                         _solvent_
+
+      object                       _buffer_
+
+      NUMBER                       _closeness_
+
+
+
+This command is identical to the solvateBox command except that the
+solvent box that is created is not clipped to the boundary of the
+_buffer_ region.  This command forms larger solvent boxes than does
+solvateBox because it does not cause solvent that is outside the buffer
+region to be discarded.   This helps to preserve the periodic structure
+of properly constructed solvent boxes, preventing hot-spots from
+forming.
+
+
+@@endHelp
+
+
+@@beginHelp:  solvateShell
+
+
+    solvateShell solute solvent thickness [ closeness ]
+
+
+
+      UNIT                         _solute_
+
+      UNIT                         _solvent_
+
+      NUMBER                       _thickness_
+
+      NUMBER                       _closeness_
+
+
+The _solvateShell_ command creates a solvent shell around the _solute_ UNIT.
+The _solute_ UNIT is modified by the addition of _solvent_ RESIDUEs.
+
+
+The normal choice for a TIP3 _solvent_ UNIT is WATBOX216. The _solvent_ box 
+is repeated in all three spatial directions and _solvent_ RESIDUEs selected 
+to create a solvent shell with a radius of _thickness_ Angstroms around the 
+_solute_.
+
+
+The _thickness_ argument defines the maximum distance a _solvent_ ATOM may 
+be from the closest _solute_ ATOM. 
+
+
+The optional _closeness_ parameter can be used to control overlap of _solvent_
+with _solute_ ATOMs.   The default value of the _closeness_ argument is 
+1.0, which allows contact but no overlap.  Please see the solvateBox 
+command for more details on the _closeness_ parameter.
+
+
+@@endHelp
+
+
+@@beginHelp:  measureGeom
+
+
+    measureGeom atom1 atom2 [ atom3 atom4 ]
+
+      ATOM                _atom1_ _atom2_ _atom3_ _atom4_
+
+
+Measure the distance, angle or torsion between two, three or four ATOMs,
+respectively.
+
+
+@@endHelp
+
+
+@@beginHelp:  listOff
+
+
+    listOff library
+
+      STRING                       _library_
+
+
+List the UNITs/PARMSETs stored within the Object File Format file 
+named _library_.
+
+
+@@endHelp
+
+
+@@beginHelp:  deleteOffLibEntry
+
+
+    deleteOffLibEntry library entry
+
+      STRING                       _library_
+
+      STRING                       _entry_
+
+
+Delete _entry_ from the Object File Format file named _library_.
+
+
+@@endHelp
+
+
+@@beginHelp:  source
+
+
+    source filename
+
+      STRING                       _filename_
+
+
+
+This command executes LEaP commands within a text file.  To display the
+commands as they are read, see the verbosity command.  The text within
+the source file must be formatted exactly like the text the user types
+into LEaP.
+
+
+@@endHelp
+
+
+@@beginHelp:  translate
+
+
+    translate atoms direction
+
+
+      UNIT/RESIDUE/ATOM            _atoms_
+
+      LIST                         _direction_
+
+
+
+Translate all of the ATOMs within _atoms_ by the vector defined by
+the three NUMBERs in the LIST _ direction_.
+
+
+
+@@endHelp
+
+
+@@beginHelp:  transform
+
+
+    transform atoms matrix
+
+
+      CONTAINER/LIST               _atoms_
+
+      LIST                         _matrix_
+
+
+Translate all of the ATOMs within _atoms_ by the (3X3) or (4X4) matrix
+defined by the 9 or 16 NUMBERs in the LIST of LISTs _matrix_. 
+
+    { { r11  r12  r13  -tx }
+      { r21  r22  r23  -ty }
+      { r31  r32  r33  -tz }
+      { 0    0    0     1  } }
+
+The diagonal upper left elements, rII can be used for symmetry operations,
+e.g. a reflection in the XY plane can be produced with r11=1, r22=1, r33=-1
+where the other rIJ elements are 0. The -t column is used to specify 
+translations along the appropriate axes (0 for no translation).
+
+
+@@endHelp
+
+
+@@beginHelp:  matchVariables
+
+
+    variable = matchVariables string
+
+
+      LIST                         _variable_
+
+      STRING                       _string_
+
+
+Create a LIST of variables with names that match _string_. The _string_
+argument can contain the wildcard characters `?' and `*' to match any
+single character or substring of characters, respectively.
+
+
+@@endHelp
+
+
+
+@@beginHelp:  verbosity
+
+
+    verbosity level
+
+
+      NUMBER                       _level_
+
+
+
+This command sets the level of output that LEaP provides the user.
+A value of 0 is the default, providing the minimum of messages.  A
+value of 1 will produce more output, and a value of 2 will produce
+all of the output of level 1 and display the text of the script lines
+executed with the source command.
+
+
+@@endHelp
+
+
+@@beginHelp:  zMatrix
+
+
+    zMatrix obj zmatrix
+
+
+      UNIT/RESIDUE/ATOM            _obj_
+
+      LIST                         _zmatrix_
+
+
+
+The zMatrix command is quite complicated.  It is used to define the
+external coordinates of ATOMs within _obj_ using internal coordinates.
+The second parameter of the zMatrix command is a LIST of LISTs; each
+sub-list has several arguments:
+
+
+{ a1 a2 bond12 }
+
+
+This entry defines the coordinate of _a1_ by placing it _bond12_ angstroms
+along the x-axis from ATOM _a2_.   If ATOM _a2_ does not have coordinates
+defined then ATOM _a2_ is placed at the origin.
+
+
+{ a1 a2 a3 bond12 angle123 }
+
+
+This entry defines the coordinate of _a1_ by placing it _bond12_ angstroms
+away from ATOM _a2_ making an angle of _angle123_ degrees between
+_a1_, _a2_ and _a3_.  The angle is measured in a right hand sense
+and in the x-y plane.   ATOMs _a2_ and _a3_ must have coordinates defined.
+
+
+{ a1 a2 a3 a4 bond12 angle123 torsion1234 }
+
+
+This entry defines the coordinate of _a1_ by placing it _bond12_ angstroms
+away from ATOM _a2_, creating an angle of _angle123_ degrees between
+_a1_, _a2_, and _a3_, and making a torsion angle of _torsion1234_ between
+_a1_, _a2_, _a3_, and _a4_.
+
+
+{ a1 a2 a3 a4 bond12 angle123 angle124 orientation }
+
+
+This entry defines the coordinate of _a1_ by placing it _bond12_ angstroms
+away from ATOM _a2_, making angles _angle123_ between ATOMs _a1_,
+_a2_, and _a3_, and _angle124_ between ATOMs _a1_, _a2_, and _a4_.  The
+argument _orientation_ defines whether the ATOM _a1_ is above or below
+a plane defined by the ATOMs _a2_, _a3_, and _a4_.  If _orientation_
+is positive then _a1_ will be placed in such a way so that the inner
+product of (_a3_-_a2_)  cross (_a4_-_a2_) with (_a1_-_a2_) is positive.
+Otherwise _a1_ will be placed on the other side of the plane.  This
+allows the coordinates of a molecule like fluoro-chloro-bromo-methane
+to be defined without having to resort to dummy atoms.
+
+The first arguments within the zMatrix entries ( _a1_, _a2_, _a3_,
+_a4_ ) are either ATOMs or STRINGs containing names of ATOMs within
+_obj_.   The subsequent arguments are all NUMBERs.   Any ATOM can be
+placed at the _a1_ position, even those that have coordinates defined.
+This feature can be used to provide an endless supply of dummy atoms,
+if they are required.   A predefined dummy atom with the name `*'
+(a single asterisk, no quotes)  can also be used.
+
+No order is imposed in the sub-lists.  The user can place sub-lists
+in arbitrary order, as long as they maintain the requirement that
+all atoms _a2_, _a3_, and _a4_ must have external coordinates defined,
+except for entries that define the coordinate of an ATOM using only
+a bond length.
+
+
+@@endHelp
+
+@@beginHelp:  _types_
+
+    UNIT      A collection of ATOMs, perhaps grouped into one or more
+                RESIDUEs.  In combination with PARMSET parameters, a UNIT
+                contains all the information needed for a simulation.
+    RESIDUE   A collection of ATOMs, some of which may be designated 
+                as "connect"ing. A RESIDUE has a chemical type such as
+                "protein," "nucleic," "saccharide," "solvent," or 
+                "undefined."
+    ATOM      Has a name, a force field type, an element type, a charge,
+                perturbed name-types-charge, and a position.
+    PARMSET   A collection of force field parameters. When a UNIT is
+                associated with parameters, the PARMSETs that have been
+                loaded are searched in order of most recently loaded to
+                first loaded.
+    LIST      A sequence of objects within '{' and '}', delimited by
+                spaces. LISTs can contain other lists.
+    STRING    A series of any characters within quotes or alphanumeric
+                characters preceded by a '$'. Also, a string of alpha-
+                numeric characters standing alone is interpreted as a
+                STRING if it does not correspond to a variable name.
+    NUMBER    A number, treated as floating point double precision.
+
+@@endHelp
+
+
+@@beginHelp:  relax
+
+
+    relax obj
+
+
+      UNIT                       _obj_
+
+
+
+Relaxes the selected atoms within _obj_.  
+
+@@endHelp
+
+
+@@beginHelp:  addH
+
+
+    addH obj
+
+
+      UNIT                       _obj_
+
+
+
+Add missing hydrogens and build external coordinates for _obj_.
+
+@@endHelp
+
+
+@@beginHelp:  flip
+
+
+    flip obj
+
+
+      UNIT                       _obj_
+
+
+
+Flips the chirality of the selected atoms within _obj_.  
+
+
+@@endHelp
+@@beginHelp:  _cmd_options_
+
+The command-line options for starting tleap and xleap are:
+
+
+    -h         List these options.
+    -s         Ignore any leaprc startup file.
+    -I {dir}   Add {dir} to search path.
+    -f {file}  Source {file}.
+
+
+The tleap and xleap shell scripts automatically provide
+
+
+	-I$AMBERHOME/dat -I$AMBERHOME/dat/leap/lib -I$AMBERHOME/dat/leap/cmd
+
+where $AMBERHOME/dat contains 'parm.dat' force field files,
+      $AMBERHOME/dat/leap/lib contains residue libraries and 
+      $AMBERHOME/dat/leap/cmd contains the default leaprc and other scripts.
+
+@@endHelp

@@ -1,0 +1,1038 @@
+#
+#   Please do not edit the "depend" file directly, since it is created by the
+#   "makedepend" script.  If changes are needed, edit "makedepend" itself.
+#
+amopen.o: \
+                    copyright.h
+
+
+amopen.o:   amopen.F90
+	$(FC) $(FPPFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ amopen.F90
+
+assert.o: \
+                    copyright.h\
+                    ../include/assert.fh
+
+
+assert.o:   assert.F90
+	$(FC) $(FPPFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ assert.F90
+
+constants.o: \
+                    copyright.h\
+                    ../include/dprec.fh
+
+
+constants.o:   constants.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ constants.F90
+
+dh_correction_module.o: \
+                    ../include/dprec.fh\
+                    qmmm_qmtheorymodule.o\
+                    qmmm_module.o
+
+
+dh_correction_module.o:   dh_correction_module.F90
+	$(FC) $(FPPFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ dh_correction_module.F90
+
+elementOrbitalIndex.o: \
+                    copyright.h\
+                    ../include/dprec.fh\
+                    utilitiesModule.o
+
+
+elementOrbitalIndex.o:   elementOrbitalIndex.F90
+	$(FC) $(FPPFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ elementOrbitalIndex.F90
+
+file_io_dat.o: \
+                    files.h
+
+
+file_io_dat.o:   file_io_dat.F90
+	$(FC) $(FPPFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ file_io_dat.F90
+
+findmask.o: \
+                    ../include/dprec.fh
+
+
+findmask.o:   findmask.F90
+	$(FC) $(FPPFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ findmask.F90
+
+mexit.o: \
+                    copyright.h
+
+
+mexit.o:   mexit.F90
+	$(FC) $(FPPFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ mexit.F90
+
+MNDOChargeSeparation.o: \
+                    ../include/dprec.fh\
+                    constants.o\
+                    qmmm_module.o\
+                    slater_overlap.o
+
+
+MNDOChargeSeparation.o:   MNDOChargeSeparation.F90
+	$(FC) $(FPPFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ MNDOChargeSeparation.F90
+
+nmlsrc.o: \
+                    copyright.h
+
+
+nmlsrc.o:   nmlsrc.F90
+	$(FC) $(FPPFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ nmlsrc.F90
+
+opnq.o: \
+                    copyright.h\
+                    ../include/dprec.fh\
+                    qmmm_module.o\
+                    opnq_Evdw.o\
+                    constants.o\
+                    elementOrbitalIndex.o\
+                    qm2_parameters.o\
+                    opnq_SwitchMod.o
+
+
+opnq.o:   opnq.F90
+	$(FC) $(FPPFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ opnq.F90
+
+opnq_Edisp.o: \
+                    copyright.h\
+                    ../include/dprec.fh\
+                    opnq_Erep.o
+
+
+opnq_Edisp.o:   opnq_Edisp.F90
+	$(FC) $(FPPFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ opnq_Edisp.F90
+
+opnq_Erep.o: \
+                    copyright.h\
+                    ../include/dprec.fh
+
+
+opnq_Erep.o:   opnq_Erep.F90
+	$(FC) $(FPPFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ opnq_Erep.F90
+
+opnq_Evdw.o: \
+                    copyright.h\
+                    ../include/dprec.fh\
+                    opnq_Erep.o\
+                    opnq_Edisp.o
+
+
+opnq_Evdw.o:   opnq_Evdw.F90
+	$(FC) $(FPPFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ opnq_Evdw.F90
+
+opnq_SwitchMod.o: \
+                    copyright.h\
+                    ../include/dprec.fh
+
+
+opnq_SwitchMod.o:   opnq_SwitchMod.F90
+	$(FC) $(FPPFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ opnq_SwitchMod.F90
+
+parameterReader.o: \
+                    copyright.h\
+                    ../include/dprec.fh\
+                    utilitiesModule.o\
+                    elementOrbitalIndex.o
+
+
+parameterReader.o:   parameterReader.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ parameterReader.F90
+
+qm2_allocate_e_repul.o: \
+                    copyright.h\
+                    ../include/assert.fh\
+                    qmmm_module.o
+
+
+qm2_allocate_e_repul.o:   qm2_allocate_e_repul.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_allocate_e_repul.F90
+
+qm2_calc_charges.o: \
+                    copyright.h\
+                    ../include/dprec.fh\
+                    qmmm_module.o
+
+
+qm2_calc_charges.o:   qm2_calc_charges.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_calc_charges.F90
+
+qm2_calc_dipole.o: \
+                    copyright.h\
+                    ../include/dprec.fh\
+                    qmmm_module.o\
+                    constants.o
+
+
+qm2_calc_dipole.o:   qm2_calc_dipole.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_calc_dipole.F90
+
+qm2_calc_rij_and_eqns.o: \
+                    copyright.h\
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    qmmm_module.o\
+                    constants.o\
+                    qm2_array_locations.h
+
+
+qm2_calc_rij_and_eqns.o:   qm2_calc_rij_and_eqns.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_calc_rij_and_eqns.F90
+
+qm2_core_core_repulsion.o: \
+                    ../include/dprec.fh\
+                    qmmm_module.o\
+                    constants.o
+
+
+qm2_core_core_repulsion.o:   qm2_core_core_repulsion.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_core_core_repulsion.F90
+
+qm2_core_core_repulsion_dxyz.o: \
+                    ../include/dprec.fh\
+                    qmmm_module.o\
+                    constants.o
+
+
+qm2_core_core_repulsion_dxyz.o:   qm2_core_core_repulsion_dxyz.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_core_core_repulsion_dxyz.F90
+
+qm2_dftb_3rd_order.o: \
+                    ../include/dprec.fh\
+                    qm2_dftb_module.o\
+                    qmmm_module.o\
+                    elementOrbitalIndex.o\
+                    files.h
+
+
+qm2_dftb_3rd_order.o:   qm2_dftb_3rd_order.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_dftb_3rd_order.F90
+
+qm2_dftb_broyden.o: \
+                    ../include/dprec.fh\
+                    copyright.h\
+                    constants.o\
+                    qm2_dftb_module.o
+
+
+qm2_dftb_broyden.o:   qm2_dftb_broyden.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_dftb_broyden.F90
+
+qm2_dftb_cm3.o: \
+                    ../include/dprec.fh\
+                    qmmm_module.o\
+                    qm2_dftb_module.o
+
+
+qm2_dftb_cm3.o:   qm2_dftb_cm3.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_dftb_cm3.F90
+
+qm2_dftb_dispersion_egr.o: \
+                    ../include/dprec.fh\
+                    qm2_dftb_module.o\
+                    constants.o\
+                    qmmm_module.o
+
+
+qm2_dftb_dispersion_egr.o:   qm2_dftb_dispersion_egr.F90
+	$(FC) $(FPPFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_dftb_dispersion_egr.F90
+
+qm2_dftb_dispersion_params.o: \
+                    ../include/dprec.fh\
+                    qm2_dftb_module.o\
+                    qmmm_module.o
+
+
+qm2_dftb_dispersion_params.o:   qm2_dftb_dispersion_params.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_dftb_dispersion_params.F90
+
+qm2_dftb_dispersionread.o: \
+                    ../include/dprec.fh\
+                    qmmm_module.o\
+                    elementOrbitalIndex.o\
+                    qm2_dftb_module.o
+
+
+qm2_dftb_dispersionread.o:   qm2_dftb_dispersionread.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_dftb_dispersionread.F90
+
+qm2_dftb_energy.o: \
+                    copyright.h\
+                    ../include/dprec.fh\
+                    qmmm_module.o\
+                    elementOrbitalIndex.o\
+                    qm2_dftb_module.o\
+                    constants.o
+
+
+qm2_dftb_energy.o:   qm2_dftb_energy.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_dftb_energy.F90
+
+qm2_dftb_ewald.o: \
+                    ../include/dprec.fh\
+                    qmmm_module.o\
+                    qm2_dftb_module.o\
+                    constants.o
+
+
+qm2_dftb_ewald.o:   qm2_dftb_ewald.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_dftb_ewald.F90
+
+qm2_dftb_ewevge.o: \
+                    ../include/dprec.fh\
+                    qm2_dftb_module.o
+
+
+qm2_dftb_ewevge.o:   qm2_dftb_ewevge.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_dftb_ewevge.F90
+
+qm2_dftb_externalshift.o: \
+                    ../include/dprec.fh\
+                    qm2_dftb_module.o\
+                    qmmm_module.o\
+                    constants.o
+
+
+qm2_dftb_externalshift.o:   qm2_dftb_externalshift.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_dftb_externalshift.F90
+
+qm2_dftb_fermi.o: \
+                    ../include/dprec.fh\
+                    qm2_dftb_module.o
+
+
+qm2_dftb_fermi.o:   qm2_dftb_fermi.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_dftb_fermi.F90
+
+qm2_dftb_gamma.o: \
+                    ../include/dprec.fh
+
+
+qm2_dftb_gamma.o:   qm2_dftb_gamma.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_dftb_gamma.F90
+
+qm2_dftb_gammamat.o: \
+                    ../include/dprec.fh\
+                    constants.o
+
+
+qm2_dftb_gammamat.o:   qm2_dftb_gammamat.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_dftb_gammamat.F90
+
+qm2_dftb_gb.o: \
+                    ../include/dprec.fh\
+                    qmmm_module.o\
+                    qm2_dftb_module.o\
+                    constants.o
+
+
+qm2_dftb_gb.o:   qm2_dftb_gb.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_dftb_gb.F90
+
+qm2_dftb_get_qm_forces.o: \
+                    copyright.h\
+                    ../include/dprec.fh\
+                    def_time.h\
+                    qm2_dftb_module.o\
+                    qmmm_module.o\
+                    constants.o
+
+
+qm2_dftb_get_qm_forces.o:   qm2_dftb_get_qm_forces.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_dftb_get_qm_forces.F90
+
+qm2_dftb_get_qmmm_forces.o: \
+                    ../include/dprec.fh\
+                    qmmm_module.o\
+                    constants.o
+
+
+qm2_dftb_get_qmmm_forces.o:   qm2_dftb_get_qmmm_forces.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_dftb_get_qmmm_forces.F90
+
+qm2_dftb_gettab.o: \
+                    ../include/dprec.fh\
+                    qm2_dftb_module.o
+
+
+qm2_dftb_gettab.o:   qm2_dftb_gettab.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_dftb_gettab.F90
+
+qm2_dftb_load_params.o: \
+                    copyright.h\
+                    ../include/dprec.fh\
+                    qmmm_module.o\
+                    elementOrbitalIndex.o\
+                    constants.o\
+                    qm2_dftb_module.o\
+                    ../include/assert.fh
+
+
+qm2_dftb_load_params.o:   qm2_dftb_load_params.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_dftb_load_params.F90
+
+qm2_dftb_module.o: \
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    qmmm_module.o
+
+
+qm2_dftb_module.o:   qm2_dftb_module.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_dftb_module.F90
+
+qm2_dftb_mulliken.o: \
+                    ../include/dprec.fh\
+                    qmmm_module.o\
+                    qm2_dftb_module.o
+
+
+qm2_dftb_mulliken.o:   qm2_dftb_mulliken.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_dftb_mulliken.F90
+
+qm2_dftb_read_cm3.o: \
+                    ../include/dprec.fh\
+                    qmmm_module.o\
+                    qm2_dftb_module.o
+
+
+qm2_dftb_read_cm3.o:   qm2_dftb_read_cm3.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_dftb_read_cm3.F90
+
+qm2_dftb_repulsiv.o: \
+                    ../include/dprec.fh\
+                    constants.o\
+                    qm2_dftb_module.o
+
+
+qm2_dftb_repulsiv.o:   qm2_dftb_repulsiv.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_dftb_repulsiv.F90
+
+qm2_dftb_scf.o: \
+                    copyright.h\
+                    ../include/dprec.fh\
+                    def_time.h\
+                    qmmm_module.o\
+                    qm2_dftb_module.o\
+                    constants.o\
+                    ../include/md.h\
+                    elementOrbitalIndex.o
+
+
+qm2_dftb_scf.o:   qm2_dftb_scf.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_dftb_scf.F90
+
+qm2_dftb_scf.SQM.o: \
+                    copyright.h\
+                    ../include/dprec.fh\
+                    def_time.h\
+                    qmmm_module.o\
+                    qm2_dftb_module.o\
+                    constants.o\
+                    ../include/md.h\
+                    elementOrbitalIndex.o
+
+qm2_dftb_scf.SQM.o:   qm2_dftb_scf.F90
+	$(FC) $(FPPFLAGS) -DSQM -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_dftb_scf.F90
+
+qm2_dftb_self.o: \
+                    ../include/dprec.fh
+
+
+qm2_dftb_self.o:   qm2_dftb_self.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_dftb_self.F90
+
+qm2_dftb_shift.o: \
+                    ../include/dprec.fh\
+                    copyright.h\
+                    qmmm_module.o\
+                    qm2_dftb_module.o
+
+
+qm2_dftb_shift.o:   qm2_dftb_shift.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_dftb_shift.F90
+
+qm2_dftb_skpar.o: \
+                    ../include/dprec.fh\
+                    qm2_dftb_module.o
+
+
+qm2_dftb_skpar.o:   qm2_dftb_skpar.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_dftb_skpar.F90
+
+qm2_dftb_slkode.o: \
+                    ../include/dprec.fh\
+                    constants.o\
+                    qm2_dftb_module.o
+
+
+qm2_dftb_slkode.o:   qm2_dftb_slkode.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_dftb_slkode.F90
+
+qm2_dftb_slktrafo.o: \
+                    ../include/dprec.fh
+
+
+qm2_dftb_slktrafo.o:   qm2_dftb_slktrafo.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_dftb_slktrafo.F90
+
+qm2_diagonalizer_module.o: \
+                    copyright.h\
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    qmmm_module.o\
+                    constants.o
+
+
+qm2_diagonalizer_module.o:   qm2_diagonalizer_module.F90
+	$(FC) $(FPPFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_diagonalizer_module.F90
+
+qm2_dihed.o: \
+                    copyright.h\
+                    ../include/dprec.fh
+
+
+qm2_dihed.o:   qm2_dihed.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_dihed.F90
+
+qm2_energy.o: \
+                    copyright.h\
+                    ../include/dprec.fh\
+                    def_time.h\
+                    qmmm_module.o\
+                    qm2_pm6_hof_module.o\
+                    dh_correction_module.o\
+                    constants.o
+
+
+qm2_energy.o:   qm2_energy.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_energy.F90
+
+qm2_energy.SQM.o: \
+                    copyright.h\
+                    ../include/dprec.fh\
+                    def_time.h\
+                    qmmm_module.o\
+                    qm2_pm6_hof_module.o\
+                    dh_correction_module.o\
+                    constants.o
+
+qm2_energy.SQM.o:   qm2_energy.F90
+	$(FC) $(FPPFLAGS) -DSQM -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_energy.F90
+
+qm2_fock.o: \
+                    copyright.h\
+                    ../include/dprec.fh\
+                    qmmm_module.o\
+                    elementOrbitalIndex.o
+
+
+qm2_fock.o:   qm2_fock.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_fock.F90
+
+qm2_fock_d.o: \
+                    copyright.h\
+                    ../include/dprec.fh\
+                    qmmm_module.o\
+                    constants.o\
+                    elementOrbitalIndex.o\
+                    MNDOChargeSeparation.o
+
+
+qm2_fock_d.o:   qm2_fock_d.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_fock_d.F90
+
+qm2_fock_predict.o: \
+                    copyright.h\
+                    ../include/dprec.fh\
+                    qmmm_module.o
+
+
+qm2_fock_predict.o:   qm2_fock_predict.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_fock_predict.F90
+
+qm2_get_qm_forces.o: \
+                    copyright.h\
+                    ../include/dprec.fh\
+                    constants.o\
+                    elementOrbitalIndex.o\
+                    qmmm_module.o\
+                    qm2_pm6_hof_module.o\
+                    dh_correction_module.o\
+                    rotation.o\
+                    qm2_fock_d.o
+
+
+qm2_get_qm_forces.o:   qm2_get_qm_forces.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_get_qm_forces.F90
+
+qm2_get_qmmm_forces.o: \
+                    copyright.h\
+                    ../include/dprec.fh\
+                    constants.o\
+                    rotation.o\
+                    qmmm_module.o\
+                    opnq.o\
+                    qm2_array_locations.h\
+                    elementOrbitalIndex.o
+
+
+qm2_get_qmmm_forces.o:   qm2_get_qmmm_forces.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_get_qmmm_forces.F90
+
+qm2_h1elec.o: \
+                    copyright.h\
+                    ../include/dprec.fh\
+                    constants.o\
+                    elementOrbitalIndex.o\
+                    slater_overlap.o\
+                    qmmm_module.o
+
+
+qm2_h1elec.o:   qm2_h1elec.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_h1elec.F90
+
+qm2_h1elec_d.o: \
+                    copyright.h\
+                    ../include/dprec.fh\
+                    constants.o\
+                    rotation.o\
+                    elementOrbitalIndex.o\
+                    slater_overlap.o\
+                    qmmm_module.o\
+                    utilitiesModule.o
+
+
+qm2_h1elec_d.o:   qm2_h1elec_d.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_h1elec_d.F90
+
+qm2_hcore_qmmm.o: \
+                    copyright.h\
+                    ../include/dprec.fh\
+                    constants.o\
+                    qmmm_module.o\
+                    rotation.o\
+                    qm2_array_locations.h
+
+
+qm2_hcore_qmmm.o:   qm2_hcore_qmmm.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_hcore_qmmm.F90
+
+qm2_hcore_qmqm.o: \
+                    copyright.h\
+                    ../include/dprec.fh\
+                    constants.o\
+                    elementOrbitalIndex.o\
+                    qmmm_module.o\
+                    rotation.o
+
+
+qm2_hcore_qmqm.o:   qm2_hcore_qmqm.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_hcore_qmqm.F90
+
+qm2_identify_peptide_links.o: \
+                    copyright.h\
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    qmmm_module.o
+
+
+qm2_identify_peptide_links.o:   qm2_identify_peptide_links.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_identify_peptide_links.F90
+
+qm2_iterator_mod.o: \
+                    qmmm_module.o
+
+
+qm2_iterator_mod.o:   qm2_iterator_mod.F90
+	$(FC) $(FPPFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_iterator_mod.F90
+
+qm2_load_params_and_allocate.o: \
+                    copyright.h\
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    constants.o\
+                    elementOrbitalIndex.o\
+                    qm2_parameters.o\
+                    qm2_params_module.o\
+                    qmmm_module.o\
+                    MNDOChargeSeparation.o\
+                    qm2_diagonalizer_module.o
+
+
+qm2_load_params_and_allocate.o:   qm2_load_params_and_allocate.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_load_params_and_allocate.F90
+
+qm2_parameters.o: \
+                    copyright.h\
+                    ../include/dprec.fh\
+                    elementOrbitalIndex.o\
+                    qmmm_qmtheorymodule.o\
+                    parameterReader.o\
+                    qmmm_module.o\
+                    utilitiesModule.o
+
+
+qm2_parameters.o:   qm2_parameters.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_parameters.F90
+
+qm2_params_module.o: \
+                    copyright.h\
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    elementOrbitalIndex.o\
+                    qmmm_qmtheorymodule.o\
+                    constants.o
+
+
+qm2_params_module.o:   qm2_params_module.F90
+	$(FC) $(FPPFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_params_module.F90
+
+qm2_pm6_hof_module.o: \
+                    ../include/dprec.fh\
+                    constants.o\
+                    qmmm_module.o
+
+
+qm2_pm6_hof_module.o:   qm2_pm6_hof_module.F90
+	$(FC) $(FPPFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_pm6_hof_module.F90
+
+qm2_print_bondorders.o: \
+                    copyright.h\
+                    ../include/dprec.fh\
+                    qmmm_module.o\
+                    elementOrbitalIndex.o
+
+
+qm2_print_bondorders.o:   qm2_print_bondorders.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_print_bondorders.F90
+
+qm2_print_charges.o: \
+                    copyright.h\
+                    ../include/dprec.fh\
+                    elementOrbitalIndex.o
+
+
+qm2_print_charges.o:   qm2_print_charges.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_print_charges.F90
+
+qm2_print_energy.o: \
+                    copyright.h\
+                    ../include/dprec.fh\
+                    constants.o\
+                    qmmm_struct_module.o\
+                    qmmm_qmtheorymodule.o
+
+
+qm2_print_energy.o:   qm2_print_energy.F90
+	$(FC) $(FPPFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_print_energy.F90
+
+qm2_read_nm_and_alloc.o: \
+                    copyright.h\
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    findmask.o\
+                    constants.o\
+                    qmmm_module.o\
+                    qmmm_vsolv_module.o\
+                    qmmm_qmtheorymodule.o\
+                    elementOrbitalIndex.o\
+                    parameterReader.o\
+                    ../include/memory.h
+
+
+qm2_read_nm_and_alloc.o:   qm2_read_nm_and_alloc.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_read_nm_and_alloc.F90
+
+qm2_read_nm_and_alloc.SQM.o: \
+                    copyright.h\
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    findmask.o\
+                    constants.o\
+                    qmmm_module.o\
+                    qmmm_vsolv_module.o\
+                    qmmm_qmtheorymodule.o\
+                    elementOrbitalIndex.o\
+                    parameterReader.o\
+                    ../include/memory.h
+
+qm2_read_nm_and_alloc.SQM.o:   qm2_read_nm_and_alloc.F90
+	$(FC) $(FPPFLAGS) -DSQM -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_read_nm_and_alloc.F90
+
+qm2_repp.o: \
+                    copyright.h\
+                    ../include/dprec.fh\
+                    constants.o\
+                    qmmm_module.o
+
+
+qm2_repp.o:   qm2_repp.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_repp.F90
+
+qm2_repp_d.o: \
+                    copyright.h\
+                    ../include/dprec.fh\
+                    constants.o\
+                    qmmm_module.o\
+                    qm2_parameters.o
+
+
+qm2_repp_d.o:   qm2_repp_d.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_repp_d.F90
+
+qm2_rotate_qmqm.o: \
+                    copyright.h\
+                    ../include/dprec.fh\
+                    constants.o\
+                    qmmm_module.o
+
+
+qm2_rotate_qmqm.o:   qm2_rotate_qmqm.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_rotate_qmqm.F90
+
+qm2_scf.o: \
+                    copyright.h\
+                    ../include/dprec.fh\
+                    def_time.h\
+                    ../include/assert.fh\
+                    qmmm_module.o\
+                    constants.o\
+                    qm2_iterator_mod.o\
+                    utilitiesModule.o\
+                    qm2_fock_d.o\
+                    opnq.o
+
+
+qm2_scf.o:   qm2_scf.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_scf.F90
+
+qm2_scf.SQM.o: \
+                    copyright.h\
+                    ../include/dprec.fh\
+                    def_time.h\
+                    ../include/assert.fh\
+                    qmmm_module.o\
+                    constants.o\
+                    qm2_iterator_mod.o\
+                    utilitiesModule.o\
+                    qm2_fock_d.o\
+                    opnq.o
+
+qm2_scf.SQM.o:   qm2_scf.F90
+	$(FC) $(FPPFLAGS) -DSQM -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_scf.F90
+
+qm2_setup_orb_exp.o: \
+                    copyright.h\
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    constants.o\
+                    qmmm_module.o\
+                    elementOrbitalIndex.o
+
+
+qm2_setup_orb_exp.o:   qm2_setup_orb_exp.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_setup_orb_exp.F90
+
+qm2_smallest_number.o: \
+                    copyright.h\
+                    ../include/dprec.fh
+
+
+qm2_smallest_number.o:   qm2_smallest_number.F90
+	$(FC) $(FPPFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_smallest_number.F90
+
+qm2_transf_roothaan_diag.o: \
+                    qmmm_module.o
+
+
+qm2_transf_roothaan_diag.o:   qm2_transf_roothaan_diag.F90
+	$(FC) $(FPPFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm2_transf_roothaan_diag.F90
+
+qm_assign_atom_types.o: \
+                    copyright.h\
+                    ../include/assert.fh\
+                    qmmm_module.o\
+                    elementOrbitalIndex.o
+
+
+qm_assign_atom_types.o:   qm_assign_atom_types.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm_assign_atom_types.F90
+
+qm_gb.o: \
+                    copyright.h\
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    qmmm_module.o\
+                    constants.o\
+                    qm2_array_locations.h
+
+
+qm_gb.o:   qm_gb.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm_gb.F90
+
+qm_link_atoms.o: \
+                    copyright.h\
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    qmmm_module.o\
+                    qmmm_struct_module.o\
+                    constants.o
+
+
+qm_link_atoms.o:   qm_link_atoms.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm_link_atoms.F90
+
+qm_print_info.o: \
+                    copyright.h\
+                    ../include/dprec.fh\
+                    qmmm_module.o\
+                    qmmm_qmtheorymodule.o\
+                    dh_correction_module.o\
+                    qm2_parameters.o\
+                    elementOrbitalIndex.o\
+                    file_io_dat.o\
+                    qm2_array_locations.h
+
+
+qm_print_info.o:   qm_print_info.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm_print_info.F90
+
+qm_print_info.SQM.o: \
+                    copyright.h\
+                    ../include/dprec.fh\
+                    qmmm_module.o\
+                    qmmm_qmtheorymodule.o\
+                    dh_correction_module.o\
+                    qm2_parameters.o\
+                    elementOrbitalIndex.o\
+                    file_io_dat.o\
+                    qm2_array_locations.h
+
+qm_print_info.SQM.o:   qm_print_info.F90
+	$(FC) $(FPPFLAGS) -DSQM -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm_print_info.F90
+
+qm_zero_charges.o: \
+                    copyright.h\
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    qmmm_module.o\
+                    constants.o
+
+
+qm_zero_charges.o:   qm_zero_charges.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qm_zero_charges.F90
+
+qmmm_module.o: \
+                    copyright.h\
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    constants.o\
+                    qmmm_nml_module.o\
+                    qmmm_struct_module.o\
+                    qmmm_vsolv_module.o\
+                    qm2_params_module.o\
+                    parallel.h\
+                    utilitiesModule.o
+
+
+qmmm_module.o:   qmmm_module.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qmmm_module.F90
+
+qmmm_nml_module.o: \
+                    copyright.h\
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    qmmm_qmtheorymodule.o\
+                    parallel.h
+
+
+qmmm_nml_module.o:   qmmm_nml_module.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qmmm_nml_module.F90
+
+qmmm_qmtheorymodule.o: \
+                    constants.o\
+                    utilitiesModule.o\
+                    parallel.h
+
+
+qmmm_qmtheorymodule.o:   qmmm_qmtheorymodule.F90
+	$(FC) $(FPPFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qmmm_qmtheorymodule.F90
+
+qmmm_struct_module.o: \
+                    copyright.h\
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    elementOrbitalIndex.o\
+                    parallel.h
+
+
+qmmm_struct_module.o:   qmmm_struct_module.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qmmm_struct_module.F90
+
+qmmm_vsolv_module.o: \
+                    copyright.h\
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    file_io_dat.o\
+                    parallel.h
+
+
+qmmm_vsolv_module.o:   qmmm_vsolv_module.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ qmmm_vsolv_module.F90
+
+rotation.o: \
+                    copyright.h\
+                    ../include/dprec.fh\
+                    constants.o\
+                    elementOrbitalIndex.o
+
+
+rotation.o:   rotation.F90
+	$(FC) $(FPPFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ rotation.F90
+
+slater_overlap.o: \
+                    ../include/dprec.fh\
+                    constants.o
+
+
+slater_overlap.o:   slater_overlap.F90
+	$(FC) $(FPPFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ slater_overlap.F90
+
+sqm.o: \
+                    copyright.h\
+                    ../include/dprec.fh\
+                    ../include/assert.fh\
+                    qmmm_module.o\
+                    qm2_dftb_module.o\
+                    constants.o\
+                    qm2_pm6_hof_module.o\
+                    file_io_dat.o\
+                    utilitiesModule.o
+
+
+sqm.o:   sqm.F90
+	$(FC) $(FPPFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ sqm.F90
+
+
+timer_dummy.o:   timer_dummy.F90
+	$(FC) $(FPPFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ timer_dummy.F90
+
+utilitiesModule.o: \
+                    copyright.h\
+                    ../include/dprec.fh
+
+
+utilitiesModule.o:   utilitiesModule.F90
+	$(FC) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ utilitiesModule.F90
+
+xmin.o: \
+                    ../include/assert.fh\
+                    ../include/dprec.fh\
+                    xmin.h\
+                    constants.o
+
+
+xmin.o:   xmin.F90
+	$(FC) $(FPPFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ xmin.F90
+

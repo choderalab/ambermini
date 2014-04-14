@@ -1,0 +1,107 @@
+
+
+define( XUMF, XaUtilMessageFilter)
+
+
+XUMF.title:		xaUtilMessageFilter
+XUMF.wcChildren:	paned
+XUMF.wcPopups:		textShell
+XUMF.height:		600
+
+XUMF*Command.background:	Red
+XUMF*Toggle.background:		Green
+
+
+XUMF*paned.wcClassName:		Paned
+XUMF*paned.wcChildren:		cmdBox vP
+
+XUMF*cmdBox.wcClassName:	Box
+XUMF*cmdBox.wcChildren:		rebuild save quit
+
+XUMF*rebuild.wcClassName:	Command
+XUMF*rebuild.label:		Rebuild Message list
+XUMF*rebuild.callback:		XUMFRebuildMessBuffer() WcPopupCB(~*textShell)
+
+XUMF*save.wcClassName:		Command
+XUMF*save.label:		Save ON functions
+
+XUMF*quit.wcClassName:		Command
+XUMF*quit.label:		Quit
+XUMF*quit.callback:		WcDestroyCB(~)
+
+XUMF*vP.wcClassName:		ViewPort
+XUMF*vP.wcChildren:		fileBox
+XUMF*vP.allowVert:		True
+
+XUMF*fileBox.wcClassName:	Paned
+XUMF*fileBox.wcCallback:	XUMFFileContainerWidgetRegister()
+XUMF*fileBox*showGrip:		False
+
+XUMF*file.wcClassName:		Command
+XUMF*file.wcCallback:		XUMFFileWidgetRegister()
+XUMF*file.callback:		XUMFFilePopup()
+XUMF*file.justify:		left
+
+XUMF*funcShell.wcClassName:	TopLevelShell
+XUMF*funcShell.iconPixmap:	icon
+XUMF*funcShell.iconMask:	icon_mask
+XUMF*funcShell.wcChildren:	funcPaned
+XUMF*funcShell.wcCallback:	XUMFFunctionShellWidgetRegister()
+
+XUMF*funcPaned.wcClassName:	Paned
+XUMF*funcPaned.wcChildren:	funcCmd funcVP
+
+XUMF*funcCmd.wcClassName:	Box
+XUMF*funcCmd.wcChildren:	funcSetAll funcResetAll funcClose
+
+XUMF*funcClose.wcClassName:	Command
+XUMF*funcClose.label:		Popdown window
+XUMF*funcClose.callback:	WcPopdownCB(~)
+
+XUMF*funcSetAll.wcClassName:	Command
+XUMF*funcSetAll.label:		Set all
+XUMF*funcSetAll.callback:	XUMFSetAllWithin(~*funcBox)
+
+XUMF*funcResetAll.wcClassName:	Command
+XUMF*funcResetAll.label:	Reset all
+XUMF*funcResetAll.callback:	XUMFResetAllWithin(~*funcBox)
+
+XUMF*funcVP.wcClassName:	ViewPort
+XUMF*funcVP.wcChildren:		funcBox
+XUMF*funcVP.allowVert:		True
+
+XUMF*funcBox.wcClassName:	Paned
+XUMF*funcBox.wcCallback:	XUMFToggleContainerWidgetRegister()
+XUMF*funcBox*showGrip:		False
+
+XUMF*function.wcClassName:	Toggle
+XUMF*function.wcCallback:	XUMFToggleWidgetRegister()
+XUMF*function.callback:		XUMFToggleNotify()
+XUMF*function.justify:		left
+
+
+
+
+XUMF*textShell.wcClassName:	TopLevelShell
+XUMF*textShell.iconPixmap:	icon
+XUMF*textShell.iconMask:	icon_mask
+XUMF*textShell.wcChildren:	tPaned
+XUMF*textShell.height:		500
+XUMF*textShell.width:		500
+
+XUMF*tPaned.wcClassName:	Paned
+XUMF*tPaned.wcChildren:		tBox text
+
+XUMF*tBox.wcClassName:		Box
+XUMF*tBox.wcChildren:		tPopdown
+
+XUMF*tPopdown.wcClassName:	Command
+XUMF*tPopdown.label:		Popdown
+XUMF*tPopdown.callback:		WcPopdownCB(~)
+
+XUMF*text.wcClassName:		AsciiText
+XUMF*text.wcCallback:		XUMFTextWidgetRegister()
+XUMF*text.scrollHorizontal:	WhenNeeded
+XUMF*text.scrollVertical:	Always
+
+

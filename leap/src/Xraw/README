@@ -1,0 +1,41 @@
+
+			Xraw Widget Set 
+	   remake the well-known Athena widget set
+
+
+Acknowledgements
+
+
+Xraw is mainly derived from Xaw (author Chris D. Reterson) 
+and partly Xaw3d (author Kaleb Keithley). This is an attempt to remake
+Xaw by addding 3d rendering in widget imaging as is in OSF/Motif. 
+In addition some new widgets were created. All work is being 
+performed on the X11 R4.
+
+It began as part of work on the LEaP molecular graphics program in 
+the AMBER Project at Peter Kollman's lab at the University of California, 
+San Francisco. 
+
+Bill Ross commissioned the work and provided helpful suggestions. 
+It really could not have been done without him - thanks, Bill! 
+
+Xraw is good to compile under R4 and R5.  It compiles cleanly on 
+a SunOS 4.1.3, Ultrix 4.3, HPUX A.09.05, IRIX 5.2, OSF/1.
+
+New widgets was added to Xaw:
+	Arrow
+	Conteiner
+	Frame
+	Table
+	ScrolledTable
+	Separator
+
+
+To install:
+tar xfz Xraw-beta.tar.gz
+cd Xraw-beta
+xmkmf
+make world
+
+                                             Vladimir T. Romanovski
+                                             romsky@oea.ihep.su

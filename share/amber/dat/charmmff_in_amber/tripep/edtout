@@ -1,0 +1,99 @@
+
+          ------------------------------------------
+          Amber 5  :  EDIT Module          UCSF 1997
+          Amber 5  :  mod: 10-MAR-1997          jwc
+          ------------------------------------------
+
+  [-O]verwriting output
+     Edit Input Title:   Crambin from Martha's fh945.now file                                          
+     Link Topology Title:   link for crambin                                                              
+     DATA IS OUTPUT AS CARTESIAN COORDINATES
+
+
+     XYZ:
+
+     DUMMY ATOMS WILL BE OMITTED FROM MOLECULE
+
+
+     XRAY:
+
+     GEOMETRY FOR MOLECULE    0  IS INPUT ON FILE   15
+     ALL MOLECULES IN SYSTEM WILL BE USED
+
+     MATCHING OF RESIDUES STARTS WITH RESIDUE   1 AND ENDS WITH RESIDUE   2
+
+
+
+                    THIS CALCULATION CONTAINS  1  MOLECULES
+
+
+
+      MOLECULE    1  CONTAINS    2  RESIDUES
+
+     THR THR 
+     FIRST BOND =    1     FIRST THETA =    1     FIRST PHI =    1
+     FIRST RESIDUE =    1     LAST ATOM =   31     TYPE OF MOLECULE =    3
+
+
+
+
+
+     RESIDUE   1 =  THR    XYZ            RESIDUE TOTAL =    1
+
+
+     BOND ARRAY BEGINS WITH     1    1ST ATOM IN RESIDUE =    1
+
+    1    0   N     N3    M      16.9640   13.9740    3.5500 -0.3000
+    2    1   H1    HC    E      16.2690   13.9220    2.7780  0.3300
+    3    1   H2    HC    E      17.9170   14.0910    3.1510  0.3300
+    4    1   H3    HC    E      16.7430   14.7850    4.1620  0.3300
+    5    1   CA    C1    M      16.9110   12.7150    4.3540  0.2100
+    6    5   HA    HB    E      16.9670   11.8770    3.6750  0.1000
+    7    5   CB    C1    3      18.0870   12.7050    5.3310  0.1400
+    8    7   HB    HA    E      18.0130   13.5510    6.0470  0.0900
+    9    7   CG2   C3    3      18.1310   11.4400    6.1790 -0.2700
+   10    9   HG21  HA    E      18.0480   10.5420    5.5300  0.0900
+   11    9   HG22  HA    E      17.2850   11.4370    6.8990  0.0900
+   12    9   HG23  HA    E      19.0930   11.3890    6.7330  0.0900
+   13    7   OG1   OH    S      19.2540   12.8470    4.5290 -0.6600
+   14   13   HG1   H     E      19.8970   13.3040    5.0760  0.4300
+   15    5   C     C     M      15.6170   12.6800    5.0670  0.5100
+   16   15   O     O     E      15.1350   13.7410    5.5350 -0.5100
+
+     RESIDUE   2 =  THR    XYZ            RESIDUE TOTAL =    2
+
+
+     BOND ARRAY BEGINS WITH    16    1ST ATOM IN RESIDUE =   17
+
+   17   15   N     N1    M      15.0500   11.4980    5.1820 -0.4700
+   18   17   H     H     E      15.4280   10.6720    4.7720  0.3100
+   19   17   CA    C1    M      13.8000   11.3540    5.9440  0.0700
+   20   19   HA    HB    E      13.4380   12.3400    6.1950  0.0900
+   21   19   CB    C1    3      12.7840   10.6100    5.0990  0.1400
+   22   21   HB    HA    E      11.8480   10.4420    5.6730  0.0900
+   23   21   CG2   C3    3      12.4510   11.3230    3.7970 -0.2700
+   24   23   HG21  HA    E      13.3680   11.4410    3.1810  0.0900
+   25   23   HG22  HA    E      12.0360   12.3310    4.0130  0.0900
+   26   23   HG23  HA    E      11.7100   10.7300    3.2200  0.0900
+   27   21   OG1   OH    S      13.3640    9.3600    4.7560 -0.6600
+   28   27   HG1   H     E      12.9860    8.7180    5.3620  0.4300
+   29   19   C     CC    M      14.1180   10.6640    7.2740  0.3400
+   30   29   O     OC    E      15.0130    9.7870    7.3760 -0.6700
+   31   29   OXT   OC    E      13.4270   11.1370    8.2810 -0.6700
+
+
+
+     THE TOTAL CHARGE ON THE MOLECULE =   0.00000
+
+
+      NMOL =    1   NTOTRS =    2   NTOTAT =   31   NBOND =   30
+      NTHETA =   53   NPHI =   76   NEXT =  159
+
+
+       5 Longest Bonds in the System:
+
+     CA     19  C      29        1.5317
+     CA      5  CB      7        1.5289
+     CB      7  CG2     9        1.5236
+     CB     21  CG2    23        1.5213
+     CA     19  CB     21        1.5165

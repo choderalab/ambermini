@@ -1,0 +1,76 @@
+*  Simple minimization from an input pdb file
+*
+
+!  read in the topology and parameter files
+
+open unit 1 read form name "../top_all22_prot.inp"
+read rtf card unit 1
+close unit 1
+
+open unit 1 read form name "../par_all22_prot.inp"
+read param card unit 1
+close unit 1
+
+!  Now read in and generate the sequence.
+open unit 1 read form name "charmm.pdb"
+read sequ pdb unit 1
+
+! generate PDB first nter last cter 
+generate PDB 
+
+open unit 1 read form name "charmm.pdb"
+read coor pdb unit 1
+
+! ic param
+! ic build
+! coor init sele hydrogen end
+!  hbuild
+
+define notinit sele .not. initialized end
+if ?NSEL .gt. 0 print coor sele notinit end
+if ?NSEL .gt. 0 goto stop
+
+update CDIE eps 1.0 cutnb 999 ctofnb 998 ctonnb 997
+
+! open unit 2 form write name "psf"
+! write psf card unit 2
+
+energy
+
+stop
+
+
+!********************MINIMIZATION***********************
+
+coor copy comp
+minimization ABNR nstep 300 step 1.0 tole 0.001
+coor rms
+
+!cons harm SELE ALL END force @const
+!coor rms
+
+!label mini-loop
+!   cons harm SELE ALL END force @const
+!   minimization ABNR nstep 1000 step 1.0 tole 0.001
+!   coor rms 
+!   incr const by -5.0
+!if @const .ge. 5.0 goto mini-loop
+
+!cons harm SELE ALL END force 0.0
+
+!*******************************************************
+
+energy
+
+coor rgyr
+
+coor surf acce rprobe 1.4
+scalar wmain aver all sele all end
+scalar wmain mult ?NSEL
+scalar wmain show sele bynum 1 end
+
+
+label STOP
+stop
+
+

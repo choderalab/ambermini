@@ -1,0 +1,691 @@
+Converting par_all22_na.inp and top_all22_na.inp to Amber format
+HT     1.008          H ! TIPS3P WATER HYDROGEN
+H1     1.008          H ! Nucleic acid amine proton
+H2     1.008          H ! Nucleic acid ring nitrogen proton
+H3     1.008          H ! Nucleic acid aromatic carbon proton
+H4     1.008          H ! Nucleic acid phosphate hydroxyl proton
+H5     1.008          H ! Nucleic acid ribose hydroxyl proton
+H6     1.008          H ! Nucleic acid ribose aliphatic proton
+H7     1.008          H ! Nucleic acid proton (equivalent to protein HA)
+HB     1.008          H ! NAD+ aromatic hydrogen
+C1    12.011          C ! Nucleic acid carbonyl carbon
+C2    12.011          C ! Nucleic acid aromatic carbon to amide
+C3    12.011          C ! Nucleic acid aromatic carbon 
+C4    12.011          C ! Nucleic acid purine C8 and ADE C2  
+C5    12.011          C ! Nucleic acid purine C4 and C5
+C6    12.011          C ! Nucleic acid sp3 ribose ring carbon
+CB    12.011          C ! Nucleic acid sp3 ribose ring carbon, C1'
+CC    12.011          C ! Nucleic acid sp3 deoxyribose ring carbon, C2'
+C7    12.011          C ! Nucleic acid carbon (equivalent to protein CT1)
+C8    12.011          C ! Nucleic acid carbon (equivalent to protein CT2)
+C9    12.011          C ! Nucleic acid carbon (equivalent to protein CT3)
+CA    12.011          C ! Nucleic acid aromatic carbon for 5MC
+CB    12.011          C ! NAD+ aromatic carbon
+CC    12.011          C ! NADH aromatic carbon
+CD    12.011          C ! Nucleic acid aromatic carbon for 5MC
+CE    12.011          C ! NAD+/NADH amide carbonyl carbon
+N1    14.007          N ! Nucleic acid amide nitrogen
+N2    14.007          N ! Nucleic acid protonated ring nitrogen
+NU    14.007          N ! Nucleic acid protonated ring nitrogen, ura N3
+NG    14.007          N ! Nucleic acid protonated ring nitrogen, gua N1
+N3    14.007          N ! Nucleic acid unprotonated ring nitrogen 
+N4    14.007          N ! Nucleic acid purine N7
+N5    14.007          N ! Nucleic acid sp2 amine nitrogen
+NA    14.007          N ! Nucleic acid unprotonated ring nitrogen, ade N1 and N
+NI    14.007          N ! Nucleic acid unprotonated ring nitrogen, inosine N3
+OT    15.999          O ! TIPS3P WATER OXYGEN
+O1    15.999          O ! Nucleic acid carbonyl oxygen
+OC    15.999          O ! Nucleic acid carbonyl oxygen, cyt O2
+O2    15.999          O ! Nucleic acid phosphate ester oxygen
+O3    15.999          O ! Nucleic acid =O in phosphate 
+O4    15.999          O ! Nucleic acid phosphate hydroxyl oxygen
+O5    15.999          O ! Nucleic acid ribose hydroxyl oxygen
+O6    15.999          O ! Nucleic acid ribose ring oxygen
+P     30.974          P ! phosphorus
+P2    30.974          P ! pyrophosphate phosphorus
+SO    22.990          NA ! Sodium Ion
+MG    24.305          MG ! Magnesium Ion
+DU     0.001          H ! dummy atom
+
+
+C1-C3   302.0000    1.4250 !U,T,  par_a4 JWK 9/30/91                        
+CE-C3   302.0000    1.4800 !nad/ppi, jjp1/adm jr. 7/95                      
+C1-C5   302.0000    1.3600 !G,  JWK, adm jr., 7/24/91                       
+CE-N1   560.0000    1.3600 !nad/ppi, jjp1/adm jr. 7/95                      
+C1-N2   302.0000    1.4000 !U, JWK, adm jr., 7/24/91                        
+C1-NG   340.0000    1.4100 !G, par_a4 JWK 9/30/91                           
+C1-NU   340.0000    1.4100 !U, par_a4 JWK 9/30/91                           
+C1-N3   400.0000    1.3580 !C, par_a6 JWK 9/30/91                           
+C1-O1   620.0000    1.2350 !U,A,G par_a4 adm jr., 10/2/91                   
+CE-O1   860.0000    1.2300 !nad/ppi, jjp1/adm jr. 7/95                      
+C1-OC   620.0000    1.2450 !C, adm jr., 10/2/91                             
+C2-C3   302.0000    1.4200 !C, JWK, adm jr., 7/24/91                        
+C2-CD   260.0000    1.4050 !5mc, adm jr., 9/9/93, from C2 C3                
+C2-C5   302.0000    1.3600 !A, JWK, adm jr., 10/2/91                        
+C2-N1   400.0000    1.3650 !C,A,G JWK, adm jr., 10/2/91                     
+C2-NG   400.0000    1.4000 !G  JWK, adm jr., 7/24/91                        
+C2-N3   400.0000    1.3400 !C  par_a6 JWK 9/30/91                           
+C2-NA   320.0000    1.3400 !A  par_a8 JWK 9/30/91                           
+C3-C3   560.0000    1.3350 ! par_a4 JWK 9/30/91                             
+CA-C3   450.0000    1.3600 !nad/ppi, jjp1/adm jr. 7/95                      
+CB-C3   420.0000    1.3500 !nad/ppi, jjp1/adm jr. 7/95                      
+CC-C3   420.0000    1.3200 !nadh/ppi, jjp1/adm jr. 7/95                     
+CD-C3   560.0000    1.3350 !5mc, adm jr., 9/9/93, from C3 C3                
+C3-C8   222.5000    1.4900 !nadh/ppi, jjp1/adm jr. 7/95                     
+C3-C9   230.0000    1.4800 !T, par_51, adm jr., 7/24/91                     
+CD-C9   230.0000    1.4800 !5mc, adm jr., 9/9/93, from C3 C9                
+C3-H3   350.0000    1.0900 !C,U, JWK                                        
+C3-HB   350.0000    1.0900 !nad/ppi, jjp1/adm jr. 7/95                      
+CA-HB   350.0000    1.0900 !nad/ppi, jjp1/adm jr. 7/95                      
+CB-HB   350.0000    1.0900 !nad/ppi, jjp1/adm jr. 7/95                      
+CC-H3   374.0000    1.0900 !nadh/ppi, jjp1/adm jr. 7/95                     
+C3-N2   302.0000    1.3650 !C,U, JWK, adm jr., 7/24/91                      
+CB-N2   420.0000    1.3150 !nad/ppi, jjp1/adm jr. 7/95                      
+CC-N2   420.0000    1.3550 !nadh/ppi, jjp1/adm jr. 7/95                     
+C4-H3   380.0000    1.0900 !G,A, JWK par_a7 9/30/91                         
+C4-N2   300.0000    1.3650 !G,A, JWK, adm jr., 7/24/91                      
+C4-NG   350.0000    1.3650 !Inosine, adm jr., 2/94                          
+C4-NA   310.0000    1.3100 !A, JWK, par_a7 9/30/91                          
+C4-NI   450.0000    1.2950 !Inosine, adm jr., 2/94                          
+C4-N4   400.0000    1.3080 !G,A, JWK par_a8 9/30/91                         
+C5-C5   320.0000    1.3700 !G,A, JWK par_a8 9/30/91                         
+C5-N2   302.0000    1.4080 !G,A, JWK, adm jr., 7/24/91                      
+C5-NA   350.0000    1.3360 !A, JWK par_a8 9/30/91                           
+C5-NI   350.0000    1.3460 !Inosine, adm jr., 2/94                          
+C5-N4   350.0000    1.3600 !G,A, JWK, par_a8 9/30/91                        
+C6-C6   222.5000    1.5160 !RIBOSE, ADM Jr.                                 
+C6-CB   222.5000    1.5270 !RIBOSE, ADM Jr.                                 
+C6-CC   222.5000    1.5370 !RIBOSE, ADM Jr.                                 
+CB-CC   222.5000    1.5270 !RIBOSE, ADM Jr.                                 
+C6-C7   222.5000    1.5160 !RIBOSE, ADM Jr.                                 
+C6-C8   222.5000    1.5160 !RIBOSE, ADM Jr.                                 
+C6-C9   222.5000    1.5160 !RIBOSE, ADM Jr.                                 
+C6-H6   309.0000    1.1110 !RIBOSE, ADM Jr.                                 
+CB-H6   309.0000    1.1110 !RIBOSE, ADM Jr.                                 
+CC-H6   309.0000    1.1110 !RIBOSE, ADM Jr.                                 
+CB-N2   300.0000    1.4800 !RIBOSE, ADM Jr.                                 
+CB-N1   300.0000    1.4800 !RIBOSE, ADM Jr.                                 
+C6-O2   340.0000    1.4300 !from C7 O2, ADM Jr.                             
+C6-O5   428.0000    1.4200 !RIBOSE, MeOH                                    
+C6-O6   296.7000    1.4450 !RIBOSE, ADM Jr.                                 
+CB-O6   296.7000    1.4100 !RIBOSE, ADM Jr.                                 
+C7-C7   222.5000    1.5000 !Alkanes, sacred                                 
+C7-C8   222.5000    1.5380 !Alkanes, free                                   
+C7-C9   222.5000    1.5380 !Alkanes, sacred                                 
+C7-H7   309.0000    1.1110 !Alkanes, sacred                                 
+C8-C9   222.5000    1.5280 !Alkanes, sacred                                 
+C8-H7   309.0000    1.1110 !Alkanes, sacred                                 
+C8-N2   400.0000    1.4600 !9-E-GUA, ADM JR.                                
+C8-O2   340.0000    1.4300 !DMP, ADM Jr.                                    
+C8-O5   428.0000    1.4200 !RIBOSE, MeOH                                    
+C9-H7   322.0000    1.1110 !Alkanes, sacred                                 
+C9-N2   400.0000    1.4600 !FOR 9-M-ADE(THY), ADM JR.                       
+C9-O2   340.0000    1.4300 !DMP, ADM Jr.                                    
+H1-N1   488.0000    1.0000 !A,C,G, JWK, adm jr., 7/24/91                    
+H2-N2   474.0000    1.0100 !C,U, JWK                                        
+H2-NG   471.0000    1.0100 !G, JWK, par_a12 9/30/91                         
+H2-NU   474.0000    1.0100 !U, JWK, adm jr., 7/24/91                        
+H4-O4   545.0000    0.9600 !MP_1, ADM Jr.                                   
+H5-O5   545.0000    0.9600 !RIBOSE, MeOH                                    
+HT-HT     0.0000    1.5139 ! from TIPS3P geometry (for SHAKE w/PARAM)       
+HT-OT   450.0000    0.9572 ! from TIPS3P geometry                           
+O2-P    270.0000    1.6000 !DMP, ADM Jr.                                    
+O3-P    580.0000    1.4800 !DMP, ADM Jr.                                    
+O4-P    237.0000    1.5800 !MP_1, ADM Jr.                                   
+O2-P2   300.0000    1.6800 !nad/ppi, jjp1/adm jr. 7/95                      
+O3-P2   480.0000    1.5300 !nad/ppi, jjp1/adm jr. 7/95                      
+N5-H1   460.0000    1.0100 !sugar model, adm jr.                            
+N5-CB   240.0000    1.4700 !sugar model, adm jr.
+
+C3-C1-NU     67.000   113.400     0.000     0.000 !U,T, JWK, adm jr., 7/24/91  
+C3-CE-N1     85.000   113.000    80.000     2.460 !nad/ppi, jjp1/adm jr. 7/95  
+C3-C1-O1    100.000   124.700     0.000     0.000 !U,T, par_a3 JWK 9/30/91     
+C3-CE-O1     85.000   118.500    20.000     2.430 !nad/ppi, jjp1/adm jr. 7/95  
+C5-C1-NG     67.000   109.400     0.000     0.000 !G, JWK, adm jr., 7/24/91    
+C5-C1-O1    100.000   125.600     0.000     0.000 !G, par_a3 adm jr., 10/2/91  
+N1-CE-O1     85.000   128.500    20.000     2.170 !nad/ppi, jjp1/adm jr. 7/95  
+N2-C1-NU     67.000   114.600     0.000     0.000 !U,T, JWK, adm jr., 7/24/91  
+N2-C1-N3     70.000   116.400     0.000     0.000 !C, JWK, adm jr., 7/24/91    
+N2-C1-O1    100.000   123.500     0.000     0.000 !C,U,G par_a3 JWK 9/30/91    
+N2-C1-OC    100.000   121.500     0.000     0.000 !C, adm jr., 10/2/91         
+NG-C1-O1    100.000   125.000     0.000     0.000 !G par_a4 adm jr., 10/2/91   
+NU-C1-O1    100.000   121.900     0.000     0.000 !U, par_a3 JWK 9/30/91       
+N3-C1-OC    100.000   122.100     0.000     0.000 !C, par_a3 JWK 9/30/91       
+C3-C2-N1     70.000   117.900     0.000     0.000 !C, JWK, adm jr., 7/24/91    
+CD-C2-N1    110.000   116.400     0.000     0.000 !5mc, adm jr., 9/9/93        
+C3-C2-N3     70.000   119.800     0.000     0.000 !C, JWK, adm jr., 7/24/91    
+CD-C2-N3     30.000   121.300     0.000     0.000 !5mc, adm jr., 9/9/93        
+C5-C2-N1     70.000   119.100     0.000     0.000 !A, adm jr., 6/7/92          
+C5-C2-NA     80.000   112.600     0.000     0.000 !A, JWK   par_a9 9/30/91     
+N1-C2-NG     70.000   114.800    20.000     2.300 !G, JWK, adm jr., 7/24/91    
+N1-C2-N3     70.000   122.300     0.000     0.000 !C JWK, adm jr., 7/24/91     
+N1-C2-NA     70.000   128.300     0.000     0.000 !A adm jr., 6/7/92           
+NG-C2-NA     70.000   122.900     0.000     0.000 !G, JWK   par_49, par_a11 9/3
+C1-C3-C3    125.000   118.000     0.000     0.000 !U,T, JWK, adm jr., 7/24/91  
+CE-C3-CC      5.000   107.800     0.000     0.000 !nad/ppi, jjp1/adm jr. 7/95  
+CE-C3-C8    125.000   124.200     0.000     0.000 !nadh/ppi, jjp1/adm jr. 7/95 
+C1-C3-C9     70.000   118.300     0.000     0.000 !T, JWK, adm jr., 7/24/91    
+C1-C3-H3     30.000   120.000     0.000     0.000 !C,U, JWK, adm jr., 7/24/91  
+C2-C3-C3    125.000   119.300     0.000     0.000 !C, JWK, adm jr., 7/24/91    
+C2-CD-C3    100.000   117.800     0.000     0.000 !5mc, adm jr. 9/9/93         
+C2-CD-C9     40.000   118.000     0.000     0.000 !5mc, adm jr. 9/9/93         
+C2-C3-H3     30.000   118.700     0.000     0.000 !C, JWK, adm jr., 7/24/91    
+CA-C3-CE     40.000   110.200     0.000     0.000 !nad/ppi, jjp1/adm jr. 7/95  
+CB-C3-CE     10.000   131.800     0.000     0.000 !nad/ppi, jjp1/adm jr. 7/95  
+C3-CA-C3     50.000   118.000     0.000     0.000 !nad/ppi, jjp1/adm jr. 7/95  
+CA-C3-CB     40.000   118.000     0.000     0.000 !nad/ppi, jjp1/adm jr. 7/95  
+C3-C3-C8     53.500   108.500     0.000     0.000 !nadh/ppi, jjp1/adm jr. 7/95 
+CB-C3-C8     53.500   108.500     0.000     0.000 !nad/ppi, jjp1/adm jr. 7/95  
+CC-C3-C8     43.500   128.000     0.000     0.000 !nad/ppi, jjp1/adm jr. 7/95  
+C3-C3-C9     70.000   123.700     0.000     0.000 !T, JWK, adm jr., 7/24/91    
+C3-CD-C9     40.000   124.200     0.000     0.000 !5mc, adm jr., 9/9/93        
+C3-C3-H3     30.000   122.000     0.000     0.000 !C,U, JWK, adm jr., 7/24/91  
+CD-C3-H3     30.000   122.000     0.000     0.000 !5mc, adm jr., 9/9/93        
+CB-C3-HB     30.000   122.000     0.000     0.000 !nad/ppi, jjp1/adm jr. 7/95  
+CA-C3-HB     30.000   119.000     0.000     0.000 !nad/ppi, jjp1/adm jr. 7/95  
+C3-CC-H3     42.000   119.000     0.000     0.000 !nadh/ppi, jjp1/adm jr. 7/95 
+CC-C3-H3     42.000   116.000     0.000     0.000 !nad/ppi, jjp1/adm jr. 7/95  
+C3-CA-HB     80.000   121.000     0.000     0.000 !nad/ppi, jjp1/adm jr. 7/95  
+C3-CB-HB     80.000   120.500     0.000     0.000 !nad/ppi, jjp1/adm jr. 7/95  
+C3-C3-N2    125.000   124.200     0.000     0.000 !C,U, JWK, adm jr., 7/24/91  
+C3-CB-N2    120.000   122.000     0.000     0.000 !nad/ppi, jjp1/adm jr. 7/95  
+C3-CC-N2     60.000   122.000     0.000     0.000 !nadh/ppi, jjp1/adm jr. 7/95 
+CD-C3-N2    100.000   124.200     0.000     0.000 !5mc, adm jr., 9/9/93        
+C8-C3-H3     30.000   116.000     0.000     0.000 !nadh/ppi, jjp1/adm jr. 7/95 
+H3-C3-N2     30.000   113.800     0.000     0.000 !C,U, JWK, adm jr., 7/24/91  
+HB-CB-N2     80.000   117.500     0.000     0.000 !nad/ppi, jjp1/adm jr. 7/95  
+H3-CC-N2     42.000   119.000     0.000     0.000 !nad/ppi, jjp1/adm jr. 7/95  
+H3-C4-N2     40.000   119.000     0.000     0.000 !G,A, JWK, par_a9 9/30/91    
+H3-C4-NA     35.000   114.750     0.000     0.000 !A, JWK, par_a9 9/30/91      
+H3-C4-NI     35.000   115.750     0.000     0.000 !Inosine, adm jr., 2/94      
+H3-C4-NG     35.000   114.750     0.000     0.000 !Inosine, adm jr., 2/94      
+H3-C4-N4     40.000   126.700     0.000     0.000 !G,A, JWK, par_a9 9/30/91    
+N2-C4-N4    100.000   114.300     0.000     0.000 !G,A, JWK, par_a9 9/30/91    
+NA-C4-NA     80.000   130.500     0.000     0.000 !A, JWK, par_a9 9/30/91      
+NI-C4-NG     80.000   129.500     0.000     0.000 !Inosine, adm jr., 2/94      
+C1-C5-C5    125.000   119.500     0.000     0.000 !G, JWK, adm jr., 7/24/91    
+C1-C5-N4    125.000   128.800     0.000     0.000 !G, JWK, adm jr., 7/24/91    
+C2-C5-C5    100.000   119.700     0.000     0.000 !A, JWK, par_a7 9/30/91      
+C2-C5-N4    120.000   128.600     0.000     0.000 !A, JWK, par_a9 9/30/91      
+C5-C5-N2    100.000   105.100     0.000     0.000 !G,A, JWK, par_a9 9/30/91    
+C5-C5-NA    100.000   127.500     0.000     0.000 !A, JWK, par_a7 9/30/91      
+C5-C5-NI    100.000   127.500     0.000     0.000 !Inosine, adm jr., 2/94      
+C5-C5-N4    100.000   111.700     0.000     0.000 !G,A, JWK, par_a7 9/30/91    
+N2-C5-NA    140.000   127.400     0.000     0.000 !A, JWK, par_a9 9/30/91      
+N2-C5-NI    140.000   127.400     0.000     0.000 !Inosine, adm jr., 2/94      
+C6-C6-C6     53.350   111.000     8.000     2.561 ! Alkanes                    
+C6-C6-CB     53.350   105.500     8.000     2.561 ! Alkanes(new eq geom)       
+C6-C6-CC     53.350   108.000     8.000     2.561 ! Alkanes(new eq geom)       
+C6-CC-CB     53.350   105.500     8.000     2.561 ! Alkanes(new eq geom)       
+C6-C6-C8     53.350   108.500     8.000     2.561 ! Alkanes                    
+C6-C6-C9     53.350   108.500     8.000     2.561 ! Alkanes                    
+C6-CB-N2     70.000   113.700     0.000     0.000 !RIBOSE, ADM Jr.             
+CC-CB-N2     70.000   113.700     0.000     0.000 !RIBOSE, ADM Jr.             
+C6-CB-N1     70.000   113.700     0.000     0.000 !RIBOSE, ADM Jr.             
+C6-C6-O2     75.700   110.100     0.000     0.000 !RIBOSE, ADM Jr., MeOH       
+CB-C6-O2     75.700   110.100     0.000     0.000 !RIBOSE, ADM Jr., MeOH       
+CC-C6-O2     75.700   110.100     0.000     0.000 !RIBOSE, ADM Jr., MeOH       
+C6-C6-O5     75.700   110.100     0.000     0.000 !RIBOSE, ADM Jr., MeOH       
+CB-C6-O5     75.700   110.100     0.000     0.000 !RIBOSE, ADM Jr., MeOH       
+CC-C6-O5     75.700   110.100     0.000     0.000 !RIBOSE, ADM Jr., MeOH       
+C6-C6-O6    110.000   105.000     0.000     0.000 !RIBOSE, ADM Jr.             
+C6-CB-O6    110.000   105.000     0.000     0.000 !RIBOSE, ADM Jr.             
+CC-CB-O6    110.000   105.000     0.000     0.000 !RIBOSE, ADM Jr.             
+C7-C6-O6    110.000   109.000     0.000     0.000 !RIBOSE, ADM Jr.             
+C8-C6-O6    110.000   109.000     0.000     0.000 !RIBOSE, ADM Jr.             
+C9-C6-O6    110.000   109.000     0.000     0.000 !RIBOSE, ADM Jr.             
+H6-C6-C6     34.500   110.100    22.530     2.179 ! Alkanes, sacred            
+H6-CB-C6     34.500   110.100    22.530     2.179 ! Alkanes, sacred            
+H6-CB-CC     34.500   110.100    22.530     2.179 ! Alkanes, free              
+H6-CC-C6     33.400   110.100    22.530     2.179 ! Alkanes, free              
+H6-CC-CB     33.400   110.100    22.530     2.179 ! Alkanes, free              
+H6-C6-CB     34.500   110.100    22.530     2.179 ! Alkanes, sacred            
+H6-C6-CC     34.500   110.100    22.530     2.179 ! Alkanes, free              
+H6-C6-C7     34.500   110.100    22.530     2.179 ! Alkanes, sacred            
+H6-C6-C8     34.500   110.100    22.530     2.179 ! Alkanes, free              
+H6-C6-C9     34.500   110.100    22.530     2.179 ! Alkanes, sacred            
+H6-C6-H6     35.500   109.000     5.400     1.802 ! Alkanes, free              
+H6-CC-H6     35.500   109.000     5.400     1.802 ! Alkanes, free              
+H6-CB-N2     43.000   111.000     0.000     0.000 !RIBOSE, ADM Jr.             
+H6-C6-O2     60.000   109.500     0.000     0.000 !from H7 C7 O2, ADM JR.      
+H6-C6-O5     45.900   108.890     0.000     0.000 !RIBOSE, ADM Jr., MeOH       
+H6-C6-O6     45.200   107.240     0.000     0.000 !RIBOSE, ADM Jr.             
+H6-CB-O6     45.200   107.240     0.000     0.000 !RIBOSE, ADM Jr.             
+O5-C6-O6     92.600   111.550     0.000     0.000 !RIBOSE, ADM Jr., ribose (wit
+O6-CB-N2     70.000   108.000     0.000     0.000 !RIBOSE, ADM Jr.             
+O6-CB-N5     70.000   108.000     0.000     0.000 !GLYCOSIDAC, Arnott + Huckins
+C6-CB-N5     70.000   113.700     0.000     0.000 !GLYCOSIDAC, Arnott + Huckins
+CC-CB-N5     70.000   113.700     0.000     0.000 !GLYCOSIDAC, Arnott + Huckins
+N5-CB-H6     38.000   111.000    50.000     2.140 ! sugar model, adm jr.       
+C6-C7-H7     34.500   110.100    22.530     2.179 ! Alkanes, sacred            
+C6-C7-O2     75.700   110.100     0.000     0.000 !RIBOSE, ADM Jr., MeOH       
+C6-C7-O5     75.700   110.100     0.000     0.000 !RIBOSE, ADM Jr., MeOH       
+C7-C7-H7     34.500   110.100    22.530     2.179 ! Alkanes, sacred            
+C8-C7-H7     34.500   110.100    22.530     2.179 ! Alkanes, free              
+H7-C7-O5     45.900   108.890     0.000     0.000 !RIBOSE, ADM Jr., MeOH       
+C3-C8-C3    125.000   108.000     0.000     0.000 !nadh/ppi, jjp1/adm jr. 7/95 
+C3-C8-H7     55.000   110.100     0.000     0.000 !nadh/ppi, jjp1/adm jr. 7/95 
+C6-C8-H7     34.500   110.100    22.530     2.179 ! Alkanes, free              
+C6-C8-O2     75.700   110.100     0.000     0.000 !RIBOSE, ADM Jr., MeOH       
+C6-C8-O5     75.700   110.100     0.000     0.000 !RIBOSE, ADM Jr., MeOH       
+C7-C8-H7     34.500   110.100    22.530     2.179 ! Alkanes, free              
+C8-C8-H7     26.500   110.100    22.530     2.179 ! Alkanes, free              
+C9-C8-H7     34.600   110.100    22.530     2.179 ! Alkanes, sacred            
+C9-C8-N2     70.000   113.700     0.000     0.000 !from C6  CB N2, adm jr.     
+H7-C8-H7     35.500   109.000     5.400     1.802 ! Alkanes, sacred            
+H7-C8-N2     33.430   110.100     0.000     0.000 !FOR 9-M-ADE(THY), ADM       
+H7-C8-O2     60.000   109.500     0.000     0.000 !DMP, ADM Jr.                
+H7-C8-O5     45.900   108.890     0.000     0.000 !RIBOSE, ADM Jr., MeOH       
+C3-C9-H7     33.430   110.100    22.530     2.179 ! Alkanes, sacred            
+CD-C9-H7     33.430   110.100    22.530     2.179 ! Alkanes, sacred            
+C6-C9-H7     33.430   110.100    22.530     2.179 ! Alkanes, sacred            
+C6-C9-O2     75.700   110.100     0.000     0.000 !nad/ppi, jjp1/adm jr. 7/95  
+C7-C9-H7     33.430   110.100    22.530     2.179 ! Alkanes, sacred            
+C8-C9-H7     34.600   110.100    22.530     2.179 ! Alkanes, sacred            
+H7-C9-H7     35.500   108.400     5.400     1.802 ! Alkanes, sacred            
+H7-C9-N2     33.430   110.100     0.000     0.000 !FOR 9-M-ADE(THY), ADM       
+H7-C9-O2     60.000   109.500     0.000     0.000 !DMP, ADM Jr.                
+CE-N1-H1     35.000   120.000     0.000     0.000 !nad/ppi, jjp1/adm jr. 7/95  
+C2-N1-H1     40.000   120.000     0.000     0.000 ! par_a6 JWK 9/30/91         
+H1-N1-H1     32.000   120.000     0.000     0.000 ! par_a5 JWK 9/30/91         
+C1-N2-C3    125.000   120.600     0.000     0.000 !C,U, JWK                    
+C1-N2-CB     70.000   117.700     0.000     0.000 !from C1 N2 C7, adm jr., 7/24
+C1-N2-C9     70.000   117.700     0.000     0.000 !1-M-T XTAL, adm jr., 7/24/91
+C1-N2-H2     40.500   122.000     0.000     0.000 !C,U  JWK, adm jr., 7/24/91  
+CB-N2-CB     30.000   120.000     0.000     0.000 !nad/ppi, jjp1/adm jr. 7/95  
+CC-N2-CC     20.000   114.000     0.000     0.000 !nadh/ppi, jjp1/adm jr. 7/95 
+C3-N2-CB     70.000   121.700     0.000     0.000 !from C3 N2 C7, adm jr., 7/24
+CB-N2-CB     70.000   121.700     0.000     0.000 !nad/ppi, jjp1/adm jr. 7/95  
+CC-N2-CB     70.000   121.700     0.000     0.000 !nad/ppi, jjp1/adm jr. 7/95  
+C3-N2-C9     70.000   121.700     0.000     0.000 !1-M-T XTAL, adm jr., 7/24/91
+C3-N2-H2     32.000   117.400     0.000     0.000 !C,U, JWK, adm jr., 7/24/91  
+CB-N2-H2     32.000   117.400     0.000     0.000 !nad/ppi, jjp1/adm jr. 7/95  
+CC-N2-H2     39.000   123.000     0.000     0.000 !nad/ppi, jjp1/adm jr. 7/95  
+C4-N2-C5    110.000   105.600     0.000     0.000 !G,A, JWK, par_a9 9/30/91    
+C4-N2-CB     70.000   128.400     0.000     0.000 !from C4 N2 C7, adm jr., 7/24
+C4-N2-C8     70.000   128.400     0.000     0.000 !9-E-GUA, adm jr., 7/24/91   
+C4-N2-C9     70.000   128.400     0.000     0.000 !9-M-ADE, adm jr., 7/24/91   
+C4-N2-H2     30.000   125.000     0.000     0.000 !G,A, JWK, par_a9 9/30/91    
+C5-N2-CB     70.000   126.000     0.000     0.000 !from C5 N2 C7, adm jr., 7/24
+C5-N2-C8     70.000   126.000     0.000     0.000 !9-E-GUA, adm jr., 7/24/91   
+C5-N2-C9     70.000   126.000     0.000     0.000 !9-M-ADE, adm jr., 7/24/91   
+C5-N2-H2     30.000   129.400     0.000     0.000 !G,A, JWK, par_a9 9/30/91    
+C1-NG-C2    125.000   128.700     0.000     0.000 !G, JWK, adm jr., 7/24/91    
+C1-NG-C4    125.000   129.700     0.000     0.000 !Inosine, adm jr., 2/94      
+C1-NG-H2     40.500   114.300     0.000     0.000 !G, adm jr., 7/24/91         
+C2-NG-H2     40.500   117.000     0.000     0.000 !G par_49, adm jr., 7/24/91  
+C4-NG-H2     40.500   116.000     0.000     0.000 !Inosine, adm jr., 2/94      
+C1-NU-C1     90.000   129.200     0.000     0.000 !U,T, par_a4 JWK 9/30/91     
+C1-NU-H2     40.500   115.400     0.000     0.000 !T,U, JWK, adm jr., 7/24/91  
+C1-N3-C2     70.000   119.700     0.000     0.000 !C, JWK, adm jr., 7/24/91    
+C2-NA-C5     90.000   112.000     0.000     0.000 !G, JWK, par_a11 9/30/91     
+C2-NA-C4     90.000   119.900     0.000     0.000 !A, JWK, par_a9 9/30/91      
+C4-NA-C5     90.000   110.300     0.000     0.000 !A, JWK, par_a9 9/30/91      
+C4-NI-C5     90.000   110.300     0.000     0.000 !Inosine, adm jr., 2/94      
+C4-N4-C5    110.000   103.300     0.000     0.000 !G,A, JWK, par_a9 9/30/91    
+CB-N5-H1     50.000   111.500     0.000     0.000 ! sugar model, adm jr.       
+H1-N5-H1     39.000   106.000     0.000     0.000 ! sugar model, adm jr.       
+C6-O2-P      20.000   120.000    35.000     2.330 !DMP, ADM JR.                
+C8-O2-P      20.000   120.000    35.000     2.330 !DMP, ADM Jr.                
+C9-O2-P      20.000   120.000    35.000     2.330 !DMP, ADM Jr.                
+C9-O2-P2     20.000   120.000    35.000     2.330 !nad/ppi, jjp1/adm jr. 7/95  
+P -O2-P      15.000   140.000   -40.000     2.800 !nad/ppi, jjp1/adm jr. 7/95  
+P2-O2-P      15.000   140.000   -40.000     2.800 !nad/ppi, jjp1/adm jr. 7/95  
+P2-O2-P2     15.000   140.000   -40.000     2.800 !nad/ppi, jjp1/adm jr. 7/95  
+H4-O4-P      30.000   115.000    40.000     2.350 !MP_1, ADM Jr.               
+H5-O5-C6     57.500   106.000     0.000     0.000 !RIBOSE, ADM Jr., MeOH       
+H5-O5-C7     57.500   106.000     0.000     0.000 !RIBOSE, ADM Jr., MeOH       
+H5-O5-C8     57.500   106.000     0.000     0.000 !RIBOSE, ADM Jr., MeOH       
+H5-O5-C9     57.500   106.000     0.000     0.000 !RIBOSE, ADM Jr., MeOH       
+C6-O6-C6    110.000   107.500     0.000     0.000 !RIBOSE, ADM Jr.             
+C6-O6-CB    110.000   107.500     0.000     0.000 !RIBOSE, ADM Jr.             
+HT-OT-HT     55.000   104.520     0.000     0.000 ! FROM TIPS3P GEOMETRY       
+O2-P -O2     80.000   104.300     0.000     0.000 !DMP, ADM Jr.                
+O2-P -O3     98.900   111.600     0.000     0.000 !DMP, ADM Jr.                
+O2-P -O4     48.100   108.000     0.000     0.000 !MP_1, ADM Jr.               
+O3-P -O3    120.000   120.000     0.000     0.000 !DMP, ADM Jr.                
+O3-P -O4     98.900   108.230     0.000     0.000 !MP_1, ADM Jr.               
+O4-P -O4     98.900   104.000     0.000     0.000 !MP_0, ADM Jr.               
+O2-P2-O2     80.000   104.300     0.000     0.000 !nad/ppi, jjp1/adm jr. 7/95  
+O2-P2-O3     88.900   111.600     0.000     0.000 !nad/ppi, jjp1/adm jr. 7/95  
+O3-P2-O3    104.000   120.000     0.000     0.000 !nad/ppi, jjp1/adm jr. 7/95
+
+O2-P -O2-C6   1         0.9500           0.00            -2.
+O2-P -O2-C6   1         0.5000           0.00             3.
+O2-P -O2-C8   1         0.9500           0.00            -2.
+O2-P -O2-C8   1         0.5000           0.00             3.
+O2-P -O2-C9   1         0.9500           0.00            -2.
+O2-P -O2-C9   1         0.5000           0.00             3.
+O3-P -O2-C6   1         0.1000           0.00             3.
+O3-P -O2-C8   1         0.1000           0.00             3.
+O3-P -O2-C9   1         0.1000           0.00             3.
+O4-P -O2-C6   1         0.9500           0.00            -2.
+O4-P -O2-C6   1         0.5000           0.00             3.
+O4-P -O2-C8   1         0.9500           0.00            -2.
+O4-P -O2-C8   1         0.5000           0.00             3.
+O4-P -O2-C9   1         0.9500           0.00            -2.
+O4-P -O2-C9   1         0.5000           0.00             3.
+X -O4-P -X    1         0.3000           0.00             3.
+X -C8-O2-X    1        -0.1000           0.00             3.
+X -C9-O2-X    1        -0.1000           0.00             3.
+X -C6-O2-X    1        -0.1000           0.00             3.
+X -C6-C6-X    1         0.1500           0.00             3.
+X -C6-CB-X    1         0.1500           0.00             3.
+X -C6-CC-X    1         0.1500           0.00             3.
+X -CB-CC-X    1         0.1500           0.00             3.
+O5-C6-C6-O2   1         0.5000           0.00             3.
+O5-C6-C6-O5   1         0.5000           0.00             3.
+X -C6-O6-X    1         0.1000           0.00             3.
+X -CB-O6-X    1         0.1000           0.00             3.
+C5-N2-CB-C6   1         0.5000           0.00             3.
+C3-N2-CB-C6   1         0.5000           0.00             3.
+H1-N1-CB-C6   1         0.5000           0.00             3.
+X -CB-N2-X    1         0.0000           0.00             3.
+X -CB-N1-X    1         0.0000           0.00             3.
+X -C8-N2-X    1         0.0000           0.00             3.
+X -C9-N2-X    1         0.0000           0.00             3.
+CB-C6-C6-O2   1         0.2000           0.00             2.
+CB-CC-C6-O2   1         0.4500           0.00             2.
+CB-C6-C6-O5   1         0.2000           0.00             2.
+CB-CC-C6-O5   1         0.4500           0.00             2.
+X -C6-C8-X    1         0.2000           0.00             3.
+X -C6-C9-X    1         0.2000           0.00             3.
+X -C6-O5-X    1         0.1400           0.00             3.
+X -C7-C7-X    1         0.2000           0.00             3.
+X -C7-C8-X    1         0.2000           0.00             3.
+X -C7-C9-X    1         0.2000           0.00             3.
+X -C8-C8-X    1         0.1950           0.00             3.
+X -C8-C9-X    1         0.1600           0.00             3.
+X -C8-O5-X    1         0.1400           0.00             3.
+C9-C8-C8-C9   1         0.1500           0.00             1.
+C9-C8-C8-C8   1         0.1500           0.00             1.
+C8-C8-C8-C8   1         0.1500           0.00             1.
+N2-C3-C3-C1   1         4.0000         180.00             2.
+C3-C3-C1-NU   1         3.0000         180.00             2.
+C3-C1-N2-C1   1         3.5000         180.00             2.
+C1-NU-C1-N2   1         3.5000         180.00             2.
+C1-N2-C3-C3   1         3.5000         180.00             2.
+NU-C1-N2-C3   1         3.0000         180.00             2.
+H3-C3-C3-H3   1         3.0000         180.00             2.
+H3-C3-C1-O1   1         4.0000         180.00             2.
+O1-C1-N2-H2   1         3.0000         180.00             2.
+O1-C1-NG-H2   1         3.0000         180.00             2.
+O1-C1-NU-H2   1         2.5000         180.00             2.
+H2-N2-C3-H3   1         1.8000         180.00             2.
+N2-C1-NU-H2   1         1.8000         180.00             2.
+C3-C1-NU-H2   1         1.8000         180.00             2.
+N2-C1-C3-C9   1         3.0000           0.00             3.
+N2-C3-C3-C9   1         3.0000           0.00             3.
+C1-C3-C9-H7   1         0.0000           0.00             3.
+C3-C3-C9-H7   1         0.0000           0.00             3.
+N2-C3-C3-C2   1         4.0000         180.00             2.
+C3-C3-C2-N3   1         4.0000         180.00             2.
+C3-C2-N3-C1   1         4.5000         180.00             2.
+C2-N3-C1-N2   1         4.5000         180.00             2.
+N3-C1-N2-C3   1         3.5000         180.00             2.
+N3-C2-N1-H1   1         2.0000         180.00             2.
+C3-C2-N1-H1   1         2.0000         180.00             2.
+N1-C2-C3-H3   1         2.0000         180.00             2.
+OC-C1-N2-H2   1         3.0000         180.00             2.
+X -C2-N3-X    1         1.0000         180.00             2.
+N2-C3-CD-C2   1         3.0000         180.00             2.
+C3-CD-C2-N3   1         1.0000         180.00             2.
+CD-C2-N3-C1   1        10.0000         180.00             2.
+CD-C3-N2-C1   1         1.0000         180.00             2.
+CD-C2-N1-H1   1         2.0000         180.00             2.
+N1-C2-CD-C3   1         0.0000         180.00             2.
+N1-C2-CD-C9   1         0.0000         180.00             2.
+N2-C3-CD-C9   1         4.0000         180.00             2.
+N3-C2-CD-C9   1         0.0000         180.00             2.
+C3-CD-C9-H7   1         0.0000           0.00             3.
+C2-CD-C9-H7   1         0.3500           0.00             3.
+C2-CD-C3-H3   1         4.0000         180.00             2.
+C9-CD-C3-H3   1         4.0000         180.00             2.
+NA-C2-C5-C5   1         6.0000         180.00             2.
+C5-C2-NA-C4   1         6.0000         180.00             2.
+N4-C4-N2-C5   1        10.0000         180.00             2.
+NA-C4-NA-C5   1         6.0000         180.00             2.
+NA-C4-NA-C2   1         8.0000         180.00             2.
+N2-C4-N4-C5   1         8.0000         180.00             2.
+C2-C5-C5-NA   1         6.0000         180.00             2.
+N4-C5-C5-N2   1         8.0000         180.00             2.
+C5-C5-N2-C4   1        10.0000         180.00             2.
+C5-C5-NA-C4   1         6.0000         180.00             2.
+C5-C5-N4-C4   1         8.0000         180.00             2.
+C5-C2-N1-H1   1         2.5000         180.00             2.
+H2-N2-C4-H3   1         1.5000         180.00             2.
+NA-C2-N1-H1   1         2.5000         180.00             2.
+NA-C5-C5-N4   1        20.0000         180.00             2.
+C2-C5-C5-N2   1        20.0000         180.00             2.
+NG-C1-C5-C5   1         6.0000         180.00             2.
+C5-C1-NG-C2   1         6.0000         180.00             2.
+C1-NG-C2-NA   1         6.0000         180.00             2.
+NG-C2-NA-C5   1         6.0000         180.00             2.
+C2-NA-C5-C5   1         6.0000         180.00             2.
+C1-C5-C5-NA   1         6.0000         180.00             2.
+NG-C2-N1-H1   1         2.0000         180.00             2.
+C1-C5-C5-N2   1        20.0000         180.00             2.
+C5-C5-NI-C4   1         6.0000         180.00             2.
+NG-C4-NI-C5   1         6.0000         180.00             2.
+NI-C4-NG-H2   1         1.5000         180.00             2.
+NI-C4-NG-C1   1         1.5000         180.00             2.
+H3-C4-NG-H2   1         1.5000         180.00             2.
+H3-C4-NG-C1   1         1.5000         180.00             2.
+X -C4-NI-X    1         3.5000         180.00             2.
+X -C5-NI-X    1         1.0000         180.00             2.
+X -C1-N3-X    1         1.0000         180.00             2.
+X -C1-N2-X    1         0.9000         180.00             2.
+X -C1-NG-X    1         0.9000         180.00             2.
+X -C1-NU-X    1         0.9000         180.00             2.
+X -C3-N2-X    1         1.0000         180.00             2.
+X -C3-C3-X    1         1.0000         180.00             2.
+X -C1-C3-X    1         1.0000         180.00             2.
+X -C2-C3-X    1         0.8000         180.00             2.
+X -C1-C5-X    1         1.0000         180.00             2.
+X -C2-NG-X    1         1.0000         180.00             2.
+X -C2-C5-X    1         1.0000         180.00             2.
+X -C4-N2-X    1         1.5000         180.00             2.
+X -C4-NA-X    1         3.5000         180.00             2.
+X -C4-N4-X    1         1.0000         180.00             2.
+X -C5-C5-X    1         0.0000         180.00             2.
+X -C5-N2-X    1         1.5000         180.00             2.
+X -C5-NA-X    1         1.0000         180.00             2.
+X -C5-N4-X    1         1.0000         180.00             2.
+X -C2-NA-X    1         1.0000         180.00             2.
+C1-N2-C9-H7   1         0.1900           0.00             3.
+C3-N2-C9-H7   1         0.0000           0.00             3.
+C4-N2-C9-H7   1         0.0000           0.00             3.
+C5-N2-C9-H7   1         0.1900           0.00             3.
+X -CB-N5-X    1         0.1100           0.00             3.
+N5-CB-C6-O5   1         0.0501           0.00             3.
+N5-CB-C6-H6   1         0.0501           0.00             3.
+N5-CB-C6-C6   1         0.0501           0.00             3.
+N5-CB-CC-O5   1         0.0501           0.00             3.
+N5-CB-CC-H6   1         0.0501           0.00             3.
+N5-CB-CC-C6   1         0.0501           0.00             3.
+C6-O6-CB-N5   1         0.1000           0.00             3.
+C3-N2-CB-HB   1         7.0000         180.00             2.
+H2-N2-CB-HB   1         3.0000         180.00             2.
+HB-C3-CA-HB   1         2.0000         180.00             2.
+HB-C3-CB-HB   1         1.0000         180.00             2.
+N2-CB-C3-HB   1         7.0000         180.00             2.
+C3-CE-C3-HB   1         7.0000         180.00             2.
+CE-C3-CB-HB   1         1.0000         180.00             2.
+CE-C3-CA-HB   1         5.0000         180.00             2.
+C3-CE-C3-H3   1         7.0000         180.00             2.
+CE-C3-C3-H3   1         1.0000         180.00             2.
+CA-C3-CE-O1   1         2.3800         180.00             2.
+CB-C3-CE-O1   1         2.3800         180.00             2.
+CA-C3-CE-N1   1         0.3500         180.00            -1.
+CA-C3-CE-N1   1         0.6200           0.00             2.
+CB-C3-CE-N1   1         0.3500           0.00            -1.
+CB-C3-CE-N1   1         0.6200           0.00             2.
+C3-CA-C3-CE   1         3.0000         180.00             2.
+C3-CA-C3-CB   1         6.0000         180.00             2.
+N2-CB-C3-CA   1         7.0000         180.00             2.
+CB-N2-CB-C3   1         4.0000         180.00             2.
+X -C3-CA-X    1         1.0000         180.00             2.
+X -C3-CB-X    1         1.0000         180.00             2.
+X -C3-C8-X    1         1.0000         180.00             3.
+X -N1-CE-X    1         2.5000         180.00             2.
+X -N2-CB-X    1         1.0000         180.00             2.
+C8-C3-CE-O1   1         1.0000         180.00            -2.
+C8-C3-CE-O1   1         1.0000           0.00            -3.
+C8-C3-CE-O1   1         0.4000           0.00             6.
+C8-C3-CE-N1   1         0.5000         180.00            -2.
+C8-C3-CE-N1   1         0.3500         180.00            -3.
+C8-C3-CE-N1   1         0.4000           0.00             6.
+CC-C3-CE-O1   1         0.3000           0.00            -1.
+CC-C3-CE-O1   1         1.9500         180.00             2.
+CC-C3-CE-N1   1         1.1000         180.00            -1.
+CC-C3-CE-N1   1         1.9500         180.00             2.
+H2-N2-CC-H3   1         4.0000         180.00             2.
+C3-N2-CC-H3   1         7.0000         180.00             2.
+N2-CC-C3-H3   1         7.0000         180.00             2.
+C8-C3-CC-N2   1         0.1000         180.00             2.
+CC-C3-C8-C3   1         4.0000         180.00             3.
+CE-C3-CC-N2   1         2.5000         180.00             2.
+X -C3-CC-X    1         0.1000         180.00             2.
+X -N2-CC-X    1         0.1000         180.00             2.
+CC-N2-CC-C3   1         0.1000         180.00             2.
+P2-O2-P -O2   1         0.0300           0.00            -2.
+P2-O2-P -O2   1         0.0300           0.00             3.
+P -O2-P2-O2   1         0.0300           0.00            -2.
+P -O2-P2-O2   1         0.0300           0.00             3.
+P2-O2-P2-O2   1         0.0300           0.00            -2.
+P2-O2-P2-O2   1         0.0300           0.00             3.
+P -O2-P -O2   1         0.0300           0.00            -2.
+P -O2-P -O2   1         0.0300           0.00             3.
+P -O2-P -O3   1         0.1000           0.00            -2.
+P -O2-P -O3   1         0.0300           0.00             3.
+P -O2-P2-O3   1         0.1000           0.00            -2.
+P -O2-P2-O3   1         0.0300           0.00             3.
+P2-O2-P -O3   1         0.1000           0.00            -2.
+P2-O2-P -O3   1         0.0300           0.00             3.
+P2-O2-P2-O3   1         0.1000           0.00            -2.
+P2-O2-P2-O3   1         0.0300           0.00             3.
+
+H2-C4-C5-N2            14.0000         180.00             1.
+H2-C1-C1-NU             8.0000         180.00             1.
+H2-X -X -N2             0.6000         180.00             1.
+H2-X -X -NG             0.6000         180.00             1.
+H2-C4-C1-NG             1.6000         180.00             1.
+H1-X -X -N1             4.0000         180.00             1.
+H3-C1-C3-C3            36.0000         180.00             1.
+H3-X -X -C3            30.0000         180.00             1.
+C1-X -X -O1           140.0000         180.00             1.
+C1-X -X -OC           140.0000         180.00             1.
+C2-X -X -N1           180.0000         180.00             1.
+H3-NG-NI-C4            78.0000         180.00             1.
+H3-X -X -C4            40.0000         180.00             1.
+C9-X -X -C3            40.0000         180.00             1.
+HB-X -X -C3            30.0000         180.00             1.
+HB-X -X -CA            26.0000         180.00             1.
+HB-X -X -CB            26.0000         180.00             1.
+H2-C3-CB-N2           100.0000         180.00             1.
+H1-H1-CE-N1           -10.0000         180.00             1.
+O1-X -X -CE            80.0000         180.00             1.
+H3-X -X -CC           106.0000         180.00             1.
+H7-C3-C3-C8            36.0000         180.00             1.
+
+
+
+CHAR      RE                 !  these are the regular nonbons
+  H1        0.224500  0.046000                                                  
+  H2        0.224500  0.046000                                                  
+  H3        1.320000  0.022000                                                  
+  HB        0.900000  0.046000           ! nad/ppi, jjp1/adm jr.                
+  H4        0.224500  0.046000                                                  
+  H5        0.224500  0.046000                                                  
+  H6        1.320000  0.022000                                                  
+  H7        1.320000  0.022000                                                  
+  HT        0.224500  0.046000           ! TIP3P                                
+  N1        1.850000  0.200000                                                  
+  N2        1.850000  0.200000                                                  
+  NG        1.850000  0.200000                                                  
+  NU        1.850000  0.200000                                                  
+  N3        1.850000  0.200000                                                  
+  NA        1.850000  0.200000                                                  
+  NI        1.850000  0.200000                                                  
+  N4        1.850000  0.200000                                                  
+  N5        1.850000  0.200000                                                  
+  O1        1.700000  0.120000                                                  
+  OC        1.700000  0.120000                                                  
+  O2        1.770000  0.152100                                                  
+  O3        1.700000  0.120000                                                  
+  O4        1.770000  0.152100                                                  
+  O5        1.770000  0.152100                                                  
+  O6        1.770000  0.152100                                                  
+  OT        1.768200  0.152100           ! TIP3P                                
+  C1        1.800000  0.140000                                                  
+  CE        2.000000  0.070000           ! nad/ppi, jjp1/adm jr. (protein CC)   
+  C2        1.800000  0.140000                                                  
+  C3        1.800000  0.180000                                                  
+  CA        1.800000  0.180000           ! nad/ppi, jjp1/adm jr.                
+  CB        1.800000  0.180000           ! nad/ppi, jjp1/adm jr.                
+  CC        1.800000  0.180000           ! nad/ppi, jjp1/adm jr.                
+  CD        1.800000  0.180000           ! 5mc, adm jr.                         
+  C4        1.800000  0.120000                                                  
+  C5        1.800000  0.120000                                                  
+  C6        2.275000  0.020000           !equivalent to protein CT1             
+  CB        2.275000  0.020000           !equivalent to protein CT1             
+  CC        2.175000  0.055000           !equivalent to protein CT2             
+  C7        2.275000  0.020000           !equivalent to protein CT1             
+  C8        2.175000  0.055000           !equivalent to protein CT2             
+  C9        2.060000  0.080000           !equivalent to protein CT3             
+  P         2.150000  0.585000                                                  
+  P2        2.150000  0.585000           ! nad/ppi, jjp1/adm jr.                
+  SO        1.532000  0.100000           ! from Benoit Roux                     
+  MG        1.650000  0.001000           ! from Blaise Prodhom                  
+  DU        1.000000  0.000000           ! from Blaise Prodhom
+
+CHAR      RE                 ! these are the 1-4 terms
+  H1        0.224500  0.046000                                                  
+  H2        0.224500  0.046000                                                  
+  H3        1.320000  0.022000                                                  
+  HB        0.900000  0.046000           ! nad/ppi, jjp1/adm jr.                
+  H4        0.224500  0.046000                                                  
+  H5        0.224500  0.046000                                                  
+  H6        1.320000  0.022000                                                  
+  H7        1.320000  0.022000                                                  
+  HT        0.224500  0.046000           ! TIP3P                                
+  N1        1.850000  0.200000                                                  
+  N2        1.850000  0.200000                                                  
+  NG        1.850000  0.200000                                                  
+  NU        1.850000  0.200000                                                  
+  N3        1.850000  0.200000                                                  
+  NA        1.850000  0.200000                                                  
+  NI        1.850000  0.200000                                                  
+  N4        1.850000  0.200000                                                  
+  N5        1.850000  0.200000                                                  
+  O1        1.700000  0.120000                                                  
+  OC        1.700000  0.120000                                                  
+  O2        1.770000  0.152100                                                  
+  O3        1.700000  0.120000                                                  
+  O4        1.770000  0.152100                                                  
+  O5        1.770000  0.152100                                                  
+  O6        1.770000  0.152100                                                  
+  OT        1.768200  0.152100           ! TIP3P                                
+  C1        1.800000  0.140000                                                  
+  CE        2.000000  0.070000           ! nad/ppi, jjp1/adm jr. (protein CC)   
+  C2        1.800000  0.140000                                                  
+  C3        1.800000  0.180000                                                  
+  CA        1.800000  0.180000           ! nad/ppi, jjp1/adm jr.                
+  CB        1.800000  0.180000           ! nad/ppi, jjp1/adm jr.                
+  CC        1.800000  0.180000           ! nad/ppi, jjp1/adm jr.                
+  CD        1.800000  0.180000           ! 5mc, adm jr.                         
+  C4        1.800000  0.120000                                                  
+  C5        1.800000  0.120000                                                  
+  C6        1.900000  0.010000           !equivalent to protein CT1             
+  CB        1.900000  0.010000           !equivalent to protein CT1             
+  CC        1.900000  0.010000           !equivalent to protein CT2             
+  C7        1.900000  0.010000           !equivalent to protein CT1             
+  C8        1.900000  0.010000           !equivalent to protein CT2             
+  C9        1.900000  0.010000           !equivalent to protein CT3             
+  P         2.150000  0.585000                                                  
+  P2        2.150000  0.585000           ! nad/ppi, jjp1/adm jr.                
+  SO        1.532000  0.100000           ! from Benoit Roux                     
+  MG        1.650000  0.001000           ! from Blaise Prodhom                  
+  DU        1.000000  0.000000           ! from Blaise Prodhom
+
+END

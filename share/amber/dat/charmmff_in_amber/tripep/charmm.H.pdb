@@ -1,0 +1,35 @@
+REMARK   PRODUCTION DYNAMICS INPUT FILE TO GENERATE A                                 
+REMARK   298 K TRAJECTORY OF THE PROTEIN DIMER GCN4 LEUCINE ZIPPER FROM 2ZTA.PDB      
+REMARK   DATE:    11/12/99     16: 2:59      CREATED BY USER: case                    
+ATOM      1  N   THR     1      16.964  13.974   3.550  0.00  1.85      PDB 
+ATOM      2  H1  THR     1      16.269  13.922   2.778  0.00  0.80      PDB 
+ATOM      3  H2  THR     1      17.917  14.091   3.151  0.00  0.80      PDB 
+ATOM      4  H3  THR     1      16.743  14.785   4.162  0.00  0.80      PDB 
+ATOM      5  CA  THR     1      16.911  12.715   4.354  0.00  2.27      PDB 
+ATOM      6  HA  THR     1      16.967  11.877   3.675  0.00  1.32      PDB 
+ATOM      7  CB  THR     1      18.087  12.705   5.331  0.00  2.27      PDB 
+ATOM      8  HB  THR     1      18.013  13.551   6.047  0.00  1.32      PDB 
+ATOM      9  OG1 THR     1      19.254  12.847   4.529  0.00  1.77      PDB 
+ATOM     10  HG1 THR     1      19.897  13.304   5.076  0.00  0.80      PDB 
+ATOM     11  CG2 THR     1      18.131  11.440   6.179  0.00  2.06      PDB 
+ATOM     12 HG21 THR     1      18.048  10.542   5.530  0.00  1.32      PDB 
+ATOM     13 HG22 THR     1      17.285  11.437   6.899  0.00  1.32      PDB 
+ATOM     14 HG23 THR     1      19.093  11.389   6.733  0.00  1.32      PDB 
+ATOM     15  C   THR     1      15.617  12.680   5.067  0.00  2.00      PDB 
+ATOM     16  O   THR     1      15.135  13.741   5.535  0.00  1.70      PDB 
+ATOM     17  N   THR     2      15.050  11.498   5.182  0.00  1.85      PDB 
+ATOM     18  H   THR     2      15.428  10.672   4.772  0.00  0.80      PDB 
+ATOM     19  CA  THR     2      13.800  11.354   5.944  0.00  2.27      PDB 
+ATOM     20  HA  THR     2      13.438  12.340   6.195  0.00  1.32      PDB 
+ATOM     21  CB  THR     2      12.784  10.610   5.099  0.00  2.27      PDB 
+ATOM     22  HB  THR     2      11.848  10.442   5.673  0.00  1.32      PDB 
+ATOM     23  OG1 THR     2      13.364   9.360   4.756  0.00  1.77      PDB 
+ATOM     24  HG1 THR     2      12.986   8.718   5.362  0.00  0.80      PDB 
+ATOM     25  CG2 THR     2      12.451  11.323   3.797  0.00  2.06      PDB 
+ATOM     26 HG21 THR     2      13.368  11.441   3.181  0.00  1.32      PDB 
+ATOM     27 HG22 THR     2      12.036  12.331   4.013  0.00  1.32      PDB 
+ATOM     28 HG23 THR     2      11.710  10.730   3.220  0.00  1.32      PDB 
+ATOM     29  C   THR     2      14.118  10.664   7.274  0.00  2.00      PDB 
+ATOM     30  O   THR     2      15.013   9.787   7.376  0.00  1.70      PDB 
+ATOM     31  OXT THR     2      13.427  11.137   8.281  0.00  1.85      PDB 
+END

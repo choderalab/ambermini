@@ -1,0 +1,25 @@
+!#########################################################################
+!
+!		ATOM PROPERTIES TABLE
+!
+!
+TABLE_SHELL(	a,
+		Edit selected atoms,
+		XAUESensitiveUnit,
+		False,
+		EMPTY,
+		DOUBLE_W DOUBLE_W DOUBLE_W DOUBLE_W TYPE_W \
+		DOUBLE_W DOUBLE_W DOUBLE_W )
+
+!
+!	Titles for ATOM properties columns
+!
+TITLE_INSIDE(	aDataTitles,
+		DOUBLE_W DOUBLE_W DOUBLE_W DOUBLE_W TYPE_W \
+		DOUBLE_W DOUBLE_W DOUBLE_W , 
+		8,
+		NAME TYPE CHARGE ELEMENT unused \
+		PERT.name PERT.type DELTA.charge )
+!
+!
+!##########################################################################

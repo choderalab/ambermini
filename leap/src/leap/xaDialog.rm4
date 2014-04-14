@@ -1,0 +1,437 @@
+!
+!	File:	xaDialog.rm4
+!
+!	Description:
+!		This file contains the WCL resources to define
+!		dialog boxes used by xaLeap.
+!
+!
+
+
+
+!========================================================================
+!========================================================================
+!========================================================================
+!========================================================================
+!========================================================================
+!========================================================================
+!
+!
+!	Dialog boxes
+!
+!
+! ---- edit <unit|parmset>
+!
+!
+! -- form definition
+!
+Parse_CMD_DIALOG( 
+	dbEdit, 
+	editUnitForm,
+	edit (/*editUnitNameAsciiText);, 
+	editSme,
+	xtcpXACInitializeList(/*editUnitList,UP)  \
+	WcSetValueCB((this.height:400) (this.width:500)),
+	xtcpXACDestroyList(/*editUnitList),
+	Edit Unit/Parmset)
+
+XaLeap*editUnitForm.wcClassName:		Form
+XaLeap*editUnitForm.wcChildren:			editUnitVp editUnitPaned
+XaLeap*editUnitForm.shadowWidth:		0
+
+!
+! -- unit lister
+!
+DEFAULT_LIST( 
+	editUnitVp, 
+	editUnitList,
+	xtcpXACCopyValueTo(/*editUnitNameAsciiText),Unit:)
+
+XaLeap*editUnitList.doubleClickCallback: \
+	xtcpXACCopyValueTo(/*editUnitNameAsciiText) \
+	xtcpXACParseCommand( edit (/*editUnitNameAsciiText);)
+
+XaLeap*editUnitVp.left:				ChainLeft
+XaLeap*editUnitVp.right:			ChainForm
+XaLeap*editUnitVp.top:				ChainTop
+XaLeap*editUnitVp.bottom:			ChainBottom
+
+!
+! -- place to collect unit|prmset name
+!
+XaLeap*editUnitPaned.wcClassName:		Form
+XaLeap*editUnitPaned.wcChildren:		editUnitDesc editUnitName
+XaLeap*editUnitPaned.shadowWidth:		0
+!XaLeap*editUnitPaned.vertDistance:		14
+XaLeap*editUnitPaned.left:			ChainLeft
+XaLeap*editUnitPaned.right:			ChainForm
+XaLeap*editUnitPaned.top:			ChainBottom
+XaLeap*editUnitPaned.bottom:			ChainForm
+XaLeap*editUnitPaned.fromVert:			^editUnitVp
+
+XaLeap*editUnitDesc.wcClassName:		Label
+XaLeap*editUnitDesc.label:			Unit / ParmSet to edit:
+XaLeap*editUnitDesc.font:			DIALOG_LABEL_FONT
+XaLeap*editUnitDesc.borderWidth:		0
+XaLeap*editUnitDesc.left:			ChainLeft
+XaLeap*editUnitDesc.top:			ChainTop
+XaLeap*editUnitDesc.bottom:			ChainForm
+XaLeap*editUnitDesc.right:			ChainLeft
+XaLeap*editUnitDesc.horizDistance:		0
+
+XaLeap*editUnitName.fromHoriz:			^editUnitDesc
+XaLeap*editUnitName.left:			ChainLeft
+XaLeap*editUnitName.top:			ChainTop
+XaLeap*editUnitName.bottom:			ChainForm
+XaLeap*editUnitName.right:			ChainForm
+
+SINGLE_LINE_FRAME_ASCIITEXT(editUnitName)
+XaLeap*editUnitNameAsciiText.wcCallback: XASetKeyboardFocus(~.dForm)
+
+
+!-------------------------------------------------------------------
+!
+!	Dialog box for LoadOff
+!
+!
+
+Parse_CMD_DIALOG( 
+	dbLoadOff, 
+	LoadOffForm, 
+	`loadOff "(/*loadFilePath)(/*loadFileName)";', 
+	LoadOffSme,
+	POPUP_FILE_SELECTOR( /*loadFileList, /*loadFilePath) \
+	WcSetValueCB((this.height:500) (this.width:500)),
+	POPDOWN_FILE_SELECTOR( /*loadFileList),
+	Load Off File)
+
+XaLeap*LoadOffForm.wcClassName:		Paned
+XaLeap*LoadOffForm.wcChildren:		loadFileSelector
+XaLeap*LoadOffForm.orientation:		vertical
+XaLeap*LoadOffForm.internalBorderWidth:	8
+XaLeap*LoadOffForm.shadowWidth:		0
+XaLeap*LoadOffForm*borderWidth:		0
+
+FILE_SELECTOR( loadFileSelector, loadFilePath, loadFileList, loadFileName)
+
+XaLeap*LoadOffForm*loadFileSelector.resizeToPreferred:	True
+XaLeap*LoadOffForm.loadFileSelector.showGrip:		True
+
+
+
+!-------------------------------------------------------------------
+!
+!	Dialog box for SaveOff
+!
+!
+
+Parse_CMD_DIALOG( 
+	dbSaveOff, 
+	SaveOffForm, 
+	`saveOff (/*saveUnitParmsetList) "(/*saveFilePath)(/*saveFileName)";', 
+	SaveOffSme,	
+	xtcpXACInitializeList(/*saveUnitParmsetList,UP) \
+	POPUP_FILE_SELECTOR( /*saveFileList, /*saveFilePath) \
+	WcSetValueCB((this.height:500) (this.width:500)),
+	POPDOWN_FILE_SELECTOR( /*saveFileList),
+	Save Off File)
+
+XaLeap*SaveOffForm.wcClassName:		Paned
+XaLeap*SaveOffForm.wcChildren:		saveUnitParmsetVp  saveFileSelector
+XaLeap*SaveOffForm.orientation:		vertical
+XaLeap*SaveOffForm.internalBorderWidth:	8
+XaLeap*SaveOffForm.shadowWidth:		0
+XaLeap*SaveOffForm*borderWidth:		0
+
+DEFAULT_LIST( saveUnitParmsetVp, saveUnitParmsetList,EMPTY,Unit/ParmSet:)
+XaLeap*SaveOffForm*saveUnitParmsetVp.resizeToPreferred:	True
+XaLeap*SaveOffForm*saveUnitParmsetVp.preferredPaneSize:	200
+
+XaLeap*SaveOffForm*saveUnitParmsetVp.left:		ChainLeft
+XaLeap*SaveOffForm*saveUnitParmsetVp.right:		ChainForm
+XaLeap*SaveOffForm*saveUnitParmsetVp.top:		ChainTop
+XaLeap*SaveOffForm*saveUnitParmsetVp.bottom:		ChainBottom
+
+
+FILE_SELECTOR( saveFileSelector, saveFilePath, saveFileList, saveFileName)
+XaLeap*SaveOffForm*saveFileSelector.resizeToPreferred:	True
+XaLeap*SaveOffForm.saveFileSelector.showGrip:		True
+
+XaLeap*SaveOffForm*saveFileSelector.left:		ChainLeft
+XaLeap*SaveOffForm*saveFileSelector.right:		ChainForm
+XaLeap*SaveOffForm*saveFileSelector.top:		ChainBottom
+XaLeap*SaveOffForm*saveFileSelector.bottom:		ChainForm
+XaLeap*SaveOffForm*saveFileSelector.fromVert:		^saveUnitParmsetVp
+
+
+!-------------------------------------------------------------------
+!
+!	Dialog box for SavePDB
+!
+!
+
+Parse_CMD_DIALOG( 
+	dbSavePDB, 
+	SavePDBForm, 
+	`savePDB (/*saveUnitListPDB) "(/*saveFilePathPDB)(/*saveFileName)";', 
+	SavePDBSme,	
+	xtcpXACInitializeList(/*saveUnitListPDB, U) \
+	POPUP_FILE_SELECTOR( /*saveFileListPDB, /*saveFilePathPDB) \
+	WcSetValueCB((this.height:500) (this.width:500)),
+	POPDOWN_FILE_SELECTOR( /*saveFileListPDB),
+	Save PDB File)
+
+XaLeap*SavePDBForm.wcClassName:		Paned
+XaLeap*SavePDBForm.wcChildren:		saveUnitVpPDB  saveFileSelectorPDB
+XaLeap*SavePDBForm.orientation:		vertical
+XaLeap*SavePDBForm.internalBorderWidth:	8
+XaLeap*SavePDBForm.shadowWidth:		0
+XaLeap*SavePDBForm*borderWidth:		0
+
+DEFAULT_LIST( saveUnitVpPDB, saveUnitListPDB, EMPTY, Unit:)
+FILE_SELECTOR( saveFileSelectorPDB, saveFilePathPDB, saveFileListPDB, saveFileName)
+
+XaLeap*SavePDBForm*saveUnitVpPDB.resizeToPreferred:	True
+XaLeap*SavePDBForm*saveUnitVpPDB.preferredPaneSize:	200
+
+XaLeap*SavePDBForm*saveFileSelectorPDB.resizeToPreferred:	True
+XaLeap*SavePDBForm.saveFileSelectorPDB.showGrip:		True
+
+
+!-------------------------------------------------------------------
+!
+!	Dialog box for loadPDB
+!
+
+Parse_CMD_DIALOG( 
+	dbLoadPDB, 
+	LoadPDBForm, 
+	`(/*lPVarName) = loadPDB "(/*LoadPDBFilePath)(/*LoadPDBFileName)";',
+	LoadPDBSme,
+	POPUP_FILE_SELECTOR( /*LoadPDBFileList, /*LoadPDBFilePath) \
+	WcSetValueCB((this.height:500) (this.width:500)),
+	POPDOWN_FILE_SELECTOR( /*LoadPDBFileList),
+	Load PDB File)
+!
+!-- overall form:
+!
+XaLeap*LoadPDBForm.wcClassName:		Paned
+XaLeap*LoadPDBForm.wcChildren:		LoadPDBVar sprt LoadPDBFileSelector
+XaLeap*LoadPDBForm.orientation:		vertical
+XaLeap*LoadPDBForm.internalBorderWidth:	8
+XaLeap*LoadPDBForm.shadowWidth:		0
+XaLeap*LoadPDBForm*borderWidth:		0
+XaLeap*LoadPDBForm.defaultDistance:	2
+
+!
+!----- 'variable name' part of form:
+!
+XaLeap*LoadPDBForm*LoadPDBVar.wcClassName:		Paned
+XaLeap*LoadPDBForm*LoadPDBVar.wcChildren:		lPVarLabel lPVarFrame
+XaLeap*LoadPDBForm*LoadPDBVar.orientation:		horizontal
+XaLeap*LoadPDBForm*LoadPDBVar*showGrip:			False
+XaLeap*LoadPDBForm*LoadPDBVar.internalBorderWidth:	0
+XaLeap*LoadPDBForm*LoadPDBVar.shadowWidth:		0
+
+
+XaLeap*lPVarLabel.wcClassName:			Label
+XaLeap*lPVarLabel.label:			Variable:
+XaLeap*lPVarLabel.font:				DIALOG_LABEL_FONT
+
+XaLeap*lPVarFrame.wcClassName:			Frame
+XaLeap*lPVarFrame.wcChildren:			lPVarName
+XaLeap*lPVarFrame.frameType:         		Sunken
+XaLeap*lPVarFrame.layoutPolicy:      		single
+XaLeap*lPVarFrame.shadowWidth:       		2
+XaLeap*lPVarFrame.vSpace:            		0
+XaLeap*lPVarFrame.hSpace:            		0
+
+XaLeap*lPVarName.wcClassName:    		AsciiText
+SINGLE_LINE_ASCIITEXT(lPVarName)
+
+!
+!----- 'divider line' part of form:
+!	 (just putting something seems to make a sizing divider)
+!
+XaLeap*LoadPDBForm*sprt.wcClassName:		Simple
+XaLeap*LoadPDBForm*sprt.width:			1
+XaLeap*LoadPDBForm*sprt.height:			1
+
+!
+!----- 'file selector' part of form:
+!
+XaLeap*LoadPDBForm*LoadPDBFileSelector.resizeToPreferred:	True
+XaLeap*LoadPDBForm.LoadPDBFileSelector.showGrip:		True
+
+FILE_SELECTOR( LoadPDBFileSelector, LoadPDBFilePath, LoadPDBFileList, LoadPDBFileName)
+
+
+!-------------------------------------------------------------------
+!
+!	Dialog box for Impose
+!
+!
+
+
+Parse_CMD_DIALOG( 
+	dbImpose, 
+	imposeForm, 
+ `impose (/*imposeUnit) {(/*imposeRangeTextAsciiText)}, (/*imposeConst);', 
+	imposeSme,
+	xtcpXACInitializeList(/*imposeUnit,U) \
+	xtcpXACInitializeList(/*imposeConst,L) \
+	WcSetValueCB((this.height:500) (this.width:500)),
+	xtcpXACDestroyList(/*imposeUnit) \
+	xtcpXACDestroyList(/*imposeConst),
+	Impose)
+
+XaLeap*imposeForm.wcClassName:			Paned
+XaLeap*imposeForm.wcChildren:			imposePaned imposeConstFormVp
+XaLeap*imposeForm.orientation:			vertical
+XaLeap*imposeForm.shadowWidth:			0
+XaLeap*imposeForm*resizeToPrefered:		True
+XaLeap*imposeForm*borderWidth:			0
+XaLeap*imposeForm.vSpace:			0
+XaLeap*imposeForm.hSpace:			0
+	
+XaLeap*imposeForm.imposePaned.wcClassName:	Form
+XaLeap*imposeForm.imposePaned.wcChildren:	imposeUnitVp imposeRangeForm
+XaLeap*imposeForm.imposePaned.showGrip:		True
+XaLeap*imposeForm.imposePaned.shadowWidth:	0
+XaLeap*imposeForm.imposePaned.defaultDistance:	2
+
+DEFAULT_LIST( imposeUnitVp, imposeUnit,EMPTY, Unit:)
+XaLeap*imposePaned.imposeUnitVp.left:		ChainLeft
+XaLeap*imposePaned.imposeUnitVp.right:		ChainForm
+XaLeap*imposePaned.imposeUnitVp.top:		ChainTop
+XaLeap*imposePaned.imposeUnitVp.bottom:		ChainBottom
+
+XaLeap*imposeForm.imposeConstFormVp.wcClassName:Form
+XaLeap*imposeForm.imposeConstFormVp.wcChildren:	imposeConstVp
+XaLeap*imposeForm.imposeConstFormVp.shadowWidth:0
+XaLeap*imposeForm.imposeConstFormVp.min:	100
+
+DEFAULT_LIST( imposeConstVp, imposeConst,EMPTY,Internal coordinates:)
+XaLeap*imposeConstVp.left:		ChainLeft
+XaLeap*imposeConstVp.right:		ChainForm
+XaLeap*imposeConstVp.top:		ChainTop
+XaLeap*imposeConstVp.bottom:		ChainForm
+
+
+XaLeap*imposeRangeForm.wcClassName:		Form
+XaLeap*imposeRangeForm.wcChildren:		imposeRangeLabel \
+						imposeRangeText
+XaLeap*imposeRangeForm.shadowWidth:		0
+XaLeap*imposeRangeForm.left:			ChainLeft
+XaLeap*imposeRangeForm.right:			ChainForm
+XaLeap*imposeRangeForm.top:			ChainBottom
+XaLeap*imposeRangeForm.bottom:			ChainForm
+XaLeap*imposeRangeForm.fromVert:		^imposeUnitVp
+
+
+XaLeap*imposeRangeLabel.wcClassName:		Label
+XaLeap*imposeRangeLabel.label:			Sequence numbers:
+XaLeap*imposeRangeLabel.font:			DIALOG_LABEL_FONT
+XaLeap*imposeRangeLabel.left:			ChainLeft
+XaLeap*imposeRangeLabel.top:			ChainTop
+XaLeap*imposeRangeLabel.bottom:			ChainForm
+XaLeap*imposeRangeLabel.right:			ChainLeft
+XaLeap*imposeRangeLabel.horizDistance:		0
+
+XaLeap*imposeRangeText.fromHoriz:		^imposeRangeLabel
+XaLeap*imposeRangeText.left:			ChainLeft
+XaLeap*imposeRangeText.top:			ChainTop
+XaLeap*imposeRangeText.bottom:			ChainForm
+XaLeap*imposeRangeText.right:			ChainForm
+
+SINGLE_LINE_FRAME_ASCIITEXT(imposeRangeText)
+XaLeap*imposeRangeText*string: { 1 999 }
+
+
+
+!-------------------------------------------------------------------
+!
+!	Dialog box for Quit
+!
+!
+
+
+
+DIALOG_QUEST_OK_CANCEL( dbQuit,\n Quit XLEaP ? Un-saved changes will be lost ! \n ,
+xtcpXACParseCommand(quit;),EMPTY,EMPTY,Quit, Quit, Cancel)
+
+
+NO_BORDER(quitQuery)
+
+
+!-------------------------------------------------------------------
+!
+!	Dialog box loadAmberPrep
+!
+!
+!
+
+Parse_CMD_DIALOG( 
+	dbLAP, 
+	lAPInfo, 
+	`loadAmberPrep "(*lAPFilePath)(*lAPFileName)";',
+	LoadAmberPrepSme,
+	POPUP_FILE_SELECTOR( /*lAPFileList, /*lAPFilePath) \
+	WcSetValueCB((this.height:500) (this.width:500)),
+	POPDOWN_FILE_SELECTOR( /*lAPFileList),
+	Load Amber Prep File)
+	
+FILE_SELECTOR( lAPInfo, lAPFilePath, lAPFileList, lAPFileName)
+
+!-------------------------------------------------------------------
+!
+!	Dialog box for SaveAmberPrep
+!
+!
+
+Parse_CMD_DIALOG( 
+	dbSAP, 
+	SaveAmberPrepForm, 
+	`saveAmberPrep (/*saveUnitList) "(/*saveFilePathP)(/*saveFileNameP)";', 
+	SaveAmberPrepSme,	
+	xtcpXACInitializeList(/*saveUnitList,U) \
+	POPUP_FILE_SELECTOR( /*saveFileListP, /*saveFilePathP) \
+	WcSetValueCB((this.height:500) (this.width:500)),
+	POPDOWN_FILE_SELECTOR( /*saveFileListP),
+	Save Off File)
+
+XaLeap*SaveAmberPrepForm.wcClassName:		Paned
+XaLeap*SaveAmberPrepForm.wcChildren:		saveUnitVp saveFileSelectorP
+XaLeap*SaveAmberPrepForm.orientation:		vertical
+XaLeap*SaveAmberPrepForm.internalBorderWidth:	8
+XaLeap*SaveAmberPrepForm.shadowWidth:		0
+XaLeap*SaveAmberPrepForm*borderWidth:		0
+
+DEFAULT_LIST( saveUnitVp, saveUnitList,EMPTY,Unit:)
+XaLeap*SaveAmberPrepForm*saveUnitVp.resizeToPreferred:		True
+XaLeap*SaveAmberPrepForm*saveUnitVp.preferredPaneSize:		200
+
+FILE_SELECTOR( saveFileSelectorP, saveFilePathP, saveFileListP, saveFileNameP)
+XaLeap*SaveAmberPrepForm*saveFileSelectorP.resizeToPreferred:	True
+XaLeap*SaveAmberPrepForm.saveFileSelectorP.showGrip:		True
+
+
+!-------------------------------------------------------------------
+!
+!	Dialog box 'source'
+!
+!
+!
+
+Parse_CMD_DIALOG( 
+	dbSource, 
+	sourceInfo, 
+	`source "(/*sourceFilePath)(/*sourceFileName)";', 
+	sourceSme,
+	POPUP_FILE_SELECTOR( /*sourceFileList, /*sourceFilePath) \
+	WcSetValueCB((this.height:500) (this.width:500)),
+	POPDOWN_FILE_SELECTOR( /*sourceFileList),
+	Source)
+
+FILE_SELECTOR( sourceInfo, sourceFilePath, sourceFileList, sourceFileName)
+

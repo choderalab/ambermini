@@ -1,0 +1,9 @@
+!
+!
+! Define the monochrome flag for those systems
+! whos 'm4' preprocessor does not support command line options.
+!
+
+define( MONOCHROME, 1)
+
+

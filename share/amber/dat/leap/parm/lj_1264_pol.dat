@@ -1,0 +1,89 @@
+H     0.387    Referenced or adopted from JACS,112,8543,90,K.J.Miller
+HC    0.387    Referenced or adopted from JACS,112,8543,90,K.J.Miller
+H1    0.387    Referenced or adopted from JACS,112,8543,90,K.J.Miller
+H2    0.387    Referenced or adopted from JACS,112,8543,90,K.J.Miller
+H3    0.387    Referenced or adopted from JACS,112,8543,90,K.J.Miller
+HA    0.387    Referenced or adopted from JACS,112,8543,90,K.J.Miller
+H4    0.387    Referenced or adopted from JACS,112,8543,90,K.J.Miller
+H5    0.387    Referenced or adopted from JACS,112,8543,90,K.J.Miller
+HO    0.387    Referenced or adopted from JACS,112,8543,90,K.J.Miller
+HS    0.387    Referenced or adopted from JACS,112,8543,90,K.J.Miller
+HW    0.000    Assume the hydrogens of water have zero polarizability
+HP    0.387    Referenced or adopted from JACS,112,8543,90,K.J.Miller
+HZ    0.387    Referenced or adopted from JACS,112,8543,90,K.J.Miller
+C     1.352    Referenced or adopted from JACS,112,8543,90,K.J.Miller
+CA    1.352    Referenced or adopted from JACS,112,8543,90,K.J.Miller
+CB    1.352    Referenced or adopted from JACS,112,8543,90,K.J.Miller
+CC    1.352    Referenced or adopted from JACS,112,8543,90,K.J.Miller
+CD    1.352    Referenced or adopted from JACS,112,8543,90,K.J.Miller
+CK    1.352    Referenced or adopted from JACS,112,8543,90,K.J.Miller
+CM    1.352    Referenced or adopted from JACS,112,8543,90,K.J.Miller
+CN    1.352    Referenced or adopted from JACS,112,8543,90,K.J.Miller
+CP    1.352    Referenced or adopted from JACS,112,8543,90,K.J.Miller
+CQ    1.352    Referenced or adopted from JACS,112,8543,90,K.J.Miller
+CR    1.352    Referenced or adopted from JACS,112,8543,90,K.J.Miller
+CI    1.352    Referenced or adopted from JACS,112,8543,90,K.J.Miller
+CT    1.061    Referenced or adopted from JACS,112,8543,90,K.J.Miller
+CV    1.352    Referenced or adopted from JACS,112,8543,90,K.J.Miller
+CW    1.352    Referenced or adopted from JACS,112,8543,90,K.J.Miller
+C*    1.352    Referenced or adopted from JACS,112,8543,90,K.J.Miller
+CY    1.352    Referenced or adopted from JACS,112,8543,90,K.J.Miller
+CZ    1.352    Referenced or adopted from JACS,112,8543,90,K.J.Miller
+N     1.090    Referenced or adopted from JACS,112,8543,90,K.J.Miller
+NA    1.090    Referenced or adopted from JACS,112,8543,90,K.J.Miller
+NB    1.090    Referenced or adopted from JACS,112,8543,90,K.J.Miller
+NC    1.090    Referenced or adopted from JACS,112,8543,90,K.J.Miller
+N2    1.090    Referenced or adopted from JACS,112,8543,90,K.J.Miller
+N3    1.090    Referenced or adopted from JACS,112,8543,90,K.J.Miller
+NT    1.090    Referenced or adopted from JACS,112,8543,90,K.J.Miller
+N*    1.090    Referenced or adopted from JACS,112,8543,90,K.J.Miller
+NY    1.090    Referenced or adopted from JACS,112,8543,90,K.J.Miller
+O     0.569    Referenced or adopted from JACS,112,8543,90,K.J.Miller
+O2    0.569    Referenced or adopted from JACS,112,8543,90,K.J.Miller
+OW    1.444    From "The Structure and Properties of Water" by D. Eisenberg and W. Kauzmann
+OH    0.637    Referenced or adopted from JACS,112,8543,90,K.J.Miller
+OS    0.637    Referenced or adopted from JACS,112,8543,90,K.J.Miller
+S     3.000    Referenced or adopted from JACS,112,8543,90,K.J.Miller
+SH    3.000    Referenced or adopted from JACS,112,8543,90,K.J.Miller
+P     1.538    Referenced or adopted from JACS,112,8543,90,K.J.Miller
+Li    0.029    Referenced from J. Phys. C: Solid State Phys.11,1541,(1978)
+IP    0.250    Assume Na+ and referenced from J. Phys. C: Solid State Phys.11,1541,(1978)
+Na    0.250    Referenced from J. Phys. C: Solid State Phys.11,1541,(1978)
+K     1.057    Referenced from J. Phys. C: Solid State Phys.11,1541,(1978)
+Rb    1.560    Referenced from J. Phys. C: Solid State Phys.11,1541,(1978)
+Cs    2.588    Referenced from J. Phys. C: Solid State Phys.11,1541,(1978)
+MG    0.048    Caculated from B3LYP/6-311++G(2d,2p) level of theory  
+C0    0.477    Caculated from B3LYP/6-311++G(2d,2p) level of theory
+Zn    0.344    Caculated from B3LYP/6-311++G(2d,2p) level of theory 
+CU    0.413    Caculated from B3LYP/6-311++G(2d,2p) level of theory
+FE    0.518    Caculated from B3LYP/6-311++G(2d,2p) level of theory
+F     0.320    From Applequist JACS,94,2952,(1972)
+Cl    1.910    From Applequist JACS,94,2952,(1972)
+Br    2.880    From Applequist JACS,94,2952,(1972)
+I     4.690    From Applequist JACS,94,2952,(1972)
+IM    1.910    Assume is Cl- and from Applequist JACS,94,2952,(1972)
+Li+   0.029    Referenced from J. Phys. C: Solid State Phys.11,1541,(1978)
+Na+   0.250    Referenced from J. Phys. C: Solid State Phys.11,1541,(1978)
+K+    1.057    Referenced from J. Phys. C: Solid State Phys.11,1541,(1978)    
+Rb+   1.560    Referenced from J. Phys. C: Solid State Phys.11,1541,(1978)
+Cs+   2.588    Referenced from J. Phys. C: Solid State Phys.11,1541,(1978)
+F-    0.320    From Applequist JACS,94,2952,(1972)
+Cl-   1.910    From Applequist JACS,94,2952,(1972)
+Br-   2.880    From Applequist JACS,94,2952,(1972)
+I-    4.690    From Applequist JACS,94,2952,(1972)
+Be2+  0.0067   Caculated from B3LYP/6-311++G(2d,2p) level of theory
+Cu2+  0.413    Caculated from B3LYP/6-311++G(2d,2p) level of theory 
+Ni2+  0.395    Caculated from B3LYP/6-311++G(2d,2p) level of theory 
+Zn2+  0.344    Caculated from B3LYP/6-311++G(2d,2p) level of theory
+Co2+  0.447    Caculated from B3LYP/6-311++G(2d,2p) level of theory
+Cr2+  0.623    Caculated from B3LYP/6-311++G(2d,2p) level of theory
+Fe2+  0.518    Caculated from B3LYP/6-311++G(2d,2p) level of theory
+Mg2+  0.048    Caculated from B3LYP/6-311++G(2d,2p) level of theory
+V2+   0.620    Caculated from B3LYP/6-311++G(2d,2p) level of theory
+Mn2+  0.534    Caculated from B3LYP/6-311++G(2d,2p) level of theory
+Hg2+  0.707    Caculated from B3LYP/6-311++G(2d,2p) level of theory
+Cd2+  0.427    Caculated from B3LYP/6-311++G(2d,2p) level of theory
+Ca2+  0.477    Caculated from B3LYP/6-311++G(2d,2p) level of theory
+Sn2+  3.083    Caculated from B3LYP/6-311++G(2d,2p) level of theory
+Sr2+  0.813    Caculated from B3LYP/6-311++G(2d,2p) level of theory
+Ba2+  1.496    Caculated from B3LYP/6-311++G(2d,2p) level of theory

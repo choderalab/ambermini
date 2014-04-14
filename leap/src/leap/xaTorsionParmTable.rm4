@@ -1,0 +1,21 @@
+!#####################################################################
+!
+!			TORSION PARAMETERS TABLE
+!
+!
+TABLE_SHELL(	tParm,
+		Torsion parameters table,
+		SetSensitiveCB(*torsionParms),
+		True,
+		edit,
+		TYPE_W TYPE_W TYPE_W TYPE_W DOUBLE_W DOUBLE_W DOUBLE_W DESC_W )
+
+!#####################################################################
+!
+!       Titles for Angle Parameters columns
+!
+
+TITLE_INSIDE(	tParmDataTitles,
+		TYPE_W TYPE_W TYPE_W TYPE_W DOUBLE_W DOUBLE_W DOUBLE_W DESC_W,
+		8,
+		TYPE_1 TYPE_2 TYPE_3 TYPE_4 N 'PK/IDIVF' P0 DESCRIPTION )

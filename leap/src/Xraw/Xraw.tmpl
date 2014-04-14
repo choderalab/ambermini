@@ -1,0 +1,71 @@
+
+#ifndef XrawBuildIncludes
+#define XrawBuildIncludes(srclist,dstSUBdir,dstUPdir)			@@\
+includes::								@@\
+	$(MKDIRHIER) ../X11/dstSUBdir				        @@\
+	@(set -x; cd ../X11/dstSUBdir; for i in srclist; do \	        @@\
+		$(RM) $$i; \						@@\
+		$(LN) dstUPdir/$(CURRENT_DIR)/$$i .; \	                @@\
+	done)
+#endif /* XrawBuildIncludes */
+
+
+/*
+ * Instead of SharedLibraryObjectRule 
+ */	
+#ifndef XrawSharedLibraryObjectRule
+#define XrawSharedLibraryObjectRule()                                   @@\
+all::                                                                   @@\
+	@if [ ! -d shared ]; then mkdir shared; else exit 0; fi         @@\
+                                                                        @@\
+.c.o:                                                                   @@\
+	$(RM) $@ shared/$@                                              @@\
+	$(CC) -pic -c $(SHAREDCODEDEF) $(SHLIBDEF) $(CFLAGS) $*.c       @@\
+	$(CP) $*.o shared/$*.o                                          @@\
+                                                                        @@\
+clean::                                                                 @@\
+	-@if [ -d shared ]; then echo "	$(RM) shared/?*.o"; \           @@\
+	$(RM) shared/?*.o; else exit 0; fi                              @@\
+                                                                        @@\
+
+#endif /* XrawSharedLibraryObjectRule()*/
+
+/*
+ * Instead of DebuggedLibraryObjectRule 
+ */	
+#ifndef XrawDebuggedLibraryObjectRule
+#define XrawDebuggedLibraryObjectRule()                                 @@\
+all::                                                                   @@\
+	@if [ ! -d debugger ]; then mkdir debugger; else exit 0; fi     @@\
+                                                                        @@\
+.c.o:                                                                   @@\
+	$(RM) $@ debugger/$@                                            @@\
+	$(CC) -g -c $(CFLAGS) $*.c                                      @@\
+	$(CP) $*.o debugger/$*.o                                        @@\
+                                                                        @@\
+clean::                                                                 @@\
+	-@if [ -d debugger ]; then echo "	$(RM) debugger/?*.o"; \ @@\
+	$(RM) debugger/?*.o; else exit 0; fi                            @@\
+                                                                        @@\
+
+#endif /* XrawDebuggedLibraryObjectRule()*/
+
+#ifndef XrawSharedLibraryRevisionLink
+#define XrawSharedLibraryRevisionLink(rev)                              @@\
+all:: lib$(LIBRARY_NAME).so                                             @@\
+                                                                        @@\
+lib$(LIBRARY_NAME).so :                                                 @@\
+	@if [ ! -f lib$(LIBRARY_NAME).so ];\                            @@\
+	then $(LN) lib$(LIBRARY_NAME).so.rev lib$(LIBRARY_NAME).so;\    @@\
+	else exit 0;\                                                   @@\
+	fi
+#endif /* XrawSharedLibraryRevisionLink */
+
+MKDIRHIER=sh mkdirhier.sh
+
+#if defined(AlphaArchitecture)
+
+        CDEBUGFLAGS     = -taso -non_shared
+        EXTRA_LIBRARIES = $(DNETLIB)
+
+#endif

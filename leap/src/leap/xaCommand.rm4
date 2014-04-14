@@ -1,0 +1,520 @@
+!
+!	COMMAND LINE INTERFACE
+!
+!
+!
+
+!
+!	Include descriptions for dialog boxes
+!
+include(xaDialog.rm4)
+
+
+XaLeap.title:			XLEaP: Universe Editor
+XaLeap.wcChildren:		commandPanelAndText
+XaLeap.preferredPaneSize:	800
+XaLeap.wcPopups:		dbQuit 		\
+				dbAbout_1 	\
+				dbLoadOff 	\
+				dbSaveOff 	\
+				dbLoadPDB 	\
+				dbSavePDB 	\
+				dbLAP	 	\
+				dbSAP	 	\
+				dbImpose 	\
+				dbEdit 		\
+				dbSource 
+
+
+XaLeap*background:		BACKGROUND
+XaLeap*foreground:		FOREGROUND
+XaLeap*borderColor:		BORDER
+XaLeap*Command.background:	COMMAND_BACKGROUND
+XaLeap*Command.font:		DIALOG_BUTTON_FONT
+XaLeap*Toggle.background:	COMMAND_BACKGROUND
+XaLeap*Viewport*background:	COMMAND_BACKGROUND
+XaLeap*SimpleMenu*background:	INPUT_BACKGROUND
+XaLeap*MenuButton.background:	MENU_BACKGROUND
+XaLeap*translations:	`#override' \
+	<Message>WM_PROTOCOLS: xManageDelete()\n\
+
+!	<Message>WM_DELETE_WINDOW: WcPopupACT( dbQuit )\n\
+!	<Message>WM_SAVE_YOURSELF: WcPopupACT( dbQuit )\n\
+	
+			
+XaLeap*autoFill:		True
+
+!
+!	PANEL_BUTTON($1,$2,$3)
+!
+!	$1 - name of button Widget to create
+!	$2 - Label for button
+!	$3 - Widget to popup when button is pressed
+!
+
+define(PANEL_BUTTON,
+XaLeap*$1.wcClassName:		Command
+XaLeap*$1.wcPopups:		$3
+XaLeap*$1.label:		$2
+XaLeap*$1.internalWidth:	20
+XaLeap*$1.justify:		left
+XaLeap*$1.callback:		WcSetInsensitiveCB(this) WcPopupCB(*$3)
+XaLeap*$1.left:		0
+XaLeap*$1.right:	100
+XaLeap*$1.top:		$4
+XaLeap*$1.bottom:	$5
+XaLeap*$1.font:			COMMAND_BUTTON_FONT
+)
+
+XaLeap*commandPanelAndText.wcClassName:		Paned
+XaLeap*commandPanelAndText.wcChildren:		commandBar commands
+XaLeap*commandPanelAndText.orientation:		vertical
+XaLeap*commandPanelAndText.shadowWidth:		0
+XaLeap*commandPanelAndText.highlightThickness:	0
+XaLeap*commandPanelAndText.internalBorderWidth: 0
+XaLeap*commandPanelAndText.vSpace:		0
+XaLeap*commandPanelAndText.hSpace:		0
+
+XaLeap*commandBar.wcClassName:			Paned
+XaLeap*commandBar.background:			MENU_BACKGROUND
+XaLeap*commandBar.internalBorderWidth:		0
+XaLeap*commandBar.shadowWidth:			2
+XaLeap*commandBar.orientation:			horizontal
+XaLeap*commandBar.wcChildren:			fileMenuBut 	\
+						editMenuBut 	\
+						verbosityMenuBut\
+						blank
+
+XaLeap*commandBar.blank.background:		MENU_BACKGROUND
+
+XaLeap*commandBar*fileMenuBut.wcClassName:	MenuButton
+XaLeap*commandBar*fileMenuBut.label:		File
+XaLeap*commandBar*fileMenuBut.wcPopups:		fileMenuSh
+XaLeap*commandBar*fileMenuBut.menuName:		fileMenuSh
+XaLeap*commandBar*fileMenuBut.showGrip:		False
+
+XaLeap*commandBar*editMenuBut.wcClassName:	MenuButton
+XaLeap*commandBar*editMenuBut.label:		Edit
+XaLeap*commandBar*editMenuBut.wcPopups:		editMenuSh
+XaLeap*commandBar*editMenuBut.menuName:		editMenuSh
+XaLeap*commandBar*editMenuBut.showGrip:		False
+
+XaLeap*editMenuBut*editMenuSh.wcClassName:	SimpleMenu
+XaLeap*editMenuBut*editMenuSh.SmeBSB.leftMargin:8
+XaLeap*editMenuBut*editMenuSh.wcChildren:	editSme		\
+						menuLine		\
+						imposeSme	
+MENUOPTION( editSme, Edit, WcPopdown(~))
+MENUOPTION( imposeSme, Impose, WcPopdown(~))
+
+XaLeap*fileMenuBut*fileMenuSh.wcClassName:	SimpleMenu
+XaLeap*fileMenuBut*fileMenuSh.SmeBSB.leftMargin:8
+XaLeap*fileMenuBut*fileMenuSh.wcChildren:	aboutSme	\
+						menuLine	\
+						LoadOffSme	\
+						SaveOffSme	\
+						menuLine	\
+						LoadPDBSme	\
+						SavePDBSme	\
+						menuLine	\
+						LoadAmberPrepSme	\
+						SaveAmberPrepSme	\
+						menuLine	\
+						sourceSme	\
+						menuLine	\
+						quitSme
+
+MENUOPTION( aboutSme, 		About LEaP, 		WcPopupCB(/*dbAbout_1))
+MENUOPTION( LoadOffSme, 	Load Off file, 		WcPopupCB(/*dbLoadOff))
+MENUOPTION( SaveOffSme, 	Save Off file, 		WcPopupCB(/*dbSaveOff))
+MENUOPTION( LoadPDBSme, 	Load PDB file, 		WcPopupCB(/*dbLoadPDB))
+MENUOPTION( SavePDBSme, 	Save PDB file, 		WcPopupCB(/*dbSavePDB))
+MENUOPTION( LoadAmberPrepSme, 	Load Amber Prep file, 	WcPopupCB(/*dbLAP))
+MENUOPTION( SaveAmberPrepSme, 	Save Amber Prep file, 	WcPopupCB(/*dbSAP))
+MENUOPTION( sourceSme, 		Source file, 		WcPopupCB(/*dbSource))
+MENUOPTION( quitSme, 		Quit,			WcPopupGrabCB(/*dbQuit))
+
+MENUOPTION( editSme, 		Edit unit/parmset,	WcPopupCB(/*dbEdit))
+MENUOPTION( imposeSme, 		Impose,			WcPopupCB(/*dbImpose))
+
+
+XaLeap*commandBar*verbosityMenuBut.wcClassName:		MenuButton
+XaLeap*commandBar*verbosityMenuBut.label:		Verbosity
+XaLeap*commandBar*verbosityMenuBut.wcPopups:		verbosityMenuSh
+XaLeap*commandBar*verbosityMenuBut.menuName:		verbosityMenuSh
+XaLeap*commandBar*verbosityMenuBut.showGrip:		False
+
+XaLeap*verbosityMenuBut*verbosityMenuSh.wcClassName:		SimpleMenu
+XaLeap*verbosityMenuBut*verbosityMenuSh.wcChildren:		l0  l1  l2
+XaLeap*verbosityMenuBut*verbosityMenuSh.SmeBSB.switched: 	True
+XaLeap*verbosityMenuBut*verbosityMenuSh.SmeBSB.leftMargin:	28
+
+
+MENUOPTION( l0, Minimum messages, xtcpXACParseCommand(verbosity 0;))
+MENUOPTION( l1, All messages, xtcpXACParseCommand(verbosity 1;))
+MENUOPTION( l2, All messages and expand source files, xtcpXACParseCommand(verbosity 2;))
+
+XaLeap*verbosityMenuBut*verbosityMenuSh.l0.state:	True
+
+XaLeap*commandPanel.wcClassName:		Paned
+XaLeap*commandPanel.wcChildren:			commandButtons sprt panelQuit
+XaLeap*commandPanel.internalBorderWidth:	0
+XaLeap*commandPanel.internalBorderWidth:	0
+XaLeap*commandPanel.showGrips:			False
+
+XaLeap*commandButtons.wcClassName:		Frame
+XaLeap*commandButtons.wcChildren:		controlPanel
+XaLeap*commandButtons.layoutPolicy:			single
+XaLeap*commandButtons.shadowWidth:		0
+XaLeap*commandButtons.skipAdjust:		False
+
+XaLeap*commandPanel.sprt.wcClassName:		Separator
+XaLeap*commandPanel.sprt.separatorType:		doubleLine
+XaLeap*commandPanel.sprt.min:			1
+XaLeap*commandPanel.sprt.width:			1
+XaLeap*commandPanel.sprt.height:		12
+XaLeap*commandPanel.sprt.shadowWidth:		0
+XaLeap*commandPanel.sprt.skipAdjust:		True
+XaLeap*commandPanel.sprt.showGrip:		False
+
+XaLeap*controlPanel.wcClassName:		Paned
+XaLeap*controlPanel.orientation:		vertical
+XaLeap*controlPanel.internalBorderWidth:	6
+XaLeap*controlPanel.internalBorderColor:	BACKGROUND
+XaLeap*controlPanel.borderWidth:		0
+XaLeap*controlPanel.wcChildren:			cLogo	\
+						about 	\
+						gist	\
+						verbo
+
+XaLeap*controlPanel.cLogo.wcClassName:		Label
+XaLeap*controlPanel.cLogo.wcCallback:	xtcpXATDefineBitmap( bitmap, xaLogo)
+XaLeap*controlPanel.cLogo.shadowWidth:		1
+XaLeap*controlPanel.cLogo.borderWidth:		1
+XaLeap*controlPanel.cLogo.borderColor:		FOREGROUND
+XaLeap*controlPanel.cLogo.showGrip:		False
+
+
+XaLeap*controlPanel.about.wcClassName:		Frame
+XaLeap*controlPanel.about.wcChildren:		panelAbout
+XaLeap*controlPanel.about.frameType:		chiseled
+XaLeap*controlPanel.about.layoutPolicy:		single
+XaLeap*controlPanel.about.showGrip:		False
+
+XaLeap*controlPanel.gist.wcClassName:		Frame
+XaLeap*controlPanel.gist.frameType:		chiseled
+XaLeap*controlPanel.gist.layoutPolicy:		fraction
+XaLeap*controlPanel.gist.vSpace:		0
+XaLeap*controlPanel.gist.yFraction:		43
+XaLeap*controlPanel.gist.showGrip:		False
+XaLeap*controlPanel.gist.skipAdjust:		False
+XaLeap*controlPanel.gist.wcChildren:		panelLoadOff	\
+						panelSaveOff	\
+						panelLoadPDB	\
+						panelSavePDB	\
+						panelLAP	\
+						panelSAP	\
+						panelImpose	\
+						panelEdit	\
+						panelSource
+
+XaLeap*controlPanel.verbo.wcClassName:		Frame
+XaLeap*controlPanel.verbo.wcChildren:		pnd
+XaLeap*controlPanel.verbo.skipAdjust:		True
+XaLeap*controlPanel.verbo.frameType:		chiseled
+
+XaLeap*controlPanel.verbo*pnd.wcClassName:	Paned
+XaLeap*controlPanel.verbo*pnd.wcChildren:	blShift down radio
+XaLeap*controlPanel.verbo*pnd.orientation:	horizontal
+XaLeap*controlPanel.verbo*pnd*showGrip:		False
+XaLeap*controlPanel.verbo*pnd*min:		1
+XaLeap*controlPanel.verbo*pnd.borderWidth:	0
+XaLeap*controlPanel.verbo*pnd.internalBorderWidth:0
+
+XaLeap*controlPanel.verbo*blShift.wcClassName:	Simple
+XaLeap*controlPanel.verbo*blShift.width:	18
+XaLeap*controlPanel.verbo*blShift.height:	1
+
+XaLeap*controlPanel.verbo*down.wcClassName:	Form
+XaLeap*controlPanel.verbo*down.wcChildren:	lbl
+
+XaLeap*controlPanel.verbo*lbl.wcClassName:	Label
+XaLeap*controlPanel.verbo*lbl.label:		Verbosity:
+XaLeap*controlPanel.verbo*lbl.internalHeight:	0
+XaLeap*controlPanel.verbo*lbl.internalWidth:	0
+XaLeap*controlPanel.verbo*lbl.bottom:		ChainBottom
+XaLeap*controlPanel.verbo*lbl.top:		ChainBottom
+XaLeap*controlPanel.verbo*lbl.left:		ChainLeft
+XaLeap*controlPanel.verbo*lbl.right:		ChainRight
+
+!!
+!! The names of l0 l1 l2 is used in xaCommand.c .
+!!
+XaLeap*controlPanel.verbo*radio.wcClassName:		Frame
+XaLeap*controlPanel.verbo*radio.layoutPolicy:			fraction
+XaLeap*controlPanel.verbo*radio.wcChildren:		l0 l1 l2
+XaLeap*controlPanel.verbo*radio.shadowWidth:		0
+XaLeap*controlPanel.verbo*radio.hSpace:			0
+XaLeap*controlPanel.verbo*radio.height:			1
+XaLeap*controlPanel.verbo*radio.width:			1
+XaLeap*controlPanel.verbo*radio.Command.width:		12
+XaLeap*controlPanel.verbo*radio.Command.height:		16
+XaLeap*controlPanel.verbo*radio.Command.background:   BACKGROUND
+XaLeap*controlPanel.verbo*radio.Command.foreground:   BACKGROUND
+XaLeap*controlPanel.verbo*radio.Command.translations:	`#override'\n\
+						<EnterWindow>: \n\
+						<LeaveWindow>: \n
+
+define(SET_BUTTON, 
+WcSetValueCB((this.topShadowContrast:   -30)  \
+             (this.bottomShadowContrast:-20)) \
+WcSetValueCB((this.background:          maroon)))
+
+define(UNSET_BUTTON, 
+WcSetValueCB($1.background:           BACKGROUND) \
+WcSetValueCB(($1.topShadowContrast:    20)        \
+             ($1.bottomShadowContrast: 40)))
+
+define(SWITCH_RADIO_BUTTONS, SET_BUTTON UNSET_BUTTON(^$1) UNSET_BUTTON(^$2))   
+
+XaLeap*controlPanel.verbo*l0.wcClassName:	Command
+XaLeap*controlPanel.verbo*l0.wcCallback:	SET_BUTTON
+XaLeap*controlPanel.verbo*l0.left:	0
+XaLeap*controlPanel.verbo*l0.right:	30
+XaLeap*controlPanel.verbo*l0.top:	40
+XaLeap*controlPanel.verbo*l0.bottom:	100
+XaLeap*controlPanel.verbo*l0.label:		
+XaLeap*controlPanel.verbo*l0.callback:		SWITCH_RADIO_BUTTONS(l1,l2) \
+					xtcpXACParseCommand(verbosity 0;)
+
+XaLeap*controlPanel.verbo*l1.wcClassName:	Command
+XaLeap*controlPanel.verbo*l1.left:	35
+XaLeap*controlPanel.verbo*l1.right:	65
+XaLeap*controlPanel.verbo*l1.top:	20
+XaLeap*controlPanel.verbo*l1.bottom:	100
+XaLeap*controlPanel.verbo*l1.label:		
+XaLeap*controlPanel.verbo*l1.callback:		SWITCH_RADIO_BUTTONS(l0,l2) \
+					xtcpXACParseCommand(verbosity 1;)
+
+XaLeap*controlPanel.verbo*l2.wcClassName:	Command
+XaLeap*controlPanel.verbo*l2.left:	70
+XaLeap*controlPanel.verbo*l2.right:	100
+XaLeap*controlPanel.verbo*l2.top:	0
+XaLeap*controlPanel.verbo*l2.bottom:	100
+XaLeap*controlPanel.verbo*l2.label:		
+XaLeap*controlPanel.verbo*l2.callback:		SWITCH_RADIO_BUTTONS(l0,l1) \
+					xtcpXACParseCommand(verbosity 2;)
+
+XaLeap*panelQuit.wcClassName:			Frame
+XaLeap*panelQuit.wcChildren:			quit
+XaLeap*panelQuit.layoutPolicy:			single
+XaLeap*panelQuit.shadowWidth:			0
+XaLeap*panelQuit.skipAdjust:			True
+XaLeap*panelQuit.showGrip:			False
+XaLeap*panelQuit.hSpace:			10
+XaLeap*panelQuit.vSpace:			8
+
+XaLeap*panelQuit.quit.wcClassName:		Command
+XaLeap*panelQuit.quit.wcPopups:			dbQuit
+XaLeap*panelQuit.quit.justify:			center
+XaLeap*panelQuit.quit.label:			Quit
+XaLeap*panelQuit.quit.callback:			WcPopupGrab(/*dbQuit)
+XaLeap*panelQuit.quit.left:		30
+XaLeap*panelQuit.quit.right:		70
+XaLeap*panelQuit.quit.top:		5
+XaLeap*panelQuit.quit.bottom:		95
+
+XaLeap*dbAbout_1.wcClassName:  			DIALOGSHELL
+XaLeap*dbAbout_1.wcChildren:   			dlgPaned
+XaLeap*dbAbout_1.wcCallback:			SetParentShellAsGroup(/)
+XaLeap*dbAbout_1.title:				XLEaP: authors
+XaLeap*dbAbout_1.popupCallback:			xtcpXACReplaceShell()\
+						WcSetInsensitiveCB(/*aboutSme)
+XaLeap*dbAbout_1.popdownCallback:		WcSetSensitiveCB(/*aboutSme)
+XaLeap*dbAbout_1*Command.font:			DIALOG_BUTTON_FONT
+XaLeap*dbAbout_1*Command.background:		COMMAND_BACKGROUND
+XaLeap*dbAbout_1*Label.font:			DIALOG_LABEL_FONT
+XaLeap*dbAbout_1*background:           		DIALOG_BACKGROUND
+
+
+XaLeap*dbAbout_1*Form.defaultDistance:				12
+
+XaLeap*dbAbout_1.dlgPaned.wcClassName: 			Paned
+XaLeap*dbAbout_1.dlgPaned.internalBorderWidth: 		20
+XaLeap*dbAbout_1.dlgPaned*skipAdjust:			True
+XaLeap*dbAbout_1.dlgPaned.shadowWidth:			2
+XaLeap*dbAbout_1.dlgPaned.orientation:			vertical
+XaLeap*dbAbout_1.dlgPaned.wcChildren:  			form 	\
+							formCommand
+
+!!							separator \
+
+XaLeap*dbAbout_1.dlgPaned.form.showGrip:		False
+XaLeap*dbAbout_1.dlgPaned.separator.showGrip:		False
+XaLeap*dbAbout_1.dlgPaned.formCommand.showGrip:		False
+
+XaLeap*dbAbout_1.dlgPaned.form.wcClassName:		Frame
+XaLeap*dbAbout_1.dlgPaned.form.wcChildren:		box
+XaLeap*dbAbout_1.dlgPaned.form.skipAdjust:		False
+XaLeap*dbAbout_1.dlgPaned.form.shadowWidth:		2
+XaLeap*dbAbout_1.dlgPaned.form.frameType:		Sunken
+XaLeap*dbAbout_1.dlgPaned.form.layoutPolicy:		center
+
+XaLeap*dbAbout_1.dlgPaned.form*box.wcClassName: 	Label
+XaLeap*dbAbout_1.dlgPaned.form*box.bitmap:		XLEaP_about
+XaLeap*dbAbout_1.dlgPaned.form*box.internalWidth:	0
+XaLeap*dbAbout_1.dlgPaned.form*box.internalHeight:	0
+XaLeap*dbAbout_1.dlgPaned.form*box.shadowWidth:		0
+
+
+XaLeap*dbAbout_1.dlgPaned.separator.wcClassName:	Separator
+XaLeap*dbAbout_1.dlgPaned.separator.height:		10
+XaLeap*dbAbout_1.dlgPaned.separator.width:		1
+XaLeap*dbAbout_1.dlgPaned.separator.shadowWidth:	0
+
+XaLeap*dbAbout_1.dlgPaned.formCommand.wcClassName:	Frame
+XaLeap*dbAbout_1.dlgPaned.formCommand.wcChildren:  	cancel
+XaLeap*dbAbout_1.dlgPaned.formCommand.borderWidth:	0
+XaLeap*dbAbout_1.dlgPaned.formCommand.layoutPolicy:		fraction
+XaLeap*dbAbout_1.dlgPaned.formCommand.xFraction:	8
+XaLeap*dbAbout_1.dlgPaned.formCommand.yFraction:	13
+XaLeap*dbAbout_1.dlgPaned.formCommand.shadowWidth:	0
+
+XaLeap*dbAbout_1.dlgPaned.formCommand.more.wcClassName:		Command
+XaLeap*dbAbout_1.dlgPaned.formCommand.more.label:		More
+XaLeap*dbAbout_1.dlgPaned.formCommand.more.left:	1
+XaLeap*dbAbout_1.dlgPaned.formCommand.more.right:	3
+XaLeap*dbAbout_1.dlgPaned.formCommand.more.top:		1
+XaLeap*dbAbout_1.dlgPaned.formCommand.more.bottom:	12
+XaLeap*dbAbout_1.dlgPaned.formCommand.more.callback:	\
+                    WcSetInsensitiveCB(this) WcCreateChildrenCB(//,dbAbout_2)
+
+XaLeap*dbAbout_1.dlgPaned.formCommand.cancel.wcClassName: 	Command
+XaLeap*dbAbout_1.dlgPaned.formCommand.cancel.label:		Close
+XaLeap*dbAbout_1.dlgPaned.formCommand.cancel.callback:		WcPopdownCB(/)
+
+XaLeap*dbAbout_1.dlgPaned.formCommand.cancel.left:	2
+XaLeap*dbAbout_1.dlgPaned.formCommand.cancel.right:	6
+XaLeap*dbAbout_1.dlgPaned.formCommand.cancel.top:	1
+XaLeap*dbAbout_1.dlgPaned.formCommand.cancel.bottom:	12
+
+
+
+XaLeap*dbAbout_2.wcClassName:  			DIALOGSHELL
+XaLeap*dbAbout_2.wcChildren:   			dlgPaned
+XaLeap*dbAbout_2.wcCallback:			xtcpXACReplaceShell()\
+						SetParentShellAsGroup(/)
+XaLeap*dbAbout_2.title:				XLEaP about more
+XaLeap*dbAbout_2*Command.font:			DIALOG_BUTTON_FONT
+XaLeap*dbAbout_2*Command.background:		COMMAND_BACKGROUND
+XaLeap*dbAbout_2*Label.font:			DIALOG_LABEL_FONT
+XaLeap*dbAbout_2*background:           		DIALOG_BACKGROUND
+
+
+XaLeap*dbAbout_2*Command.shadowWidth:			2
+XaLeap*dbAbout_2*Form.defaultDistance:			12
+
+XaLeap*dbAbout_2.dlgPaned.wcClassName: 			Paned
+XaLeap*dbAbout_2.dlgPaned.internalBorderWidth:		INTERNAL_BORDER_WIDTH
+XaLeap*dbAbout_2.dlgPaned*borderWidth:			0
+XaLeap*dbAbout_2.dlgPaned.orientation:			vertical
+XaLeap*dbAbout_2.dlgPaned*skipAdjust:			True
+XaLeap*dbAbout_2.dlgPaned.width:			730
+XaLeap*dbAbout_2.dlgPaned.wcChildren:  			form 	\
+							separator \
+							formComm
+
+XaLeap*dbAbout_2.dlgPaned.form.showGrip:		False
+XaLeap*dbAbout_2.dlgPaned.separator.showGrip:		False
+XaLeap*dbAbout_2.dlgPaned.formComm.showGrip:		False
+
+XaLeap*dbAbout_2.dlgPaned.form.wcClassName:		Frame
+XaLeap*dbAbout_2.dlgPaned.form.wcChildren:		formText
+XaLeap*dbAbout_2.dlgPaned.form.preferredPaneSize:	250
+XaLeap*dbAbout_2.dlgPaned.form.skipAdjust:		False
+XaLeap*dbAbout_2.dlgPaned.form.shadowWidth:		0
+
+XaLeap*dbAbout_2.dlgPaned.form.formText.wcClassName:	Frame
+XaLeap*dbAbout_2.dlgPaned.form.formText.wcChildren:	text
+XaLeap*dbAbout_2.dlgPaned.form.formText.skipAdjust:	False
+XaLeap*dbAbout_2.dlgPaned.form.formText.shadowWidth:	2
+XaLeap*dbAbout_2.dlgPaned.form.formText.frameType:	chiseled
+XaLeap*dbAbout_2.dlgPaned.form.formText.vSpace:		0
+XaLeap*dbAbout_2.dlgPaned.form.formText.hSpace:		0
+
+XaLeap*dbAbout_2.dlgPaned.form.formText.text.wcClassName: 	AsciiText
+XaLeap*dbAbout_2.dlgPaned.form.formText.text*scrollHorizontal:	always
+XaLeap*dbAbout_2.dlgPaned.form.formText.text*scrollVertical:	always
+XaLeap*dbAbout_2.dlgPaned.form.formText.text*type:		file
+XaLeap*dbAbout_2.dlgPaned.form.formText.text*string:		XLEaPAbout
+XaLeap*dbAbout_2.dlgPaned.form.formText.text*font:              \
+				-*-courier-medium-r-*-*-17-*-*-*-*-*-*-*
+XaLeap*dbAbout_2.dlgPaned.form.formText.text*background: `#687a97'
+XaLeap*dbAbout_2.dlgPaned.form.formText.text*foreground: white
+XaLeap*dbAbout_2.dlgPaned.form.formText.text.Scrollbar.background:BACKGROUND
+XaLeap*dbAbout_2.dlgPaned.form.formText.text*Margin:	10
+XaLeap*dbAbout_2.dlgPaned.form.formText.text*displayCaret:	False
+
+XaLeap*dbAbout_2.dlgPaned.separator.wcClassName:	Separator
+XaLeap*dbAbout_2.dlgPaned.separator.height:		10
+XaLeap*dbAbout_2.dlgPaned.separator.width:		1
+XaLeap*dbAbout_2.dlgPaned.separator.shadowWidth:	0
+
+XaLeap*dbAbout_2.dlgPaned.formComm.wcClassName:		Frame
+XaLeap*dbAbout_2.dlgPaned.formComm.borderWidth:		0
+XaLeap*dbAbout_2.dlgPaned.formComm.wcChildren:  	close
+XaLeap*dbAbout_2.dlgPaned.formComm.layoutPolicy:		fraction
+XaLeap*dbAbout_2.dlgPaned.formComm.xFraction:		8
+XaLeap*dbAbout_2.dlgPaned.formComm.yFraction:		13
+XaLeap*dbAbout_2.dlgPaned.formComm.shadowWidth:		0
+
+XaLeap*dbAbout_2.dlgPaned.formComm.close.wcClassName: 	Command
+XaLeap*dbAbout_2.dlgPaned.formComm.close.label:		Cancel
+XaLeap*dbAbout_2.dlgPaned.formComm.close.left:		3
+XaLeap*dbAbout_2.dlgPaned.formComm.close.right:		5
+XaLeap*dbAbout_2.dlgPaned.formComm.close.top:		1
+XaLeap*dbAbout_2.dlgPaned.formComm.close.bottom:	11
+XaLeap*dbAbout_2.dlgPaned.formComm.close.callback:	\
+				WcSetSensitiveCB(//*more) WcDestroy(/)
+
+!
+!	The asciiText widget for the command line interface.
+!
+XaLeap*commands.wcClass:		Frame
+XaLeap*commands.wcChildren:		text
+XaLeap*commands.frameType:		tack
+XaLeap*commands.shadowWidth:		4
+XaLeap*commands.vSpace:			0
+XaLeap*commands.hSpace:			0
+XaLeap*commands.showGrip:		False
+XaLeap*commands.preferredPaneSize:	400
+
+NO_BORDER(commands.text)
+
+XaLeap*commands.text.wcClass:			AsciiText
+XaLeap*commands.text.wcCallback:		xtcpXACCmdWidgetRegister()
+XaLeap*commands.text.type:			string
+XaLeap*commands.text*font:		-*-courier-medium-r-*-*-14-*-*-*-*-*-*-*
+XaLeap*commands.text.textSource.editType:	append
+XaLeap*commands.text.scrollVertical:		always
+XaLeap*commands.text.scrollHorizontal:		whenNeeded
+XaLeap*commands.text.useStringInPlace:		False
+XaLeap*commands.text.preferredPaneSize:		800
+XaLeap*commands.text*displayNonprinting:	False
+XaLeap*commands.text.translations:		`#override'\
+	<Key>BackSpace:	end-of-file() xtapXACTextProcessRubout()\n\
+	<Key>Delete:	end-of-file() xtapXACTextProcessRubout()\n\
+ Ctrl	<Key>u:		xtapXACTextProcessRuboutLine()\n\
+ Ctrl	<Key>c:		xtapXACTextProcessCancel()\n\
+ Ctrl	<Key>:		no-op() \n\
+	<Key>Return:	end-of-file() xtapXACTextProcessKeys()\n\
+	<Key>:		end-of-file() xtapXACTextProcessKeys()\n\
+	<Btn2Down>:	xtapXACTextProcessInsertSelection(CUT_BUFFER0)
+
+!	<BtnDown>:	\n\
+!	<BtnUp>:	\n\
+!	<Motion>:	
+
+!xtapXACTextProcessInsertSelection(CUT_BUFFER0) \n\
+
+

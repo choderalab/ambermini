@@ -1,0 +1,518 @@
+1
+                 Chemistry at HARvard Macromolecular Mechanics
+                   (CHARMM) - Developmental Version 25b2 - February 15, 1998   
+       Copyright(c) 1984,1992  President and Fellows of Harvard College
+                              All Rights Reserved
+                     Current operating system: IRIS UNIX
+                 Created on 11/24/99 at 10: 2:21 by user: case        
+
+            Maximum number of ATOMS:      6120, and RESidues:        4000
+            Current HEAP size:         1024000, and STACK size:    100000
+
+ RDTITL> *  SIMPLE MINIMIZATION FROM AN INPUT PDB FILE
+ RDTITL> *
+  
+ CHARMM>     
+  
+ CHARMM>    !  read in the topology and parameter files
+ CHARMM>     
+  
+ CHARMM>    open unit 1 read form name "../top_all22_prot.inp"
+ VOPEN> Attempting to open::../top_all22_prot.inp::
+ OPNLGU> Unit  1 opened for READONLY access to ../top_all22_prot.inp
+  
+ CHARMM>    read rtf card unit 1
+ MAINIO> Residue topology file being read from unit   1.
+ TITLE> *>>>>>>>>CHARMM22 ALL-HYDROGEN TOPOLOGY FILE FOR PROTEINS <<<<<
+ TITLE> *>>>>>>>>>>>>>>>>>>>>>>> JULY 1997 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+ TITLE> *>>>>>>> DIRECT COMMENTS TO ALEXANDER D. MACKERELL JR. <<<<<<<<<
+ TITLE> *>>>>>> 410-706-7442 OR EMAIL: ALEX,MMIRIS.AB.UMD.EDU  <<<<<<<<<
+ TITLE> *
+ WARNING from DECODI -- Zero length string being converted to 0
+ RTFRDR> WARNING: Version number is NOT specified.
+
+      ***** LEVEL  2 WARNING FROM <RTFRDR> *****
+      ***** Version number 22 not needed.
+      ******************************************
+      BOMLEV (  0) IS NOT REACHED. WRNLEV IS  5
+
+  
+ CHARMM>    close unit 1
+ VCLOSE: Closing unit    1 with status "KEEP"
+  
+ CHARMM>     
+  
+ CHARMM>    open unit 1 read form name "../par_all22_prot.inp"
+ VOPEN> Attempting to open::../par_all22_prot.inp::
+ OPNLGU> Unit  1 opened for READONLY access to ../par_all22_prot.inp
+  
+ CHARMM>    read param card unit 1
+
+          PARAMETER FILE BEING READ FROM UNIT  1
+ TITLE> *>>>> CHARMM22 ALL-HYDROGEN PARAMETER FILE FOR PROTEINS <<<<<<<<<<
+ TITLE> *>>>>>>>>>>>>>>>>>>>>>>> JULY 1997 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+ TITLE> *>>>>>>> DIRECT COMMENTS TO ALEXANDER D. MACKERELL JR. <<<<<<<<<
+ TITLE> *>>>>>> 410-706-7442 OR EMAIL: ALEX,MMIRIS.AB.UMD.EDU  <<<<<<<<<
+ TITLE> *
+ PARRDR> Multiple terms for dihedral type: INDEX  443 CODE36924784     CT3 -OS  -CD  -OB  
+ PARRDR> Multiple terms for dihedral type: INDEX  441 CODE36919834     CT2 -OS  -CD  -OB  
+ PARRDR> Multiple terms for dihedral type: INDEX  434 CODE36611445     CP3 -N   -C   -O   
+ PARRDR> Multiple terms for dihedral type: INDEX  432 CODE36605676     CP2 -CP1 -C   -O   
+ PARRDR> Multiple terms for dihedral type: INDEX  430 CODE36601545     CP1 -N   -C   -O   
+ PARRDR> Multiple terms for dihedral type: INDEX  421 CODE36486876     HB  -CP1 -C   -O   
+ PARRDR> Multiple terms for dihedral type: INDEX  406 CODE31833876     N   -CP1 -C   -NH1 
+ PARRDR> Multiple terms for dihedral type: INDEX  404 CODE31734876     CP2 -CP1 -C   -NH1 
+ PARRDR> Multiple terms for dihedral type: INDEX  398 CODE31616076     HB  -CP1 -C   -NH1 
+ PARRDR> Multiple terms for dihedral type: INDEX  387 CODE30715176     CP2 -CP1 -C   -N   
+ PARRDR> Multiple terms for dihedral type: INDEX  381 CODE30596376     HB  -CP1 -C   -N   
+ PARRDR> Multiple terms for dihedral type: INDEX  353 CODE26632451     CT3 -NH1 -C   -CP1 
+ PARRDR> Multiple terms for dihedral type: INDEX  351 CODE26627501     CT2 -NH1 -C   -CP1 
+ PARRDR> Multiple terms for dihedral type: INDEX  349 CODE26622551     CT1 -NH1 -C   -CP1 
+ PARRDR> Multiple terms for dihedral type: INDEX  334 CODE25984001     CT2 -NH1 -C   -CT3 
+ PARRDR> Multiple terms for dihedral type: INDEX  332 CODE25979051     CT1 -NH1 -C   -CT3 
+ PARRDR> Multiple terms for dihedral type: INDEX  326 CODE25921463     HS  -S   -CT2 -CT3 
+ PARRDR> Multiple terms for dihedral type: INDEX  325 CODE25921463     HS  -S   -CT2 -CT3 
+ PARRDR> Multiple terms for dihedral type: INDEX  323 CODE25876301     H   -OH1 -CT2 -CT3 
+ PARRDR> Multiple terms for dihedral type: INDEX  322 CODE25876301     H   -OH1 -CT2 -CT3 
+ PARRDR> Multiple terms for dihedral type: INDEX  320 CODE25876300     H   -OH1 -CT1 -CT3 
+ PARRDR> Multiple terms for dihedral type: INDEX  319 CODE25876300     H   -OH1 -CT1 -CT3 
+ PARRDR> Multiple terms for dihedral type: INDEX  311 CODE25865201     CT1 -NH1 -C   -CT2 
+ PARRDR> Multiple terms for dihedral type: INDEX  306 CODE25762451     H   -OH1 -CT2 -CT2 
+ PARRDR> Multiple terms for dihedral type: INDEX  305 CODE25762451     H   -OH1 -CT2 -CT2 
+ PARRDR> Multiple terms for dihedral type: INDEX  295 CODE25698713     HS  -S   -CT2 -CT1 
+ PARRDR> Multiple terms for dihedral type: INDEX  294 CODE25698713     HS  -S   -CT2 -CT1 
+ PARRDR> Multiple terms for dihedral type: INDEX  292 CODE25653551     H   -OH1 -CT2 -CT1 
+ PARRDR> Multiple terms for dihedral type: INDEX  291 CODE25653551     H   -OH1 -CT2 -CT1 
+ PARRDR> Multiple terms for dihedral type: INDEX  289 CODE25653550     H   -OH1 -CT1 -CT1 
+ PARRDR> Multiple terms for dihedral type: INDEX  288 CODE25653550     H   -OH1 -CT1 -CT1 
+ PARRDR> Multiple terms for dihedral type: INDEX  242 CODE12103275     CP2 -CP1 -CC  -O   
+ PARRDR> Multiple terms for dihedral type: INDEX  240 CODE11984475     HB  -CP1 -CC  -O   
+ PARRDR> Multiple terms for dihedral type: INDEX  226 CODE 7598775     N   -CP1 -CC  -NH2 
+ PARRDR> Multiple terms for dihedral type: INDEX  224 CODE 7499775     CP2 -CP1 -CC  -NH2 
+ PARRDR> Multiple terms for dihedral type: INDEX  222 CODE 7380975     HB  -CP1 -CC  -NH2 
+ PARRDR> Multiple terms for dihedral type: INDEX  189 CODE 6311676     N   -C   -CP1 -N   
+ PARRDR> Multiple terms for dihedral type: INDEX  181 CODE 2446545     CP1 -C   -N   -CP3 
+ PARRDR> Multiple terms for dihedral type: INDEX  179 CODE 2421795     CT3 -C   -N   -CP3 
+ PARRDR> Multiple terms for dihedral type: INDEX  177 CODE 2416845     CT2 -C   -N   -CP3 
+ PARRDR> Multiple terms for dihedral type: INDEX  175 CODE 2411895     CT1 -C   -N   -CP3 
+ PARRDR> Multiple terms for dihedral type: INDEX  169 CODE 2154495     CP1 -C   -N   -CP1 
+ PARRDR> Multiple terms for dihedral type: INDEX  167 CODE 2129745     CT3 -C   -N   -CP1 
+ PARRDR> Multiple terms for dihedral type: INDEX  165 CODE 2124795     CT2 -C   -N   -CP1 
+ PARRDR> Multiple terms for dihedral type: INDEX  163 CODE 2119845     CT1 -C   -N   -CP1 
+ PARRDR> Multiple terms for dihedral type: INDEX  132 CODE 1604123     CT3 -CT2 -CPH1-CPH1
+ PARRDR> Multiple terms for dihedral type: INDEX  131 CODE 1604123     CT3 -CT2 -CPH1-CPH1
+ PARRDR> Multiple terms for dihedral type: INDEX  128 CODE 1594223     CT1 -CT2 -CPH1-CPH1
+ PARRDR> Multiple terms for dihedral type: INDEX  127 CODE 1594223     CT1 -CT2 -CPH1-CPH1
+ PARRDR> Multiple terms for dihedral type: INDEX  120 CODE 1488403     CT3 -SM  -SM  -CT3 
+ PARRDR> Multiple terms for dihedral type: INDEX  119 CODE 1488403     CT3 -SM  -SM  -CT3 
+ PARRDR> Multiple terms for dihedral type: INDEX  117 CODE 1488263     CT3 -CT2 -S   -CT3 
+ PARRDR> Multiple terms for dihedral type: INDEX  115 CODE 1486451     CT3 -C   -NH1 -CT3 
+ PARRDR> Multiple terms for dihedral type: INDEX  112 CODE 1483313     CT2 -CT2 -S   -CT3 
+ PARRDR> Multiple terms for dihedral type: INDEX  110 CODE 1481501     CT2 -C   -NH1 -CT3 
+ PARRDR> Multiple terms for dihedral type: INDEX  107 CODE 1476551     CT1 -C   -NH1 -CT3 
+ PARRDR> Multiple terms for dihedral type: INDEX   99 CODE 1369603     CT2 -SM  -SM  -CT2 
+ PARRDR> Multiple terms for dihedral type: INDEX   98 CODE 1369603     CT2 -SM  -SM  -CT2 
+ PARRDR> Multiple terms for dihedral type: INDEX   96 CODE 1367651     CT2 -C   -NH1 -CT2 
+ PARRDR> Multiple terms for dihedral type: INDEX   93 CODE 1362701     CT1 -C   -NH1 -CT2 
+ PARRDR> Multiple terms for dihedral type: INDEX   83 CODE 1253801     CT1 -C   -NH1 -CT1 
+ PARMIO> NONBOND, HBOND lists and IMAGE atoms cleared.
+  
+ CHARMM>    close unit 1
+ VCLOSE: Closing unit    1 with status "KEEP"
+  
+ CHARMM>     
+  
+ CHARMM>    !  Now read in and generate the sequence.
+ CHARMM>    open unit 1 read form name "charmm.pdb"
+ VOPEN> Attempting to open::charmm.pdb::
+ OPNLGU> Unit  1 opened for READONLY access to charmm.pdb
+  
+ CHARMM>    read sequ pdb unit 1
+ MAINIO> Sequence information being read from unit   1.
+ TITLE>    PRODUCTION DYNAMICS INPUT FILE TO GENERATE A
+ TITLE>    298 K TRAJECTORY OF THE PROTEIN DIMER GCN4 LEUCINE ZIPPER FROM 2ZTA.PDB
+ TITLE>    DATE:    11/12/99     16: 2:59      CREATED BY USER: case
+ TITLE>  *
+
+          RESIDUE SEQUENCE --    46 RESIDUES
+          THR THR CYS CYS PRO SER ILE VAL ALA ARG SER ASN PHE ASN VAL CYS ARG LEU PRO GLY 
+          THR SER GLU ALA ILE CYS ALA THR TYR THR GLY CYS ILE ILE ILE PRO GLY ALA THR CYS 
+          PRO GLY ASP TYR ALA ASN 
+ ***** Message from SEQRDR ***** THE SYSTEM CONTAINS  4 TITRATABLE GROUPS
+ THE USER MUST PREDETERMINE THE PROTONATION STATE THROUGH THE SEQUENCE AND RTF
+ HIS -  0  ASP -  1  GLU -  1  LYS -  0  TYR -  2
+  
+ CHARMM>     
+  
+ CHARMM>    generate PDB first nter last cter setup
+ THE PATCH 'NTER  ' WILL BE USED FOR THE FIRST RESIDUE
+ THE PATCH 'CTER  ' WILL BE USED FOR THE LAST  RESIDUE
+ GENPSF> Segment   1 has been generated. Its identifier is PDB .
+ PSFSUM> PSF modified: NONBOND lists and IMAGE atoms cleared.
+ PSFSUM> Summary of the structure file counters :
+         Number of segments      =        1   Number of residues   =       46
+         Number of atoms         =      645   Number of groups     =      195
+         Number of bonds         =      651   Number of angles     =     1172
+         Number of dihedrals     =     1723   Number of impropers  =      107
+         Number of HB acceptors  =       65   Number of HB donors  =       77
+         Number of NB exclusions =        0   Total charge =    0.00000
+  
+ CHARMM>    patch disu pdb 3 pdb 40
+ ATOM  PDB  3    CYS  HG1  AND ALL REFERENCES TO IT DELETED.
+ ATOM  PDB  40   CYS  HG1  AND ALL REFERENCES TO IT DELETED.
+
+ Message from MAPIC: Atom numbers are changed.
+ DELTIC:    2 bonds deleted
+ DELTIC:    2 angles deleted
+ DELTIC:    6 dihedrals deleted
+ DELTIC:    2 donors deleted
+ PSFSUM> PSF modified: NONBOND lists and IMAGE atoms cleared.
+ PSFSUM> Summary of the structure file counters :
+         Number of segments      =        1   Number of residues   =       46
+         Number of atoms         =      643   Number of groups     =      195
+         Number of bonds         =      650   Number of angles     =     1172
+         Number of dihedrals     =     1724   Number of impropers  =      107
+         Number of HB acceptors  =       65   Number of HB donors  =       75
+         Number of NB exclusions =        0   Total charge =    0.00000
+  
+ CHARMM>    patch disu pdb 4 pdb 32
+ ATOM  PDB  4    CYS  HG1  AND ALL REFERENCES TO IT DELETED.
+ ATOM  PDB  32   CYS  HG1  AND ALL REFERENCES TO IT DELETED.
+
+ Message from MAPIC: Atom numbers are changed.
+ DELTIC:    2 bonds deleted
+ DELTIC:    2 angles deleted
+ DELTIC:    6 dihedrals deleted
+ DELTIC:    2 donors deleted
+ PSFSUM> PSF modified: NONBOND lists and IMAGE atoms cleared.
+ PSFSUM> Summary of the structure file counters :
+         Number of segments      =        1   Number of residues   =       46
+         Number of atoms         =      641   Number of groups     =      195
+         Number of bonds         =      649   Number of angles     =     1172
+         Number of dihedrals     =     1725   Number of impropers  =      107
+         Number of HB acceptors  =       65   Number of HB donors  =       73
+         Number of NB exclusions =        0   Total charge =    0.00000
+  
+ CHARMM>    patch disu pdb 16 pdb 26
+ ATOM  PDB  16   CYS  HG1  AND ALL REFERENCES TO IT DELETED.
+ ATOM  PDB  26   CYS  HG1  AND ALL REFERENCES TO IT DELETED.
+
+ Message from MAPIC: Atom numbers are changed.
+ DELTIC:    2 bonds deleted
+ DELTIC:    2 angles deleted
+ DELTIC:    6 dihedrals deleted
+ DELTIC:    2 donors deleted
+ PSFSUM> PSF modified: NONBOND lists and IMAGE atoms cleared.
+ PSFSUM> Summary of the structure file counters :
+         Number of segments      =        1   Number of residues   =       46
+         Number of atoms         =      639   Number of groups     =      195
+         Number of bonds         =      648   Number of angles     =     1172
+         Number of dihedrals     =     1726   Number of impropers  =      107
+         Number of HB acceptors  =       65   Number of HB donors  =       71
+         Number of NB exclusions =        0   Total charge =    0.00000
+  
+ CHARMM>     
+  
+ CHARMM>    open unit 1 read form name "charmm.pdb"
+ OPNLGU> Unit already open. The old file will be closed first.
+ VCLOSE: Closing unit    1 with status "KEEP"
+ VOPEN> Attempting to open::charmm.pdb::
+ OPNLGU> Unit  1 opened for READONLY access to charmm.pdb
+  
+ CHARMM>    read coor pdb unit 1
+          SPATIAL COORDINATES BEING READ FROM UNIT  1
+ TITLE>    PRODUCTION DYNAMICS INPUT FILE TO GENERATE A
+ TITLE>    298 K TRAJECTORY OF THE PROTEIN DIMER GCN4 LEUCINE ZIPPER FROM 2ZTA.PDB
+ TITLE>    DATE:    11/12/99     16: 2:59      CREATED BY USER: CASE
+ TITLE>  *
+  
+ CHARMM>     
+  
+ CHARMM>    ! ic param
+ CHARMM>    ! ic build
+ CHARMM>    ! coor init sele hydrogen end
+ CHARMM>    !  hbuild
+ CHARMM>     
+  
+ CHARMM>    define notinit sele .not. initialized end
+ SELRPN>      0 atoms have been selected out of    639
+  
+ CHARMM>    if ?NSEL .gt. 0 print coor sele notinit end
+ RDCMND substituted energy or value "?NSEL" to "0"
+ Comparing "0" and "0".
+ IF test evaluated as false.  Skipping command
+  
+ CHARMM>    if ?NSEL .gt. 0 goto stop
+ RDCMND substituted energy or value "?NSEL" to "0"
+ Comparing "0" and "0".
+ IF test evaluated as false.  Skipping command
+  
+ CHARMM>     
+  
+ CHARMM>    update CDIE eps 1.0 cutnb 999 ctofnb 998 ctonnb 997
+
+ NONBOND OPTION FLAGS: 
+     ELEC     VDW      ATOMs    CDIElec  SHIFt    VATOm    VSWItch 
+     BYGRoup  NOEXtnd  NOEWald 
+ CUTNB  =999.000 CTEXNB =999.000 CTONNB =997.000 CTOFNB =998.000
+ WMIN   =  1.500 WRNMXD =  0.500 E14FAC =  1.000 EPS    =  1.000
+ NBXMOD =      5
+ There are        0 atom  pairs and        0 atom  exclusions.
+ There are        0 group pairs and        0 group exclusions.
+ <MAKINB> with mode   5 found   1820 exclusions and   1697 interactions(1-4)
+ <MAKGRP> found    574 group exclusions.
+ Generating nonbond list with Exclusion mode = 5
+ SPACE FOR   203842 ATOM PAIRS AND        0 GROUP PAIRS
+
+ General atom nonbond list generation found:
+   202021 ATOM PAIRS WERE FOUND FOR ATOM LIST
+        0 GROUP PAIRS REQUIRED ATOM SEARCHES
+
+  
+ CHARMM>     
+  
+ CHARMM>    ! open unit 2 form write name "psf"
+ CHARMM>    ! write psf card unit 2
+ CHARMM>    ! close unit 2
+ CHARMM>     
+  
+ CHARMM>    energy
+
+ NONBOND OPTION FLAGS: 
+     ELEC     VDW      ATOMs    CDIElec  SHIFt    VATOm    VSWItch 
+     BYGRoup  NOEXtnd  NOEWald 
+ CUTNB  =999.000 CTEXNB =999.000 CTONNB =997.000 CTOFNB =998.000
+ WMIN   =  1.500 WRNMXD =  0.500 E14FAC =  1.000 EPS    =  1.000
+ NBXMOD =      5
+ There are   202021 atom  pairs and     3517 atom  exclusions.
+ There are        0 group pairs and      574 group exclusions.
+ Generating nonbond list with Exclusion mode = 5
+ SPACE FOR   203842 ATOM PAIRS AND        0 GROUP PAIRS
+
+ General atom nonbond list generation found:
+   202021 ATOM PAIRS WERE FOUND FOR ATOM LIST
+        0 GROUP PAIRS REQUIRED ATOM SEARCHES
+
+ENER ENR:  Eval#     ENERgy      Delta-E         GRMS
+ENER INTERN:          BONDs       ANGLes       UREY-b    DIHEdrals    IMPRopers
+ENER EXTERN:        VDWaals         ELEC       HBONds          ASP         USER
+ ----------       ---------    ---------    ---------    ---------    ---------
+ENER>        0   -304.88494      0.00000     12.88941
+ENER INTERN>       81.56611    115.99448     10.14834    220.79809      5.12220
+ENER EXTERN>      -84.73049   -653.78367      0.00000      0.00000      0.00000
+ ----------       ---------    ---------    ---------    ---------    ---------
+  
+ CHARMM>     
+  
+ CHARMM>    minimization ABNR nstep 300 step 1.0 tole 0.001
+
+ NONBOND OPTION FLAGS: 
+     ELEC     VDW      ATOMs    CDIElec  SHIFt    VATOm    VSWItch 
+     BYGRoup  NOEXtnd  NOEWald 
+ CUTNB  =999.000 CTEXNB =999.000 CTONNB =997.000 CTOFNB =998.000
+ WMIN   =  1.500 WRNMXD =  0.500 E14FAC =  1.000 EPS    =  1.000
+ NBXMOD =      5
+ There are   202021 atom  pairs and     3517 atom  exclusions.
+ There are        0 group pairs and      574 group exclusions.
+ Generating nonbond list with Exclusion mode = 5
+ SPACE FOR   203842 ATOM PAIRS AND        0 GROUP PAIRS
+
+ General atom nonbond list generation found:
+   202021 ATOM PAIRS WERE FOUND FOR ATOM LIST
+        0 GROUP PAIRS REQUIRED ATOM SEARCHES
+
+
+
+ ABNER> An energy minimization has been requested.
+
+ EIGRNG =    0.0005000   MINDIM =            5
+ NPRINT =           10   NSTEP  =          300
+ PSTRCT =    0.0000000   SDSTP  =    1.0000000
+ STPLIM =    1.0000000   STRICT =    0.1000000
+ TOLFUN =    0.0010000   TOLGRD =    0.0000000
+ TOLITR =          100   TOLSTP =    0.0000000
+ FMEM   =    0.0000000
+MINI MIN: Cycle      ENERgy      Delta-E         GRMS    Step-size
+MINI INTERN:          BONDs       ANGLes       UREY-b    DIHEdrals    IMPRopers
+MINI EXTERN:        VDWaals         ELEC       HBONds          ASP         USER
+ ----------       ---------    ---------    ---------    ---------    ---------
+MINI>        0   -304.88494      0.00000     12.88941      0.00000
+MINI INTERN>       81.56611    115.99448     10.14834    220.79809      5.12220
+MINI EXTERN>      -84.73049   -653.78367      0.00000      0.00000      0.00000
+ ----------       ---------    ---------    ---------    ---------    ---------
+MINI>       10   -478.23112    173.34618      6.48715      0.17006
+MINI INTERN>       43.33831    106.50724      7.72073    213.91686      3.61878
+MINI EXTERN>     -146.77626   -706.55678      0.00000      0.00000      0.00000
+ ----------       ---------    ---------    ---------    ---------    ---------
+ UPDECI: Nonbond update at step        18
+ Generating nonbond list with Exclusion mode = 5
+ SPACE FOR   203842 ATOM PAIRS AND        0 GROUP PAIRS
+
+ General atom nonbond list generation found:
+   202021 ATOM PAIRS WERE FOUND FOR ATOM LIST
+        0 GROUP PAIRS REQUIRED ATOM SEARCHES
+
+MINI>       20   -513.54806     35.31694      1.83584      0.05930
+MINI INTERN>       40.51666    119.68910      8.44402    212.33534      3.71458
+MINI EXTERN>     -156.67065   -741.57712      0.00000      0.00000      0.00000
+ ----------       ---------    ---------    ---------    ---------    ---------
+MINI>       30   -538.94955     25.40149      1.09649      0.03446
+MINI INTERN>       38.43282    115.10572      7.50548    205.53772      3.38147
+MINI EXTERN>     -152.88412   -756.02863      0.00000      0.00000      0.00000
+ ----------       ---------    ---------    ---------    ---------    ---------
+ UPDECI: Nonbond update at step        36
+ Generating nonbond list with Exclusion mode = 5
+ SPACE FOR   203842 ATOM PAIRS AND        0 GROUP PAIRS
+
+ General atom nonbond list generation found:
+   202021 ATOM PAIRS WERE FOUND FOR ATOM LIST
+        0 GROUP PAIRS REQUIRED ATOM SEARCHES
+
+MINI>       40   -555.45559     16.50604      1.09477      0.03338
+MINI INTERN>       40.97651    123.12865      7.61184    202.11444      3.33206
+MINI EXTERN>     -150.13149   -782.48760      0.00000      0.00000      0.00000
+ ----------       ---------    ---------    ---------    ---------    ---------
+MINI>       50   -562.32033      6.86474      0.62757      0.01940
+MINI INTERN>       40.58375    121.49768      7.76544    200.18390      3.56413
+MINI EXTERN>     -150.10278   -785.81246      0.00000      0.00000      0.00000
+ ----------       ---------    ---------    ---------    ---------    ---------
+ UPDECI: Nonbond update at step        60
+ Generating nonbond list with Exclusion mode = 5
+ SPACE FOR   203842 ATOM PAIRS AND        0 GROUP PAIRS
+
+ General atom nonbond list generation found:
+   202021 ATOM PAIRS WERE FOUND FOR ATOM LIST
+        0 GROUP PAIRS REQUIRED ATOM SEARCHES
+
+MINI>       60   -569.95205      7.63172      0.50900      0.01879
+MINI INTERN>       36.93045    114.69445      7.36477    197.25273      3.55211
+MINI EXTERN>     -149.50204   -780.24452      0.00000      0.00000      0.00000
+ ----------       ---------    ---------    ---------    ---------    ---------
+MINI>       70   -573.32557      3.37352      1.92147      0.01348
+MINI INTERN>       36.63237    113.01011      7.73350    195.84692      3.28025
+MINI EXTERN>     -147.08003   -782.74869      0.00000      0.00000      0.00000
+ ----------       ---------    ---------    ---------    ---------    ---------
+ UPDECI: Nonbond update at step        72
+ Generating nonbond list with Exclusion mode = 5
+ SPACE FOR   203842 ATOM PAIRS AND        0 GROUP PAIRS
+
+ General atom nonbond list generation found:
+   202021 ATOM PAIRS WERE FOUND FOR ATOM LIST
+        0 GROUP PAIRS REQUIRED ATOM SEARCHES
+
+MINI>       80   -581.14010      7.81453      1.02506      0.02686
+MINI INTERN>       37.44521    116.40227      7.58632    196.63984      3.39961
+MINI EXTERN>     -143.57318   -799.04018      0.00000      0.00000      0.00000
+ ----------       ---------    ---------    ---------    ---------    ---------
+MINI>       90   -585.43012      4.29002      0.50528      0.01561
+MINI INTERN>       38.05115    118.82588      7.77224    196.77429      3.60950
+MINI EXTERN>     -145.61398   -804.84920      0.00000      0.00000      0.00000
+ ----------       ---------    ---------    ---------    ---------    ---------
+MINI>      100   -587.49348      2.06336      0.53953      0.01512
+MINI INTERN>       37.72138    118.40200      7.69006    195.93490      3.62644
+MINI EXTERN>     -144.56880   -806.29945      0.00000      0.00000      0.00000
+ ----------       ---------    ---------    ---------    ---------    ---------
+MINI>      110   -590.66766      3.17418      1.00232      0.02440
+MINI INTERN>       37.88584    119.77437      7.87057    194.07446      3.68142
+MINI EXTERN>     -144.85058   -809.10375      0.00000      0.00000      0.00000
+ ----------       ---------    ---------    ---------    ---------    ---------
+MINI>      120   -591.97473      1.30707      0.51452      0.01261
+MINI INTERN>       38.15755    119.71817      7.80682    194.33368      3.58909
+MINI EXTERN>     -146.17629   -809.40374      0.00000      0.00000      0.00000
+ ----------       ---------    ---------    ---------    ---------    ---------
+ UPDECI: Nonbond update at step       122
+ Generating nonbond list with Exclusion mode = 5
+ SPACE FOR   203842 ATOM PAIRS AND        0 GROUP PAIRS
+
+ General atom nonbond list generation found:
+   202021 ATOM PAIRS WERE FOUND FOR ATOM LIST
+        0 GROUP PAIRS REQUIRED ATOM SEARCHES
+
+MINI>      130   -593.12377      1.14904      0.17330      0.00733
+MINI INTERN>       37.63767    119.62724      7.85384    194.46096      3.57805
+MINI EXTERN>     -144.74401   -811.53751      0.00000      0.00000      0.00000
+ ----------       ---------    ---------    ---------    ---------    ---------
+MINI>      140   -595.41311      2.28934      0.37544      0.01183
+MINI INTERN>       37.31007    119.16438      7.90901    194.14112      3.57352
+MINI EXTERN>     -143.66647   -813.84474      0.00000      0.00000      0.00000
+ ----------       ---------    ---------    ---------    ---------    ---------
+MINI>      150   -596.43248      1.01938      0.20020      0.00687
+MINI INTERN>       37.52950    119.29275      7.83448    193.97741      3.57685
+MINI EXTERN>     -145.42928   -813.21420      0.00000      0.00000      0.00000
+ ----------       ---------    ---------    ---------    ---------    ---------
+MINI>      160   -597.99750      1.56502      0.16990      0.00666
+MINI INTERN>       38.32206    120.24558      7.94143    194.17141      3.59929
+MINI EXTERN>     -146.12773   -816.14954      0.00000      0.00000      0.00000
+ ----------       ---------    ---------    ---------    ---------    ---------
+ UPDECI: Nonbond update at step       164
+ Generating nonbond list with Exclusion mode = 5
+ SPACE FOR   203842 ATOM PAIRS AND        0 GROUP PAIRS
+
+ General atom nonbond list generation found:
+   202021 ATOM PAIRS WERE FOUND FOR ATOM LIST
+        0 GROUP PAIRS REQUIRED ATOM SEARCHES
+
+MINI>      170   -599.32577      1.32827      0.23124      0.00645
+MINI INTERN>       38.21873    120.39637      7.92986    195.06907      3.55036
+MINI EXTERN>     -144.25503   -820.23513      0.00000      0.00000      0.00000
+ ----------       ---------    ---------    ---------    ---------    ---------
+
+ ABNER> Minimization exiting with function tolerance ( 0.0010000) satisfied.
+
+ABNR MIN: Cycle      ENERgy      Delta-E         GRMS    Step-size
+ABNR INTERN:          BONDs       ANGLes       UREY-b    DIHEdrals    IMPRopers
+ABNR EXTERN:        VDWaals         ELEC       HBONds          ASP         USER
+ ----------       ---------    ---------    ---------    ---------    ---------
+ABNR>      177   -600.28291      0.95715      0.61033      0.01285
+ABNR INTERN>       37.69460    120.16696      7.85142    195.46777      3.50936
+ABNR EXTERN>     -144.04604   -820.92698      0.00000      0.00000      0.00000
+ ----------       ---------    ---------    ---------    ---------    ---------
+  
+ CHARMM>     
+  
+ CHARMM>    energy
+
+ NONBOND OPTION FLAGS: 
+     ELEC     VDW      ATOMs    CDIElec  SHIFt    VATOm    VSWItch 
+     BYGRoup  NOEXtnd  NOEWald 
+ CUTNB  =999.000 CTEXNB =999.000 CTONNB =997.000 CTOFNB =998.000
+ WMIN   =  1.500 WRNMXD =  0.500 E14FAC =  1.000 EPS    =  1.000
+ NBXMOD =      5
+ There are   202021 atom  pairs and     3517 atom  exclusions.
+ There are        0 group pairs and      574 group exclusions.
+ Generating nonbond list with Exclusion mode = 5
+ SPACE FOR   203842 ATOM PAIRS AND        0 GROUP PAIRS
+
+ General atom nonbond list generation found:
+   202021 ATOM PAIRS WERE FOUND FOR ATOM LIST
+        0 GROUP PAIRS REQUIRED ATOM SEARCHES
+
+ENER ENR:  Eval#     ENERgy      Delta-E         GRMS
+ENER INTERN:          BONDs       ANGLes       UREY-b    DIHEdrals    IMPRopers
+ENER EXTERN:        VDWaals         ELEC       HBONds          ASP         USER
+ ----------       ---------    ---------    ---------    ---------    ---------
+ENER>        0   -600.28308      0.00017      0.27866
+ENER INTERN>       37.70953    120.11499      7.90911    195.41780      3.53021
+ENER EXTERN>     -144.06793   -820.89678      0.00000      0.00000      0.00000
+ ----------       ---------    ---------    ---------    ---------    ---------
+  
+ CHARMM>     
+  
+ CHARMM>    label STOP
+  
+ CHARMM>    stop
+ VCLOSE: Closing unit    1 with status "KEEP"
+
+                    NORMAL TERMINATION BY NORMAL STOP
+                    MAXIMUM STACK SPACE USED IS   47526
+                    STACK CURRENTLY IN USE IS         0
+                    MOST SEVERE WARNING WAS AT LEVEL  2
+                    HEAP PRINTOUT-  HEAP SIZE   1024000
+                    SPACE CURRENTLY IN USE IS         0
+                    MAXIMUM SPACE USED IS        336434
+                    FREE LIST
+            PRINHP> ADDRESS:         1 LENGTH:   1024000 NEXT:         0
+
+                    $$$$$ JOB ACCOUNTING INFORMATION $$$$$
+                     ELAPSED TIME:    56.00  SECONDS 
+                         CPU TIME:    52.21  SECONDS 

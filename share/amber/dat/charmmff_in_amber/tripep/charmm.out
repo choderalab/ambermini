@@ -1,0 +1,263 @@
+1
+                 Chemistry at HARvard Macromolecular Mechanics
+                   (CHARMM) - Developmental Version 25b2 - February 15, 1998   
+       Copyright(c) 1984,1992  President and Fellows of Harvard College
+                              All Rights Reserved
+                     Current operating system: IRIS UNIX
+                 Created on 11/23/99 at 17: 2:37 by user: case        
+
+            Maximum number of ATOMS:      6120, and RESidues:        4000
+            Current HEAP size:         1024000, and STACK size:    100000
+
+ RDTITL> *  SIMPLE MINIMIZATION FROM AN INPUT PDB FILE
+ RDTITL> *
+  
+ CHARMM>     
+  
+ CHARMM>    !  read in the topology and parameter files
+ CHARMM>     
+  
+ CHARMM>    open unit 1 read form name "../top_all22_prot.inp"
+ VOPEN> Attempting to open::../top_all22_prot.inp::
+ OPNLGU> Unit  1 opened for READONLY access to ../top_all22_prot.inp
+  
+ CHARMM>    read rtf card unit 1
+ MAINIO> Residue topology file being read from unit   1.
+ TITLE> *>>>>>>>>CHARMM22 ALL-HYDROGEN TOPOLOGY FILE FOR PROTEINS <<<<<
+ TITLE> *>>>>>>>>>>>>>>>>>>>>>>> JULY 1997 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+ TITLE> *>>>>>>> DIRECT COMMENTS TO ALEXANDER D. MACKERELL JR. <<<<<<<<<
+ TITLE> *>>>>>> 410-706-7442 OR EMAIL: ALEX,MMIRIS.AB.UMD.EDU  <<<<<<<<<
+ TITLE> *
+ WARNING from DECODI -- Zero length string being converted to 0
+ RTFRDR> WARNING: Version number is NOT specified.
+
+      ***** LEVEL  2 WARNING FROM <RTFRDR> *****
+      ***** Version number 22 not needed.
+      ******************************************
+      BOMLEV (  0) IS NOT REACHED. WRNLEV IS  5
+
+  
+ CHARMM>    close unit 1
+ VCLOSE: Closing unit    1 with status "KEEP"
+  
+ CHARMM>     
+  
+ CHARMM>    open unit 1 read form name "../par_all22_prot.inp"
+ VOPEN> Attempting to open::../par_all22_prot.inp::
+ OPNLGU> Unit  1 opened for READONLY access to ../par_all22_prot.inp
+  
+ CHARMM>    read param card unit 1
+
+          PARAMETER FILE BEING READ FROM UNIT  1
+ TITLE> *>>>> CHARMM22 ALL-HYDROGEN PARAMETER FILE FOR PROTEINS <<<<<<<<<<
+ TITLE> *>>>>>>>>>>>>>>>>>>>>>>> JULY 1997 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+ TITLE> *>>>>>>> DIRECT COMMENTS TO ALEXANDER D. MACKERELL JR. <<<<<<<<<
+ TITLE> *>>>>>> 410-706-7442 OR EMAIL: ALEX,MMIRIS.AB.UMD.EDU  <<<<<<<<<
+ TITLE> *
+ PARRDR> Multiple terms for dihedral type: INDEX  443 CODE36924784     CT3 -OS  -CD  -OB  
+ PARRDR> Multiple terms for dihedral type: INDEX  441 CODE36919834     CT2 -OS  -CD  -OB  
+ PARRDR> Multiple terms for dihedral type: INDEX  434 CODE36611445     CP3 -N   -C   -O   
+ PARRDR> Multiple terms for dihedral type: INDEX  432 CODE36605676     CP2 -CP1 -C   -O   
+ PARRDR> Multiple terms for dihedral type: INDEX  430 CODE36601545     CP1 -N   -C   -O   
+ PARRDR> Multiple terms for dihedral type: INDEX  421 CODE36486876     HB  -CP1 -C   -O   
+ PARRDR> Multiple terms for dihedral type: INDEX  406 CODE31833876     N   -CP1 -C   -NH1 
+ PARRDR> Multiple terms for dihedral type: INDEX  404 CODE31734876     CP2 -CP1 -C   -NH1 
+ PARRDR> Multiple terms for dihedral type: INDEX  398 CODE31616076     HB  -CP1 -C   -NH1 
+ PARRDR> Multiple terms for dihedral type: INDEX  387 CODE30715176     CP2 -CP1 -C   -N   
+ PARRDR> Multiple terms for dihedral type: INDEX  381 CODE30596376     HB  -CP1 -C   -N   
+ PARRDR> Multiple terms for dihedral type: INDEX  353 CODE26632451     CT3 -NH1 -C   -CP1 
+ PARRDR> Multiple terms for dihedral type: INDEX  351 CODE26627501     CT2 -NH1 -C   -CP1 
+ PARRDR> Multiple terms for dihedral type: INDEX  349 CODE26622551     CT1 -NH1 -C   -CP1 
+ PARRDR> Multiple terms for dihedral type: INDEX  334 CODE25984001     CT2 -NH1 -C   -CT3 
+ PARRDR> Multiple terms for dihedral type: INDEX  332 CODE25979051     CT1 -NH1 -C   -CT3 
+ PARRDR> Multiple terms for dihedral type: INDEX  326 CODE25921463     HS  -S   -CT2 -CT3 
+ PARRDR> Multiple terms for dihedral type: INDEX  325 CODE25921463     HS  -S   -CT2 -CT3 
+ PARRDR> Multiple terms for dihedral type: INDEX  323 CODE25876301     H   -OH1 -CT2 -CT3 
+ PARRDR> Multiple terms for dihedral type: INDEX  322 CODE25876301     H   -OH1 -CT2 -CT3 
+ PARRDR> Multiple terms for dihedral type: INDEX  320 CODE25876300     H   -OH1 -CT1 -CT3 
+ PARRDR> Multiple terms for dihedral type: INDEX  319 CODE25876300     H   -OH1 -CT1 -CT3 
+ PARRDR> Multiple terms for dihedral type: INDEX  311 CODE25865201     CT1 -NH1 -C   -CT2 
+ PARRDR> Multiple terms for dihedral type: INDEX  306 CODE25762451     H   -OH1 -CT2 -CT2 
+ PARRDR> Multiple terms for dihedral type: INDEX  305 CODE25762451     H   -OH1 -CT2 -CT2 
+ PARRDR> Multiple terms for dihedral type: INDEX  295 CODE25698713     HS  -S   -CT2 -CT1 
+ PARRDR> Multiple terms for dihedral type: INDEX  294 CODE25698713     HS  -S   -CT2 -CT1 
+ PARRDR> Multiple terms for dihedral type: INDEX  292 CODE25653551     H   -OH1 -CT2 -CT1 
+ PARRDR> Multiple terms for dihedral type: INDEX  291 CODE25653551     H   -OH1 -CT2 -CT1 
+ PARRDR> Multiple terms for dihedral type: INDEX  289 CODE25653550     H   -OH1 -CT1 -CT1 
+ PARRDR> Multiple terms for dihedral type: INDEX  288 CODE25653550     H   -OH1 -CT1 -CT1 
+ PARRDR> Multiple terms for dihedral type: INDEX  242 CODE12103275     CP2 -CP1 -CC  -O   
+ PARRDR> Multiple terms for dihedral type: INDEX  240 CODE11984475     HB  -CP1 -CC  -O   
+ PARRDR> Multiple terms for dihedral type: INDEX  226 CODE 7598775     N   -CP1 -CC  -NH2 
+ PARRDR> Multiple terms for dihedral type: INDEX  224 CODE 7499775     CP2 -CP1 -CC  -NH2 
+ PARRDR> Multiple terms for dihedral type: INDEX  222 CODE 7380975     HB  -CP1 -CC  -NH2 
+ PARRDR> Multiple terms for dihedral type: INDEX  189 CODE 6311676     N   -C   -CP1 -N   
+ PARRDR> Multiple terms for dihedral type: INDEX  181 CODE 2446545     CP1 -C   -N   -CP3 
+ PARRDR> Multiple terms for dihedral type: INDEX  179 CODE 2421795     CT3 -C   -N   -CP3 
+ PARRDR> Multiple terms for dihedral type: INDEX  177 CODE 2416845     CT2 -C   -N   -CP3 
+ PARRDR> Multiple terms for dihedral type: INDEX  175 CODE 2411895     CT1 -C   -N   -CP3 
+ PARRDR> Multiple terms for dihedral type: INDEX  169 CODE 2154495     CP1 -C   -N   -CP1 
+ PARRDR> Multiple terms for dihedral type: INDEX  167 CODE 2129745     CT3 -C   -N   -CP1 
+ PARRDR> Multiple terms for dihedral type: INDEX  165 CODE 2124795     CT2 -C   -N   -CP1 
+ PARRDR> Multiple terms for dihedral type: INDEX  163 CODE 2119845     CT1 -C   -N   -CP1 
+ PARRDR> Multiple terms for dihedral type: INDEX  132 CODE 1604123     CT3 -CT2 -CPH1-CPH1
+ PARRDR> Multiple terms for dihedral type: INDEX  131 CODE 1604123     CT3 -CT2 -CPH1-CPH1
+ PARRDR> Multiple terms for dihedral type: INDEX  128 CODE 1594223     CT1 -CT2 -CPH1-CPH1
+ PARRDR> Multiple terms for dihedral type: INDEX  127 CODE 1594223     CT1 -CT2 -CPH1-CPH1
+ PARRDR> Multiple terms for dihedral type: INDEX  120 CODE 1488403     CT3 -SM  -SM  -CT3 
+ PARRDR> Multiple terms for dihedral type: INDEX  119 CODE 1488403     CT3 -SM  -SM  -CT3 
+ PARRDR> Multiple terms for dihedral type: INDEX  117 CODE 1488263     CT3 -CT2 -S   -CT3 
+ PARRDR> Multiple terms for dihedral type: INDEX  115 CODE 1486451     CT3 -C   -NH1 -CT3 
+ PARRDR> Multiple terms for dihedral type: INDEX  112 CODE 1483313     CT2 -CT2 -S   -CT3 
+ PARRDR> Multiple terms for dihedral type: INDEX  110 CODE 1481501     CT2 -C   -NH1 -CT3 
+ PARRDR> Multiple terms for dihedral type: INDEX  107 CODE 1476551     CT1 -C   -NH1 -CT3 
+ PARRDR> Multiple terms for dihedral type: INDEX   99 CODE 1369603     CT2 -SM  -SM  -CT2 
+ PARRDR> Multiple terms for dihedral type: INDEX   98 CODE 1369603     CT2 -SM  -SM  -CT2 
+ PARRDR> Multiple terms for dihedral type: INDEX   96 CODE 1367651     CT2 -C   -NH1 -CT2 
+ PARRDR> Multiple terms for dihedral type: INDEX   93 CODE 1362701     CT1 -C   -NH1 -CT2 
+ PARRDR> Multiple terms for dihedral type: INDEX   83 CODE 1253801     CT1 -C   -NH1 -CT1 
+ PARMIO> NONBOND, HBOND lists and IMAGE atoms cleared.
+  
+ CHARMM>    close unit 1
+ VCLOSE: Closing unit    1 with status "KEEP"
+  
+ CHARMM>     
+  
+ CHARMM>    !  Now read in and generate the sequence.
+ CHARMM>    open unit 1 read form name "charmm.pdb"
+ VOPEN> Attempting to open::charmm.pdb::
+ OPNLGU> Unit  1 opened for READONLY access to charmm.pdb
+  
+ CHARMM>    read sequ pdb unit 1
+ MAINIO> Sequence information being read from unit   1.
+ TITLE>    PRODUCTION DYNAMICS INPUT FILE TO GENERATE A
+ TITLE>    298 K TRAJECTORY OF THE PROTEIN DIMER GCN4 LEUCINE ZIPPER FROM 2ZTA.PDB
+ TITLE>    DATE:    11/12/99     16: 2:59      CREATED BY USER: case
+ TITLE>  *
+
+          RESIDUE SEQUENCE --     2 RESIDUES
+          THR THR 
+  
+ CHARMM>     
+  
+ CHARMM>    ! generate PDB first nter last cter
+ CHARMM>    generate PDB
+ THE PATCH 'NTER  ' WILL BE USED FOR THE FIRST RESIDUE
+ THE PATCH 'CTER  ' WILL BE USED FOR THE LAST  RESIDUE
+ GENPSF> Segment   1 has been generated. Its identifier is PDB .
+ PSFSUM> PSF modified: NONBOND lists and IMAGE atoms cleared.
+ PSFSUM> Summary of the structure file counters :
+         Number of segments      =        1   Number of residues   =        2
+         Number of atoms         =       31   Number of groups     =        8
+         Number of bonds         =       30   Number of angles     =       53
+         Number of dihedrals     =       73   Number of impropers  =        3
+         Number of HB acceptors  =        5   Number of HB donors  =        6
+         Number of NB exclusions =        0   Total charge =    0.00000
+  
+ CHARMM>     
+  
+ CHARMM>    open unit 1 read form name "charmm.pdb"
+ OPNLGU> Unit already open. The old file will be closed first.
+ VCLOSE: Closing unit    1 with status "KEEP"
+ VOPEN> Attempting to open::charmm.pdb::
+ OPNLGU> Unit  1 opened for READONLY access to charmm.pdb
+  
+ CHARMM>    read coor pdb unit 1
+          SPATIAL COORDINATES BEING READ FROM UNIT  1
+ TITLE>    PRODUCTION DYNAMICS INPUT FILE TO GENERATE A
+ TITLE>    298 K TRAJECTORY OF THE PROTEIN DIMER GCN4 LEUCINE ZIPPER FROM 2ZTA.PDB
+ TITLE>    DATE:    11/12/99     16: 2:59      CREATED BY USER: CASE
+ TITLE>  *
+  
+ CHARMM>     
+  
+ CHARMM>    ! ic param
+ CHARMM>    ! ic build
+ CHARMM>    ! coor init sele hydrogen end
+ CHARMM>    !  hbuild
+ CHARMM>     
+  
+ CHARMM>    define notinit sele .not. initialized end
+ SELRPN>      0 atoms have been selected out of     31
+  
+ CHARMM>    if ?NSEL .gt. 0 print coor sele notinit end
+ RDCMND substituted energy or value "?NSEL" to "0"
+ Comparing "0" and "0".
+ IF test evaluated as false.  Skipping command
+  
+ CHARMM>    if ?NSEL .gt. 0 goto stop
+ RDCMND substituted energy or value "?NSEL" to "0"
+ Comparing "0" and "0".
+ IF test evaluated as false.  Skipping command
+  
+ CHARMM>     
+  
+ CHARMM>    update CDIE eps 1.0 cutnb 999 ctofnb 998 ctonnb 997
+
+ NONBOND OPTION FLAGS: 
+     ELEC     VDW      ATOMs    CDIElec  SHIFt    VATOm    VSWItch 
+     BYGRoup  NOEXtnd  NOEWald 
+ CUTNB  =999.000 CTEXNB =999.000 CTONNB =997.000 CTOFNB =998.000
+ WMIN   =  1.500 WRNMXD =  0.500 E14FAC =  1.000 EPS    =  1.000
+ NBXMOD =      5
+ There are        0 atom  pairs and        0 atom  exclusions.
+ There are        0 group pairs and        0 group exclusions.
+ <MAKINB> with mode   5 found     83 exclusions and     73 interactions(1-4)
+ <MAKGRP> found     17 group exclusions.
+ Generating nonbond list with Exclusion mode = 5
+ SPACE FOR      466 ATOM PAIRS AND        0 GROUP PAIRS
+
+ General atom nonbond list generation found:
+      382 ATOM PAIRS WERE FOUND FOR ATOM LIST
+        0 GROUP PAIRS REQUIRED ATOM SEARCHES
+
+  
+ CHARMM>     
+  
+ CHARMM>    ! open unit 2 form write name "psf"
+ CHARMM>    ! write psf card unit 2
+ CHARMM>     
+  
+ CHARMM>    energy
+
+ NONBOND OPTION FLAGS: 
+     ELEC     VDW      ATOMs    CDIElec  SHIFt    VATOm    VSWItch 
+     BYGRoup  NOEXtnd  NOEWald 
+ CUTNB  =999.000 CTEXNB =999.000 CTONNB =997.000 CTOFNB =998.000
+ WMIN   =  1.500 WRNMXD =  0.500 E14FAC =  1.000 EPS    =  1.000
+ NBXMOD =      5
+ There are      382 atom  pairs and      156 atom  exclusions.
+ There are        0 group pairs and       17 group exclusions.
+ Generating nonbond list with Exclusion mode = 5
+ SPACE FOR      466 ATOM PAIRS AND        0 GROUP PAIRS
+
+ General atom nonbond list generation found:
+      382 ATOM PAIRS WERE FOUND FOR ATOM LIST
+        0 GROUP PAIRS REQUIRED ATOM SEARCHES
+
+ENER ENR:  Eval#     ENERgy      Delta-E         GRMS
+ENER INTERN:          BONDs       ANGLes       UREY-b    DIHEdrals    IMPRopers
+ENER EXTERN:        VDWaals         ELEC       HBONds          ASP         USER
+ ----------       ---------    ---------    ---------    ---------    ---------
+ENER>        0    -19.16326      0.00000     13.47269
+ENER INTERN>        3.02126      3.80122      0.44238      9.04478      0.12801
+ENER EXTERN>        5.47805    -41.07896      0.00000      0.00000      0.00000
+ ----------       ---------    ---------    ---------    ---------    ---------
+  
+ CHARMM>     
+  
+ CHARMM>    stop
+ VCLOSE: Closing unit    1 with status "KEEP"
+
+                    NORMAL TERMINATION BY NORMAL STOP
+                    MAXIMUM STACK SPACE USED IS   47526
+                    STACK CURRENTLY IN USE IS         0
+                    MOST SEVERE WARNING WAS AT LEVEL  2
+                    HEAP PRINTOUT-  HEAP SIZE   1024000
+                    SPACE CURRENTLY IN USE IS         0
+                    MAXIMUM SPACE USED IS          2378
+                    FREE LIST
+            PRINHP> ADDRESS:         1 LENGTH:   1024000 NEXT:         0
+
+                    $$$$$ JOB ACCOUNTING INFORMATION $$$$$
+                     ELAPSED TIME:     2.00  SECONDS 
+                         CPU TIME:     0.82  SECONDS 

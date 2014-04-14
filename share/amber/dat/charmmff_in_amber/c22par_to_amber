@@ -1,0 +1,200 @@
+#!/usr/bin/perl -w
+#
+#   take a "c22par" file from $ARGV[0], plus a corresponding topology file
+#       from $ARGV[1], and a set of atom-name substitutions from
+#       $ARGV[2], and convert to amber "parm.dat" format on STDOUT
+#
+#  for example:
+#
+#       c22par_to_amber par_all22_na.inp top_all22_na.inp  name_trans.dna 
+#                > parm22.dna.dat
+#
+#       OR
+#
+#       c22par_to_amber par_all22_prot.inp top_all22_prot.inp name_trans.pro 
+#                > parm22.pro.dat
+#
+#       here par_all22_na.inp and top_all22_na.inp are files you get from the
+#       CHARMM force field web site:
+#
+#           http://www.pharmacy.umab.edu/~alex/research.html 
+#
+#       and the output file parm22.dna.dat could be used as input to LEaP.
+#
+#       You may still have to edit the all*.in and dna22*.in files here 
+#       to make sure that the atom types, charges and improper torsions
+#       match those in the CHARMM topology file.
+#
+#
+
+
+$Fld8 = "";  # to avoid warning message
+
+print "Converting $ARGV[0] and $ARGV[1] to Amber format\n";
+
+print STDERR "Performing the following atom-type translations:\n";
+open (TRANS,"$ARGV[2]") || die "cannot find input $ARGV[2];\n";
+$trans = "";
+while (<TRANS>) {
+	chop; ($orig,$new) = split(' ');
+	$trans .= "s/$orig/$new/ig; ";
+	printf STDERR "  %-4s  %-4s\n",$orig,$new;
+}
+
+open (TOP,"$ARGV[1]") || die "cannot find input $ARGV[1]\n";
+while (<TOP>) {
+	if (substr($_,0,4) eq "MASS") {
+		chop; $comment = substr($_,25,57);
+		eval $trans;
+		@_ = split(' '); 
+		printf "%-2s%10.3f          %s\n", $_[2],$_[3],$comment;
+	}
+}
+print "\n";
+print "\n";
+
+open (PAR, "$ARGV[0]") || die "cannot find input $ARGV[0]\n";
+while (<PAR>) {
+#
+#    find keywords:
+#
+	chop;
+	@_ = split(' ');
+	if (scalar @_ == 0) {next; }  # skip lines with nothing but blanks
+	if (substr($_,0,1) eq "*") {  next; }
+	if (substr($_,0,1) eq "!") {  next; }
+	if (substr($_,0,5) eq "BONDS") { $bonds=1; next; }
+	if (substr($_,0,6) eq "ANGLES"  || substr($_,0,5) eq "THETA") { 
+		print "$prev_comment\n\n"; $bonds=0; $angles=1; next; 
+	}
+	if (substr($_,0,6) eq "DIHEDR" || substr($_,0,3) eq "PHI") {  
+		print "$prev_comment\n\n"; 
+		$angles=0; $dihe=1; $prevdihe = ""; $prevperiod = 0.;
+		next; 
+	}
+	if (substr($_,0,3) eq "IMP") {
+		printf "%14d.\n", $prevperiod;
+		print "\n"; $dihe=0; $improp=1; next; 
+	}
+	if (substr($_,0,6) eq "NONBON") {  print "\n"; $improp=0; $nonb=1; 
+		$lastchar = substr($_,length($_)-1,1);
+		if ($lastchar eq "-") { <PAR>; }
+		print "\n";
+		print "\n";
+		print "CHAR      RE   \n";
+		next; 
+	}
+	if (substr($_,0,5) eq "HBOND" || substr($_,0,5) eq "NBFIX") { last; }
+#
+#     perform atom-name substitutions:
+#
+		eval $trans;
+#
+#    ---now work on bonds:
+#
+	if ($bonds) {
+		next if substr($_,0,1) eq "!";
+		$prev_comment = $comment;
+		if (/!/) {
+			$data = $`; $comment = " !" . $';
+		} else {
+			$data = $_; $comment = "";
+		}
+    	@_ = split(' ');
+    	if (substr($_[0], 0, 1) ne '!') {
+#                                 new data is coming; complete previous line:
+			printf "%-50s\n", substr($prev_comment,0,50) unless $bonds == 1;
+			@Fld = split(' ',$data);
+    		printf '%-2s-%-2s %10.4f%10.4f',$Fld[0],$Fld[1],$Fld[2],$Fld[3];
+			$bonds++;
+		}
+		next;
+	}
+#
+#     ---angles:
+#
+	if ($angles) {
+		next if substr($_,0,1) eq "!";
+		$prev_comment = $comment;
+		if (/!/) {
+			$data = $`; $comment = " !" . $';
+		} else {
+			$data = $_; $comment = "";
+		}
+	    @_ = split(' ');
+    	if (substr($_[0], 0, 1) ne "!") {
+			printf "%-30s\n", substr($prev_comment,0,30) unless $angles == 1; 
+			@Fld = split(' ',$data);
+			if( $#Fld == 4 ){
+    			printf '%-2s-%-2s-%-2s %10.3f%10.3f     0.000     0.000',
+					$Fld[0],$Fld[1],$Fld[2],$Fld[3],$Fld[4];
+			} else {
+    			printf '%-2s-%-2s-%-2s %10.3f%10.3f%10.3f%10.3f',
+					$Fld[0],$Fld[1],$Fld[2],$Fld[3],$Fld[4],$Fld[5],$Fld[6];
+			}
+			$angles++;
+		}
+		next;
+	}
+#
+#     ---dihedrals:
+#
+	if ($dihe) {
+		next if substr($_,0,1) eq "!";
+	    ($Fld1,$Fld2,$Fld3,$Fld4,$Fld5,$Fld6,$Fld7,$Fld8) = split(' ',$_,8);
+    	next if substr($Fld1, 0, 1) eq '!';
+
+		$currdihe = substr($_,0,18);
+		if( $currdihe eq $prevdihe ){
+			printf "%14d.\n", -$prevperiod;
+		} else {
+			printf "%14d.\n", $prevperiod unless $prevperiod == 0.;
+		}
+			
+    	printf "%-2s-%-2s-%-2s-%-2s   1%15.4f%15.2f", 
+			$Fld1, $Fld2, $Fld3, $Fld4, $Fld5, $Fld7;
+
+		$prevdihe = $currdihe;
+		$prevperiod = $Fld6;
+		next;
+	}
+#
+#     ---impropers:
+#
+	if ($improp) {
+	    ($Fld1,$Fld2,$Fld3,$Fld4,$Fld5,$Fld6) = split(' ',$_,6);
+    	next if substr($Fld1, 0, 1) eq '!';
+
+    	printf "%-2s-%-2s-%-2s-%-2s    %15.4f         180.00             1.\n", 
+			$Fld1, $Fld2, $Fld3, $Fld4, 2.*$Fld5;
+		next;
+	}
+#
+#     ---nonbons:
+#
+	if ($nonb) {
+		next if substr($_,0,1) eq "!";
+		$prev_comment = $comment;
+		if (/!/) {
+			$data = $`; $comment = " !" . $';
+		} else {
+			$data = $_; $comment = "";
+		}
+	    @_ = split(' ');
+    	if (substr($_[0], 0, 1) ne '!') {
+			printf "%-30s\n", substr($prev_comment,0,30) unless $nonb == 1; 
+			@Fld = split(' ',$data); @_ = split(' ',$data); $nf = scalar @_;
+    		printf "  %-2s      %10.6f%10.6f", 
+				$Fld[0], $Fld[3], -$Fld[2];
+			if ($nf == 4) {
+				printf("%10.6f%10.6f", $Fld[3], -$Fld[2]);
+			} else {
+				printf("%10.6f%10.6f", $Fld[6], -$Fld[5]);
+			}
+			$nonb++;
+		}
+		next;
+	}
+}
+print "$prev_comment\n\n";
+print "END\n";

@@ -1,0 +1,17 @@
+#! /bin/csh
+#
+#
+
+cat <<eof >mdin
+  basic test file for sander
+
+#  small amount of minimization:
+
+ &cntrl
+    imin=1, maxcyc=500, ntb=0, igb=2, ntpr=10,
+    cut=99., scnb=1.0, scee=1.0,
+ &end
+eof
+
+../../../bin/sander.CHARMM -O -i mdin -c prmcrd -o sander.out
+/bin/rm mdin restrt

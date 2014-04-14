@@ -1,0 +1,1097 @@
+Converting par_all22_prot.inp and top_all22_prot.inp to Amber format
+H      1.008           H ! polar H
+HC     1.008           H ! N-ter H
+HA     1.008           H ! nonpolar H
+HT     1.008           H ! TIPS3P WATER HYDROGEN
+HP     1.008           H ! aromatic H
+HB     1.008           H ! backbone H
+H1     1.008           H ! his he1, (+) his HG,HD2
+H2     1.008           H ! (+) his HE1
+H3     1.008           H ! neutral his HG, HD2
+HS     1.008           H ! thiol hydrogen
+HK     1.008           H ! for alkene; RHC=CR
+HL     1.008           H ! for alkene; H2C=CR
+C     12.011           C ! carbonyl C, peptide backbone
+CA    12.011           C ! aromatic C
+C1    12.011           C ! aliphatic sp3 C for CH
+C2    12.011           C ! aliphatic sp3 C for CH2
+C3    12.011           C ! aliphatic sp3 C for CH3
+C4    12.011           C ! his CG and CD2 carbons
+C5    12.011           C ! his CE1 carbon
+CP    12.011           C ! trp C between rings
+CY    12.011           C ! TRP C in pyrrole ring
+C6    12.011           C ! tetrahedral C (proline CA)
+C7    12.011           C ! tetrahedral C (proline CB/CG)
+C8    12.011           C ! tetrahedral C (proline CD)
+CC    12.011           C ! carbonyl C, asn,asp,gln,glu,cter,ct2
+CD    12.011           C ! carbonyl C, pres aspp,glup,ct1
+CP    12.011           C ! heme alpha-C
+CB    12.011           C ! heme beta-C
+CN    12.011           C ! heme meso-C
+CM    12.011           C ! heme CO carbon
+CS    12.011           C ! thiolate carbon
+CK    12.011           C ! for alkene; RHC=CR
+CL    12.011           C ! for alkene; H2C=CR
+N     14.007           N ! proline N
+N4    14.007           N ! neutral his protonated ring nitrogen
+N5    14.007           N ! neutral his unprotonated ring nitrogen
+N6    14.007           N ! charged his ring nitrogen
+N1    14.007           N ! peptide nitrogen
+N2    14.007           N ! amide nitrogen
+N3    14.007           N ! ammonium nitrogen
+NC    14.007           N ! guanidinium nitroogen
+NY    14.007           N ! TRP N in pyrrole ring
+NP    14.007           N ! Proline ring NH2+ (N-terminal)
+NH    14.007           N ! heme pyrrole N
+O     15.999           O ! carbonyl oxygen
+OB    15.999           O ! carbonyl oxygen in acetic acid
+OC    15.999           O ! carboxylate oxygen
+OH    15.999           O ! hydroxyl oxygen
+OS    15.999           O ! ester oxygen
+OT    15.999           O ! TIPS3P WATER OXYGEN
+OM    15.999           O ! heme CO/O2 oxygen
+S     32.060           S ! sulphur
+SM    32.060           S ! sulfur C-S-S-C type
+SS    32.060           S ! thiolate sulfur
+HE     4.003           HE ! helium
+NE    20.180           NE ! neon
+CQ    40.080           CA ! calcium 2+
+ZN    65.370           ZN ! zinc (II) cation
+FE    55.847           Fe ! heme iron 56
+DU     0.000           H ! dummy atom
+
+
+C -C    600.0000    1.3350 ! Heme vinyl substituent (KK, from propene (JCS))
+CA-CA   305.0000    1.3750 ! benzene, JES 8/25/89                           
+CK-CK   440.0000    1.3400 ! for butene; from propene, yin/adm jr., 12/95   
+CK-CL   500.0000    1.3420 ! for propene, yin/adm jr., 12/95                
+CK-C2   365.0000    1.5020 ! for butene; from propene, yin/adm jr., 12/95   
+CK-C3   383.0000    1.5040 ! for butene, yin/adm jr., 12/95                 
+CL-CL   510.0000    1.3300 ! for ethene, yin/adm jr., 12/95                 
+C6-C    250.0000    1.4900 ! 6-31g* AcProN2, ProN2, 6-31g*//3-21g AcProNHCH3
+C6-CC   250.0000    1.4900 ! 6-31g* AcProN2, ProN2, 6-31g*//3-21g AcProNHCH3
+C6-CD   200.0000    1.4900 ! 6-31g* AcProN2, ProN2, 6-31g*//3-21g AcProNHCH3
+C7-C6   222.5000    1.5270 ! 6-31g* AcProN2, ProN2, 6-31g*//3-21g AcProNHCH3
+C7-C7   222.5000    1.5370 ! 6-31g* AcProN2, ProN2, 6-31g*//3-21g AcProNHCH3
+C8-C7   222.5000    1.5370 ! 6-31g* AcProN2, ProN2, 6-31g*//3-21g AcProNHCH3
+CB-C    450.0000    1.3800 ! Heme (6-liganded): substituents (KK 05/13/91)  
+CB-CP   299.8000    1.4432 ! Heme (6-liganded): porphyrin macrocycle (KK 05/
+CB-CB   340.7000    1.3464 ! Heme (6-liganded): porphyrin macrocycle (KK 05/
+C4-C4   410.0000    1.3600 ! histidine, adm jr., 6/27/90                    
+CN-CP   360.0000    1.3716 ! Heme (6-liganded): porphyrin macrocycle (KK 05/
+CP-CA   305.0000    1.3680 ! adm jr., 12/30/91, for jwk                     
+CP-CP   360.0000    1.4000 !adm jr., 12/30/91, for jwk                      
+C1-C    250.0000    1.4900 ! Ala Dipeptide ab initio CQc's (LK) fixed from 1
+C1-CC   200.0000    1.5220 ! adm jr. 4/05/91, for asn,asp,gln,glu and cters 
+C1-CD   200.0000    1.5220 ! adm jr. 5/02/91, acetic acid pure solvent      
+C1-C1   222.5000    1.5000 ! alkane update, adm jr., 3/2/92                 
+C2-C    250.0000    1.4900 ! Ala Dipeptide ab initio CQc's (LK) fixed from 1
+C2-CA   230.0000    1.4900 ! phe,tyr, JES 8/25/89                           
+C2-CC   200.0000    1.5220 ! adm jr. 4/05/91, for asn,asp,gln,glu and cters 
+C2-CD   200.0000    1.5220 ! adm jr. 5/02/91, acetic acid pure solvent      
+C2-CB   230.0000    1.4900 ! Heme (6-liganded): substituents (KK 05/13/91)  
+C2-C4   229.6300    1.5000 ! his, adm jr., 7/22/89, FC from C2CT, BL from cr
+C2-C1   222.5000    1.5380 ! alkane update, adm jr., 3/2/92                 
+C2-C2   222.5000    1.5300 ! alkane update, adm jr., 3/2/92                 
+C3-C    250.0000    1.4900 ! Ala Dipeptide ab initio CQc's (LK) fixed from 1
+C3-CA   230.0000    1.4900 ! toluene, adm jr. 3/7/92                        
+C3-CC   200.0000    1.5220 ! adm jr. 4/05/91, for asn,asp,gln,glu and cters 
+C3-CD   200.0000    1.5220 ! adm jr. 5/02/91, acetic acid pure solvent      
+C3-CB   230.0000    1.4900 ! Heme (6-liganded): substituents (KK 05/13/91)  
+C3-C4   229.6300    1.5000 ! his, adm jr., 7/22/89, FC from C2CT, BL from cr
+C3-CS   190.0000    1.5310 ! ethylthiolate 6-31+G* geom/freq, adm jr., 6/1/9
+C3-C1   222.5000    1.5380 ! alkane update, adm jr., 3/2/92                 
+C3-C2   222.5000    1.5280 ! alkane update, adm jr., 3/2/92                 
+C3-C3   222.5000    1.5300 ! alkane update, adm jr., 3/2/92                 
+CY-CA   350.0000    1.3650 !adm jr., 5/08/91, indole CCDB structure search  
+CY-CP   350.0000    1.4400 !adm jr., 12/30/91, for jwk                      
+CY-C2   230.0000    1.5100 !JWK  Kb from alkane freq.. b0 from TRP crystal  
+FE-CM   258.0000    1.9000 ! Heme (6-liganded): CO ligand (KK 05/13/91)     
+FE-CN     0.0000    3.3814 ! Heme (6-liganded): for "ic para" only (KK 05/13
+H -CD   330.0000    1.1100 ! adm jr. 5/02/91, acetic acid pure solvent      
+HA-C    330.0000    1.1000 ! Heme vinyl substituent (KK, from propene (JCS))
+HA-CA   340.0000    1.0830 ! trp, adm jr., 10/02/89                         
+HA-CC   317.1300    1.1000 ! adm jr., 5/13/91, formamide geometry and vibrat
+HA-C7   309.0000    1.1110 ! 6-31g* AcProN2, ProN2, 6-31g*//3-21g AcProNHCH3
+HA-C8   309.0000    1.1110 ! 6-31g* AcProN2, ProN2, 6-31g*//3-21g AcProNHCH3
+HA-CN   367.6000    1.0900 ! Heme (6-liganded): porphyrin macrocycle (KK 05/
+HA-CS   300.0000    1.1110 ! methylthiolate 6-31+G* geom/freq, adm jr., 6/1/
+HA-C1   309.0000    1.1110 ! alkane update, adm jr., 3/2/92                 
+HA-C2   309.0000    1.1110 ! alkane update, adm jr., 3/2/92                 
+HA-C3   322.0000    1.1110 ! alkane update, adm jr., 3/2/92                 
+HA-CY   330.0000    1.0800 ! JWK 05/14/91 new r0 from indole                
+HK-CK   360.5000    1.1000 ! for propene, yin/adm jr., 12/95                
+HL-CL   365.0000    1.1000 ! for ethene, yin/adm jr., 12/95                 
+HB-C6   330.0000    1.0800 ! 6-31g* AcProN2, ProN2, 6-31g*//3-21g AcProNHCH3
+HB-C1   330.0000    1.0800 ! Alanine Dipeptide ab initio CQc's (LK)         
+HB-C2   330.0000    1.0800 ! Alanine Dipeptide ab initio CQc's (LK)         
+HB-C3   330.0000    1.0800 ! Alanine Dipeptide ab initio CQc's (LK)         
+HP-CA   340.0000    1.0800 ! phe,tyr JES 8/25/89                            
+HP-CY   350.0000    1.0800 !adm jr., 12/30/91, for jwk                      
+H1-C4   375.0000    1.0830 ! his, adm jr., 6/27/90                          
+H1-C5   340.0000    1.0900 ! his, adm jr., 6/28/29                          
+H2-C5   333.0000    1.0700 ! his, adm jr., 6/27/90                          
+H3-C4   365.0000    1.0830 ! adm jr., 3/24/92, maintain old aliphatic H VDW 
+HT-HT     0.0000    1.5139 ! FROM TIPS3P GEOMETRY (FOR SHAKE/W PARAM)       
+N -C    260.0000    1.3000 ! 6-31g* AcProN2, ProN2, 6-31g*//3-21g AcProNHCH3
+N -C6   320.0000    1.4340 ! 6-31g* AcProN2, ProN2, 6-31g*//3-21g AcProNHCH3
+N -C8   320.0000    1.4550 ! 6-31g* AcProN2, ProN2, 6-31g*//3-21g AcProNHCH3
+NC-C    463.0000    1.3650 ! 403.0->463.0, 1.305->1.365 guanidinium (KK)    
+NC-C2   261.0000    1.4900 ! arg, (DS)                                      
+NC-C3   261.0000    1.4900 ! methylguanidinium, adm jr., 3/26/92            
+NC-HC   455.0000    1.0000 ! 405.0->455.0 GUANIDINIUM (KK)                  
+N1-C    370.0000    1.3450 ! Alanine Dipeptide ab initio CQc's (LK)         
+N1-C1   320.0000    1.4300 ! NMA Gas & Liquid Phase IR Spectra (LK)         
+N1-C2   320.0000    1.4300 ! NMA Gas & Liquid Phase IR Spectra (LK)         
+N1-C3   320.0000    1.4300 ! NMA Gas & Liquid Phase IR Spectra (LK)         
+N1-H    440.0000    0.9970 ! Alanine Dipeptide ab initio CQc's (LK)         
+N1-HC   405.0000    0.9800 ! (DS)                                           
+N2-CC   430.0000    1.3600 ! adm jr. 4/10/91, acetamide                     
+N2-C2   240.0000    1.4550 ! from N2  C3, neutral glycine, adm jr.          
+N2-C3   240.0000    1.4550 ! methylamine geom/freq, adm jr., 6/2/92         
+N2-H    480.0000    1.0000 ! adm jr. 8/13/90 acetamide geometry and vibratio
+N2-HC   460.0000    1.0000 ! methylamine geom/freq, adm jr., 6/2/92         
+N3-C1   200.0000    1.4800 ! new stretch and bend; methylammonium (KK 03/10/
+N3-C2   200.0000    1.4800 ! new stretch and bend; methylammonium (KK 03/10/
+N3-C3   200.0000    1.4800 ! new stretch and bend; methylammonium (KK 03/10/
+N3-HC   403.0000    1.0400 ! new stretch and bend; methylammonium (KK 03/10/
+NP-C6   320.0000    1.4850 ! 6-31g* AcProN2, ProN2, 6-31g*//3-21g AcProNHCH3
+NP-C8   320.0000    1.5020 ! 6-31g* AcProN2, ProN2, 6-31g*//3-21g AcProNHCH3
+NP-HC   460.0000    1.0060 ! 6-31g* AcProN2, ProN2, 6-31g*//3-21g AcProNHCH3
+NH-CP   377.2000    1.3757 ! Heme (6-liganded): porphyrin macrocycle (KK 05/
+NH-FE   270.2000    1.9580 ! Heme (6-liganded): porphyrin macrocycle (KK 05/
+N4-C4   400.0000    1.3800 ! his, ADM JR., 7/20/89                          
+N4-C5   400.0000    1.3600 ! his, ADM JR., 7/20/89                          
+N4-H    466.0000    1.0000 ! his, ADM JR., 7/20/89                          
+N5-C4   400.0000    1.3800 ! his, ADM JR., 7/20/89                          
+N5-C5   400.0000    1.3200 ! his, ADM JR., 7/20/89                          
+N5-FE    65.0000    2.2000 ! Heme (6-liganded): His ligand (KK 05/13/91)    
+N6-C4   380.0000    1.3700 ! his, adm jr., 6/28/90                          
+N6-C5   380.0000    1.3200 ! his, adm jr., 6/27/90                          
+N6-H    453.0000    1.0000 ! his, adm jr., 6/27/90                          
+NY-CA   270.0000    1.3700 !adm jr., 12/30/91, for jwk                      
+NY-CP   270.0000    1.3750 !adm jr., 12/30/91, for jwk                      
+NY-H    465.0000    0.9760 ! indole JWK   08/28/89                          
+O -C    620.0000    1.2300 ! Peptide geometry, condensed phase (LK)         
+O -CC   650.0000    1.2300 ! adm jr. 4/10/91, acetamide                     
+OB-CC   750.0000    1.2200 ! adm jr., 10/17/90, acetic acid vibrations and g
+OB-CD   750.0000    1.2200 ! adm jr. 5/02/91, acetic acid pure solvent      
+OC-CA   525.0000    1.2600 ! adm jr. 8/27/91, phenoxide                     
+OC-CC   525.0000    1.2600 ! adm jr. 7/23/91, acetic acid                   
+OC-C2   450.0000    1.3300 ! ethoxide 6-31+G* geom/freq, adm jr., 6/1/92    
+OC-C3   450.0000    1.3300 ! methoxide 6-31+G* geom/freq, adm jr., 6/1/92   
+OH-CA   334.3000    1.4110 ! MeOH, EMB 10/10/89,                            
+OH-CD   230.0000    1.4000 ! adm jr. 5/02/91, acetic acid pure solvent      
+OH-C1   428.0000    1.4200 ! methanol vib fit EMB 11/21/89                  
+OH-C2   428.0000    1.4200 ! methanol vib fit EMB 11/21/89                  
+OH-C3   428.0000    1.4200 ! methanol vib fit EMB 11/21/89                  
+OH-H    545.0000    0.9600 ! EMB 11/21/89 methanol vib fit                  
+OM-CM  1115.0000    1.1280 ! Heme (6-liganded): CO ligand (KK 05/13/91)     
+OM-FE   250.0000    1.8000 ! Heme (6-liganded): O2 ligand (KK 05/13/91)     
+OM-OM   600.0000    1.2300 ! Heme (6-liganded): O2 ligand (KK 05/13/91)     
+OS-CD   150.0000    1.3340 ! adm jr. 5/02/91, acetic acid pure solvent      
+OS-C3   340.0000    1.4300 ! adm jr., 4/05/91, for PRES C1 from methylacetat
+OT-HT   450.0000    0.9572 ! FROM TIPS3P GEOM                               
+S -C2   198.0000    1.8180 ! fitted to C-S s   9/26/92 (FL)                 
+S -C3   240.0000    1.8160 ! fitted to C-S s   9/26/92 (FL)                 
+S -HS   275.0000    1.3250 ! methanethiol pure solvent, adm jr., 6/22/92    
+SM-C2   214.0000    1.8160 ! improved CSSC dihedral in DMDS  5/15/92 (FL)   
+SM-C3   214.0000    1.8160 ! improved CSSC dihedral in DMDS  5/15/92 (FL)   
+SM-SM   173.0000    2.0290 ! improved CSSC dihedral in DMDS  5/15/92 (FL)   
+SS-CS   205.0000    1.8360 ! ALLOW   SUL
+
+CA-CA-CA     40.000   120.000    35.000     2.416 ! JES 8/25/89                
+CK-CK-C3     48.000   123.500     0.000     0.000 ! for 2-butene, yin/adm jr., 
+CK-C2-C3     32.000   112.200     0.000     0.000 ! for 1-butene; from propene,
+CL-CK-C2     48.000   126.000     0.000     0.000 ! for 1-butene; from propene,
+CL-CK-C3     47.000   125.200     0.000     0.000 ! for propene, yin/adm jr., 1
+C6-N -C      60.000   117.000     0.000     0.000 ! 6-31g* AcProN2, ProN2, 6-31
+C7-C6-C      52.000   112.300     0.000     0.000 ! 6-31g* AcProN2, ProN2, 6-31
+C7-C6-CC     52.000   112.300     0.000     0.000 ! 6-31g* AcProN2, ProN2, 6-31
+C7-C6-CD     50.000   112.300     0.000     0.000 ! 6-31g* AcProN2, ProN2, 6-31
+C7-C7-C6     70.000   108.500     0.000     0.000 ! 6-31g* AcProN2, ProN2, 6-31
+C8-C7-C7     70.000   108.500     0.000     0.000 ! 6-31g* AcProN2, ProN2, 6-31
+C8-N -C      60.000   117.000     0.000     0.000 ! 6-31g* AcProN2, ProN2, 6-31
+C8-N -C6    100.000   114.200     0.000     0.000 ! 6-31g* AcProN2, ProN2, 6-31
+C8-NP-C6    100.000   111.000     0.000     0.000 ! 6-31g* AcProN2, ProN2, 6-31
+CP-CB-C      70.000   126.740     0.000     0.000 ! Heme (6-liganded): substitu
+CP-CN-CP     94.200   125.120     0.000     0.000 ! Heme (6-liganded): porphyri
+CP-NH-CP    139.300   103.900     0.000     0.000 ! Heme (6-liganded): porphyri
+CB-C -C      70.000   121.500     0.000     0.000 ! Heme (6-liganded): substitu
+CB-CB-C      70.000   126.750     0.000     0.000 ! Heme (6-liganded): substitu
+CB-CB-CP     30.800   106.510     0.000     0.000 ! Heme (6-liganded): porphyri
+C5-N4-C4    130.000   107.500     0.000     0.000 ! his, adm jr., 6/27/90      
+C5-N5-C4    130.000   104.000     0.000     0.000 ! his, adm jr., 6/27/90      
+C5-N6-C4    145.000   108.000     0.000     0.000 ! his, ADM JR., 7/20/89      
+CN-CP-CB     61.600   124.070     0.000     0.000 ! Heme (6-liganded): porphyri
+CP-CA-CA     60.000   118.000     0.000     0.000 !adm jr., 12/30/91, for jwk  
+CP-CP-CA     60.000   122.000     0.000     0.000 !adm jr., 12/30/91, for jwk  
+CP-CY-CA    120.000   107.400    25.000     2.261 !adm jr., 12/30/91, for jwk  
+CP-NY-CA    110.000   108.000     0.000     0.000 !adm jr., 12/30/91, for jwk  
+C1-C1-C      52.000   108.000     0.000     0.000 ! Alanine Dipeptide ab initio
+C1-C1-CC     52.000   108.000     0.000     0.000 ! adm jr. 4/05/91, for asn,as
+C1-C1-C1     53.350   111.000     8.000     2.561 ! alkane update, adm jr., 3/2
+C1-C2-CA     51.800   107.500     0.000     0.000 ! PARALLH19 (JES)            
+C1-C2-CC     52.000   108.000     0.000     0.000 ! adm jr. 4/05/91, for asn,as
+C1-C2-CD     52.000   108.000     0.000     0.000 ! adm jr. 5/02/91, acetic aci
+C1-C2-C4     58.350   113.000     0.000     0.000 ! his, ADM JR., 7/22/89, from
+C1-C2-C1     58.350   113.500    11.160     2.561 ! alkane frequencies (MJF), a
+C1-N1-C      50.000   120.000     0.000     0.000 ! NMA Vib Modes (LK)         
+C2-CA-CA     45.800   122.300     0.000     0.000 ! PARALLH19 (JES)            
+C2-CB-CP     65.000   126.740     0.000     0.000 ! Heme (6-liganded): substitu
+C2-CB-CB     65.000   126.750     0.000     0.000 ! Heme (6-liganded): substitu
+C2-C4-C4     45.800   130.000     0.000     0.000 ! his, ADM JR., 7/22/89, FC=>
+C2-C1-C      52.000   108.000     0.000     0.000 ! Alanine Dipeptide ab initio
+C2-C1-CC     52.000   108.000     0.000     0.000 ! adm jr. 4/05/91, for asn,as
+C2-C1-CD     52.000   108.000     0.000     0.000 ! adm jr. 5/02/91, acetic aci
+C2-C1-C1     53.350   111.000     8.000     2.561 ! alkane update, adm jr., 3/2
+C2-C2-C      52.000   108.000     0.000     0.000 ! from C2  C1  C, for lactams
+C2-C2-CC     52.000   108.000     0.000     0.000 ! adm jr. 4/05/91, for asn,as
+C2-C2-CD     52.000   108.000     0.000     0.000 ! adm jr. 5/02/91, acetic aci
+C2-C2-CB     70.000   113.000     0.000     0.000 ! Heme (6-liganded): substitu
+C2-C2-C1     58.350   113.500    11.160     2.561 ! alkane frequencies (MJF), a
+C2-C2-C2     58.350   113.600    11.160     2.561 ! alkane update, adm jr., 3/2
+C2-C3-C1     58.350   113.500    11.160     2.561 ! alkane frequencies (MJF), a
+C2-CY-CA     45.800   129.400     0.000     0.000 !adm jr., 5/08/91,  indole CC
+C2-CY-CP     45.800   124.000     0.000     0.000 !adm jr., 5/08/91,  indole CC
+C2-NC-C      62.300   120.000     0.000     0.000 ! 107.5->120.0 to make planar
+C2-N1-C      50.000   120.000     0.000     0.000 ! NMA Vib Modes (LK)         
+C2-OS-CD     40.000   109.600    30.000     2.265 ! adm jr. 5/02/91, acetic aci
+C3-CA-CA     45.800   122.300     0.000     0.000 ! toluene, adm jr., 3/7/92   
+C3-CB-CP     65.000   126.740     0.000     0.000 ! Heme (6-liganded): substitu
+C3-CB-CB     65.000   126.750     0.000     0.000 ! Heme (6-liganded): substitu
+C3-C4-C4     45.800   130.000     0.000     0.000 ! his, ADM JR., 7/22/89, FC=>
+C3-C1-C      52.000   108.000     0.000     0.000 ! Alanine Dipeptide ab initio
+C3-C1-CC     52.000   108.000     0.000     0.000 ! adm jr. 4/09/92, for ALA ct
+C3-C1-C1     53.350   108.500     8.000     2.561 ! alkane update, adm jr., 3/2
+C3-C1-C2     53.350   114.000     8.000     2.561 ! alkane update, adm jr., 3/2
+C3-C1-C3     53.350   114.000     8.000     2.561 ! alkane update, adm jr., 3/2
+C3-C2-CA     51.800   107.500     0.000     0.000 ! ethylbenzene, adm jr., 3/7/
+C3-C2-C4     58.350   113.000     0.000     0.000 ! his, ADM JR., 7/22/89, from
+C3-C2-C1     58.350   113.500    11.160     2.561 ! alkane frequencies (MJF), a
+C3-C2-C2     58.000   115.000     8.000     2.561 ! alkane update, adm jr., 3/2
+C3-C2-C3     53.350   114.000     8.000     2.561 ! alkane update, adm jr., 3/2
+C3-NC-C      62.300   120.000     0.000     0.000 ! methylguanidinium, adm jr.,
+C3-N1-C      50.000   120.000     0.000     0.000 ! NMA Vib Modes (LK)         
+C3-OS-CD     40.000   109.600    30.000     2.265 ! adm jr. 5/02/91, acetic aci
+C3-S -C2     34.000    95.000     0.000     0.000 ! expt. MeEtS,    3/26/92 (FL
+CY-CP-CA    160.000   130.600     0.000     0.000 !adm jr., 12/30/91, for jwk  
+CY-CP-CP    110.000   107.400     0.000     0.000 !adm jr., 12/30/91, for jwk  
+CY-C2-C1     58.350   114.000     0.000     0.000 ! from TRP crystal, JWK      
+CY-C2-C3     58.350   114.000     0.000     0.000 ! from TRP crystal, JWK      
+FE-NH-CP     96.150   128.050     0.000     0.000 ! Heme (6-liganded): porphyri
+FE-N5-C4     30.000   133.000     0.000     0.000 ! Heme (6-liganded): ligand l
+FE-N5-C5     30.000   123.000     0.000     0.000 ! Heme (6-liganded): ligand l
+H -N1-C      34.000   123.000     0.000     0.000 ! NMA Vib Modes (LK)         
+H -N1-C1     35.000   117.000     0.000     0.000 ! NMA Vibrational Modes (LK) 
+H -N1-C2     35.000   117.000     0.000     0.000 ! NMA Vibrational Modes (LK) 
+H -N1-C3     35.000   117.000     0.000     0.000 ! NMA Vibrational Modes (LK) 
+H -N2-CC     50.000   120.000     0.000     0.000 ! his, adm jr. 8/13/90 acetam
+H -N2-H      23.000   120.000     0.000     0.000 ! adm jr. 8/13/90 acetamide g
+H -N4-C4     30.000   125.500    20.000     2.150 ! his, adm jr., 6/27/90      
+H -N4-C5     30.000   127.000    20.000     2.140 ! his, adm jr., 6/27/90      
+H -N6-C4     25.000   126.000    15.000     2.130 ! his, adm jr., 6/27/90      
+H -N6-C5     25.000   126.000    15.000     2.090 ! his, adm jr., 6/27/90      
+H -NY-CA     28.000   126.000     0.000     0.000 !adm jr., 12/30/91, for jwk  
+H -NY-CP     28.000   126.000     0.000     0.000 !adm jr., 12/30/91, for jwk  
+H -OH-CA     65.000   108.000     0.000     0.000 ! JES 8/25/89 phenol         
+H -OH-CD     55.000   115.000     0.000     0.000 ! adm jr. 5/02/91, acetic aci
+H -OH-C1     57.500   106.000     0.000     0.000 ! methanol vib fit EMB 11/21/
+H -OH-C2     57.500   106.000     0.000     0.000 ! methanol vib fit EMB 11/21/
+H -OH-C3     57.500   106.000     0.000     0.000 ! methanol vib fit EMB 11/21/
+HA-C -C      50.000   120.500     0.000     0.000 ! Heme vinyl substituent (KK 
+HA-C -CB     50.000   120.000     0.000     0.000 ! Heme (6-liganded): substitu
+HA-C -HA     50.000   118.000     0.000     0.000 ! Heme vinyl substituent (KK 
+HA-CA-CA     29.000   120.000    25.000     2.152 ! trp, adm jr., 10/02/89     
+HA-CA-CP     41.000   122.000     0.000     0.000 !adm jr., 5/08/91, indole CCD
+HA-CA-CY     32.000   125.000    25.000     2.173 ! JWK 05/14/91 new theta0 and
+HA-C7-C6     33.430   110.100    22.530     2.179 ! 6-31g* AcProN2, ProN2, 6-31
+HA-C7-C7     26.500   110.100    22.530     2.179 ! 6-31g* AcProN2, ProN2, 6-31
+HA-C7-C8     26.500   110.100    22.530     2.179 ! 6-31g* AcProN2, ProN2, 6-31
+HA-C7-HA     35.500   109.000     5.400     1.802 ! 6-31g* AcProN2, ProN2, 6-31
+HA-C8-C7     26.500   110.100    22.530     2.179 ! 6-31g* AcProN2, ProN2, 6-31
+HA-C8-HA     35.500   109.000     5.400     1.802 ! 6-31g* AcProN2, ProN2, 6-31
+HA-CN-CP     12.700   117.440     0.000     0.000 ! Heme (6-liganded): porphyri
+HA-CN-FE      0.000   180.000     0.000     0.000 ! Heme (6-liganded): for "ic 
+HA-CS-C3     34.600   110.100    22.530     2.179 ! ethylthiolate 6-31+G* geom/
+HA-CS-HA     35.500   108.400    14.000     1.775 ! methylthiolate 6-31+G* geom
+HA-C1-C      33.000   109.500    30.000     2.163 ! alanine dipeptide, LK, repl
+HA-C1-CD     33.000   109.500    30.000     2.163 ! adm jr. 5/02/91, acetic aci
+HA-C1-C1     34.500   110.100    22.530     2.179 ! alkane update, adm jr., 3/2
+HA-C1-C2     34.500   110.100    22.530     2.179 ! alkane update, adm jr., 3/2
+HA-C1-C3     34.500   110.100    22.530     2.179 ! alkane update, adm jr., 3/2
+HA-C1-HA     35.500   109.000     5.400     1.802 ! based on HA   C2  HA       
+HA-C2-C      33.000   109.500    30.000     2.163 ! alanine dipeptide, LK, repl
+HA-C2-CA     49.300   107.500     0.000     0.000 ! PARALLH19 (JES)            
+HA-C2-CC     33.000   109.500    30.000     2.163 ! adm jr. 4/05/91, for asn,as
+HA-C2-CD     33.000   109.500    30.000     2.163 ! adm jr. 5/02/91, acetic aci
+HA-C2-CK     45.000   111.500     0.000     0.000 ! for 1-butene; from propene,
+HA-C2-CB     50.000   109.500     0.000     0.000 ! Heme (6-liganded): substitu
+HA-C2-C4     33.430   109.500     0.000     0.000 ! his, ADM JR., 7/22/89, from
+HA-C2-C1     33.430   110.100    22.530     2.179 ! alkane frequencies (MJF), a
+HA-C2-C2     26.500   110.100    22.530     2.179 ! alkane update, adm jr., 3/2
+HA-C2-C3     34.600   110.100    22.530     2.179 ! alkane update, adm jr., 3/2
+HA-C2-CY     33.430   109.500     0.000     0.000 ! ADM JR., 10/02/89, from C2C
+HA-C2-HA     35.500   109.000     5.400     1.802 ! alkane update, adm jr., 3/2
+HA-C3-C      33.000   109.500    30.000     2.163 ! alanine dipeptide, LK, repl
+HA-C3-CA     49.300   107.500     0.000     0.000 ! toluene, adm jr. 3/7/92    
+HA-C3-CC     33.000   109.500    30.000     2.163 ! adm jr. 4/05/91, for asn,as
+HA-C3-CD     33.000   109.500    30.000     2.163 ! adm jr. 5/02/91, acetic aci
+HA-C3-CK     42.000   111.500     0.000     0.000 ! for 2-butene, yin/adm jr., 
+HA-C3-CB     50.000   109.500     0.000     0.000 ! Heme (6-liganded): substitu
+HA-C3-C4     33.430   109.500     0.000     0.000 ! his, ADM JR., 7/22/89, from
+HA-C3-CS     34.600   110.100    22.530     2.179 ! ethylthiolate 6-31+G* geom/
+HA-C3-C1     33.430   110.100    22.530     2.179 ! alkane frequencies (MJF), a
+HA-C3-C2     34.600   110.100    22.530     2.179 ! alkane update, adm jr., 3/2
+HA-C3-C3     37.500   110.100    22.530     2.179 ! alkane update, adm jr., 3/2
+HA-C3-HA     35.500   108.400     5.400     1.802 ! alkane update, adm jr., 3/2
+HA-CY-CA     20.000   126.400    25.000     2.186 ! JWK 05/14/91 new theta0 and
+HA-CY-CP     32.000   126.400    25.000     2.255 ! JWK 05/14/91 new theta0 and
+HK-CK-CK     52.000   119.500     0.000     0.000 ! for 2-butene, yin/adm jr., 
+HK-CK-CL     42.000   118.000     0.000     0.000 ! for propene, yin/adm jr., 1
+HK-CK-C2     40.000   116.000     0.000     0.000 ! for 1-butene; from propene,
+HK-CK-C3     22.000   117.000     0.000     0.000 ! for propene, yin/adm jr., 1
+HL-CL-CK     45.000   120.500     0.000     0.000 ! for propene, yin/adm jr., 1
+HL-CL-CL     55.500   120.500     0.000     0.000 ! for ethene, yin/adm jr., 12
+HL-CL-HL     19.000   119.000     0.000     0.000 ! for propene, yin/adm jr., 1
+HB-C6-C      50.000   112.000     0.000     0.000 ! 6-31g* AcProN2, ProN2, 6-31
+HB-C6-CC     50.000   112.000     0.000     0.000 ! 6-31g* AcProN2, ProN2, 6-31
+HB-C6-CD     50.000   112.000     0.000     0.000 ! 6-31g* AcProN2, ProN2, 6-31
+HB-C6-C7     35.000   118.000     0.000     0.000 ! 6-31g* AcProN2, ProN2, 6-31
+HB-C1-C      50.000   109.500     0.000     0.000 ! Alanine Dipeptide ab initio
+HB-C1-CC     50.000   109.500     0.000     0.000 ! adm jr. 4/05/91, for asn,as
+HB-C1-CD     50.000   109.500     0.000     0.000 ! adm jr. 5/02/91, acetic aci
+HB-C1-C1     35.000   111.000     0.000     0.000 ! Alanine Dipeptide ab initio
+HB-C1-C2     35.000   111.000     0.000     0.000 ! Alanine Dipeptide ab initio
+HB-C1-C3     35.000   111.000     0.000     0.000 ! Alanine Dipeptide ab initio
+HB-C2-C      50.000   109.500     0.000     0.000 ! Alanine Dipeptide ab initio
+HB-C2-CC     50.000   109.500     0.000     0.000 ! adm jr. 4/05/91, for asn,as
+HB-C2-CD     50.000   109.500     0.000     0.000 ! adm jr. 5/02/91, acetic aci
+HB-C2-HB     36.000   115.000     0.000     0.000 ! Alanine Dipeptide ab initio
+HB-C3-C      50.000   109.500     0.000     0.000 ! Alanine Dipeptide ab initio
+HC-NC-C      49.000   120.000     0.000     0.000 ! 35.3->49.0 GUANIDINIUM (KK)
+HC-NC-C2     40.400   120.000     0.000     0.000 ! 107.5->120.0 to make planar
+HC-NC-C3     40.400   120.000     0.000     0.000 ! methylguanidinium, adm jr.,
+HC-NC-HC     25.000   120.000     0.000     0.000 ! 40.0->25.0 GUANIDINIUM (KK)
+HC-N2-C2     50.000   111.000     0.000     0.000 ! from HC N2 C3, neutral glyc
+HC-N2-C3     50.000   111.000     0.000     0.000 ! methylamine geom/freq, adm 
+HC-N2-HC     39.000   106.500     0.000     0.000 ! 40.0->25.0 GUANIDINIUM (KK)
+HC-N3-C1     30.000   109.500    20.000     2.074 ! new stretch and bend; methy
+HC-N3-C2     30.000   109.500    20.000     2.074 ! new stretch and bend; methy
+HC-N3-C3     30.000   109.500    20.000     2.074 ! new stretch and bend; methy
+HC-N3-HC     44.000   109.500     0.000     0.000 ! new stretch and bend; methy
+HC-NP-C6     33.000   109.500     4.000     2.056 ! 6-31g* AcProN2, ProN2, 6-31
+HC-NP-C8     33.000   109.500     4.000     2.056 ! 6-31g* AcProN2, ProN2, 6-31
+HC-NP-HC     51.000   107.500     0.000     0.000 ! 6-31g* AcProN2, ProN2, 6-31
+HP-CA-CA     30.000   120.000    22.000     2.152 ! JES 8/25/89 benzene        
+HP-CA-CP     30.000   122.000    22.000     2.146 !adm jr., 12/30/91, for jwk  
+HP-CA-CY     32.000   125.000    25.000     2.173 ! JWK 05/14/91 new theta0 and
+HP-CY-CA     32.000   126.400    25.000     2.186 !adm jr., 12/30/91, for jwk  
+HP-CY-CP     32.000   126.400    25.000     2.255 ! JWK 05/14/91 new theta0 and
+H1-C4-C4     22.000   130.000    15.000     2.215 ! adm jr., 6/27/90, his      
+H3-C4-C4     25.000   130.000    20.000     2.200 ! adm jr., 3/24/92, maintain 
+HS-S -C2     38.800    95.000     0.000     0.000 ! methanethiol pure solvent, 
+HS-S -C3     43.000    95.000     0.000     0.000 ! methanethiol pure solvent, 
+HT-OT-HT     55.000   104.520     0.000     0.000 ! TIP3P GEOMETRY, ADM JR.    
+N -C -C6     20.000   112.500     0.000     0.000 ! 6-31g* AcProN2, ProN2, 6-31
+N -C -C1     20.000   112.500     0.000     0.000 ! 6-31g* AcProN2, ProN2, 6-31
+N -C -C2     20.000   112.500     0.000     0.000 ! 6-31g* AcProN2, ProN2, 6-31
+N -C -C3     20.000   112.500     0.000     0.000 ! 6-31g* AcProN2, ProN2, 6-31
+N -C6-C      50.000   108.200     0.000     0.000 ! 6-31g* AcProN2, ProN2, 6-31
+N -C6-CC     50.000   108.200     0.000     0.000 ! 6-31g* AcProN2, ProN2, 6-31
+N -C6-CD     50.000   108.200     0.000     0.000 ! 6-31g* AcProN2, ProN2, 6-31
+N -C6-C7     70.000   110.800     0.000     0.000 ! 6-31g* AcProN2, ProN2, 6-31
+N -C6-HB     48.000   112.000     0.000     0.000 ! 6-31g* AcProN2, ProN2, 6-31
+N -C8-C7     70.000   110.500     0.000     0.000 ! 6-31g* AcProN2, ProN2, 6-31
+N -C8-HA     48.000   108.000     0.000     0.000 ! 6-31g* AcProN2, ProN2, 6-31
+NC-C -NC     52.000   120.000    90.000     2.364 ! changed from 60.0/120.3 for
+NC-C2-C2     67.700   107.500     0.000     0.000 ! arg, (DS)                  
+NC-C2-HA     51.500   107.500     0.000     0.000 ! arg, (DS)                  
+NC-C3-HA     51.500   107.500     0.000     0.000 ! methylguanidinium, adm jr.,
+N1-C -C6     80.000   116.500     0.000     0.000 ! 6-31g* AcProN2, ProN2, 6-31
+N1-C -C1     80.000   116.500     0.000     0.000 ! NMA Vib Modes (LK)         
+N1-C -C2     80.000   116.500     0.000     0.000 ! NMA Vib Modes (LK)         
+N1-C -C3     80.000   116.500     0.000     0.000 ! NMA Vib Modes (LK)         
+N1-C1-C      50.000   107.000     0.000     0.000 ! Alanine Dipeptide ab initio
+N1-C1-CC     50.000   107.000     0.000     0.000 ! adm jr. 4/05/91, for asn,as
+N1-C1-CD     50.000   107.000     0.000     0.000 ! adm jr. 5/02/91, acetic aci
+N1-C1-C1     70.000   113.500     0.000     0.000 ! Alanine Dipeptide ab initio
+N1-C1-C2     70.000   113.500     0.000     0.000 ! Alanine Dipeptide ab initio
+N1-C1-C3     70.000   113.500     0.000     0.000 ! Alanine Dipeptide ab initio
+N1-C1-HB     48.000   108.000     0.000     0.000 ! Alanine Dipeptide ab initio
+N1-C2-C      50.000   107.000     0.000     0.000 ! Alanine Dipeptide ab initio
+N1-C2-CC     50.000   107.000     0.000     0.000 ! adm jr. 5/20/92, for asn,as
+N1-C2-CD     50.000   107.000     0.000     0.000 ! adm jr. 5/02/91, acetic aci
+N1-C2-C2     70.000   113.500     0.000     0.000 ! from N1  C1  C2, for lactam
+N1-C2-HA     51.500   109.500     0.000     0.000 ! from N1  C3  HA, for lactam
+N1-C2-HB     48.000   108.000     0.000     0.000 ! Alanine Dipeptide ab initio
+N1-C3-HA     51.500   109.500     0.000     0.000 ! NMA crystal (JCS)          
+N2-CC-C6     80.000   112.500     0.000     0.000 ! 6-31g* AcProN2, ProN2, 6-31
+N2-CC-C1     50.000   116.500    50.000     2.450 ! adm jr. 8/13/90 acetamide g
+N2-CC-C2     50.000   116.500    50.000     2.450 ! adm jr. 8/13/90 acetamide g
+N2-CC-C3     50.000   116.500    50.000     2.450 ! adm jr. 8/13/90 acetamide g
+N2-CC-HA     44.000   111.000    50.000     1.980 ! adm jr., 5/13/91, formamide
+N2-C2-HB     38.000   109.500    50.000     2.140 !from N2  C3  HA, neutral gly
+N2-C2-CD     52.000   108.000     0.000     0.000 !from C2 C2 CD, neutral glyci
+N2-C3-HA     38.000   109.500    50.000     2.140 ! methylamine geom/freq, adm 
+N3-C1-C      43.700   110.000     0.000     0.000 ! new aliphatics, adm jr., 2/
+N3-C1-CC     43.700   110.000     0.000     0.000 ! adm jr. 4/05/91, for asn,as
+N3-C1-C1     67.700   110.000     0.000     0.000 ! new aliphatics, adm jr., 2/
+N3-C1-C2     67.700   110.000     0.000     0.000 ! new aliphatics, adm jr., 2/
+N3-C1-C3     67.700   110.000     0.000     0.000 ! new aliphatics, adm jr., 2/
+N3-C1-HB     51.500   107.500     0.000     0.000 ! new aliphatics, adm jr., 2/
+N3-C2-C      43.700   110.000     0.000     0.000 ! alanine (JCS)              
+N3-C2-CC     43.700   110.000     0.000     0.000 ! adm jr. 4/05/91, for asn,as
+N3-C2-CD     43.700   110.000     0.000     0.000 ! adm jr. 5/02/91, acetic aci
+N3-C2-C2     67.700   110.000     0.000     0.000 ! alanine (JCS)              
+N3-C2-HA     45.000   107.500    35.000     2.101 ! new stretch and bend; methy
+N3-C2-HB     51.500   107.500     0.000     0.000 ! for use on NTER -- from N3 
+N3-C3-HA     45.000   107.500    35.000     2.101 ! new stretch and bend; methy
+NP-C6-C      50.000   106.000     0.000     0.000 ! 6-31g* AcProN2, ProN2, 6-31
+NP-C6-CC     50.000   106.000     0.000     0.000 ! 6-31g* AcProN2, ProN2, 6-31
+NP-C6-CD     50.000   106.000     0.000     0.000 ! 6-31g* AcProN2, ProN2, 6-31
+NP-C6-C7     70.000   108.500     0.000     0.000 ! 6-31g* AcProN2, ProN2, 6-31
+NP-C6-HB     51.500   107.500     0.000     0.000 ! 6-31g* AcProN2, ProN2, 6-31
+NP-C8-C7     70.000   108.500     0.000     0.000 ! 6-31g* AcProN2, ProN2, 6-31
+NP-C8-HA     51.500   109.150     0.000     0.000 ! 6-31g* AcProN2, ProN2, 6-31
+NH-CP-CB    122.000   111.540     0.000     0.000 ! Heme (6-liganded): porphyri
+NH-CP-CN     88.000   124.390     0.000     0.000 ! Heme (6-liganded): porphyri
+NH-FE-CM     50.000    90.000     0.000     0.000 ! Heme (6-liganded): ligand l
+NH-FE-CN      0.000    45.000     0.000     0.000 ! Heme (6-liganded): for "ic 
+NH-FE-NH     14.390    90.000     0.000     0.000 ! Heme (6-liganded): porphyri
+N4-C4-C4    130.000   106.000     0.000     0.000 ! his, ADM JR., 7/20/89      
+N4-C4-C2     45.800   124.000     0.000     0.000 ! his, ADM JR., 7/22/89, FC F
+N4-C4-C3     45.800   124.000     0.000     0.000 ! his, ADM JR., 7/22/89, FC F
+N4-C4-H3     25.000   124.000    20.000     2.140 ! adm jr., 3/24/92, maintain 
+N4-C5-H1     25.000   122.500    20.000     2.140 ! his, adm jr., 6/27/90      
+N5-C4-C4    130.000   110.000     0.000     0.000 ! his, ADM JR., 7/20/89      
+N5-C4-C2     45.800   120.000     0.000     0.000 ! his, ADM JR., 7/22/89, FC F
+N5-C4-H3     25.000   120.000    20.000     2.140 ! adm jr., 3/24/92, maintain 
+N5-C5-H1     25.000   125.000    20.000     2.120 ! his, adm jr., 6/27/90      
+N5-C5-N4    130.000   112.500     0.000     0.000 ! his, adm jr., 6/27/90      
+N5-FE-CM     50.000   180.000     0.000     0.000 ! Heme (6-liganded): ligand l
+N5-FE-NH     50.000    90.000     0.000     0.000 ! Heme (6-liganded): ligand l
+N6-C4-C4    145.000   108.000     0.000     0.000 ! his, ADM JR., 7/20/89      
+N6-C4-C2     45.800   122.000     0.000     0.000 ! his, ADM JR., 7/22/89, FC F
+N6-C4-H1     22.000   122.000    15.000     2.180 ! his, adm jr., 6/27/90      
+N6-C5-H2     32.000   126.000    25.000     2.140 ! his, adm jr., 6/27/90      
+N6-C5-N6    145.000   108.000     0.000     0.000 ! his, ADM JR., 7/20/89      
+NY-CA-CY    120.000   110.000    25.000     2.240 !adm jr., 12/30/91, for jwk  
+NY-CA-HA     32.000   125.000    25.000     2.177 ! JWK 05/14/91 new theta0 and
+NY-CA-HP     32.000   125.000    25.000     2.177 ! JWK 05/14/91 new theta0 and
+NY-CP-CA    160.000   130.600     0.000     0.000 !adm jr., 12/30/91, for jwk  
+NY-CP-CP    110.000   107.400     0.000     0.000 !adm jr., 12/30/91, for jwk  
+O -C -C6     80.000   118.000     0.000     0.000 ! 6-31g* AcProN2, ProN2, 6-31
+O -C -C1     80.000   121.000     0.000     0.000 ! Alanine Dipeptide ab initio
+O -C -C2     80.000   121.000     0.000     0.000 ! Alanine Dipeptide ab initio
+O -C -C3     80.000   121.000     0.000     0.000 ! Alanine Dipeptide ab initio
+O -C -H      50.000   121.700     0.000     0.000 ! acetaldehyde (JCS)         
+O -C -N      80.000   122.500     0.000     0.000 ! 6-31g* AcProN2, ProN2, 6-31
+O -C -N1     80.000   122.500     0.000     0.000 ! NMA Vib Modes (LK)         
+O -CC-C6     80.000   118.000     0.000     0.000 ! 6-31g* AcProN2, ProN2, 6-31
+O -CC-C1     15.000   121.000    50.000     2.440 ! adm jr. 4/10/91, acetamide 
+O -CC-C2     15.000   121.000    50.000     2.440 ! adm jr. 4/10/91, acetamide 
+O -CC-C3     15.000   121.000    50.000     2.440 ! adm jr. 4/10/91, acetamide 
+O -CC-HA     44.000   122.000     0.000     0.000 ! adm jr., 5/13/91, formamide
+O -CC-N2     75.000   122.500    50.000     2.370 ! adm jr. 4/10/91, acetamide 
+OB-CD-C6     70.000   125.000    20.000     2.442 ! 6-31g* AcProN2, ProN2, 6-31
+OB-CD-C1     70.000   125.000    20.000     2.442 ! adm jr. 5/02/91, acetic aci
+OB-CD-C2     70.000   125.000    20.000     2.442 ! adm jr. 5/02/91, acetic aci
+OB-CD-C3     70.000   125.000    20.000     2.442 ! adm jr. 5/02/91, acetic aci
+OC-CA-CA     40.000   120.000     0.000     0.000 ! adm jr. 8/27/91, phenoxide 
+OC-CC-C6     40.000   118.000    50.000     2.388 ! 6-31g* AcProN2, ProN2, 6-31
+OC-CC-C1     40.000   118.000    50.000     2.388 ! adm jr. 7/23/91, correction
+OC-CC-C2     40.000   118.000    50.000     2.388 ! adm jr. 7/23/91, correction
+OC-CC-C3     40.000   118.000    50.000     2.388 ! adm jr. 7/23/91, correction
+OC-CC-OC    100.000   124.000    70.000     2.225 ! adm jr. 7/23/91, correction
+OC-C2-C3     65.000   122.000     0.000     0.000 ! ethoxide 6-31+G* geom/freq,
+OC-C2-HA     65.000   118.300     0.000     0.000 ! ethoxide 6-31+G* geom/freq,
+OC-C3-HA     65.000   118.300     0.000     0.000 ! methoxide 6-31+G* geom/freq
+OH-CA-CA     45.200   120.000     0.000     0.000 ! PARALLH19 WITH [122.3] (JES
+OH-CD-C2     55.000   110.500     0.000     0.000 ! adm jr, 10/17/90, acetic ac
+OH-CD-C3     55.000   110.500     0.000     0.000 ! adm jr, 10/17/90, acetic ac
+OH-CD-OB     50.000   123.000   210.000     2.262 ! adm jr, 10/17/90, acetic ac
+OH-C1-C1     75.700   110.100     0.000     0.000 ! MeOH, EMB, 10/10/89        
+OH-C1-C3     75.700   110.100     0.000     0.000 ! MeOH, EMB, 10/10/89        
+OH-C1-HA     45.900   108.890     0.000     0.000 ! MeOH, EMB, 10/10/89        
+OH-C2-C1     75.700   110.100     0.000     0.000 ! MeOH, EMB, 10/10/89        
+OH-C2-C2     75.700   110.100     0.000     0.000 ! MeOH, EMB, 10/10/89        
+OH-C2-C3     75.700   110.100     0.000     0.000 ! MeOH, EMB, 10/10/89        
+OH-C2-HA     45.900   108.890     0.000     0.000 ! MeOH, EMB, 10/10/89        
+OH-C3-HA     45.900   108.890     0.000     0.000 ! MeOH, EMB, 10/10/89        
+OM-CM-FE     35.000   180.000     0.000     0.000 ! Heme (6-liganded): ligand l
+OM-FE-NH      5.000    90.000     0.000     0.000 ! Heme (6-liganded): ligand l
+OM-OM-FE      0.000   180.000     0.000     0.000 ! Heme (6-liganded): ligand l
+OS-CD-C6     55.000   109.000    20.000     2.326 ! 6-31g* AcProN2, ProN2, 6-31
+OS-CD-C1     55.000   109.000    20.000     2.326 ! adm jr., 4/05/91, for PRES 
+OS-CD-C2     55.000   109.000    20.000     2.326 ! adm jr., 4/05/91, for PRES 
+OS-CD-C3     55.000   109.000    20.000     2.326 ! adm jr., 4/05/91, for PRES 
+OS-CD-OB     90.000   125.900   160.000     2.258 ! adm jr. 3/19/92, from lipid
+OS-C2-HA     60.000   109.500     0.000     0.000 ! adm jr. 4/05/91, for PRES C
+OS-C3-HA     60.000   109.500     0.000     0.000 ! adm jr. 4/05/91, for PRES C
+S -C2-C1     58.000   112.500     0.000     0.000 ! as in expt.MeEtS & DALC cry
+S -C2-C2     58.000   114.500     0.000     0.000 ! expt. MeEtS,     3/26/92 (F
+S -C2-C3     58.000   114.500     0.000     0.000 ! expt. MeEtS,     3/26/92 (F
+S -C2-HA     46.100   111.300     0.000     0.000 ! vib. freq. and HF/6-31G* ge
+S -C3-HA     46.100   111.300     0.000     0.000 ! vib. freq. and HF/6-31G* ge
+SM-C2-C1     58.000   112.500     0.000     0.000 ! as in expt.MeEtS & DALC cry
+SM-C2-HA     38.000   111.000     0.000     0.000 ! new S-S atom type 8/24/90  
+SM-C3-HA     38.000   111.000     0.000     0.000 ! new S-S atom type 8/24/90  
+SM-SM-C2     72.500   103.300     0.000     0.000 ! expt. dimethyldisulfide,   
+SM-SM-C3     72.500   103.300     0.000     0.000 ! expt. dimethyldisulfide,   
+SS-CS-C3     55.000   118.000     0.000     0.000 ! ethylthiolate 6-31+G* geom/
+SS-CS-HA     40.000   112.300     0.000     0.000 ! ALLOW SUL
+
+C -C1-N1-C    1         0.2000         180.00             1.
+C -C2-N1-C    1         0.2000         180.00             1.
+C -N -C6-C    1         0.8000           0.00             3.
+CA-CA-CA-CA   1         3.1000         180.00             2.
+CA-CP-CP-CA   1         3.1000         180.00             2.
+CA-C2-C1-C    1         0.0400           0.00             3.
+CA-CY-CP-CA   1         3.0000         180.00             2.
+CA-NY-CP-CA   1         3.0000         180.00             2.
+CC-C6-N -C    1         0.8000           0.00             3.
+CC-C1-C2-CA   1         0.0400           0.00             3.
+CC-C1-N1-C    1         0.2000         180.00             1.
+CC-C2-N1-C    1         0.2000         180.00             1.
+CD-C6-N -C    1         0.0000         180.00             1.
+CD-C1-N1-C    1         0.2000         180.00             1.
+CD-C2-N1-C    1         0.2000         180.00             1.
+CK-CK-C3-HA   1         0.0300           0.00             3.
+CL-CK-C2-C3   1         0.5000           0.00             3.
+CL-CK-C2-HA   1         0.1200           0.00             3.
+CL-CK-C3-HA   1         0.0500         180.00             3.
+C6-C -N -C6   1         2.7500         180.00            -2.
+C6-C -N -C6   1         0.3000           0.00             4.
+C7-C6-N -C    1         0.8000           0.00             3.
+C7-C8-N -C    1         0.0000         180.00             3.
+C7-C8-N -C6   1         0.1000           0.00             3.
+C7-C8-NP-C6   1         0.0800           0.00             3.
+C8-N -C -C6   1         2.7500         180.00            -2.
+C8-N -C -C6   1         0.3000           0.00             4.
+C8-N -C6-C    1         0.1000           0.00             3.
+C8-N -C6-CC   1         0.1000           0.00             3.
+C8-N -C6-C7   1         0.1000           0.00             3.
+C8-NP-C6-C    1         0.0800           0.00             3.
+C8-NP-C6-CC   1         0.0800           0.00             3.
+C8-NP-C6-CD   1         0.0800           0.00             3.
+C8-NP-C6-C7   1         0.0800           0.00             3.
+C5-N4-C4-C4   1        14.0000         180.00             2.
+C5-N5-C4-C4   1        14.0000         180.00             2.
+C5-N6-C4-C4   1        12.0000         180.00             2.
+CP-CA-CA-CA   1         3.1000         180.00             2.
+CP-CP-CA-CA   1         3.1000         180.00             2.
+CP-CP-CY-CA   1         4.0000         180.00             2.
+CP-CP-NY-CA   1         5.0000         180.00             2.
+C1-C -N -C6   1         2.7500         180.00            -2.
+C1-C -N -C6   1         0.3000           0.00             4.
+C1-C -N -C8   1         2.7500         180.00            -2.
+C1-C -N -C8   1         0.3000           0.00             4.
+C1-C -N1-C1   1         1.6000           0.00            -1.
+C1-C -N1-C1   1         2.5000         180.00             2.
+C1-C1-N1-C    1         1.8000           0.00             1.
+C1-C2-CA-CA   1         0.2300         180.00             2.
+C1-C2-C4-C4   1         0.2000           0.00            -1.
+C1-C2-C4-C4   1         0.2700           0.00            -2.
+C1-C2-C4-C4   1         0.0000           0.00             3.
+C1-C2-CY-CA   1         0.2300         180.00             2.
+C1-C2-CY-CP   1         0.2300         180.00             2.
+C1-N1-C -C6   1         1.6000           0.00            -1.
+C1-N1-C -C6   1         2.5000         180.00             2.
+C2-C -N -C6   1         2.7500         180.00            -2.
+C2-C -N -C6   1         0.3000           0.00             4.
+C2-C -N -C8   1         2.7500         180.00            -2.
+C2-C -N -C8   1         0.3000           0.00             4.
+C2-C -N1-C1   1         1.6000           0.00            -1.
+C2-C -N1-C1   1         2.5000         180.00             2.
+C2-C -N1-C2   1         1.6000           0.00            -1.
+C2-C -N1-C2   1         2.5000         180.00             2.
+C2-C -N1-C3   1         1.6000           0.00            -1.
+C2-C -N1-C3   1         2.5000         180.00             2.
+C2-CA-CA-CA   1         3.1000         180.00             2.
+C2-C4-N4-C5   1         3.0000         180.00             2.
+C2-C4-N5-C5   1         3.0000         180.00             2.
+C2-C4-N6-C5   1         2.5000         180.00             2.
+C2-C1-N1-C    1         1.8000           0.00             1.
+C2-C2-C4-C4   1         0.4000           0.00             1.
+C2-C2-C2-C2   1         0.1500           0.00             1.
+C2-C2-N1-C    1         1.8000           0.00             1.
+C2-CY-CP-CA   1         3.0000         180.00             2.
+C2-CY-CP-CP   1         3.0000         180.00             2.
+C2-N1-C -C6   1         1.6000           0.00            -1.
+C2-N1-C -C6   1         2.5000         180.00             2.
+C2-N1-C -C1   1         1.6000           0.00            -1.
+C2-N1-C -C1   1         2.5000         180.00             2.
+C2-SM-SM-C2   1         1.0000           0.00            -1.
+C2-SM-SM-C2   1         4.1000           0.00            -2.
+C2-SM-SM-C2   1         0.9000           0.00             3.
+C3-C -N -C6   1         2.7500         180.00            -2.
+C3-C -N -C6   1         0.3000           0.00             4.
+C3-C -N -C8   1         2.7500         180.00            -2.
+C3-C -N -C8   1         0.3000           0.00             4.
+C3-C -N1-C1   1         1.6000           0.00            -1.
+C3-C -N1-C1   1         2.5000         180.00             2.
+C3-C -N1-C2   1         1.6000           0.00            -1.
+C3-C -N1-C2   1         2.5000         180.00             2.
+C3-C -N1-C3   1         1.6000           0.00            -1.
+C3-C -N1-C3   1         2.5000         180.00             2.
+C3-CA-CA-CA   1         3.1000         180.00             2.
+C3-CK-CL-HL   1         5.2000         180.00             2.
+C3-C4-N4-C5   1         3.0000         180.00             2.
+C3-C1-N1-C    1         1.8000           0.00             1.
+C3-C2-CA-CA   1         0.2300         180.00             2.
+C3-C2-C4-C4   1         0.2000           0.00            -1.
+C3-C2-C4-C4   1         0.2700           0.00            -2.
+C3-C2-C4-C4   1         0.0000           0.00             3.
+C3-C2-C2-C2   1         0.1500           0.00             1.
+C3-C2-C2-C3   1         0.1500           0.00             1.
+C3-C2-CY-CA   1         0.2300         180.00             2.
+C3-C2-CY-CP   1         0.2300         180.00             2.
+C3-C2-S -C3   1         0.2400         180.00            -1.
+C3-C2-S -C3   1         0.3700           0.00             3.
+C3-N1-C -C6   1         1.6000           0.00            -1.
+C3-N1-C -C6   1         2.5000         180.00             2.
+C3-N1-C -C1   1         1.6000           0.00            -1.
+C3-N1-C -C1   1         2.5000         180.00             2.
+C3-S -C2-C2   1         0.2400         180.00            -1.
+C3-S -C2-C2   1         0.3700           0.00             3.
+C3-SM-SM-C3   1         1.0000           0.00            -1.
+C3-SM-SM-C3   1         4.1000           0.00            -2.
+C3-SM-SM-C3   1         0.9000           0.00             3.
+CY-CA-NY-CP   1         5.0000         180.00             2.
+CY-CP-CA-CA   1         3.0000         180.00             2.
+CY-CP-CP-CA   1        10.0000         180.00             2.
+H -N1-C -C6   1         2.5000         180.00             2.
+H -N1-C -C1   1         2.5000         180.00             2.
+H -N1-C -C2   1         2.5000         180.00             2.
+H -N1-C -C3   1         2.5000         180.00             2.
+H -N1-C1-C    1         0.0000           0.00             1.
+H -N1-C1-CC   1         0.0000           0.00             1.
+H -N1-C1-CD   1         0.0000           0.00             1.
+H -N1-C1-C1   1         0.0000           0.00             1.
+H -N1-C1-C2   1         0.0000           0.00             1.
+H -N1-C1-C3   1         0.0000           0.00             1.
+H -N1-C2-C    1         0.0000           0.00             1.
+H -N1-C2-CC   1         0.0000           0.00             1.
+H -N1-C2-CD   1         0.0000           0.00             1.
+H -N1-C2-C2   1         0.0000           0.00             1.
+H -N1-C2-C3   1         0.0000           0.00             1.
+H -N2-CC-C1   1         1.4000         180.00             2.
+H -N2-CC-C2   1         1.4000         180.00             2.
+H -N2-CC-C3   1         1.4000         180.00             2.
+H -N2-CC-C6   1         2.5000         180.00             2.
+H -N4-C4-C4   1         1.0000         180.00             2.
+H -N4-C4-C2   1         1.0000         180.00             2.
+H -N4-C4-C3   1         1.0000         180.00             2.
+H -N6-C4-C4   1         1.4000         180.00             2.
+H -N6-C4-C2   1         3.0000         180.00             2.
+H -N6-C4-C3   1         3.0000         180.00             2.
+H -NY-CA-CY   1         0.8000         180.00             2.
+H -NY-CP-CA   1         0.8000         180.00             2.
+H -NY-CP-CP   1         0.8000         180.00             2.
+H -OH-CA-CA   1         0.9900         180.00             2.
+H -OH-C1-C1   1         1.3300           0.00            -1.
+H -OH-C1-C1   1         0.1800           0.00            -2.
+H -OH-C1-C1   1         0.3200           0.00             3.
+H -OH-C1-C3   1         1.3300           0.00            -1.
+H -OH-C1-C3   1         0.1800           0.00            -2.
+H -OH-C1-C3   1         0.3200           0.00             3.
+H -OH-C2-C1   1         1.3000           0.00            -1.
+H -OH-C2-C1   1         0.3000           0.00            -2.
+H -OH-C2-C1   1         0.4200           0.00             3.
+H -OH-C2-C2   1         1.3000           0.00            -1.
+H -OH-C2-C2   1         0.3000           0.00            -2.
+H -OH-C2-C2   1         0.4200           0.00             3.
+H -OH-C2-C3   1         1.3000           0.00            -1.
+H -OH-C2-C3   1         0.3000           0.00            -2.
+H -OH-C2-C3   1         0.4200           0.00             3.
+HA-CA-CA-CA   1         3.5000         180.00             2.
+HA-CA-CA-CP   1         3.5000         180.00             2.
+HA-CA-CA-HA   1         2.5000         180.00             2.
+HA-CA-CP-CP   1         3.0000         180.00             2.
+HA-CA-CP-CY   1         4.0000         180.00             2.
+HA-CA-CY-CP   1         1.2000         180.00             2.
+HA-CA-CY-C2   1         1.2000         180.00             2.
+HA-CA-NY-CP   1         3.0000         180.00             2.
+HA-CA-NY-H    1         1.0000         180.00             2.
+HA-CC-N2-H    1         1.4000         180.00             2.
+HA-C8-N -C    1         0.0000         180.00             3.
+HA-C8-N -C6   1         0.1000           0.00             3.
+HA-C8-NP-C6   1         0.0800           0.00             3.
+HA-C1-C2-CA   1         0.0400           0.00             3.
+HA-C2-C4-C4   1         0.0000           0.00             3.
+HA-C2-CY-CA   1         0.2500         180.00             2.
+HA-C2-CY-CP   1         0.2500         180.00             2.
+HA-C2-N1-C    1         0.0000           0.00             3.
+HA-C2-N1-H    1         0.0000           0.00             3.
+HA-C2-S -C3   1         0.2800           0.00             3.
+HA-C3-C4-C4   1         0.0000           0.00             3.
+HA-C3-CS-HA   1         0.1600           0.00             3.
+HA-C3-C2-CA   1         0.0400           0.00             3.
+HA-C3-N1-C    1         0.0000           0.00             3.
+HA-C3-N1-H    1         0.0000           0.00             3.
+HA-C3-S -C2   1         0.2800           0.00             3.
+HA-CY-CA-CP   1         1.2000         180.00             2.
+HA-CY-CA-HA   1         1.2000         180.00             2.
+HA-CY-CP-CA   1         3.0000         180.00             2.
+HA-CY-CP-CP   1         3.0000         180.00             2.
+HK-CK-CL-HL   1         5.2000         180.00             2.
+HK-CK-C2-HA   1         0.8700           0.00             3.
+HK-CK-C2-C3   1         0.1200           0.00             3.
+HK-CK-C3-HA   1         0.3400           0.00             3.
+HL-CL-CK-C2   1         5.2000         180.00             2.
+HB-C6-N -C    1         0.8000           0.00             3.
+HB-C6-N -C8   1         0.1000           0.00             3.
+HB-C6-NP-C8   1         0.0800           0.00             3.
+HB-C1-N1-C    1         0.0000           0.00             1.
+HB-C1-N1-H    1         0.0000           0.00             1.
+HB-C2-N1-C    1         0.0000           0.00             1.
+HB-C2-N1-H    1         0.0000           0.00             1.
+HB-C3-N1-C    1         0.0000           0.00             1.
+HB-C3-N1-H    1         0.0000           0.00             1.
+HC-N2-C2-HB   1         0.1100           0.00             3.
+HC-N2-C2-CD   1         0.1100           0.00             3.
+HC-NP-C6-C    1         0.0800           0.00             3.
+HC-NP-C6-CC   1         0.0800           0.00             3.
+HC-NP-C6-CD   1         0.0800           0.00             3.
+HC-NP-C6-C7   1         0.0800           0.00             3.
+HC-NP-C6-HB   1         0.0800           0.00             3.
+HC-NP-C8-C7   1         0.0800           0.00             3.
+HC-NP-C8-HA   1         0.0800           0.00             3.
+HP-CA-CA-CA   1         4.2000         180.00             2.
+HP-CA-CA-CP   1         3.0000         180.00             2.
+HP-CA-CA-C2   1         4.2000         180.00             2.
+HP-CA-CA-C3   1         4.2000         180.00             2.
+HP-CA-CA-HP   1         2.4000         180.00             2.
+HP-CA-CP-CP   1         3.0000         180.00             2.
+HP-CA-CP-CY   1         3.0000         180.00             2.
+HP-CA-CY-CP   1         2.0000         180.00             2.
+HP-CA-CY-C2   1         1.2000         180.00             2.
+HP-CA-NY-CP   1         2.0000         180.00             2.
+HP-CA-NY-H    1         0.4000         180.00             2.
+HP-CY-CA-HP   1         1.0000         180.00             2.
+HP-CY-CP-CA   1         2.8000         180.00             2.
+HP-CY-CP-CP   1         2.8000         180.00             2.
+H1-C4-C4-C2   1         1.0000         180.00             2.
+H1-C4-C4-C3   1         1.0000         180.00             2.
+H1-C4-C4-H1   1         1.0000         180.00             2.
+H1-C4-N6-C5   1         2.5000         180.00             2.
+H1-C4-N6-H    1         3.0000         180.00             2.
+H1-C5-N4-C4   1         3.0000         180.00             2.
+H1-C5-N4-H    1         1.0000         180.00             2.
+H1-C5-N5-C4   1         3.0000         180.00             2.
+H2-C5-N6-C4   1         3.0000         180.00             2.
+H2-C5-N6-H    1         0.0000         180.00             2.
+H3-C4-C4-C2   1         2.0000         180.00             2.
+H3-C4-C4-C3   1         2.0000         180.00             2.
+H3-C4-C4-H3   1         2.0000         180.00             2.
+H3-C4-N4-C5   1         3.0000         180.00             2.
+H3-C4-N4-H    1         1.0000         180.00             2.
+H3-C4-N5-C5   1         3.0000         180.00             2.
+HS-S -C2-C1   1         0.2400           0.00            -1.
+HS-S -C2-C1   1         0.1500           0.00            -2.
+HS-S -C2-C1   1         0.2700           0.00             3.
+HS-S -C2-C3   1         0.2400           0.00            -1.
+HS-S -C2-C3   1         0.1500           0.00            -2.
+HS-S -C2-C3   1         0.2700           0.00             3.
+HS-S -C2-HA   1         0.2000           0.00             3.
+HS-S -C3-HA   1         0.2000           0.00             3.
+N -C -C6-C7   1         0.4000           0.00            -1.
+N -C -C6-C7   1         0.6000           0.00             2.
+N -C -C6-HB   1         0.4000         180.00            -1.
+N -C -C6-HB   1         0.6000           0.00             2.
+N -C -C6-N    1         0.3000           0.00            -1.
+N -C -C6-N    1        -0.3000           0.00             4.
+N -C -C1-C1   1         0.0000           0.00             1.
+N -C -C1-C2   1         0.0000           0.00             1.
+N -C -C1-C3   1         0.0000           0.00             1.
+N -C -C1-HB   1         0.0000           0.00             1.
+N -C -C2-HB   1         0.0000           0.00             1.
+N -C -C3-HA   1         0.0000           0.00             1.
+N -C1-C2-CA   1         0.0400           0.00             3.
+N1-C -C6-C7   1         0.4000           0.00            -1.
+N1-C -C6-C7   1         0.6000           0.00             2.
+N1-C -C6-HB   1         0.4000         180.00            -1.
+N1-C -C6-HB   1         0.6000           0.00             2.
+N1-C -C6-N    1         0.3000           0.00            -1.
+N1-C -C6-N    1        -0.3000           0.00             4.
+N1-C -C1-C1   1         0.0000           0.00             1.
+N1-C -C1-C2   1         0.0000           0.00             1.
+N1-C -C1-C3   1         0.0000           0.00             1.
+N1-C -C1-HB   1         0.0000           0.00             1.
+N1-C -C1-N1   1         0.6000           0.00             1.
+N1-C -C2-C2   1         0.0000           0.00             1.
+N1-C -C2-HA   1         0.0000           0.00             3.
+N1-C -C2-HB   1         0.0000           0.00             1.
+N1-C -C2-N1   1         0.6000           0.00             1.
+N1-C -C3-HA   1         0.0000           0.00             3.
+N1-C1-C -N    1         0.4000           0.00             1.
+N1-C2-C -N    1         0.4000           0.00             1.
+N2-CC-C6-C7   1         0.4000           0.00            -1.
+N2-CC-C6-C7   1         0.6000           0.00             2.
+N2-CC-C6-HB   1         0.4000         180.00            -1.
+N2-CC-C6-HB   1         0.6000           0.00             2.
+N2-CC-C6-N    1         0.3000           0.00            -1.
+N2-CC-C6-N    1        -0.3000           0.00             4.
+N2-CC-C2-HA   1         0.0000         180.00             3.
+N3-C1-C -N    1         0.4000           0.00             1.
+N3-C1-C -N1   1         0.6000           0.00             1.
+N3-C1-CC-N2   1         0.4000           0.00             1.
+N3-C2-C -N    1         0.4000           0.00             1.
+N3-C2-C -N1   1         0.4000           0.00             1.
+N3-C2-CC-N2   1         0.4000           0.00             1.
+NP-C6-C -N    1         0.3000           0.00             1.
+NP-C6-C -N1   1         0.3000           0.00             1.
+NP-C6-CC-N2   1         0.3000           0.00             1.
+N4-C4-C4-C2   1         3.0000         180.00             2.
+N4-C4-C4-C3   1         3.0000         180.00             2.
+N4-C4-C4-H3   1         3.0000         180.00             2.
+N4-C4-C2-C1   1         0.1900           0.00             3.
+N4-C4-C2-C2   1         0.1900           0.00             3.
+N4-C4-C2-C3   1         0.1900           0.00             3.
+N4-C4-C2-HA   1         0.1900           0.00             3.
+N4-C4-C3-HA   1         0.1900           0.00             3.
+N4-C5-N5-C4   1        14.0000         180.00             2.
+N5-C4-C4-C2   1         3.0000         180.00             2.
+N5-C4-C4-C3   1         3.0000         180.00             2.
+N5-C4-C4-H3   1         3.0000         180.00             2.
+N5-C4-C4-N4   1        14.0000         180.00             2.
+N5-C4-C2-C1   1         0.1900           0.00             3.
+N5-C4-C2-C2   1         0.1900           0.00             3.
+N5-C4-C2-C3   1         0.1900           0.00             3.
+N5-C4-C2-HA   1         0.1900           0.00             3.
+N5-C4-C3-HA   1         0.1900           0.00             3.
+N5-C5-N4-C4   1        14.0000         180.00             2.
+N5-C5-N4-H    1         1.0000         180.00             2.
+N6-C4-C4-C2   1         2.5000         180.00             2.
+N6-C4-C4-C3   1         2.5000         180.00             2.
+N6-C4-C4-H1   1         2.5000         180.00             2.
+N6-C4-C4-N6   1        12.0000         180.00             2.
+N6-C4-C2-C1   1         0.1900           0.00             3.
+N6-C4-C2-C2   1         0.1900           0.00             3.
+N6-C4-C2-C3   1         0.1900           0.00             3.
+N6-C4-C2-HA   1         0.1900           0.00             3.
+N6-C4-C3-HA   1         0.1900           0.00             3.
+N6-C5-N6-C4   1        12.0000         180.00             2.
+N6-C5-N6-H    1         1.4000         180.00             2.
+NY-CA-CY-CP   1         4.0000         180.00             2.
+NY-CA-CY-C2   1         3.5000         180.00             2.
+NY-CA-CY-HA   1         3.5000         180.00             2.
+NY-CA-CY-HP   1         3.5000         180.00             2.
+NY-CP-CA-CA   1         2.8000         180.00             2.
+NY-CP-CA-HA   1         4.0000         180.00             2.
+NY-CP-CA-HP   1         3.0000         180.00             2.
+NY-CP-CP-CA   1        10.0000         180.00             2.
+NY-CP-CP-CY   1         5.0000         180.00             2.
+O -C -C6-C7   1         0.4000         180.00            -1.
+O -C -C6-C7   1         0.6000           0.00             2.
+O -C -C6-HB   1         0.4000           0.00            -1.
+O -C -C6-HB   1         0.6000           0.00             2.
+O -C -C6-N    1        -0.3000           0.00             4.
+O -C -C1-C1   1         1.4000           0.00             1.
+O -C -C1-C2   1         1.4000           0.00             1.
+O -C -C1-C3   1         1.4000           0.00             1.
+O -C -C1-HB   1         0.0000           0.00             1.
+O -C -C1-N1   1         0.0000           0.00             1.
+O -C -C1-N3   1         0.0000           0.00             1.
+O -C -C2-C2   1         1.4000           0.00             1.
+O -C -C2-HA   1         0.0000         180.00             3.
+O -C -C2-HB   1         0.0000           0.00             1.
+O -C -C2-N1   1         0.0000           0.00             1.
+O -C -C2-N3   1         0.0000           0.00             1.
+O -C -C3-HA   1         0.0000         180.00             3.
+O -C -N -C6   1         2.7500         180.00            -2.
+O -C -N -C6   1         0.3000           0.00             4.
+O -C -N -C8   1         2.7500         180.00            -2.
+O -C -N -C8   1         0.3000           0.00             4.
+O -C -N1-C1   1         2.5000         180.00             2.
+O -C -N1-C2   1         2.5000         180.00             2.
+O -C -N1-C3   1         2.5000         180.00             2.
+O -C -N1-H    1         2.5000         180.00             2.
+O -CC-C6-C7   1         0.4000         180.00            -1.
+O -CC-C6-C7   1         0.6000           0.00             2.
+O -CC-C6-HB   1         0.4000           0.00            -1.
+O -CC-C6-HB   1         0.6000           0.00             2.
+O -CC-C6-N    1        -0.3000           0.00             4.
+O -CC-C2-HA   1         0.0000         180.00             3.
+O -CC-N2-H    1         1.4000         180.00             2.
+OB-CD-OS-C2   1         0.9650         180.00            -1.
+OB-CD-OS-C2   1         3.8500         180.00             2.
+OB-CD-OS-C3   1         0.9650         180.00            -1.
+OB-CD-OS-C3   1         3.8500         180.00             2.
+OC-CA-CA-CA   1         3.1000         180.00             2.
+OC-CA-CA-HP   1         4.2000         180.00             2.
+OC-CC-C6-C7   1         0.1600           0.00             3.
+OC-CC-C6-HB   1         0.1600           0.00             3.
+OC-CC-C6-N    1         0.1600           0.00             3.
+OC-CC-C6-NP   1         0.1600           0.00             3.
+OC-CC-C1-N3   1         3.2000         180.00             2.
+OC-CC-C2-N3   1         3.2000         180.00             2.
+OH-CA-CA-CA   1         3.1000         180.00             2.
+OH-CA-CA-HP   1         4.2000         180.00             2.
+S -C2-C2-HA   1         0.0100           0.00             3.
+SM-C2-C2-HA   1         0.0100           0.00             3.
+SM-SM-C2-C1   1         0.3100           0.00             3.
+SM-SM-C2-C2   1         0.3100           0.00             3.
+SM-SM-C2-HA   1         0.1580           0.00             3.
+SM-SM-C3-HA   1         0.1580           0.00             3.
+SS-CS-C3-HA   1         0.1500           0.00             3.
+X -C -C -X    1         4.0000         180.00             2.
+X -C -NC-X    1         2.2500         180.00             2.
+X -CD-OH-X    1         2.0500         180.00             2.
+X -CD-OS-X    1         2.0500         180.00             2.
+X -CK-CK-X    1         5.2000         180.00             2.
+X -CL-CL-X    1         4.9000         180.00             2.
+X -C6-C -X    1         0.0000         180.00             6.
+X -C6-CC-X    1         0.0000         180.00             6.
+X -C6-CD-X    1         0.0000         180.00             6.
+X -C6-C7-X    1         0.1400           0.00             3.
+X -C7-C7-X    1         0.1600           0.00             3.
+X -C8-C7-X    1         0.1400           0.00             3.
+X -CP-CB-X    1         0.0000           0.00             2.
+X -CP-CN-X    1         0.0000           0.00             2.
+X -CB-C -X    1         3.0000         180.00             2.
+X -CB-CB-X    1         0.0000           0.00             2.
+X -CB-C2-X    1         0.0000           0.00             6.
+X -CB-C3-X    1         0.0000           0.00             6.
+X -CP-CP-X    1         0.0000         180.00             2.
+X -C1-CC-X    1         0.0500         180.00             6.
+X -C1-CD-X    1         0.0000         180.00             6.
+X -C1-C1-X    1         0.2000           0.00             3.
+X -C1-C2-X    1         0.2000           0.00             3.
+X -C1-C3-X    1         0.2000           0.00             3.
+X -C1-N3-X    1         0.1000           0.00             3.
+X -C1-OH-X    1         0.1400           0.00             3.
+X -C1-OS-X    1        -0.1000           0.00             3.
+X -C2-CA-X    1         0.0000           0.00             6.
+X -C2-CC-X    1         0.0500         180.00             6.
+X -C2-CD-X    1         0.0000         180.00             6.
+X -C2-C2-X    1         0.1950           0.00             3.
+X -C2-C3-X    1         0.1600           0.00             3.
+X -C2-NC-X    1         0.0000         180.00             6.
+X -C2-N3-X    1         0.1000           0.00             3.
+X -C2-OH-X    1         0.1400           0.00             3.
+X -C2-OS-X    1        -0.1000           0.00             3.
+X -C3-CA-X    1         0.0000           0.00             6.
+X -C3-CC-X    1         0.0500         180.00             6.
+X -C3-CD-X    1         0.0000         180.00             6.
+X -C3-C3-X    1         0.1550           0.00             3.
+X -C3-NC-X    1         0.0000         180.00             6.
+X -C3-N2-X    1         0.1100           0.00             3.
+X -C3-N3-X    1         0.0900           0.00             3.
+X -C3-OH-X    1         0.1400           0.00             3.
+X -C3-OS-X    1        -0.1000           0.00             3.
+X -FE-CM-X    1         0.0500           0.00             4.
+X -FE-NH-X    1         0.0000           0.00             2.
+X -FE-OM-X    1         0.0000           0.00             4.
+X -NH-CP-X    1         0.0000           0.00             2.
+
+CB-CP-NH-CP            41.6000         180.00             1.
+CB-X -X -C            180.0000         180.00             1.
+C2-X -X -CB           180.0000         180.00             1.
+C3-X -X -CB           180.0000         180.00             1.
+HA-C -C -HA            40.0000         180.00             1.
+HA-CP-CP-CN            58.8000         180.00             1.
+HA-CB-C -C             40.0000         180.00             1.
+HA-HA-C -C             40.0000         180.00             1.
+HL-HL-CL-CL             6.0000         180.00             1.
+H1-N4-N5-C5             1.0000         180.00             1.
+H1-N5-N4-C5             1.0000         180.00             1.
+H3-C4-N4-C4             1.0000         180.00             1.
+H3-C4-N5-C4             1.0000         180.00             1.
+H3-C4-N6-C4             2.0000         180.00             1.
+H3-N4-C4-C4             1.0000         180.00             1.
+H3-N5-C4-C4             1.0000         180.00             1.
+N -C -C6-C8             0.0000         180.00             1.
+NC-X -X -C             80.0000         180.00             1.
+N1-X -X -H             40.0000         180.00             1.
+N2-X -X -H              8.0000         180.00             1.
+NH-CP-CP-FE           274.8000         180.00             1.
+NH-CP-CB-CB            81.2000         180.00             1.
+NH-CP-CN-CP            36.6000         180.00             1.
+NH-CN-CB-CP            65.4000         180.00             1.
+N4-C4-C5-H              0.9000         180.00             1.
+N4-C5-C4-H              0.9000         180.00             1.
+N6-C4-C5-H              2.4000         180.00             1.
+N6-C5-C4-H              2.4000         180.00             1.
+NY-CA-CY-CP           200.0000         180.00             1.
+O -C6-N2-CC            90.0000         180.00             1.
+O -C1-N2-CC            90.0000         180.00             1.
+O -C2-N2-CC            90.0000         180.00             1.
+O -C3-N2-CC            90.0000         180.00             1.
+O -HA-N2-CC            90.0000         180.00             1.
+O -N -C2-CC           240.0000         180.00             1.
+O -N2-C6-CC            90.0000         180.00             1.
+O -N2-C1-CC            90.0000         180.00             1.
+O -N2-C2-CC            90.0000         180.00             1.
+O -N2-C3-CC            90.0000         180.00             1.
+O -N2-HA-CC            90.0000         180.00             1.
+O -X -X -C            240.0000         180.00             1.
+OB-X -X -CD           200.0000         180.00             1.
+OC-X -X -CC           192.0000         180.00             1.
+
+
+
+CHAR      RE   
+  C         2.000000  0.110000  2.000000  0.110000 ! NMA pure solvent, adm jr., 
+  CA        1.992400  0.070000  1.992400  0.070000 ! benzene (JES)              
+  CC        2.000000  0.070000  2.000000  0.070000 ! adm jr. 3/3/92, acetic acid
+  CD        2.000000  0.070000  2.000000  0.070000 ! adm jr. 3/19/92, acetate a.
+  CK        2.090000  0.068000  2.090000  0.068000 ! for propene, yin/adm jr., 1
+  CL        2.080000  0.064000  2.080000  0.064000 ! for ethene, yin/adm jr., 12
+  CM        2.100000  0.110000  2.100000  0.110000 ! Heme (6-liganded): CO ligan
+  C6        2.275000  0.020000  1.900000  0.010000 ! alkane update, adm jr., 3/2
+  C7        2.175000  0.055000  1.900000  0.010000 ! alkane update, adm jr., 3/2
+  C8        2.175000  0.055000  1.900000  0.010000 ! alkane update, adm jr., 3/2
+  CP        1.800000  0.090000  1.800000  0.090000 ! Heme (6-liganded): porphyri
+  CB        1.800000  0.090000  1.800000  0.090000 ! Heme (6-liganded): porphyri
+  C4        1.800000  0.050000  1.800000  0.050000 ! adm jr., 10/23/91, imidazol
+  C5        1.800000  0.050000  1.800000  0.050000 ! adm jr., 10/23/91, imidazol
+  CN        1.800000  0.090000  1.800000  0.090000 ! Heme (6-liganded): porphyri
+  CP        1.800000  0.090000  1.900000  0.090000 ! benzene (JES)              
+  CS        2.200000  0.110000  2.200000  0.110000 ! methylthiolate to water and
+  C1        2.275000  0.020000  1.900000  0.010000 ! isobutane pure solvent prop
+  C2        2.175000  0.055000  1.900000  0.010000 ! propane pure solvent proper
+  C3        2.060000  0.080000  1.900000  0.010000 ! methane/ethane a.i. and eth
+  CY        1.992400  0.070000  1.992400  0.070000 ! TRP, JWK 08/29/89          
+  H         0.224500  0.046000  0.224500  0.046000 ! same as TIP3P hydrogen, adm
+  HA        1.320000  0.022000  1.320000  0.022000 ! methane/ethane a.i. and eth
+  HK        1.250000  0.031000  1.250000  0.031000 ! for propene, yin/adm jr., 1
+  HL        1.260000  0.026000  1.260000  0.026000 ! for ethene, yin/adm jr., 12
+  HB        1.320000  0.022000  1.320000  0.022000 ! methane/ethane a.i. and eth
+  HC        0.224500  0.046000  0.224500  0.046000 ! new, small polar Hydrogen, 
+  HP        1.358200  0.030000  1.358200  0.030000 ! JES 8/25/89 values from Jor
+  H1        0.900000  0.046000  0.900000  0.046000 ! adm jr., 6/27/90, his      
+  H2        0.700000  0.046000  0.700000  0.046000 ! adm jr., 6/27/90, his      
+  H3        1.468000  0.007800  1.468000  0.007800 ! adm jr., 3/24/92, maintain 
+  HS        0.450000  0.100000  0.450000  0.100000 ! methanethiol pure solvent, 
+  HT        0.224500  0.046000  0.224500  0.046000 !TIP3P HYDROGEN PARAMETERS, a
+  N         1.850000  0.200000  1.850000  0.000100 ! 6-31g* AcProN2, ProN2, 6-31
+  NC        1.850000  0.200000  1.850000  0.200000 ! JG 8/27/89; note: N1 in ARG
+  N1        1.850000  0.200000  1.550000  0.200000 ! This 1,4 vdW allows the C5 
+  N2        1.850000  0.200000  1.850000  0.200000 ! adm jr.                    
+  N3        1.850000  0.200000  1.850000  0.200000 ! adm jr.                    
+  NP        1.850000  0.200000  1.850000  0.200000 ! N-terminal proline; from 6-
+  NH        1.850000  0.200000  1.850000  0.200000 ! Heme (6-liganded): porphyri
+  N4        1.850000  0.200000  1.850000  0.200000 ! His, adm jr., 9/4/89       
+  N5        1.850000  0.200000  1.850000  0.200000 ! His, adm jr., 9/4/89       
+  N6        1.850000  0.200000  1.850000  0.200000 ! His, adm jr., 9/4/89       
+  NY        1.850000  0.200000  1.850000  0.200000 ! trp, JWK                   
+  O         1.700000  0.120000  1.400000  0.120000 ! This 1,4 vdW allows the C5 
+  OB        1.700000  0.120000  1.400000  0.120000 ! adm jr., 10/17/90, acetic a
+  OC        1.700000  0.120000  1.700000  0.120000 ! JG 8/27/89                 
+  OH        1.770000  0.152100  1.770000  0.152100 ! adm jr. 8/14/90, MeOH nonbo
+  OM        1.700000  0.120000  1.700000  0.120000 ! Heme (6-liganded): CO ligan
+  OS        1.770000  0.152100  1.770000  0.152100 ! adm jr. 9/17/90, avoid O* w
+  OT        1.768200  0.152100  1.768200  0.152100 !TIP3P OXYGEN PARAMETERS, adm
+  CQ        1.710000  0.120000  1.710000  0.120000 !CQcium (BP)                 
+  FE        0.650000  0.000000  0.650000  0.000000 ! Heme (6-liganded): Iron ato
+  S         2.000000  0.450000  2.000000  0.450000 ! adm jr., 3/3/92, methanethi
+  SM        1.975000  0.380000  1.975000  0.380000 ! adm jr., 3/3/92, dimethyldi
+  SS        2.200000  0.470000  2.200000  0.470000 ! methylthiolate to water and
+  ZN        1.090000  0.250000  1.090000  0.250000 ! RHS March 18, 1990         
+  DU        0.000000  0.000000  0.000000  0.000000 ! DUmy atom                  
+  HE        1.480000  0.021270  1.480000  0.021270 ! helium, experimental pot. e
+  NE        1.530000  0.086000  1.530000  0.086000
+
+END

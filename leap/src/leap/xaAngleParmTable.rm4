@@ -1,0 +1,23 @@
+!#########################################################################
+!
+!		ANGLE PARAMETERS TABLE
+!
+!
+TABLE_SHELL(	vParm,
+		Angle parameters table,
+		SetSensitiveCB(*angleParms),
+		True,
+		edit,
+		TYPE_W TYPE_W TYPE_W DOUBLE_W DOUBLE_W DESC_W )
+
+!
+!       Titles for Angle Parameters columns
+!
+TITLE_INSIDE(	vParmDataTitles,
+		TYPE_W TYPE_W TYPE_W DOUBLE_W DOUBLE_W DESC_W, 
+		6,
+		TYPE_1 TYPE_2 TYPE_3 Ktheta Theta0 DESCRIPTION )
+!
+!
+!
+!##########################################################################

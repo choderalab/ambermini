@@ -1,0 +1,23 @@
+!#########################################################################
+!
+!			ATOM PARAMETERS TABLE
+!
+!
+TABLE_SHELL(	aParm,
+		Atom parameters table,
+		SetSensitiveCB(*atomParms),
+		True,
+		edit,
+		TYPE_W DOUBLE_W DOUBLE_W DOUBLE_W DOUBLE_W TYPE_W TYPE_W DESC_W )
+
+!
+!       Titles for Atom Parameters columns
+!
+TITLE_INSIDE(	aParmDataTitles,
+		TYPE_W DOUBLE_W DOUBLE_W DOUBLE_W DOUBLE_W TYPE_W TYPE_W DESC_W ,
+		8,
+		TYPE MASS POLARIZ EPSILON R ELEMENT HYBRID DESCRIPTION )
+!
+!
+!
+!##########################################################################

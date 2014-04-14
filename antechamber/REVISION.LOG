@@ -1,0 +1,75 @@
+===========================================================================================
+Check in on March 20, 2013 by Junmei Wang
+===========================================================================================
+1. antechamber.c
+        changed the default_flag option for some formats. The purpose is to
+        aviod using atom names as AMBER atom types for formats like ac, prepi and prepc
+        added new option to read in radius parameters using -a flag
+        gaussian version keyword (-gv) is replaced with a flag of whether generating gesp file 
+
+        The early Guassian 09 sub-version cannot produce ESP and therefore we introduced 
+        gesp file. Later on, the Gaussian 09 subversions can produce ESP again (as the 
+        previous Gaussian versions, g03 and g98 do)  
+
+2-3. gzmat.c and gcrt.c
+        added code to provide default radius parameters, such as I, which are missing in Gaussian
+        added code to use proper basis set. Three basis sets are used based on the element information:
+        6-31G*, CEP-31G and SDD
+        The radius and basis set information is in $AMBERHOME/dat/antechamber/ESPPARM.DAT
+
+4. charge.c
+        added code to read ESP charges from Gaussian output whenever possible. Otherwise, Mulliken
+        atomic charges are read.
+
+5. espgen.c
+        improved code to extract ESP from both Gaussian log and gesp files
+
+6. respgen.c
+        improved code to generate inputs for both resp and i_resp fitting
+
+7-8. common.c and atom.h
+        changed to reflect the changes on antechamber.c and gzmat.c/gcrt.c
+
+9. parmchk.c
+        added new function to read frcmod file
+
+10. parmchk2.c
+        developed a new program to calculate or search the substitute for missing FF parameters.
+        parmchk2 finds the best substitution based on parameters on $AMBERHOME/dat/antechamber/PARMCHK.DAT
+        parmchk will be replaced withparmchk2 in the next AMBER release?
+        More details on algorithm will be provided in the manual
+
+11. rotate.c
+        add a new function to list all the atoms linking to two atoms through covalent bonds
+
+12. jout.c 
+        correct a comment line
+
+13. prepgen.c
+        modify some numbers to hopefully better deal with the collinear problem 
+
+14. gaff.dat
+        I have reoptimized X -c -ca-X parameter using modle compound of acetophenone
+        I found force constant of 4.0 gives almost identical result to ab initio at MP2/aug-cc-pVTZ level
+        for the 18 relative energies (rms error = 0.04 kcal/mol)
+        The original value, 14.5, which is inherited from AMBER protein force field is too large
+        On the other hand, Hao's value (1.5), recommended by Romain is too small.
+	Similarily, the force constant of X -c2-ca-X has been changed to  2.800. 
+	New force field parameters:
+
+	X -c -ca-X    4    4.000       180.000           2.000      optimized by Junmei Wang, Jan-2013
+	X -c2-ca-X    4    2.800       180.000           2.000      optimized by Junmei Wang, March 2013
+
+15. ATCOR.DAT
+        added correspondence for newly introduced atom types
+
+16. Makefile
+        revised to deal with parmchk2.c
+
+Newly introduced Files
+        parmchk2.c
+        PARMCHK.DAT
+        ESPPARM.DAT
+
+
+

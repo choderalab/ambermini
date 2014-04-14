@@ -1,0 +1,17 @@
+#! /bin/csh
+#
+#
+
+cat <<eof >mdin
+  basic test file for sander
+
+#  get single point calculation 
+
+ &cntrl
+    imin=1, maxcyc=1, ntb=0, igb=2,
+    cut=99., scnb=1.0, scee=1.0,
+ &end
+eof
+
+../../../bin/sander.CHARMM -O -i mdin -c prmcrd -o sander.out
+

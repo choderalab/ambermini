@@ -1,0 +1,16 @@
+  link for crambin
+
+
+DU
+
+CRAMBIN
+P   1    0    0    0    1
+THR 4THR  CYX  CYX  PRO  SER  ILE  VAL  ALA  ARG  SER  ASN  PHE  ASN  VAL  CYX  
+ARG  LEU  PRO  GLY  THR  SER  GLU  ALA  ILE  CYX  ALA  THR  TYR  THR  GLY  CYX  
+ILE  ILE  ILE  PRO  GLY  ALA  THR  CYX  PRO  GLY  ASP  TYR  ALA  ASN 
+
+    3   40SG  SG      0
+    4   32SG  SG      0
+   16   26SG  SG      0
+
+QUIT

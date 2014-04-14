@@ -1,0 +1,4 @@
+This directory will contain the files needed for SCC-DFTB calculations.
+See the Users' Manual for information on how to obtain them.
+
+Without these files, you will not be able to run SCC-DFTB QM/MM calculations.

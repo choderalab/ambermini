@@ -1,0 +1,23 @@
+!##########################################################################
+!
+!			BOND PARAMETERS TABLE
+!
+!
+TABLE_SHELL(	bParm,
+		Bond parameters table,
+		SetSensitiveCB(*bondParms),
+		True,
+		edit,
+		TYPE_W TYPE_W DOUBLE_W DOUBLE_W DESC_W )
+
+
+!
+!       Titles for Bond Parameters columns
+!
+TITLE_INSIDE(	bParmDataTitles,
+		TYPE_W TYPE_W DOUBLE_W DOUBLE_W DESC_W , 
+		5,
+		TYPE_1 TYPE_2 Kb R0  DESCRIPTION )
+!
+!
+!##########################################################################

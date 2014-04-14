@@ -1,0 +1,775 @@
+*\\\\\\ CHARMM22 All-Hydrogen Nucleic Acid Parameter File ///////
+*              Alexander D. MacKerell Jr.
+*                       July 1997
+* All comments to ADM jr.  email:alex,mmiris.ab.umd.edu
+*               telephone: 410-706-7442
+*
+
+!references
+!
+!NUCLEIC ACIDS
+!
+!MacKerell Jr., A.D., Wiorkiewicz-Kuczera, J. and Karplus, M. An
+!all-atom empirical energy function for the simulation of nucleic
+!acids, Journal of the American Chemical Society, 1995,
+!117:11946-11975.
+!
+!NAD(P)+, NAD(P)H and PPI
+!
+!Pavelites, J.J., Bash, P.A., Gao, J. and MacKerell, Jr., A.D. A
+!Molecular Mechanics Force Field for NAD+, NADH, and the Pyrophosphate
+!Groups of Nucleotides, Journal of Computational Chemistry, 1997, 18:
+!221-239.
+!
+!IONS (see protein and nucleic acid topology and parameter files for
+!additional ions
+!
+!SODIUM and POTASSIUM: note that these were originally designed
+!for param19
+!
+!Roux, B. "Theoretical Study of Ion Transport in the Gramicidin 
+!A Channel" Ph.D. Thesis, Department of Chemistry, Harvard 
+!University, Cambridge, MA, USA, 1990
+!
+!MAGNESIUM and CALCIUM
+!
+!Prodhom, B. and Karplus, M., unpublished work.
+!
+!MAGNESIUM (use both the above and following) and CHLORIDE
+!
+!MacKerell, Jr., A.D. Molecular dynamics simulation analysis of a sodium 
+!dodecyl sulfate micelle in aqueous solution: Decreased fluiditiy of
+!the micelle hydrophobic interior. Journal of Physical Chemistry, 1995, 
+!99:1846-1855
+!
+
+BONDS
+!
+!V(bond) = Kb(b - b0)**2
+!
+!Kb: kcal/mole/A**2
+!b0: A
+!
+!atom type Kb          b0
+!
+CN1  CN3    302.0       1.425   !U,T,  par_a4 JWK 9/30/91
+CN1A CN3    302.0       1.480   !nad/ppi, jjp1/adm jr. 7/95
+CN1  CN5    302.0       1.360   !G,  JWK, adm jr., 7/24/91
+CN1A NN1    560.0       1.360   !nad/ppi, jjp1/adm jr. 7/95
+CN1  NN2    302.0       1.400   !U, JWK, adm jr., 7/24/91
+CN1  NN2G   340.0       1.410   !G, par_a4 JWK 9/30/91
+CN1  NN2U   340.0       1.410   !U, par_a4 JWK 9/30/91
+CN1  NN3    400.0       1.358   !C, par_a6 JWK 9/30/91
+CN1  ON1    620.0       1.235   !U,A,G par_a4 adm jr., 10/2/91
+CN1A ON1    860.0       1.230   !nad/ppi, jjp1/adm jr. 7/95
+CN1  ON1C   620.0       1.245   !C, adm jr., 10/2/91
+CN2  CN3    302.0       1.420   !C, JWK, adm jr., 7/24/91
+CN2  CN3D   260.0       1.405   !5mc, adm jr., 9/9/93, from cn2 cn3
+CN2  CN5    302.0       1.360   !A, JWK, adm jr., 10/2/91
+CN2  NN1    400.0       1.365   !C,A,G JWK, adm jr., 10/2/91
+CN2  NN2G   400.0       1.400   !G  JWK, adm jr., 7/24/91
+CN2  NN3    400.0       1.340   !C  par_a6 JWK 9/30/91
+CN2  NN3A   320.0       1.340   !A  par_a8 JWK 9/30/91
+CN3  CN3    560.0       1.335   ! par_a4 JWK 9/30/91
+CN3A CN3    450.0       1.360   !nad/ppi, jjp1/adm jr. 7/95
+CN3B CN3    420.0       1.350   !nad/ppi, jjp1/adm jr. 7/95
+CN3C CN3    420.0       1.320   !nadh/ppi, jjp1/adm jr. 7/95
+CN3D CN3    560.0       1.335   !5mc, adm jr., 9/9/93, from cn3 cn3
+CN3  CN8    222.5       1.490   !nadh/ppi, jjp1/adm jr. 7/95
+CN3  CN9    230.0       1.480   !T, par_51, adm jr., 7/24/91
+CN3D CN9    230.0       1.480   !5mc, adm jr., 9/9/93, from cn3 cn9
+CN3  HN3    350.0       1.09    !C,U, JWK
+CN3  HN3B   350.0       1.09    !nad/ppi, jjp1/adm jr. 7/95
+CN3A HN3B   350.0       1.09    !nad/ppi, jjp1/adm jr. 7/95
+CN3B HN3B   350.0       1.09    !nad/ppi, jjp1/adm jr. 7/95
+CN3C HN3    374.0       1.09    !nadh/ppi, jjp1/adm jr. 7/95
+CN3  NN2    302.0       1.365   !C,U, JWK, adm jr., 7/24/91
+CN3B NN2    420.0       1.315   !nad/ppi, jjp1/adm jr. 7/95
+CN3C NN2    420.0       1.355   !nadh/ppi, jjp1/adm jr. 7/95
+CN4  HN3    380.0       1.09    !G,A, JWK par_a7 9/30/91
+CN4  NN2    300.0       1.365   !G,A, JWK, adm jr., 7/24/91
+CN4  NN2G   350.0       1.365   !Inosine, adm jr., 2/94
+CN4  NN3A   310.0       1.310   !A, JWK, par_a7 9/30/91
+CN4  NN3I   450.0       1.295   !Inosine, adm jr., 2/94
+CN4  NN4    400.0       1.308   !G,A, JWK par_a8 9/30/91
+CN5  CN5    320.0       1.370   !G,A, JWK par_a8 9/30/91
+CN5  NN2    302.0       1.408   !G,A, JWK, adm jr., 7/24/91
+CN5  NN3A   350.0       1.336   !A, JWK par_a8 9/30/91
+CN5  NN3I   350.0       1.346   !Inosine, adm jr., 2/94
+CN5  NN4    350.0       1.360   !G,A, JWK, par_a8 9/30/91
+CN6  CN6    222.5       1.516   !RIBOSE, ADM Jr.
+CN6  CN6B   222.5       1.527   !RIBOSE, ADM Jr.
+CN6  CN6C   222.5       1.537   !RIBOSE, ADM Jr.
+CN6B CN6C   222.5       1.527   !RIBOSE, ADM Jr.
+CN6  CN7    222.5       1.516   !RIBOSE, ADM Jr.
+CN6  CN8    222.5       1.516   !RIBOSE, ADM Jr.
+CN6  CN9    222.5       1.516   !RIBOSE, ADM Jr.
+CN6  HN6    309.0       1.111   !RIBOSE, ADM Jr.
+CN6B HN6    309.0       1.111   !RIBOSE, ADM Jr.
+CN6C HN6    309.0       1.111   !RIBOSE, ADM Jr.
+CN6B NN2    300.0       1.48    !RIBOSE, ADM Jr.
+CN6B NN1    300.0       1.48    !RIBOSE, ADM Jr.
+CN6  ON2    340.0       1.43    !from CN7 ON2, ADM Jr.
+CN6  ON5    428.0       1.420   !RIBOSE, MeOH
+CN6  ON6    296.7       1.445   !RIBOSE, ADM Jr.
+CN6B ON6    296.7       1.41    !RIBOSE, ADM Jr.
+CN7  CN7    222.50      1.500   !Alkanes, sacred
+CN7  CN8    222.50      1.538   !Alkanes, free
+CN7  CN9    222.50      1.538   !Alkanes, sacred
+CN7  HN7    309.0       1.111   !Alkanes, sacred
+CN8  CN9    222.50      1.528   !Alkanes, sacred
+CN8  HN7    309.0       1.111   !Alkanes, sacred
+CN8  NN2    400.0       1.460   !9-E-GUA, ADM JR.
+CN8  ON2    340.0       1.43    !DMP, ADM Jr.
+CN8  ON5    428.0       1.42    !RIBOSE, MeOH
+CN9  HN7    322.0       1.111   !Alkanes, sacred
+CN9  NN2    400.0       1.460   !FOR 9-M-ADE(THY), ADM JR.
+CN9  ON2    340.0       1.43    !DMP, ADM Jr.
+HN1  NN1    488.0       1.00    !A,C,G, JWK, adm jr., 7/24/91
+HN2  NN2    474.0       1.01    !C,U, JWK
+HN2  NN2G   471.0       1.01    !G, JWK, par_a12 9/30/91
+HN2  NN2U   474.0       1.01    !U, JWK, adm jr., 7/24/91
+HN4  ON4    545.0       0.960   !MP_1, ADM Jr.
+HN5  ON5    545.0       0.960   !RIBOSE, MeOH
+HT   HT       0.0       1.5139  ! from TIPS3P geometry (for SHAKE w/PARAM)
+HT   OT     450.0       0.9572  ! from TIPS3P geometry
+ON2  P      270.0       1.60    !DMP, ADM Jr. 
+ON3  P      580.0       1.48    !DMP, ADM Jr.
+ON4  P      237.0       1.58    !MP_1, ADM Jr.
+ON2  P2     300.0       1.68    !nad/ppi, jjp1/adm jr. 7/95
+ON3  P2     480.0       1.53    !nad/ppi, jjp1/adm jr. 7/95
+NN5  HN1    460.        1.01    !sugar model, adm jr.
+NN5  CN6B   240.        1.47    !sugar model, adm jr.
+ 
+ANGLES
+!
+!V(angle) = Ktheta(Theta - Theta0)**2
+!
+!V(Urey-Bradley) = Kub(S - S0)**2
+!
+!Ktheta: kcal/mole/rad**2
+!Theta0: degrees
+!Kub: kcal/mole/A**2 (Urey-Bradley)
+!S0: A
+!
+!atom types     Ktheta    Theta0   Kub     S0
+!
+CN3  CN1  NN2U    67.0     113.4  !U,T, JWK, adm jr., 7/24/91
+CN3  CN1A NN1     85.0     113.0  80.0  2.46 !nad/ppi, jjp1/adm jr. 7/95
+CN3  CN1  ON1    100.0     124.7  !U,T, par_a3 JWK 9/30/91
+CN3  CN1A ON1     85.0     118.5  20.0  2.43 !nad/ppi, jjp1/adm jr. 7/95
+CN5  CN1  NN2G    67.0     109.4  !G, JWK, adm jr., 7/24/91
+CN5  CN1  ON1    100.0     125.6  !G, par_a3 adm jr., 10/2/91
+NN1  CN1A ON1     85.0     128.5  20.0  2.17 !nad/ppi, jjp1/adm jr. 7/95
+NN2  CN1  NN2U    67.0     114.6  !U,T, JWK, adm jr., 7/24/91
+NN2  CN1  NN3     70.0     116.4  !C, JWK, adm jr., 7/24/91
+NN2  CN1  ON1    100.0     123.5  !C,U,G par_a3 JWK 9/30/91
+NN2  CN1  ON1C   100.0     121.5  !C, adm jr., 10/2/91
+NN2G CN1  ON1    100.0     125.0  !G par_a4 adm jr., 10/2/91
+NN2U CN1  ON1    100.0     121.9  !U, par_a3 JWK 9/30/91
+NN3  CN1  ON1C   100.0     122.1  !C, par_a3 JWK 9/30/91
+CN3  CN2  NN1     70.0     117.9  !C, JWK, adm jr., 7/24/91
+CN3D CN2  NN1    110.0     116.4  !5mc, adm jr., 9/9/93
+CN3  CN2  NN3     70.0     119.8  !C, JWK, adm jr., 7/24/91
+CN3D CN2  NN3     30.0     121.3  !5mc, adm jr., 9/9/93
+CN5  CN2  NN1     70.0     119.1  !A, adm jr., 6/7/92
+CN5  CN2  NN3A    80.0     112.6  !A, JWK   par_a9 9/30/91
+NN1  CN2  NN2G    70.0     114.8  20.  2.30 !G, JWK, adm jr., 7/24/91
+NN1  CN2  NN3     70.0     122.3  !C JWK, adm jr., 7/24/91
+NN1  CN2  NN3A    70.0     128.3  !A adm jr., 6/7/92
+NN2G CN2  NN3A    70.0     122.9  !G, JWK   par_49, par_a11 9/30/91
+CN1  CN3  CN3    125.0     118.0  !U,T, JWK, adm jr., 7/24/91
+CN1A CN3  CN3C     5.0     107.8  !nad/ppi, jjp1/adm jr. 7/95
+CN1A CN3  CN8    125.0     124.2  !nadh/ppi, jjp1/adm jr. 7/95
+CN1  CN3  CN9     70.0     118.3  !T, JWK, adm jr., 7/24/91
+CN1  CN3  HN3     30.0     120.0  !C,U, JWK, adm jr., 7/24/91
+CN2  CN3  CN3    125.0     119.3  !C, JWK, adm jr., 7/24/91
+CN2  CN3D CN3    100.0     117.8  !5mc, adm jr. 9/9/93
+CN2  CN3D CN9     40.0     118.0  !5mc, adm jr. 9/9/93
+CN2  CN3  HN3     30.0     118.7  !C, JWK, adm jr., 7/24/91
+CN3A CN3  CN1A    40.0     110.2  !nad/ppi, jjp1/adm jr. 7/95
+CN3B CN3  CN1A    10.0     131.8  !nad/ppi, jjp1/adm jr. 7/95
+CN3  CN3A CN3     50.0     118.0  !nad/ppi, jjp1/adm jr. 7/95
+CN3A CN3  CN3B    40.0     118.0  !nad/ppi, jjp1/adm jr. 7/95
+CN3  CN3  CN8     53.5     108.5  !nadh/ppi, jjp1/adm jr. 7/95
+CN3B CN3  CN8     53.5     108.5  !nad/ppi, jjp1/adm jr. 7/95
+CN3C CN3  CN8     43.5     128.0  !nad/ppi, jjp1/adm jr. 7/95
+CN3  CN3  CN9     70.0     123.7  !T, JWK, adm jr., 7/24/91
+CN3  CN3D CN9     40.0     124.2  !5mc, adm jr., 9/9/93
+CN3  CN3  HN3     30.0     122.0  !C,U, JWK, adm jr., 7/24/91
+CN3D CN3  HN3     30.0     122.0  !5mc, adm jr., 9/9/93
+CN3B CN3  HN3B    30.0     122.0  !nad/ppi, jjp1/adm jr. 7/95
+CN3A CN3  HN3B    30.0     119.0  !nad/ppi, jjp1/adm jr. 7/95
+CN3  CN3C HN3     42.0     119.0  !nadh/ppi, jjp1/adm jr. 7/95
+CN3C CN3  HN3     42.0     116.0  !nad/ppi, jjp1/adm jr. 7/95
+CN3  CN3A HN3B    80.0     121.0  !nad/ppi, jjp1/adm jr. 7/95
+CN3  CN3B HN3B    80.0     120.5  !nad/ppi, jjp1/adm jr. 7/95
+CN3  CN3  NN2    125.0     124.2  !C,U, JWK, adm jr., 7/24/91
+CN3  CN3B NN2    120.0     122.0  !nad/ppi, jjp1/adm jr. 7/95
+CN3  CN3C NN2     60.0     122.0  !nadh/ppi, jjp1/adm jr. 7/95
+CN3D CN3  NN2    100.0     124.2  !5mc, adm jr., 9/9/93
+CN8  CN3  HN3     30.0     116.0  !nadh/ppi, jjp1/adm jr. 7/95
+HN3  CN3  NN2     30.0     113.8  !C,U, JWK, adm jr., 7/24/91
+HN3B CN3B NN2     80.0     117.5  !nad/ppi, jjp1/adm jr. 7/95
+HN3  CN3C NN2     42.0     119.0  !nad/ppi, jjp1/adm jr. 7/95
+HN3  CN4  NN2     40.0     119.0  !G,A, JWK, par_a9 9/30/91
+HN3  CN4  NN3A    35.0     114.75 !A, JWK, par_a9 9/30/91
+HN3  CN4  NN3I    35.0     115.75 !Inosine, adm jr., 2/94
+HN3  CN4  NN2G    35.0     114.75 !Inosine, adm jr., 2/94
+HN3  CN4  NN4     40.0     126.7  !G,A, JWK, par_a9 9/30/91
+NN2  CN4  NN4    100.0     114.3  !G,A, JWK, par_a9 9/30/91
+NN3A CN4  NN3A    80.0     130.5  !A, JWK, par_a9 9/30/91
+NN3I CN4  NN2G    80.0     129.5  !Inosine, adm jr., 2/94
+CN1  CN5  CN5    125.0     119.5  !G, JWK, adm jr., 7/24/91
+CN1  CN5  NN4    125.0     128.8  !G, JWK, adm jr., 7/24/91
+CN2  CN5  CN5    100.0     119.7  !A, JWK, par_a7 9/30/91
+CN2  CN5  NN4    120.0     128.6  !A, JWK, par_a9 9/30/91
+CN5  CN5  NN2    100.0     105.1  !G,A, JWK, par_a9 9/30/91
+CN5  CN5  NN3A   100.0     127.5  !A, JWK, par_a7 9/30/91
+CN5  CN5  NN3I   100.0     127.5  !Inosine, adm jr., 2/94
+CN5  CN5  NN4    100.0     111.7  !G,A, JWK, par_a7 9/30/91
+NN2  CN5  NN3A   140.0     127.4  !A, JWK, par_a9 9/30/91
+NN2  CN5  NN3I   140.0     127.4  !Inosine, adm jr., 2/94
+CN6  CN6  CN6     53.35    111.0  8.0   2.561 ! Alkanes 
+CN6  CN6  CN6B    53.35    105.5  8.0   2.561 ! Alkanes(new eq geom)
+CN6  CN6  CN6C    53.35    108.0  8.0   2.561 ! Alkanes(new eq geom)
+CN6  CN6C CN6B    53.35    105.5  8.0   2.561 ! Alkanes(new eq geom)
+CN6  CN6  CN8     53.35    108.5  8.0   2.561 ! Alkanes
+CN6  CN6  CN9     53.35    108.5  8.0   2.561 ! Alkanes
+CN6  CN6B NN2     70.0     113.7  !RIBOSE, ADM Jr.
+CN6C CN6B NN2     70.0     113.7  !RIBOSE, ADM Jr.
+CN6  CN6B NN1     70.0     113.7  !RIBOSE, ADM Jr.
+CN6  CN6  ON2     75.7     110.1  !RIBOSE, ADM Jr., MeOH
+CN6B CN6  ON2     75.7     110.1  !RIBOSE, ADM Jr., MeOH
+CN6C CN6  ON2     75.7     110.1  !RIBOSE, ADM Jr., MeOH
+CN6  CN6  ON5     75.7     110.1  !RIBOSE, ADM Jr., MeOH
+CN6B CN6  ON5     75.7     110.1  !RIBOSE, ADM Jr., MeOH
+CN6C CN6  ON5     75.7     110.1  !RIBOSE, ADM Jr., MeOH
+CN6  CN6  ON6    110.0     105.0  !RIBOSE, ADM Jr.
+CN6  CN6B ON6    110.0     105.0  !RIBOSE, ADM Jr.
+CN6C CN6B ON6    110.0     105.0  !RIBOSE, ADM Jr.
+CN7  CN6  ON6    110.0     109.0  !RIBOSE, ADM Jr.
+CN8  CN6  ON6    110.0     109.0  !RIBOSE, ADM Jr.
+CN9  CN6  ON6    110.0     109.0  !RIBOSE, ADM Jr.
+HN6  CN6  CN6     34.5     110.1  22.53 2.179 ! Alkanes, sacred
+HN6  CN6B CN6     34.5     110.1  22.53 2.179 ! Alkanes, sacred
+HN6  CN6B CN6C    34.5     110.1  22.53 2.179 ! Alkanes, free
+HN6  CN6C CN6     33.4     110.1  22.53 2.179 ! Alkanes, free
+HN6  CN6C CN6B    33.4     110.1  22.53 2.179 ! Alkanes, free
+HN6  CN6  CN6B    34.5     110.1  22.53 2.179 ! Alkanes, sacred
+HN6  CN6  CN6C    34.5     110.1  22.53 2.179 ! Alkanes, free
+HN6  CN6  CN7     34.5     110.1  22.53 2.179 ! Alkanes, sacred
+HN6  CN6  CN8     34.5     110.1  22.53 2.179 ! Alkanes, free
+HN6  CN6  CN9     34.5     110.1  22.53 2.179 ! Alkanes, sacred
+HN6  CN6  HN6     35.5     109.0   5.40 1.802 ! Alkanes, free
+HN6  CN6C HN6     35.5     109.0   5.40 1.802 ! Alkanes, free
+HN6  CN6B NN2     43.0     111.0  !RIBOSE, ADM Jr.
+HN6  CN6  ON2     60.0     109.5  !from HN7 CN7 ON2, ADM JR.
+HN6  CN6  ON5     45.9     108.89 !RIBOSE, ADM Jr., MeOH
+HN6  CN6  ON6     45.2     107.24 !RIBOSE, ADM Jr.
+HN6  CN6B ON6     45.2     107.24 !RIBOSE, ADM Jr.
+ON5  CN6  ON6     92.6     111.55 !RIBOSE, ADM Jr., ribose (with O1')
+ON6  CN6B NN2     70.0     108.0  !RIBOSE, ADM Jr.
+ON6  CN6B NN5     70.0     108.0  !GLYCOSIDAC, Arnott + Huckins 
+CN6  CN6B NN5     70.0     113.7  !GLYCOSIDAC, Arnott + Huckins
+CN6C CN6B NN5     70.0     113.7  !GLYCOSIDAC, Arnott + Huckins
+NN5  CN6B HN6     38.0     111.0   50.   2.14  ! sugar model, adm jr.
+CN6  CN7  HN7     34.5     110.1   22.53 2.179 ! Alkanes, sacred
+CN6  CN7  ON2     75.7     110.10 !RIBOSE, ADM Jr., MeOH
+CN6  CN7  ON5     75.7     110.10 !RIBOSE, ADM Jr., MeOH
+CN7  CN7  HN7     34.5     110.10  22.53 2.179 ! Alkanes, sacred
+CN8  CN7  HN7     34.5     110.10  22.53 2.179 ! Alkanes, free
+HN7  CN7  ON5     45.9     108.89 !RIBOSE, ADM Jr., MeOH
+CN3  CN8  CN3    125.0     108.0  !nadh/ppi, jjp1/adm jr. 7/95
+CN3  CN8  HN7     55.0     110.10 !nadh/ppi, jjp1/adm jr. 7/95
+CN6  CN8  HN7     34.5     110.10  22.53 2.179 ! Alkanes, free
+CN6  CN8  ON2     75.7     110.10 !RIBOSE, ADM Jr., MeOH
+CN6  CN8  ON5     75.7     110.10 !RIBOSE, ADM Jr., MeOH
+CN7  CN8  HN7     34.5     110.10  22.53 2.179 ! Alkanes, free
+CN8  CN8  HN7     26.5     110.10  22.53 2.179 ! Alkanes, free
+CN9  CN8  HN7     34.6     110.10  22.53 2.179 ! Alkanes, sacred
+CN9  CN8  NN2     70.0     113.7  !from CN6  CN6B NN2, adm jr.
+HN7  CN8  HN7     35.5     109.00   5.40 1.802 ! Alkanes, sacred
+HN7  CN8  NN2     33.43    110.1  !FOR 9-M-ADE(THY), ADM
+HN7  CN8  ON2     60.0     109.5  !DMP, ADM Jr.
+HN7  CN8  ON5     45.9     108.89 !RIBOSE, ADM Jr., MeOH
+CN3  CN9  HN7     33.43    110.10  22.53 2.179 ! Alkanes, sacred
+CN3D CN9  HN7     33.43    110.10  22.53 2.179 ! Alkanes, sacred
+CN6  CN9  HN7     33.43    110.10  22.53 2.179 ! Alkanes, sacred
+CN6  CN9  ON2     75.7     110.1  !nad/ppi, jjp1/adm jr. 7/95
+CN7  CN9  HN7     33.43    110.10  22.53 2.179 ! Alkanes, sacred
+CN8  CN9  HN7     34.60    110.10  22.53 2.179 ! Alkanes, sacred
+HN7  CN9  HN7     35.50    108.40   5.40 1.802 ! Alkanes, sacred
+HN7  CN9  NN2     33.43    110.1  !FOR 9-M-ADE(THY), ADM
+HN7  CN9  ON2     60.0     109.5  !DMP, ADM Jr.
+CN1A NN1  HN1     35.0     120.0  !nad/ppi, jjp1/adm jr. 7/95
+CN2  NN1  HN1     40.0     120.0  ! par_a6 JWK 9/30/91
+HN1  NN1  HN1     32.0     120.0  ! par_a5 JWK 9/30/91
+CN1  NN2  CN3    125.0     120.6  !C,U, JWK                    
+CN1  NN2  CN6B    70.0     117.7  !from CN1 NN2 CN7, adm jr., 7/24/91
+CN1  NN2  CN9     70.0     117.7  !1-M-T XTAL, adm jr., 7/24/91
+CN1  NN2  HN2     40.5     122.0  !C,U  JWK, adm jr., 7/24/91
+CN3B NN2  CN3B    30.0     120.0  !nad/ppi, jjp1/adm jr. 7/95
+CN3C NN2  CN3C    20.0     114.0  !nadh/ppi, jjp1/adm jr. 7/95
+CN3  NN2  CN6B    70.0     121.7  !from CN3 NN2 CN7, adm jr., 7/24/91
+CN3B NN2  CN6B    70.0     121.7  !nad/ppi, jjp1/adm jr. 7/95
+CN3C NN2  CN6B    70.0     121.7  !nad/ppi, jjp1/adm jr. 7/95
+CN3  NN2  CN9     70.0     121.7  !1-M-T XTAL, adm jr., 7/24/91
+CN3  NN2  HN2     32.0     117.4  !C,U, JWK, adm jr., 7/24/91
+CN3B NN2  HN2     32.0     117.4  !nad/ppi, jjp1/adm jr. 7/95
+CN3C NN2  HN2     39.0     123.0  !nad/ppi, jjp1/adm jr. 7/95
+CN4  NN2  CN5    110.0     105.6  !G,A, JWK, par_a9 9/30/91
+CN4  NN2  CN6B    70.0     128.4  !from CN4 NN2 CN7, adm jr., 7/24/91
+CN4  NN2  CN8     70.0     128.4  !9-E-GUA, adm jr., 7/24/91
+CN4  NN2  CN9     70.0     128.4  !9-M-ADE, adm jr., 7/24/91
+CN4  NN2  HN2     30.0     125.0  !G,A, JWK, par_a9 9/30/91
+CN5  NN2  CN6B    70.0     126.0  !from CN5 NN2 CN7, adm jr., 7/24/91
+CN5  NN2  CN8     70.0     126.0  !9-E-GUA, adm jr., 7/24/91
+CN5  NN2  CN9     70.0     126.0  !9-M-ADE, adm jr., 7/24/91
+CN5  NN2  HN2     30.0     129.4  !G,A, JWK, par_a9 9/30/91
+CN1  NN2G CN2    125.0     128.7  !G, JWK, adm jr., 7/24/91
+CN1  NN2G CN4    125.0     129.7  !Inosine, adm jr., 2/94
+CN1  NN2G HN2     40.5     114.3  !G, adm jr., 7/24/91
+CN2  NN2G HN2     40.5     117.0  !G par_49, adm jr., 7/24/91
+CN4  NN2G HN2     40.5     116.0  !Inosine, adm jr., 2/94
+CN1  NN2U CN1     90.0     129.2  !U,T, par_a4 JWK 9/30/91
+CN1  NN2U HN2     40.5     115.4  !T,U, JWK, adm jr., 7/24/91
+CN1  NN3  CN2     70.0     119.7  !C, JWK, adm jr., 7/24/91
+CN2  NN3A CN5     90.0     112.0  !G, JWK, par_a11 9/30/91
+CN2  NN3A CN4     90.0     119.9  !A, JWK, par_a9 9/30/91
+CN4  NN3A CN5     90.0     110.3  !A, JWK, par_a9 9/30/91
+CN4  NN3I CN5     90.0     110.3  !Inosine, adm jr., 2/94
+CN4  NN4  CN5    110.0     103.3  !G,A, JWK, par_a9 9/30/91
+CN6B NN5  HN1     50.0     111.5  ! sugar model, adm jr.
+HN1  NN5  HN1     39.0     106.0  ! sugar model, adm jr.
+CN6  ON2  P       20.0     120.0  35.   2.33 !DMP, ADM JR.
+CN8  ON2  P       20.0     120.0  35.   2.33 !DMP, ADM Jr.
+CN9  ON2  P       20.0     120.0  35.   2.33 !DMP, ADM Jr.
+CN9  ON2  P2      20.0     120.0  35.   2.33 !nad/ppi, jjp1/adm jr. 7/95
+P    ON2  P       15.0     140.0 -40.0  2.80 !nad/ppi, jjp1/adm jr. 7/95
+P2   ON2  P       15.0     140.0 -40.0  2.80 !nad/ppi, jjp1/adm jr. 7/95
+P2   ON2  P2      15.0     140.0 -40.0  2.80 !nad/ppi, jjp1/adm jr. 7/95
+HN4  ON4  P       30.0     115.0  40.0  2.35 !MP_1, ADM Jr. 
+HN5  ON5  CN6     57.5     106.0  !RIBOSE, ADM Jr., MeOH
+HN5  ON5  CN7     57.5     106.0  !RIBOSE, ADM Jr., MeOH
+HN5  ON5  CN8     57.5     106.0  !RIBOSE, ADM Jr., MeOH
+HN5  ON5  CN9     57.5     106.0  !RIBOSE, ADM Jr., MeOH
+CN6  ON6  CN6    110.0     107.5  !RIBOSE, ADM Jr.
+CN6  ON6  CN6B   110.0     107.5  !RIBOSE, ADM Jr.
+HT   OT   HT      55.0     104.52 ! FROM TIPS3P GEOMETRY
+ON2  P    ON2     80.0     104.3  !DMP, ADM Jr.
+ON2  P    ON3     98.9     111.6  !DMP, ADM Jr.
+ON2  P    ON4     48.1     108.0  !MP_1, ADM Jr.
+ON3  P    ON3    120.0     120.0  !DMP, ADM Jr.
+ON3  P    ON4     98.9     108.23 !MP_1, ADM Jr.
+ON4  P    ON4     98.9     104.0  !MP_0, ADM Jr.
+ON2  P2   ON2     80.0     104.3  !nad/ppi, jjp1/adm jr. 7/95
+ON2  P2   ON3     88.9     111.6  !nad/ppi, jjp1/adm jr. 7/95
+ON3  P2   ON3    104.0     120.0  !nad/ppi, jjp1/adm jr. 7/95
+
+DIHEDRALS
+!
+!V(dihedral) = Kchi(1 + cos(n(chi) - delta))
+!
+!Kchi: kcal/mole
+!n: multiplicity
+!delta: degrees
+!
+!atom types             Kchi    n   delta
+!
+! PHOSPHATE
+ON2  P    ON2  CN6      0.95    2     0.0  !DMP, ADM Jr.
+ON2  P    ON2  CN6      0.50    3     0.0  !DMP, ADM Jr. (X P ON2 CN6 ON2)  
+ON2  P    ON2  CN8      0.95    2     0.0  !DMP, ADM Jr. (X P ON2 CN6 ON2)  
+ON2  P    ON2  CN8      0.50    3     0.0  !DMP, ADM Jr.
+ON2  P    ON2  CN9      0.95    2     0.0  !DMP, ADM Jr. (X P ON2 CN6 ON2)  
+ON2  P    ON2  CN9      0.50    3     0.0  !DMP, ADM Jr.
+ON3  P    ON2  CN6      0.10    3     0.0  !DMP, ADM Jr.
+ON3  P    ON2  CN8      0.10    3     0.0  !DMP, ADM Jr. (X P ON2 CN6 ON2)  
+ON3  P    ON2  CN9      0.10    3     0.0  !DMP, ADM Jr. (X P ON2 CN6 ON2)  
+ON4  P    ON2  CN6      0.95    2     0.0  !MP_1, ADM Jr.
+ON4  P    ON2  CN6      0.50    3     0.0  !MP_1, ADM Jr.
+ON4  P    ON2  CN8      0.95    2     0.0  !MP_1, ADM Jr.
+ON4  P    ON2  CN8      0.50    3     0.0  !MP_1, ADM Jr.
+ON4  P    ON2  CN9      0.95    2     0.0  !MP_1, ADM Jr.
+ON4  P    ON2  CN9      0.50    3     0.0  !MP_1, ADM Jr.
+X    ON4  P    X        0.30    3     0.0  !MP_1, ADM Jr.  
+! phosphate ester related terms
+X    CN8  ON2  X       -0.10    3     0.0  !DMP, ADM Jr. (P ON2 CN7 HN7)
+X    CN9  ON2  X       -0.10    3     0.0  !DMP, ADM Jr. (P ON2 CN7 HN7)
+X    CN6  ON2  X       -0.10    3     0.0  !from (P ON2 CN7 HN7)
+X    CN6  CN6  X        0.15    3     0.0  ! Alkanes (0.2 to 0.15)
+X    CN6  CN6B X        0.15    3     0.0  ! Alkanes (0.2 to 0.15)
+X    CN6  CN6C X        0.15    3     0.0  ! Alkanes (0.2 to 0.15)
+X    CN6B CN6C X        0.15    3     0.0  ! Alkanes (0.2 to 0.15)
+! RIBOSE
+ON5  CN6  CN6  ON2      0.50    3     0.0
+ON5  CN6  CN6  ON5      0.50    3     0.0
+X    CN6  ON6  X        0.10    3     0.0
+X    CN6B ON6  X        0.10    3     0.0
+CN5  NN2  CN6B CN6      0.5     3     0.0
+CN3  NN2  CN6B CN6      0.5     3     0.0 
+HN1  NN1  CN6B CN6      0.5     3     0.0 
+X    CN6B NN2  X        0.0     3     0.0 
+X    CN6B NN1  X        0.0     3     0.0 
+X    CN8  NN2  X        0.0     3     0.0 
+X    CN9  NN2  X        0.0     3     0.0 
+! SUGAR GAUCHE TERMS         
+CN6B CN6  CN6  ON2      0.2     2     0.0 ! ADM Jr. (ribo)
+CN6B CN6C CN6  ON2      0.45    2     0.0 ! ADM Jr. (deo)
+CN6B CN6  CN6  ON5      0.2     2     0.0 ! ADM Jr. (ribo)
+CN6B CN6C CN6  ON5      0.45    2     0.0 ! ADM Jr. (deo)
+!
+! WILDCARDS
+X    CN6  CN8  X        0.200   3     0.0 ! Alkanes
+X    CN6  CN9  X        0.200   3     0.0 ! Alkanes
+X    CN6  ON5  X        0.140   3     0.0 ! MeOH
+X    CN7  CN7  X        0.200   3     0.0 ! Alkanes
+X    CN7  CN8  X        0.200   3     0.0 ! Alkanes
+X    CN7  CN9  X        0.200   3     0.0 ! Alkanes
+X    CN8  CN8  X        0.195   3     0.0 ! Alkanes
+X    CN8  CN9  X        0.160   3     0.0 ! Alkanes
+X    CN8  ON5  X        0.140   3     0.0 ! MeOH
+! butane gauche terms
+cn9  cn8  cn8  cn9      0.15    1     0.0
+cn9  cn8  cn8  cn8      0.15    1     0.0
+cn8  cn8  cn8  cn8      0.15    1     0.0
+! BASES                     
+! Uracil 
+NN2  CN3  CN3  CN1      4.0     2   180.0  ! par_31
+CN3  CN3  CN1  NN2U     3.0     2   180.0  ! par_a1 JWK 9/30/91
+CN3  CN1  NN2  CN1      3.5     2   180.0  ! PAR_32
+CN1  NN2U CN1  NN2      3.5     2   180.0  ! PAR_32
+CN1  NN2  CN3  CN3      3.5     2   180.0  ! PAR_32
+NN2U CN1  NN2  CN3      3.0     2   180.0  ! par_a1 JWK 9/30/91
+HN3  CN3  CN3  HN3      3.0     2   180.0  ! par_34
+HN3  CN3  CN1  ON1      4.0     2   180.0  ! par_a1 JWK 9/30/91
+ON1  CN1  NN2  HN2      3.0     2   180.0  ! par_a1 JWK 9/30/91
+ON1  CN1  NN2G HN2      3.0     2   180.0  ! PAR_36, adm jr., 7/24/91
+ON1  CN1  NN2U HN2      2.5     2   180.0  ! par_a2 JWK 9/30/91
+HN2  NN2  CN3  HN3      1.8     2   180.0  ! PAR_36
+NN2  CN1  NN2U HN2      1.8     2   180.0  ! par_a2 JWK 9/30/91
+CN3  CN1  NN2U HN2      1.8     2   180.0  ! par_a2 JWK 9/30/91
+!Thymine
+NN2  CN1  CN3  CN9  3.00  3  0.0 !  par_51
+NN2  CN3  CN3  CN9  3.00  3  0.0 !  par_51
+CN1  CN3  CN9  HN7  0.00  3  0.0 !  par_51, adm jr. 8/1/91
+CN3  CN3  CN9  HN7  0.00  3  0.0 !  par_51, adm jr. 8/1/91
+! Cytosine 
+NN2  CN3  CN3  CN2      4.0     2   180.0  ! par_7
+CN3  CN3  CN2  NN3      4.0     2   180.0  ! par_39
+CN3  CN2  NN3  CN1      4.5     2   180.0  ! par_13
+CN2  NN3  CN1  NN2      4.5     2   180.0  ! par_13
+NN3  CN1  NN2  CN3      3.5     2   180.0  ! par_39
+NN3  CN2  NN1  HN1      2.0     2   180.0  ! par_40
+CN3  CN2  NN1  HN1      2.0     2   180.0  ! par_40
+NN1  CN2  CN3  HN3      2.0     2   180.0  ! par_39
+ON1C CN1  NN2  HN2      3.0     2   180.0  ! par_a1 adm jr., 10/2/91
+X    CN2  NN3  X        1.0     2   180.0  ! par_41
+! 5-methylcytosine
+NN2  CN3  CN3D CN2      3.0     2   180.0  !5mc, adm jr., 9/9/93
+CN3  CN3D CN2  NN3      1.0     2   180.0  !5mc, adm jr., 9/9/93
+CN3D CN2  NN3  CN1     10.0     2   180.0  !5mc, adm jr., 9/9/93
+CN3D CN3  NN2  CN1      1.0     2   180.0  !5mc, adm jr., 9/9/93
+CN3D CN2  NN1  HN1      2.0     2   180.0  !5mc, adm jr., 9/9/93
+NN1  CN2  CN3D CN3      0.0     2   180.0  !5mc, adm jr., 9/9/93
+NN1  CN2  CN3D CN9      0.0     2   180.0  !5mc, adm jr., 9/9/93
+NN2  CN3  CN3D CN9      4.0     2   180.0  !5mc, adm jr., 9/9/93
+NN3  CN2  CN3D CN9      0.0     2   180.0  !5mc, adm jr., 9/9/93
+CN3  CN3D CN9  HN7      0.0     3     0.0  !5mc, adm jr., 9/9/93
+CN2  CN3D CN9  HN7      0.35    3     0.0  !5mc, adm jr., 9/9/93
+CN2  CN3D CN3  HN3      4.0     2   180.0  !5mc, adm jr., 9/9/93
+CN9  CN3D CN3  HN3      4.0     2   180.0  !5mc, adm jr., 9/9/93
+! Adenine  
+NN3A CN2  CN5  CN5      6.0     2   180.0  ! par_24 par_a7 9/30/91
+CN5  CN2  NN3A CN4      6.0     2   180.0  ! par_24 par_a7 9/30/91
+NN4  CN4  NN2  CN5     10.0     2   180.0  ! par_47 par_a7 9/30/91
+NN3A CN4  NN3A CN5      6.0     2   180.0  ! par_24 par_a7 9/30/91
+NN3A CN4  NN3A CN2      8.0     2   180.0  ! par_43 par_a7 9/30/91
+NN2  CN4  NN4  CN5      8.0     2   180.0  ! par_25 par_a7 9/30/91
+CN2  CN5  CN5  NN3A     6.0     2   180.0  ! par_24 par_a7 9/30/91
+NN4  CN5  CN5  NN2      8.0     2   180.0  ! par_25 par_a7 9/30/91
+CN5  CN5  NN2  CN4     10.0     2   180.0  ! par_47 par_a7 9/30/91
+CN5  CN5  NN3A CN4      6.0     2   180.0  ! par_24 par_a7 9/30/91
+CN5  CN5  NN4  CN4      8.0     2   180.0  ! par_25 par_a7 9/30/91
+CN5  CN2  NN1  HN1      2.5     2   180.0  ! par_26 par_a10 9/30/91
+HN2  NN2  CN4  HN3      1.5     2   180.0  ! par_44 par_a7 9/30/91
+NN3A CN2  NN1  HN1      2.5     2   180.0  ! par_40 par_a10 9/30/91
+! Butterfly motion
+NN3A CN5  CN5  NN4     20.0     2   180.0  !A, par_24 par_a7 9/30/91
+CN2  CN5  CN5  NN2     20.0     2   180.0  !A, par_24
+! Guanine 
+NN2G CN1  CN5  CN5      6.0     2   180.0  ! par_49
+CN5  CN1  NN2G CN2      6.0     2   180.0  ! par_49
+CN1  NN2G CN2  NN3A     6.0     2   180.0  ! par_49
+NN2G CN2  NN3A CN5      6.0     2   180.0  ! par_49
+CN2  NN3A CN5  CN5      6.0     2   180.0  ! par_49
+CN1  CN5  CN5  NN3A     6.0     2   180.0  ! par_49
+NN2G CN2  NN1  HN1      2.0     2   180.0  ! par_49
+! Butterfly motion
+CN1  CN5  CN5  NN2     20.0     2   180.0  ! par_49
+! inosine, adm jr., 2/94
+CN5  CN5  NN3I CN4      6.0     2   180.0
+NN2G CN4  NN3I CN5      6.0     2   180.0
+NN3I CN4  NN2G HN2      1.5     2   180.0
+NN3I CN4  NN2G CN1      1.5     2   180.0
+HN3  CN4  NN2G HN2      1.5     2   180.0
+HN3  CN4  NN2G CN1      1.5     2   180.0
+! Wild cards for inosine
+X    CN4  NN3I X        3.5     2   180.0
+X    CN5  NN3I X        1.0     2   180.0
+! Wild cards for uracil, thymine and cytosine
+X    CN1  NN3  X        1.0     2   180.0  ! par_39
+X    CN1  NN2  X        0.9     2   180.0  ! par_36
+X    CN1  NN2G X        0.9     2   180.0  ! par_36
+X    CN1  NN2U X        0.9     2   180.0  ! par_36
+X    CN3  NN2  X        1.0     2   180.0  ! par_36
+X    CN3  CN3  X        1.0     2   180.0  ! par_36
+X    CN1  CN3  X        1.0     2   180.0  ! par_36
+X    CN2  CN3  X        0.8     2   180.0  ! par_39
+! Wild cards for adenine and guanine
+X    CN1  CN5  X        1.0     2   180.0  ! par_49
+X    CN2  NN2G X        1.0     2   180.0  ! par_49
+X    CN2  CN5  X        1.0     2   180.0  ! par_41
+X    CN4  NN2  X        1.5     2   180.0  ! par_44
+X    CN4  NN3A X        3.5     2   180.0  ! par_47 par_a7 9/30/91
+X    CN4  NN4  X        1.0     2   180.0  ! par_41
+X    CN5  CN5  X        0.0     2   180.0  ! par_20
+X    CN5  NN2  X        1.5     2   180.0  ! par_44
+X    CN5  NN3A X        1.0     2   180.0  ! par_41 par_a7 9/30/91
+X    CN5  NN4  X        1.0     2   180.0  ! par_41
+X    CN2  NN3A X        1.0     2   180.0  ! par_41 par_a7 9/30/91
+! MISC.          
+CN1  NN2  CN9  HN7  0.19  3  0.0 ! 1-M-THY
+CN3  NN2  CN9  HN7  0.00  3  0.0 ! 1-M-THY
+CN4  NN2  CN9  HN7  0.00  3  0.0 ! 9-M-ADE
+CN5  NN2  CN9  HN7  0.19  3  0.0 ! 9-M-ADE
+! sp2 amine parameters, adm jr.
+X    CN6B NN5  X    0.110    3     0.0
+NN5  CN6B CN6  ON5  0.0501   3     0.0
+NN5  CN6B CN6  HN6  0.0501   3     0.0
+NN5  CN6B CN6  CN6  0.0501   3     0.0
+NN5  CN6B CN6C ON5  0.0501   3     0.0
+NN5  CN6B CN6C HN6  0.0501   3     0.0
+NN5  CN6B CN6C CN6  0.0501   3     0.0
+CN6  ON6  CN6B NN5  0.10     3     0.0
+! nicotinamide adenine dinucleotide
+CN3  NN2  CN3B HN3B     7.0     2   180.0  !nad/ppi, jjp1/adm jr. 7/95
+HN2  NN2  CN3B HN3B     3.0     2   180.0  !nad/ppi, jjp1/adm jr. 7/95
+HN3B CN3  CN3A HN3B     2.0     2   180.0  !nad/ppi, jjp1/adm jr. 7/95
+HN3B CN3  CN3B HN3B     1.0     2   180.0  !nad/ppi, jjp1/adm jr. 7/95
+NN2  CN3B CN3  HN3B     7.0     2   180.0  !nad/ppi, jjp1/adm jr. 7/95
+CN3  CN1A CN3  HN3B     7.0     2   180.0  !nad/ppi, jjp1/adm jr. 7/95
+CN1A CN3  CN3B HN3B     1.0     2   180.0  !nad/ppi, jjp1/adm jr. 7/95
+CN1A CN3  CN3A HN3B     5.0     2   180.0  !nad/ppi, jjp1/adm jr. 7/95
+CN3  CN1A CN3  HN3      7.0     2   180.0  !nad/ppi, jjp1/adm jr. 7/95
+CN1A CN3  CN3  HN3      1.0     2   180.0  !nad/ppi, jjp1/adm jr. 7/95
+CN3A CN3  CN1A ON1      2.38    2   180.0  !nad/ppi, jjp1/adm jr. 7/95
+CN3B CN3  CN1A ON1      2.38    2   180.0  !nad/ppi, jjp1/adm jr. 7/95
+CN3A CN3  CN1A NN1      0.35    1   180.0  !nad/ppi, jjp1/adm jr. 7/95
+CN3A CN3  CN1A NN1      0.62    2     0.0  !nad/ppi, jjp1/adm jr. 7/95
+CN3B CN3  CN1A NN1      0.35    1     0.0  !nad/ppi, jjp1/adm jr. 7/95
+CN3B CN3  CN1A NN1      0.62    2     0.0  !nad/ppi, jjp1/adm jr. 7/95
+CN3  CN3A CN3  CN1A     3.0     2   180.0  !nad/ppi, jjp1/adm jr. 7/95
+CN3  CN3A CN3  CN3B     6.0     2   180.0  !nad/ppi, jjp1/adm jr. 7/95
+NN2  CN3B CN3  CN3A     7.0     2   180.0  !nad/ppi, jjp1/adm jr. 7/95
+CN3B NN2  CN3B CN3      4.0     2   180.0  !nad/ppi, jjp1/adm jr. 7/95
+X    CN3  CN3A X        1.0     2   180.0  !nad/ppi, jjp1/adm jr. 7/95
+X    CN3  CN3B X        1.0     2   180.0  !nad/ppi, jjp1/adm jr. 7/95
+X    CN3  CN8  X        1.0     3   180.0  !nad/ppi, jjp1/adm jr. 7/95
+X    NN1  CN1A X        2.5     2   180.0  !nad/ppi, jjp1/adm jr. 7/95
+X    NN2  CN3B X        1.0     2   180.0  !nad/ppi, jjp1/adm jr. 7/95
+! nicotinamide adenine dinucleotide hydride, nadh
+CN8  CN3  CN1A ON1      1.00    2   180.0  !nadh, jjp1,adm jr. 4/95
+CN8  CN3  CN1A ON1      1.00    3     0.0  !nadh, jjp1,adm jr. 4/95
+CN8  CN3  CN1A ON1      0.40    6     0.0  !nadh, jjp1,adm jr. 4/95
+CN8  CN3  CN1A NN1      0.50    2   180.0  !nadh, jjp1,adm jr. 4/95
+CN8  CN3  CN1A NN1      0.35    3   180.0  !nadh, jjp1,adm jr. 4/95
+CN8  CN3  CN1A NN1      0.40    6     0.0  !nadh, jjp1,adm jr. 4/95
+CN3C CN3  CN1A ON1      0.30    1     0.0  !nadh, jjp1,adm jr. 4/95
+CN3C CN3  CN1A ON1      1.95    2   180.0  !nadh, jjp1,adm jr. 4/95
+CN3C CN3  CN1A NN1      1.10    1   180.0  !nadh, jjp1,adm jr. 4/95
+CN3C CN3  CN1A NN1      1.95    2   180.0  !nadh, jjp1,adm jr. 4/95
+HN2  NN2  CN3C HN3      4.0     2   180.0  !nad/ppi, jjp1/adm jr. 7/95
+CN3  NN2  CN3C HN3      7.0     2   180.0  !nad/ppi, jjp1/adm jr. 7/95
+NN2  CN3C CN3  HN3      7.0     2   180.0  !nad/ppi, jjp1/adm jr. 7/95
+CN8  CN3  CN3C NN2      0.1     2   180.0  !nad/ppi, jjp1/adm jr. 7/95
+CN3C CN3  CN8  CN3      4.0     3   180.0  !nad/ppi, jjp1/adm jr. 7/95
+CN1A CN3  CN3C NN2      2.5     2   180.0  !nad/ppi, jjp1/adm jr. 7/95
+X    CN3  CN3C X        0.1     2   180.0  !nad/ppi, jjp1/adm jr. 7/95
+X    NN2  CN3C X        0.1     2   180.0  !nad/ppi, jjp1/adm jr. 7/95
+CN3C NN2  CN3C CN3      0.1     2   180.0  !nad/ppi, jjp1/adm jr. 7/95
+! pyrophosphate (ppi)
+P2   ON2  P    ON2      0.03    2     0.0  !nad/ppi, jjp1/adm jr. 7/95
+P2   ON2  P    ON2      0.03    3     0.0  !nad/ppi, jjp1/adm jr. 7/95
+P    ON2  P2   ON2      0.03    2     0.0  !nad/ppi, jjp1/adm jr. 7/95
+P    ON2  P2   ON2      0.03    3     0.0  !nad/ppi, jjp1/adm jr. 7/95
+P2   ON2  P2   ON2      0.03    2     0.0  !nad/ppi, jjp1/adm jr. 7/95
+P2   ON2  P2   ON2      0.03    3     0.0  !nad/ppi, jjp1/adm jr. 7/95
+P    ON2  P    ON2      0.03    2     0.0  !nad/ppi, jjp1/adm jr. 7/95
+P    ON2  P    ON2      0.03    3     0.0  !nad/ppi, jjp1/adm jr. 7/95
+P    ON2  P    ON3      0.10    2     0.0  !nad/ppi, jjp1/adm jr. 7/95
+P    ON2  P    ON3      0.03    3     0.0  !nad/ppi, jjp1/adm jr. 7/95
+P    ON2  P2   ON3      0.10    2     0.0  !nad/ppi, jjp1/adm jr. 7/95
+P    ON2  P2   ON3      0.03    3     0.0  !nad/ppi, jjp1/adm jr. 7/95
+P2   ON2  P    ON3      0.10    2     0.0  !nad/ppi, jjp1/adm jr. 7/95
+P2   ON2  P    ON3      0.03    3     0.0  !nad/ppi, jjp1/adm jr. 7/95
+P2   ON2  P2   ON3      0.10    2     0.0  !nad/ppi, jjp1/adm jr. 7/95
+P2   ON2  P2   ON3      0.03    3     0.0  !nad/ppi, jjp1/adm jr. 7/95
+
+IMPROPER
+!
+!V(improper) = Kpsi(psi - psi0)**2
+!
+!Kpsi: kcal/mole/rad**2
+!psi0: degrees
+!note that the second column of numbers (0) is ignored
+!
+!atom types           Kpsi                   psi0
+!
+HN2  CN4  CN5  NN2      7.0     0     0.0     !A, JWK par_42
+HN2  CN1  CN1  NN2U     4.0     0     0.0     !U, JWK par_35
+HN2  X    X    NN2      0.3     0     0.0     !C,U, JWK par_15
+HN2  X    X    NN2G     0.3     0     0.0     !G, JWK par_15
+HN2  CN4  CN1  NN2G     0.8     0     0.0     !Inosine, adm jr., 2/94
+HN1  X    X    NN1      2.0     0     0.0     !C, JWK par_40
+HN3  CN1  CN3  CN3     18.0     0     0.0     !   JWK par_37
+HN3  X    X    CN3     15.0     0     0.0     !   JWK par_37
+CN1  X    X    ON1     70.0     0     0.0     !U, JWK par_32
+CN1  X    X    ON1C    70.0     0     0.0     !C, par_32, adm jr., 10/2/91
+CN2  X    X    NN1     90.0     0     0.0     !C, JWK par_15
+HN3  NN2G NN3I CN4     39.0     0     0.0     !Inosine, adm jr., 2/94
+HN3  X    X    CN4     20.0     0     0.0     !A, JWK par_42
+CN9  X    X    CN3     20.0     0     0.0     !T par_51
+! nicotinamide adenine dinucleotide                                             
+HN3B X    X    CN3     15.0     0     0.0  !nad/ppi, jjp1/adm jr.
+HN3B X    X    CN3A    13.0     0     0.0  !nad/ppi, jjp1/adm jr.
+HN3B X    X    CN3B    13.0     0     0.0  !nad/ppi, jjp1/adm jr.
+HN2  CN3  CN3B NN2     50.0     0     0.0  !nad/ppi, jjp1/adm jr.
+HN1  HN1  CN1A NN1    -5.0      0     0.0  !nad/ppi, jjp1/adm jr.
+ON1  X    X    CN1A    40.0     0     0.0  !nad/ppi, jjp1/adm jr.
+HN3  X    X    CN3C    53.0     0     0.0  !nad/ppi, jjp1/adm jr.
+HN7  CN3  CN3  CN8     18.0     0     0.0  !nad/ppi, jjp1/adm jr.
+
+NONBONDED  NBXMOD 5  ATOM CDIEL SHIFT VATOM VDISTANCE VSWITCH -
+     CUTNB 14.0  CTOFNB 12.0  CTONNB 10.0  EPS 1.0  E14FAC 1.0  WMIN 1.5
+!
+!V(Lennard-Jones) = Eps,i,j[(Rmin,i,j/ri,j)**12 - 2(Rmin,i,j/ri,j)**6]
+!
+!epsilon: kcal/mole, Eps,i,j = sqrt(eps,i * eps,j)
+!Rmin/2: A, Rmin,i,j = Rmin/2,i + Rmin/2,j
+!
+!atom  ignored    epsilon      Rmin/2   ignored   eps,1-4       Rmin/2,1-4
+!
+HN1      0.0       -0.0460    0.2245 
+HN2      0.0       -0.0460    0.2245 
+HN3      0.0       -0.0220    1.3200
+HN3B     0.0       -0.046     0.9000 ! nad/ppi, jjp1/adm jr.
+HN4      0.0       -0.0460    0.2245
+HN5      0.0       -0.0460    0.2245
+HN6      0.0       -0.0220    1.3200
+HN7      0.0       -0.0220    1.3200
+HT       0.0       -0.0460    0.2245 ! TIP3P
+!
+! hydrogen wildcards
+!HN*      0.0       -0.0460    0.2245 ! HN1, HN2, HN4, HN5
+!HN3      0.0       -0.0220    1.3200
+!HN3B     0.0       -0.046     0.9000 ! nad/ppi, jjp1/adm jr.
+!HN6      0.0       -0.0220    1.3200
+!HN7      0.0       -0.0220    1.3200
+!HT       0.0       -0.0460    0.2245 ! TIP3P
+!                           
+NN1      0.0        -0.20     1.85
+NN2      0.0        -0.20     1.85
+NN2G     0.0        -0.20     1.85
+NN2U     0.0        -0.20     1.85
+NN3      0.0        -0.20     1.85
+NN3A     0.0        -0.20     1.85 
+NN3I     0.0        -0.20     1.85 
+NN4      0.0        -0.20     1.85
+NN5      0.0        -0.20     1.85
+!
+! nitrogen wildcards
+!NN*      0.0        -0.20     1.85  ! all nitrogens
+!
+ON1      0.0       -0.1200    1.70  
+ON1C     0.0       -0.1200    1.70 
+ON2      0.0       -0.1521    1.77   
+ON3      0.0       -0.1200    1.70  
+ON4      0.0       -0.1521    1.77  
+ON5      0.0       -0.1521    1.77  
+ON6      0.0       -0.1521    1.77  
+OT       0.0       -0.1521    1.7682 ! TIP3P
+!
+! oxygen wildcards
+!ON*      0.0       -0.1521    1.77  ! types ON2, ON4, ON5, and ON6
+!ON1*     0.0       -0.1200    1.70  ! types ON1 and ON1C
+!ON3      0.0       -0.1200    1.70
+!OT       0.0       -0.1521    1.7682 ! TIP3P
+!                        
+CN1      0.0       -0.14      1.8000
+CN1A     0.0       -0.07      2.0000 ! nad/ppi, jjp1/adm jr. (protein CC)
+CN2      0.0       -0.14      1.8000
+CN3      0.0       -0.18      1.8000
+CN3A     0.0       -0.18      1.8000 ! nad/ppi, jjp1/adm jr.
+CN3B     0.0       -0.18      1.8000 ! nad/ppi, jjp1/adm jr.
+CN3C     0.0       -0.18      1.8000 ! nad/ppi, jjp1/adm jr.
+CN3D     0.0       -0.18      1.8000 ! 5mc, adm jr.
+CN4      0.0       -0.12      1.8000
+CN5      0.0       -0.12      1.8000
+CN6      0.0       -0.02      2.2750 0.0 -0.01 1.90 !equivalent to protein CT1
+CN6B     0.0       -0.02      2.2750 0.0 -0.01 1.90 !equivalent to protein CT1
+CN6C     0.0       -0.055     2.1750 0.0 -0.01 1.90 !equivalent to protein CT2
+CN7      0.0       -0.02      2.2750 0.0 -0.01 1.90 !equivalent to protein CT1
+CN8      0.0       -0.055     2.1750 0.0 -0.01 1.90 !equivalent to protein CT2
+CN9      0.0       -0.08      2.0600 0.0 -0.01 1.90 !equivalent to protein CT3
+!
+! carbon wildcards
+!CN*      0.0       -0.14      1.8000 ! CN1, CN2,
+!CN1A     0.0       -0.07      2.0000 ! nad/ppi, jjp1/adm jr. (protein CC)
+!CN3*     0.0       -0.18      1.8000 ! CN3, CN3A, CN3B, CN3C, CN3D
+!CN4      0.0       -0.12      1.8000
+!CN5      0.0       -0.12      1.8000
+!CN6*     0.0       -0.02      2.2750 0.0 -0.01 1.90 ! CN6,CN6B (same as CT1)
+!CN6C     0.0       -0.055     2.1750 0.0 -0.01 1.90 !equivalent to protein CT2
+!CN7      0.0       -0.02      2.2750 0.0 -0.01 1.90 !equivalent to protein CT1
+!CN8      0.0       -0.055     2.1750 0.0 -0.01 1.90 !equivalent to protein CT2
+!CN9      0.0       -0.08      2.0600 0.0 -0.01 1.90 !equivalent to protein CT3
+!
+P        0.0       -0.585     2.15  
+P2       0.0       -0.585     2.15  ! nad/ppi, jjp1/adm jr.
+! phosphate wildcards
+!P*       0.0       -0.585     2.15  ! P and P2
+!
+SOD      0.0       -0.1000    1.532 ! from Benoit Roux
+MG       0.0       -0.001     1.65  ! from Blaise Prodhom
+DUM      0.0       -0.000     1.00  ! dummy atom
+
+NBFIX
+!               Emin        Rmin
+!            (kcal/mol)     (A)
+!
+SOD   OT      -0.5831     2.6880 ! from Benoit Roux
+SOD   ON1     -0.1000     2.5570 ! from Benoit Roux
+SOD   ON1C    -0.1000     2.5570 ! from Benoit Roux
+MG    OT      -7.79       2.17   ! From Blaise Prodhom
+MG    ON1    -40.00       1.8    ! From Blaise Prodhom
+MG    ON1C   -40.00       1.8    ! From Blaise Prodhom
+MG    ON2     -7.79       2.17   ! From Blaise Prodhom
+MG    ON3     -5.00       2.10   ! From Blaise Prodhom
+MG    ON4     -7.79       2.17   ! From Blaise Prodhom
+MG    ON5     -7.79       2.17   ! From Blaise Prodhom
+MG    ON6     -7.79       2.17   ! From Blaise Prodhom
+
+HBOND CUTHB 0.5  ! If you want to do hbond analysis (only), then use
+                 ! READ PARAM APPEND CARD
+                 ! to append hbond parameters from the file: par_hbond.inp
+
+END
+
+
+
+
+
+
+

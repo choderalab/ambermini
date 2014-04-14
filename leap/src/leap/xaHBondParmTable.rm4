@@ -1,0 +1,22 @@
+!##########################################################################
+!
+!		HYDROGEN BOND PARAMETERS TABLE
+!
+!
+TABLE_SHELL(	hParm,
+		Hydrogen bond parameters table,
+		SetSensitiveCB(*hBondParms),
+		True,
+		edit,
+		TYPE_W TYPE_W DOUBLE_W DOUBLE_W DESC_W )
+
+!
+!       Titles for Hydrogen Bond Parameters columns
+!
+TITLE_INSIDE(	hParmDataTitles,
+		TYPE_W TYPE_W DOUBLE_W DOUBLE_W DESC_W , 
+		5,
+		TYPE_1 TYPE_2 A B DESCRIPTION )
+!
+!
+!##########################################################################

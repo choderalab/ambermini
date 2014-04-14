@@ -1,0 +1,41 @@
+NOTE: The ability to run the CHARMM force field inside the Amber program
+is not yet functional or supported.  The notes below are for "experts",
+who are willing to recompile the code and track down problems!
+
+You should be able to convert CHARMM 22 (and later) all-atom potential files 
+(at least for proteins and nucleic acids) to Amber format using the 
+following steps:
+
+(1) Edit the *.in files provided here to see that the charges and atom
+    types in them match those in the Charmm topology files you are using.
+    (Note that atom types are translated from CHARMM to AMBER using the
+    name_trans.dna or name_trans.pro files).
+
+(2) run "make" to create an amber-style database (db4.c22.dat) that
+    has the CHARMM parameters and atom types.
+
+(3) run c22par_to_amber to create an Amber style parameter file that has
+    the CHARMM 22 parameters.  This is a perl script: see the instructions
+    at the top for how to run it.
+
+(4) Compile PARM and SANDER with -DCHARMM set in the MACHINE file.
+
+(5) now link-edit-parm-sander using the above database and parameter files
+	should give the CHARMM forcefield.  Tell PARM that the nonbonded type is
+    "CHAR". Run test cases vs. the real CHARMM program to verify.  Note that
+    there could be some (small) diffs if you have large violations of the
+    planarity constraints.
+
+Comments/questions to dave case: <case@scripps.edu>  
+
+NOTE #1: this is somewhat old stuff, and I haven't tried this is several
+years.  I think it will work, but it certainly is not foolproof.  The
+"c22par_to_amber" script relies on pattern matching (rather than parsing) to
+read the CHARMM files, so might get fooled if something is different from
+the files I used when creating the script.
+
+NOTE #2: The par_all22_*.inp and top_all22_*.inp files here were downloaded
+from http://www.pharmacy.umab.edu/~alex/research.html on May 4, 1999.
+
+NOTE #3: look in ../amberff_in_charmm if you want to do the reverse: i.e.,
+run the CHARMM program using the Cornell et al. Amber force field.

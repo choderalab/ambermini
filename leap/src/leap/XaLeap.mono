@@ -1,0 +1,2002 @@
+!
+!	File: xaLeap.rm4
+!
+!	Description:
+!		This file describes the xaLeap user interface.
+!		It is a WCL (Widget Creation Library) resource file.
+!		This is an file that contains 'm4' macros.
+!
+
+
+XaLeap*allowShellResize:	False
+
+!xaLeap.graphicMode:	offscreen
+
+!
+!	Colors
+!
+
+! Monochrome mode
+
+
+
+
+
+
+
+
+xaLeap.monoForeground:	White
+xaLeap.monoBackground:	Black
+
+xaLeap.color0:		Black
+xaLeap.color1:		Red
+xaLeap.color2:		Green
+xaLeap.color3:		Blue
+xaLeap.color4:		magenta
+xaLeap.color5:		cyan
+xaLeap.color6:		yellow
+xaLeap.color7:		White
+
+
+!
+!	Graphics mode = Monochrome
+!
+
+
+
+
+
+!
+!	Macro to  menu options
+!
+
+
+
+
+
+
+
+!
+!	Macro to  Radio Groups
+!
+
+
+
+!
+!	Define a popup box for unfinished features
+!
+
+
+
+
+
+!
+!
+!	This macro creates a dialog box containing Widgets
+!	defined by the user and Accept and Cancel buttons.
+!
+!	The dialog executes a command when the user selects Accept.
+!
+!	DIALOG_BOX($1,$2,$3,$4,$5,$6)
+!
+!	$1 - name of main shell
+!	$2 - name of Box that contains children
+!	$3 - command to execute on Accept
+!	$4 - Widget that created this one
+!	$5 - commands to execute at popup
+!	$6 - commands to execute at popdown
+!
+
+
+
+
+
+!
+!
+!	This macro creates a dialog box containing Widgets
+!	defined by the user and Accept and Cancel buttons.
+!
+!	This macro also causes the Widget that invoked the
+!	dialog box to become Insensitive until Accept or Cancel is
+!	pressed.
+!
+!	CMD_DIALOG_BOX($1,$2,$3,$4,$5,$6)
+!
+!	$1 - name of main shell
+!	$2 - name of Box that contains children
+!	$3 - command to execute
+!	$4 - Widget that created this one
+!	$5 - commands to execute at popup
+!	$6 - commands to execute at popdown
+!	$7 - Title of dialog box.
+!
+
+
+
+!
+!	DEFAULT_LIST($1,$2,$3,$4)
+!		$1 - Name of Widget to contain everything
+!		$2 - Name of list
+!		$3 - Callbacks to execute when item is selected
+!		$4 - Title for List
+!
+
+
+
+
+!
+!	SINGLE_LINE_ASCIITEXT($1)
+!
+!		$1 -	Name of the AsciiText Widget
+!
+!	Define an ASCIITEXT widget that can only be used to enter single
+!	lines of text.
+!
+
+
+
+!
+!	File selector dialog
+!
+!	FILE_SELECTOR( $1, $2, $3, $4 )
+!
+!		$1 -	Name of file selector Form
+!		$2 -	Name of file selector pathname Label
+!		$3 -	Name of file selector file list.
+!		$4 -	Name of file selector file name Text Widget.
+!
+
+
+
+
+
+!
+!	POPUP_FILE_SELECTOR( $1, $2)
+!
+!		$1 -	File Selector List Widget
+!		$2 -	File Selector Path Wiget
+!
+!	This macro is included as part of the popupCallback resource
+!
+
+
+
+!
+!	POPDOWN_FILE_SELECTOR($1)
+!
+!		$1 -	File Selector List Widget
+!
+!	Macro is included as part of the popdownCallback resource
+!
+
+
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+!	For documentation purposes, add these translations
+!	for menus.  This allows the user to hit 'm' on
+!	a menu and have it open up.
+!
+
+XaLeap*MenuButton.translations:	#augment\
+	<Key>m	:	reset() PopupMenu()\n
+
+
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+!
+!	Include dialog boxes used by xaLeap
+!
+
+!
+!	COMMAND LINE INTERFACE
+!
+!
+!
+
+!
+!	Include descriptions for dialog boxes
+!
+!
+!	File:	xaDialog.rm4
+!
+!	Description:
+!		This file contains the WCL resources to 
+!		dialog boxes used by xaLeap.
+!
+!
+
+
+
+XaLeap*TransientShell.x:	400
+XaLeap*TransientShell.y:	300
+
+
+
+
+!========================================================================
+!========================================================================
+!========================================================================
+!========================================================================
+!========================================================================
+!========================================================================
+!
+!
+!	Dialog boxes
+!
+!
+XaLeap*dbEdit.wcClassName:		TransientShell
+XaLeap*dbEdit.wcChildren:			dForm
+XaLeap*dbEdit*Form*resizable:			False
+XaLeap*dbEdit.title:			edit
+XaLeap*dbEdit.popupCallback:		WcSetInsensitiveCB(*panelEdit) xtcpXACInitializeList(*editUnitList,U) \
+			WcSetValueCB(*editUnitList.height:100)
+XaLeap*dbEdit.popdownCallback:		xtcpXACDestroyList(*editUnitList)
+
+XaLeap*dbEdit.dForm.wcClassName:		Form
+XaLeap*dbEdit.dForm.wcChildren:		editUnitForm dAccept dCancel
+
+XaLeap*dbEdit*dAccept.wcClassName:	Command
+
+!
+!	DO NOT Popdown the dialog box before you parse the command!
+!		Otherwise values could be read from empty lists.
+!
+XaLeap*dbEdit*dAccept.callback:		xtcpXACParseCommand(edit (*editUnitName);)
+					
+
+XaLeap*dbEdit*dAccept.label:		Accept
+XaLeap*dbEdit*dAccept.fromVert:		editUnitForm
+
+XaLeap*dbEdit*dCancel.wcClassName:	Command
+XaLeap*dbEdit*dCancel.callback:		WcPopdownCB(~~*dbEdit) WcSetSensitiveCB(*panelEdit)
+XaLeap*dbEdit*dCancel.label:		Cancel
+XaLeap*dbEdit*dCancel.fromVert:		editUnitForm
+XaLeap*dbEdit*dCancel.fromHoriz:		dAccept
+
+
+XaLeap*editUnitForm.wcClassName:	Form
+XaLeap*editUnitForm.wcChildren:	editUnitVp editUnitDesc editUnitName
+
+XaLeap*editUnitVp.wcClassName:	Form
+XaLeap*editUnitVp.wcChildren:		listTitle listViewPort
+XaLeap*editUnitVp.borderWidth:		0
+
+
+XaLeap*editUnitVp.listTitle.wcClassName:	Label
+XaLeap*editUnitVp.listTitle.label:		Unit:
+XaLeap*editUnitVp.listTitle.borderWidth:		0
+
+
+XaLeap*editUnitVp.listViewPort.wcClassName:	ViewPort
+XaLeap*editUnitVp.listViewPort.wcChildren:	editUnitList
+XaLeap*editUnitVp.listViewPort.allowVert:	True
+XaLeap*editUnitVp.listViewPort.forceBars:	True
+XaLeap*editUnitVp.listViewPort.height:	200
+XaLeap*editUnitVp.listViewPort.fromVert:	listTitle
+XaLeap*editUnitVp.listViewPort.width:		200
+
+XaLeap*editUnitList.wcClassName:		List
+XaLeap*editUnitList.defaultColumns:		1
+XaLeap*editUnitList.forceColumns:		True
+XaLeap*editUnitList.callback:			xtcpXACCopyValueTo(*editUnitName)
+
+XaLeap*editUnitList.callback:		xtcpXACCopyValueTo(*editUnitName)
+
+XaLeap*editUnitDesc.wcClassName:	Label
+XaLeap*editUnitDesc.label:		Unit to edit:
+XaLeap*editUnitDesc.borderWidth:	0
+XaLeap*editUnitDesc.fromVert:		editUnitVp
+
+XaLeap*editUnitName.wcClassName:		AsciiText
+XaLeap*editUnitName.textSource.editType:	edit
+XaLeap*editUnitName*foreground:		Black
+XaLeap*editUnitName*background:		White
+!Reseting translations
+XaLeap*editUnitName.translations:	#override\n\
+	<Key>Return:	no-op()\n\
+	<Key>Linefeed:	no-op()\n\
+	<Key>Down:	no-op()\n\
+	<Key>Up:	no-op()\n
+
+XaLeap*editUnitName.fromHoriz:	editUnitDesc
+XaLeap*editUnitName.fromVert:		editUnitVp
+
+
+
+!-------------------------------------------------------------------
+!
+!	Dialog box for Load
+!
+!
+
+XaLeap*dbLoad.wcClassName:		TransientShell
+XaLeap*dbLoad.wcChildren:			dForm
+XaLeap*dbLoad*Form*resizable:			False
+XaLeap*dbLoad.title:			load
+XaLeap*dbLoad.popupCallback:		WcSetInsensitiveCB(*panelLoad) xtcpXACInitializeWorkingDirectoryName(*loadFilePath) \
+xtcpXACInitializeDirectoryList(*loadFileList,*loadFilePath) 
+XaLeap*dbLoad.popdownCallback:		xtcpXACDestroyDirectoryList(*loadFileList)
+
+XaLeap*dbLoad.dForm.wcClassName:		Form
+XaLeap*dbLoad.dForm.wcChildren:		loadFileSelector dAccept dCancel
+
+XaLeap*dbLoad*dAccept.wcClassName:	Command
+
+!
+!	DO NOT Popdown the dialog box before you parse the command!
+!		Otherwise values could be read from empty lists.
+!
+XaLeap*dbLoad*dAccept.callback:		xtcpXACParseCommand(load "(*loadFilePath)(*loadFileName)";)
+					
+
+XaLeap*dbLoad*dAccept.label:		Accept
+XaLeap*dbLoad*dAccept.fromVert:		loadFileSelector
+
+XaLeap*dbLoad*dCancel.wcClassName:	Command
+XaLeap*dbLoad*dCancel.callback:		WcPopdownCB(~~*dbLoad) WcSetSensitiveCB(*panelLoad)
+XaLeap*dbLoad*dCancel.label:		Cancel
+XaLeap*dbLoad*dCancel.fromVert:		loadFileSelector
+XaLeap*dbLoad*dCancel.fromHoriz:		dAccept
+
+XaLeap*loadFileSelector.wcClassName:		Form
+XaLeap*loadFileSelector.wcChildren:		loadFilePath fileListVp fileNamePrompt loadFileName
+XaLeap*loadFileSelector.borderWidth:		0
+
+
+XaLeap*loadFilePath.wcClassName:		Label
+XaLeap*loadFilePath.justify:		left
+XaLeap*loadFilePath.width:		300
+
+XaLeap*loadFileSelector*fileListVp.wcClassName:	Form
+XaLeap*loadFileSelector*fileListVp.wcChildren:		listTitle listViewPort
+XaLeap*loadFileSelector*fileListVp.borderWidth:		0
+
+
+XaLeap*loadFileSelector*fileListVp.listTitle.wcClassName:	Label
+XaLeap*loadFileSelector*fileListVp.listTitle.label:		File:
+XaLeap*loadFileSelector*fileListVp.listTitle.borderWidth:		0
+
+
+XaLeap*loadFileSelector*fileListVp.listViewPort.wcClassName:	ViewPort
+XaLeap*loadFileSelector*fileListVp.listViewPort.wcChildren:	loadFileList
+XaLeap*loadFileSelector*fileListVp.listViewPort.allowVert:	True
+XaLeap*loadFileSelector*fileListVp.listViewPort.forceBars:	True
+XaLeap*loadFileSelector*fileListVp.listViewPort.height:	200
+XaLeap*loadFileSelector*fileListVp.listViewPort.fromVert:	listTitle
+XaLeap*loadFileSelector*fileListVp.listViewPort.width:		200
+
+XaLeap*loadFileList.wcClassName:		List
+XaLeap*loadFileList.defaultColumns:		1
+XaLeap*loadFileList.forceColumns:		True
+XaLeap*loadFileList.callback:			xtcpXACDirectoryPick(*loadFileName,*loadFilePath)
+
+XaLeap*loadFileSelector*fileListVp.fromVert:	loadFilePath
+XaLeap*loadFileSelector*fileListVp.width:	300
+
+XaLeap*loadFileSelector*fileNamePrompt.wcClassName:	Label
+XaLeap*loadFileSelector*fileNamePrompt.label:		File name:
+XaLeap*loadFileSelector*fileNamePrompt.borderWidth:		0
+
+XaLeap*loadFileSelector*fileNamePrompt.fromVert:	fileListVp
+
+XaLeap*loadFileName.wcClassName:		AsciiText
+XaLeap*loadFileName.textSource.editType:	edit
+XaLeap*loadFileName*foreground:		Black
+XaLeap*loadFileName*background:		White
+!Reseting translations
+XaLeap*loadFileName.translations:	#override\n\
+	<Key>Return:	no-op()\n\
+	<Key>Linefeed:	no-op()\n\
+	<Key>Down:	no-op()\n\
+	<Key>Up:	no-op()\n
+	
+XaLeap*loadFileName.fromVert:		fileListVp
+XaLeap*loadFileName.fromHoriz:		fileNamePrompt
+
+
+
+
+
+
+!-------------------------------------------------------------------
+!
+!	Dialog box for Save
+!
+!
+
+
+
+XaLeap*dbSave.wcClassName:		TransientShell
+XaLeap*dbSave.wcChildren:			dForm
+XaLeap*dbSave*Form*resizable:			False
+XaLeap*dbSave.title:			save
+XaLeap*dbSave.popupCallback:		WcSetInsensitiveCB(*panelSave) xtcpXACInitializeList(*saveUnitParmsetList,UP) \
+			xtcpXACInitializeWorkingDirectoryName(*saveFilePath) \
+xtcpXACInitializeDirectoryList(*saveFileList,*saveFilePath) 
+XaLeap*dbSave.popdownCallback:		xtcpXACDestroyDirectoryList(*saveFileList)
+
+XaLeap*dbSave.dForm.wcClassName:		Form
+XaLeap*dbSave.dForm.wcChildren:		saveForm dAccept dCancel
+
+XaLeap*dbSave*dAccept.wcClassName:	Command
+
+!
+!	DO NOT Popdown the dialog box before you parse the command!
+!		Otherwise values could be read from empty lists.
+!
+XaLeap*dbSave*dAccept.callback:		xtcpXACParseCommand(save (*saveUnitParmsetList),"(*saveFilePath)(*saveFileName)";)
+					
+
+XaLeap*dbSave*dAccept.label:		Accept
+XaLeap*dbSave*dAccept.fromVert:		saveForm
+
+XaLeap*dbSave*dCancel.wcClassName:	Command
+XaLeap*dbSave*dCancel.callback:		WcPopdownCB(~~*dbSave) WcSetSensitiveCB(*panelSave)
+XaLeap*dbSave*dCancel.label:		Cancel
+XaLeap*dbSave*dCancel.fromVert:		saveForm
+XaLeap*dbSave*dCancel.fromHoriz:		dAccept
+
+
+XaLeap*saveForm.wcClassName:		Form
+XaLeap*saveForm.wcChildren:		saveUnitParmsetVp saveFileSelector
+
+XaLeap*saveUnitParmsetVp.wcClassName:	Form
+XaLeap*saveUnitParmsetVp.wcChildren:		listTitle listViewPort
+XaLeap*saveUnitParmsetVp.borderWidth:		0
+
+
+XaLeap*saveUnitParmsetVp.listTitle.wcClassName:	Label
+XaLeap*saveUnitParmsetVp.listTitle.label:		Unit/Parmset:
+XaLeap*saveUnitParmsetVp.listTitle.borderWidth:		0
+
+
+XaLeap*saveUnitParmsetVp.listViewPort.wcClassName:	ViewPort
+XaLeap*saveUnitParmsetVp.listViewPort.wcChildren:	saveUnitParmsetList
+XaLeap*saveUnitParmsetVp.listViewPort.allowVert:	True
+XaLeap*saveUnitParmsetVp.listViewPort.forceBars:	True
+XaLeap*saveUnitParmsetVp.listViewPort.height:	200
+XaLeap*saveUnitParmsetVp.listViewPort.fromVert:	listTitle
+XaLeap*saveUnitParmsetVp.listViewPort.width:		200
+
+XaLeap*saveUnitParmsetList.wcClassName:		List
+XaLeap*saveUnitParmsetList.defaultColumns:		1
+XaLeap*saveUnitParmsetList.forceColumns:		True
+XaLeap*saveUnitParmsetList.callback:			
+
+
+XaLeap*saveFileSelector.wcClassName:		Form
+XaLeap*saveFileSelector.wcChildren:		saveFilePath fileListVp fileNamePrompt saveFileName
+XaLeap*saveFileSelector.borderWidth:		0
+
+
+XaLeap*saveFilePath.wcClassName:		Label
+XaLeap*saveFilePath.justify:		left
+XaLeap*saveFilePath.width:		300
+
+XaLeap*saveFileSelector*fileListVp.wcClassName:	Form
+XaLeap*saveFileSelector*fileListVp.wcChildren:		listTitle listViewPort
+XaLeap*saveFileSelector*fileListVp.borderWidth:		0
+
+
+XaLeap*saveFileSelector*fileListVp.listTitle.wcClassName:	Label
+XaLeap*saveFileSelector*fileListVp.listTitle.label:		File:
+XaLeap*saveFileSelector*fileListVp.listTitle.borderWidth:		0
+
+
+XaLeap*saveFileSelector*fileListVp.listViewPort.wcClassName:	ViewPort
+XaLeap*saveFileSelector*fileListVp.listViewPort.wcChildren:	saveFileList
+XaLeap*saveFileSelector*fileListVp.listViewPort.allowVert:	True
+XaLeap*saveFileSelector*fileListVp.listViewPort.forceBars:	True
+XaLeap*saveFileSelector*fileListVp.listViewPort.height:	200
+XaLeap*saveFileSelector*fileListVp.listViewPort.fromVert:	listTitle
+XaLeap*saveFileSelector*fileListVp.listViewPort.width:		200
+
+XaLeap*saveFileList.wcClassName:		List
+XaLeap*saveFileList.defaultColumns:		1
+XaLeap*saveFileList.forceColumns:		True
+XaLeap*saveFileList.callback:			xtcpXACDirectoryPick(*saveFileName,*saveFilePath)
+
+XaLeap*saveFileSelector*fileListVp.fromVert:	saveFilePath
+XaLeap*saveFileSelector*fileListVp.width:	300
+
+XaLeap*saveFileSelector*fileNamePrompt.wcClassName:	Label
+XaLeap*saveFileSelector*fileNamePrompt.label:		File name:
+XaLeap*saveFileSelector*fileNamePrompt.borderWidth:		0
+
+XaLeap*saveFileSelector*fileNamePrompt.fromVert:	fileListVp
+
+XaLeap*saveFileName.wcClassName:		AsciiText
+XaLeap*saveFileName.textSource.editType:	edit
+XaLeap*saveFileName*foreground:		Black
+XaLeap*saveFileName*background:		White
+!Reseting translations
+XaLeap*saveFileName.translations:	#override\n\
+	<Key>Return:	no-op()\n\
+	<Key>Linefeed:	no-op()\n\
+	<Key>Down:	no-op()\n\
+	<Key>Up:	no-op()\n
+	
+XaLeap*saveFileName.fromVert:		fileListVp
+XaLeap*saveFileName.fromHoriz:		fileNamePrompt
+
+
+XaLeap*saveFileSelector.fromHoriz:	saveUnitParmsetVp
+
+
+
+
+!-------------------------------------------------------------------
+!
+!	Dialog box for Impose
+!
+!
+
+
+XaLeap*dbImpose.wcClassName:		TransientShell
+XaLeap*dbImpose.wcChildren:			dForm
+XaLeap*dbImpose*Form*resizable:			False
+XaLeap*dbImpose.title:			impose
+XaLeap*dbImpose.popupCallback:		WcSetInsensitiveCB(*panelImpose) xtcpXACInitializeList(*imposeUnit,U) \
+		xtcpXACInitializeList(*imposeConst,L)
+XaLeap*dbImpose.popdownCallback:		xtcpXACDestroyList(*imposeUnit) xtcpXACDestroyList(*imposeConst)
+
+XaLeap*dbImpose.dForm.wcClassName:		Form
+XaLeap*dbImpose.dForm.wcChildren:		imposeForm dAccept dCancel
+
+XaLeap*dbImpose*dAccept.wcClassName:	Command
+
+!
+!	DO NOT Popdown the dialog box before you parse the command!
+!		Otherwise values could be read from empty lists.
+!
+XaLeap*dbImpose*dAccept.callback:		xtcpXACParseCommand(impose (*imposeUnit), {(*imposeRangeText)}, (*imposeConst);)
+					
+
+XaLeap*dbImpose*dAccept.label:		Accept
+XaLeap*dbImpose*dAccept.fromVert:		imposeForm
+
+XaLeap*dbImpose*dCancel.wcClassName:	Command
+XaLeap*dbImpose*dCancel.callback:		WcPopdownCB(~~*dbImpose) WcSetSensitiveCB(*panelImpose)
+XaLeap*dbImpose*dCancel.label:		Cancel
+XaLeap*dbImpose*dCancel.fromVert:		imposeForm
+XaLeap*dbImpose*dCancel.fromHoriz:		dAccept
+
+
+XaLeap*imposeForm.wcClassName:	Form
+XaLeap*imposeForm.wcChildren:		imposeUnitVp imposeConstVp imposeRangeForm
+XaLeap*imposeForm.borderWidth:		0
+
+
+XaLeap*imposeUnitVp.wcClassName:	Form
+XaLeap*imposeUnitVp.wcChildren:		listTitle listViewPort
+XaLeap*imposeUnitVp.borderWidth:		0
+
+
+XaLeap*imposeUnitVp.listTitle.wcClassName:	Label
+XaLeap*imposeUnitVp.listTitle.label:		Unit:
+XaLeap*imposeUnitVp.listTitle.borderWidth:		0
+
+
+XaLeap*imposeUnitVp.listViewPort.wcClassName:	ViewPort
+XaLeap*imposeUnitVp.listViewPort.wcChildren:	imposeUnit
+XaLeap*imposeUnitVp.listViewPort.allowVert:	True
+XaLeap*imposeUnitVp.listViewPort.forceBars:	True
+XaLeap*imposeUnitVp.listViewPort.height:	200
+XaLeap*imposeUnitVp.listViewPort.fromVert:	listTitle
+XaLeap*imposeUnitVp.listViewPort.width:		200
+
+XaLeap*imposeUnit.wcClassName:		List
+XaLeap*imposeUnit.defaultColumns:		1
+XaLeap*imposeUnit.forceColumns:		True
+XaLeap*imposeUnit.callback:			
+
+
+XaLeap*imposeConstVp.wcClassName:	Form
+XaLeap*imposeConstVp.wcChildren:		listTitle listViewPort
+XaLeap*imposeConstVp.borderWidth:		0
+
+
+XaLeap*imposeConstVp.listTitle.wcClassName:	Label
+XaLeap*imposeConstVp.listTitle.label:		Internal coordinates:
+XaLeap*imposeConstVp.listTitle.borderWidth:		0
+
+
+XaLeap*imposeConstVp.listViewPort.wcClassName:	ViewPort
+XaLeap*imposeConstVp.listViewPort.wcChildren:	imposeConst
+XaLeap*imposeConstVp.listViewPort.allowVert:	True
+XaLeap*imposeConstVp.listViewPort.forceBars:	True
+XaLeap*imposeConstVp.listViewPort.height:	200
+XaLeap*imposeConstVp.listViewPort.fromVert:	listTitle
+XaLeap*imposeConstVp.listViewPort.width:		200
+
+XaLeap*imposeConst.wcClassName:		List
+XaLeap*imposeConst.defaultColumns:		1
+XaLeap*imposeConst.forceColumns:		True
+XaLeap*imposeConst.callback:			
+
+XaLeap*imposeConstVp.fromHoriz:	imposeUnitVp
+
+XaLeap*imposeRangeForm.wcClassName:	Form
+XaLeap*imposeRangeForm.wcChildren:	imposeRangeLabel imposeRangeText
+XaLeap*imposeRangeForm.fromVert:	imposeUnitVp
+XaLeap*imposeRangeForm.borderWidth:		0
+
+
+XaLeap*imposeRangeLabel.wcClassName:	Label
+XaLeap*imposeRangeLabel.label:	Sequence numbers:
+XaLeap*imposeRangeLabel.borderWidth:		0
+
+
+XaLeap*imposeRangeText.wcClassName:		AsciiText
+XaLeap*imposeRangeText.textSource.editType:	edit
+XaLeap*imposeRangeText*foreground:		Black
+XaLeap*imposeRangeText*background:		White
+!Reseting translations
+XaLeap*imposeRangeText.translations:	#override\n\
+	<Key>Return:	no-op()\n\
+	<Key>Linefeed:	no-op()\n\
+	<Key>Down:	no-op()\n\
+	<Key>Up:	no-op()\n
+
+XaLeap*imposeRangeText.fromHoriz:	imposeRangeLabel
+XaLeap*imposeRangeText.textSource.string: { 1 999 }
+
+
+
+!-------------------------------------------------------------------
+!
+!	Dialog box for loadPdb
+!
+
+XaLeap*dbLoadPdb.wcClassName:		TransientShell
+XaLeap*dbLoadPdb.wcChildren:			dForm
+XaLeap*dbLoadPdb*Form*resizable:			False
+XaLeap*dbLoadPdb.title:			loadPdb
+XaLeap*dbLoadPdb.popupCallback:		WcSetInsensitiveCB(*panelLoadPdb) xtcpXACInitializeWorkingDirectoryName(*lPFilePath) \
+xtcpXACInitializeDirectoryList(*lPFileList,*lPFilePath) 
+XaLeap*dbLoadPdb.popdownCallback:		xtcpXACDestroyDirectoryList(*lPFileList)
+
+XaLeap*dbLoadPdb.dForm.wcClassName:		Form
+XaLeap*dbLoadPdb.dForm.wcChildren:		lPForm dAccept dCancel
+
+XaLeap*dbLoadPdb*dAccept.wcClassName:	Command
+
+!
+!	DO NOT Popdown the dialog box before you parse the command!
+!		Otherwise values could be read from empty lists.
+!
+XaLeap*dbLoadPdb*dAccept.callback:		xtcpXACParseCommand((*lPVarName) = loadPdb "(*lPFilePath)(*lPFileName)";)
+					
+
+XaLeap*dbLoadPdb*dAccept.label:		Accept
+XaLeap*dbLoadPdb*dAccept.fromVert:		lPForm
+
+XaLeap*dbLoadPdb*dCancel.wcClassName:	Command
+XaLeap*dbLoadPdb*dCancel.callback:		WcPopdownCB(~~*dbLoadPdb) WcSetSensitiveCB(*panelLoadPdb)
+XaLeap*dbLoadPdb*dCancel.label:		Cancel
+XaLeap*dbLoadPdb*dCancel.fromVert:		lPForm
+XaLeap*dbLoadPdb*dCancel.fromHoriz:		dAccept
+
+
+XaLeap*lPForm.wcClassName:	Form
+XaLeap*lPForm.wcChildren:	lPVarLabel lPVarName lPFileSelector
+
+XaLeap*lPVarLabel.wcClassName:	Label
+XaLeap*lPVarLabel.label:		Variable:
+XaLeap*lPVarLabel.borderWidth:		0
+
+
+XaLeap*lPVarName.wcClassName:		AsciiText
+XaLeap*lPVarName.textSource.editType:	edit
+XaLeap*lPVarName*foreground:		Black
+XaLeap*lPVarName*background:		White
+!Reseting translations
+XaLeap*lPVarName.translations:	#override\n\
+	<Key>Return:	no-op()\n\
+	<Key>Linefeed:	no-op()\n\
+	<Key>Down:	no-op()\n\
+	<Key>Up:	no-op()\n
+
+XaLeap*lPVarName.fromHoriz:		lPVarLabel
+
+XaLeap*lPFileSelector.wcClassName:		Form
+XaLeap*lPFileSelector.wcChildren:		lPFilePath fileListVp fileNamePrompt lPFileName
+XaLeap*lPFileSelector.borderWidth:		0
+
+
+XaLeap*lPFilePath.wcClassName:		Label
+XaLeap*lPFilePath.justify:		left
+XaLeap*lPFilePath.width:		300
+
+XaLeap*lPFileSelector*fileListVp.wcClassName:	Form
+XaLeap*lPFileSelector*fileListVp.wcChildren:		listTitle listViewPort
+XaLeap*lPFileSelector*fileListVp.borderWidth:		0
+
+
+XaLeap*lPFileSelector*fileListVp.listTitle.wcClassName:	Label
+XaLeap*lPFileSelector*fileListVp.listTitle.label:		File:
+XaLeap*lPFileSelector*fileListVp.listTitle.borderWidth:		0
+
+
+XaLeap*lPFileSelector*fileListVp.listViewPort.wcClassName:	ViewPort
+XaLeap*lPFileSelector*fileListVp.listViewPort.wcChildren:	lPFileList
+XaLeap*lPFileSelector*fileListVp.listViewPort.allowVert:	True
+XaLeap*lPFileSelector*fileListVp.listViewPort.forceBars:	True
+XaLeap*lPFileSelector*fileListVp.listViewPort.height:	200
+XaLeap*lPFileSelector*fileListVp.listViewPort.fromVert:	listTitle
+XaLeap*lPFileSelector*fileListVp.listViewPort.width:		200
+
+XaLeap*lPFileList.wcClassName:		List
+XaLeap*lPFileList.defaultColumns:		1
+XaLeap*lPFileList.forceColumns:		True
+XaLeap*lPFileList.callback:			xtcpXACDirectoryPick(*lPFileName,*lPFilePath)
+
+XaLeap*lPFileSelector*fileListVp.fromVert:	lPFilePath
+XaLeap*lPFileSelector*fileListVp.width:	300
+
+XaLeap*lPFileSelector*fileNamePrompt.wcClassName:	Label
+XaLeap*lPFileSelector*fileNamePrompt.label:		File name:
+XaLeap*lPFileSelector*fileNamePrompt.borderWidth:		0
+
+XaLeap*lPFileSelector*fileNamePrompt.fromVert:	fileListVp
+
+XaLeap*lPFileName.wcClassName:		AsciiText
+XaLeap*lPFileName.textSource.editType:	edit
+XaLeap*lPFileName*foreground:		Black
+XaLeap*lPFileName*background:		White
+!Reseting translations
+XaLeap*lPFileName.translations:	#override\n\
+	<Key>Return:	no-op()\n\
+	<Key>Linefeed:	no-op()\n\
+	<Key>Down:	no-op()\n\
+	<Key>Up:	no-op()\n
+	
+XaLeap*lPFileName.fromVert:		fileListVp
+XaLeap*lPFileName.fromHoriz:		fileNamePrompt
+
+
+XaLeap*lPFileSelector.fromHoriz:	lPVarName
+
+
+
+
+!-------------------------------------------------------------------
+!
+!	Dialog box for Quit
+!
+!
+
+
+XaLeap*dbQuit.wcClassName:		TransientShell
+XaLeap*dbQuit.wcChildren:			dForm
+XaLeap*dbQuit*Form*resizable:			False
+XaLeap*dbQuit.title:			quit
+XaLeap*dbQuit.popupCallback:		WcSetInsensitiveCB(*panelQuit) 
+XaLeap*dbQuit.popdownCallback:		
+
+XaLeap*dbQuit.dForm.wcClassName:		Form
+XaLeap*dbQuit.dForm.wcChildren:		quitQuery dAccept dCancel
+
+XaLeap*dbQuit*dAccept.wcClassName:	Command
+
+!
+!	DO NOT Popdown the dialog box before you parse the command!
+!		Otherwise values could be read from empty lists.
+!
+XaLeap*dbQuit*dAccept.callback:		xtcpXACParseCommand(quit;)
+					
+
+XaLeap*dbQuit*dAccept.label:		Accept
+XaLeap*dbQuit*dAccept.fromVert:		quitQuery
+
+XaLeap*dbQuit*dCancel.wcClassName:	Command
+XaLeap*dbQuit*dCancel.callback:		WcPopdownCB(~~*dbQuit) WcSetSensitiveCB(*panelQuit)
+XaLeap*dbQuit*dCancel.label:		Cancel
+XaLeap*dbQuit*dCancel.fromVert:		quitQuery
+XaLeap*dbQuit*dCancel.fromHoriz:		dAccept
+
+
+XaLeap*quitQuery.wcClassName:		Label
+XaLeap*quitQuery.height:		100
+XaLeap*quitQuery.label:		Quit XLEaP?\n\nUn-saved changes will be lost.
+XaLeap*quitQuery.borderWidth:		0
+
+
+
+!-------------------------------------------------------------------
+!
+!	Dialog box loadAmberPrep
+!
+!
+!
+
+XaLeap*dbLAP.wcClassName:		TransientShell
+XaLeap*dbLAP.wcChildren:			dForm
+XaLeap*dbLAP*Form*resizable:			False
+XaLeap*dbLAP.title:			loadAmberPrep
+XaLeap*dbLAP.popupCallback:		WcSetInsensitiveCB(*panelLAP) xtcpXACInitializeWorkingDirectoryName(*lAPFilePath) \
+xtcpXACInitializeDirectoryList(*lAPFileList,*lAPFilePath) 
+XaLeap*dbLAP.popdownCallback:		xtcpXACDestroyDirectoryList(*lAPFileList)
+
+XaLeap*dbLAP.dForm.wcClassName:		Form
+XaLeap*dbLAP.dForm.wcChildren:		lAPInfo dAccept dCancel
+
+XaLeap*dbLAP*dAccept.wcClassName:	Command
+
+!
+!	DO NOT Popdown the dialog box before you parse the command!
+!		Otherwise values could be read from empty lists.
+!
+XaLeap*dbLAP*dAccept.callback:		xtcpXACParseCommand(loadAmberPrep "(*lAPFilePath)(*lAPFileName)";)
+					
+
+XaLeap*dbLAP*dAccept.label:		Accept
+XaLeap*dbLAP*dAccept.fromVert:		lAPInfo
+
+XaLeap*dbLAP*dCancel.wcClassName:	Command
+XaLeap*dbLAP*dCancel.callback:		WcPopdownCB(~~*dbLAP) WcSetSensitiveCB(*panelLAP)
+XaLeap*dbLAP*dCancel.label:		Cancel
+XaLeap*dbLAP*dCancel.fromVert:		lAPInfo
+XaLeap*dbLAP*dCancel.fromHoriz:		dAccept
+
+
+XaLeap*lAPInfo.wcClassName:		Form
+XaLeap*lAPInfo.wcChildren:		lAPFilePath fileListVp fileNamePrompt lAPFileName
+XaLeap*lAPInfo.borderWidth:		0
+
+
+XaLeap*lAPFilePath.wcClassName:		Label
+XaLeap*lAPFilePath.justify:		left
+XaLeap*lAPFilePath.width:		300
+
+XaLeap*lAPInfo*fileListVp.wcClassName:	Form
+XaLeap*lAPInfo*fileListVp.wcChildren:		listTitle listViewPort
+XaLeap*lAPInfo*fileListVp.borderWidth:		0
+
+
+XaLeap*lAPInfo*fileListVp.listTitle.wcClassName:	Label
+XaLeap*lAPInfo*fileListVp.listTitle.label:		File:
+XaLeap*lAPInfo*fileListVp.listTitle.borderWidth:		0
+
+
+XaLeap*lAPInfo*fileListVp.listViewPort.wcClassName:	ViewPort
+XaLeap*lAPInfo*fileListVp.listViewPort.wcChildren:	lAPFileList
+XaLeap*lAPInfo*fileListVp.listViewPort.allowVert:	True
+XaLeap*lAPInfo*fileListVp.listViewPort.forceBars:	True
+XaLeap*lAPInfo*fileListVp.listViewPort.height:	200
+XaLeap*lAPInfo*fileListVp.listViewPort.fromVert:	listTitle
+XaLeap*lAPInfo*fileListVp.listViewPort.width:		200
+
+XaLeap*lAPFileList.wcClassName:		List
+XaLeap*lAPFileList.defaultColumns:		1
+XaLeap*lAPFileList.forceColumns:		True
+XaLeap*lAPFileList.callback:			xtcpXACDirectoryPick(*lAPFileName,*lAPFilePath)
+
+XaLeap*lAPInfo*fileListVp.fromVert:	lAPFilePath
+XaLeap*lAPInfo*fileListVp.width:	300
+
+XaLeap*lAPInfo*fileNamePrompt.wcClassName:	Label
+XaLeap*lAPInfo*fileNamePrompt.label:		File name:
+XaLeap*lAPInfo*fileNamePrompt.borderWidth:		0
+
+XaLeap*lAPInfo*fileNamePrompt.fromVert:	fileListVp
+
+XaLeap*lAPFileName.wcClassName:		AsciiText
+XaLeap*lAPFileName.textSource.editType:	edit
+XaLeap*lAPFileName*foreground:		Black
+XaLeap*lAPFileName*background:		White
+!Reseting translations
+XaLeap*lAPFileName.translations:	#override\n\
+	<Key>Return:	no-op()\n\
+	<Key>Linefeed:	no-op()\n\
+	<Key>Down:	no-op()\n\
+	<Key>Up:	no-op()\n
+	
+XaLeap*lAPFileName.fromVert:		fileListVp
+XaLeap*lAPFileName.fromHoriz:		fileNamePrompt
+
+
+
+!-------------------------------------------------------------------
+!
+!	Dialog box 'source'
+!
+!
+!
+
+XaLeap*dbSource.wcClassName:		TransientShell
+XaLeap*dbSource.wcChildren:			dForm
+XaLeap*dbSource*Form*resizable:			False
+XaLeap*dbSource.title:			source
+XaLeap*dbSource.popupCallback:		WcSetInsensitiveCB(*panelSource) xtcpXACInitializeWorkingDirectoryName(*sourceFilePath) \
+xtcpXACInitializeDirectoryList(*sourceFileList,*sourceFilePath) 
+XaLeap*dbSource.popdownCallback:		xtcpXACDestroyDirectoryList(*sourceFileList)
+
+XaLeap*dbSource.dForm.wcClassName:		Form
+XaLeap*dbSource.dForm.wcChildren:		sourceInfo dAccept dCancel
+
+XaLeap*dbSource*dAccept.wcClassName:	Command
+
+!
+!	DO NOT Popdown the dialog box before you parse the command!
+!		Otherwise values could be read from empty lists.
+!
+XaLeap*dbSource*dAccept.callback:		xtcpXACParseCommand(source "(*sourceFilePath)(*sourceFileName)";)
+					
+
+XaLeap*dbSource*dAccept.label:		Accept
+XaLeap*dbSource*dAccept.fromVert:		sourceInfo
+
+XaLeap*dbSource*dCancel.wcClassName:	Command
+XaLeap*dbSource*dCancel.callback:		WcPopdownCB(~~*dbSource) WcSetSensitiveCB(*panelSource)
+XaLeap*dbSource*dCancel.label:		Cancel
+XaLeap*dbSource*dCancel.fromVert:		sourceInfo
+XaLeap*dbSource*dCancel.fromHoriz:		dAccept
+
+
+XaLeap*sourceInfo.wcClassName:		Form
+XaLeap*sourceInfo.wcChildren:		sourceFilePath fileListVp fileNamePrompt sourceFileName
+XaLeap*sourceInfo.borderWidth:		0
+
+
+XaLeap*sourceFilePath.wcClassName:		Label
+XaLeap*sourceFilePath.justify:		left
+XaLeap*sourceFilePath.width:		300
+
+XaLeap*sourceInfo*fileListVp.wcClassName:	Form
+XaLeap*sourceInfo*fileListVp.wcChildren:		listTitle listViewPort
+XaLeap*sourceInfo*fileListVp.borderWidth:		0
+
+
+XaLeap*sourceInfo*fileListVp.listTitle.wcClassName:	Label
+XaLeap*sourceInfo*fileListVp.listTitle.label:		File:
+XaLeap*sourceInfo*fileListVp.listTitle.borderWidth:		0
+
+
+XaLeap*sourceInfo*fileListVp.listViewPort.wcClassName:	ViewPort
+XaLeap*sourceInfo*fileListVp.listViewPort.wcChildren:	sourceFileList
+XaLeap*sourceInfo*fileListVp.listViewPort.allowVert:	True
+XaLeap*sourceInfo*fileListVp.listViewPort.forceBars:	True
+XaLeap*sourceInfo*fileListVp.listViewPort.height:	200
+XaLeap*sourceInfo*fileListVp.listViewPort.fromVert:	listTitle
+XaLeap*sourceInfo*fileListVp.listViewPort.width:		200
+
+XaLeap*sourceFileList.wcClassName:		List
+XaLeap*sourceFileList.defaultColumns:		1
+XaLeap*sourceFileList.forceColumns:		True
+XaLeap*sourceFileList.callback:			xtcpXACDirectoryPick(*sourceFileName,*sourceFilePath)
+
+XaLeap*sourceInfo*fileListVp.fromVert:	sourceFilePath
+XaLeap*sourceInfo*fileListVp.width:	300
+
+XaLeap*sourceInfo*fileNamePrompt.wcClassName:	Label
+XaLeap*sourceInfo*fileNamePrompt.label:		File name:
+XaLeap*sourceInfo*fileNamePrompt.borderWidth:		0
+
+XaLeap*sourceInfo*fileNamePrompt.fromVert:	fileListVp
+
+XaLeap*sourceFileName.wcClassName:		AsciiText
+XaLeap*sourceFileName.textSource.editType:	edit
+XaLeap*sourceFileName*foreground:		Black
+XaLeap*sourceFileName*background:		White
+!Reseting translations
+XaLeap*sourceFileName.translations:	#override\n\
+	<Key>Return:	no-op()\n\
+	<Key>Linefeed:	no-op()\n\
+	<Key>Down:	no-op()\n\
+	<Key>Up:	no-op()\n
+	
+XaLeap*sourceFileName.fromVert:		fileListVp
+XaLeap*sourceFileName.fromHoriz:		fileNamePrompt
+
+
+
+
+
+
+!-------------------------------------------------------------------
+!
+!	Dialog box 'verbosity'
+!
+!
+!
+
+XaLeap*dbVerbosity.wcClassName:		TransientShell
+XaLeap*dbVerbosity.wcChildren:			dForm
+XaLeap*dbVerbosity*Form*resizable:			False
+XaLeap*dbVerbosity.title:			verbosity
+XaLeap*dbVerbosity.popupCallback:		WcSetInsensitiveCB(*panelVerbosity) 
+XaLeap*dbVerbosity.popdownCallback:		
+
+XaLeap*dbVerbosity.dForm.wcClassName:		Form
+XaLeap*dbVerbosity.dForm.wcChildren:		verbosityInfo dAccept dCancel
+
+XaLeap*dbVerbosity*dAccept.wcClassName:	Command
+
+!
+!	DO NOT Popdown the dialog box before you parse the command!
+!		Otherwise values could be read from empty lists.
+!
+XaLeap*dbVerbosity*dAccept.callback:		xtcpXACParseCommand(verbosity (*vLevel);)
+					
+
+XaLeap*dbVerbosity*dAccept.label:		Accept
+XaLeap*dbVerbosity*dAccept.fromVert:		verbosityInfo
+
+XaLeap*dbVerbosity*dCancel.wcClassName:	Command
+XaLeap*dbVerbosity*dCancel.callback:		WcPopdownCB(~~*dbVerbosity) WcSetSensitiveCB(*panelVerbosity)
+XaLeap*dbVerbosity*dCancel.label:		Cancel
+XaLeap*dbVerbosity*dCancel.fromVert:		verbosityInfo
+XaLeap*dbVerbosity*dCancel.fromHoriz:		dAccept
+
+
+XaLeap*verbosityInfo.wcClassName:	Form
+XaLeap*verbosityInfo.wcChildren:	vDescLabel verb0 verb1 verb2 vLabel vLevel
+XaLeap*verbosityInfo.borderWidth:		0
+
+!
+!	To make the following set of Toggles a "one of many" radio group
+!	use the following translation table
+!
+
+XaLeap*verbosityInfo.Toggle.translations:	#override\
+	<EnterWindow>:		highlight(Always)\n\
+	<LeaveWindow>:		unhighlight()\n\
+	<Btn1Down>,<Btn1Up>:	set() notify()\n
+
+XaLeap*vDescLabel.wcClassName:	Label
+XaLeap*vDescLabel.label:		Set the verbosity level:
+XaLeap*vDescLabel.height:		50
+XaLeap*vDescLabel.borderWidth:		0
+
+
+XaLeap*verb0.wcClassName:		Command
+XaLeap*verb0.label:			Minimum messages (Level 0)
+XaLeap*verb0.callback:		WcSetValueCB( *vLevel.label:0)
+!XaLeap*verb0.state:			True
+XaLeap*verb0.fromVert:		vDescLabel
+
+XaLeap*verb1.wcClassName:		Command
+!XaLeap*verb1.wcCallback:		WcSetValueCB( XaLeap*verb1.radioGroup: verb0)
+XaLeap*verb1.label:			All messages (Level 1)
+XaLeap*verb1.callback:		WcSetValueCB( *vLevel.label:1)
+XaLeap*verb1.fromVert:		verb0
+
+XaLeap*verb2.wcClassName:		Command
+!XaLeap*verb2.wcCallback:		WcSetValueCB( XaLeap*verb2.radioGroup: verb0)
+XaLeap*verb2.label:			All messages and expand source files (Level 2)
+XaLeap*verb2.callback:		WcSetValueCB( *vLevel.label:2)
+XaLeap*verb2.fromVert:		verb1
+
+XaLeap*vLabel.wcClassName:		Label
+XaLeap*vLabel.label:			Verbosity level:
+XaLeap*vLabel.borderWidth:		0
+
+XaLeap*vLabel.fromVert:		verb2
+
+XaLeap*vLevel.wcClassName:		Label
+XaLeap*vLevel.width:			30
+XaLeap*vLevel.fromHoriz:		vLabel
+XaLeap*vLevel.fromVert:		verb2
+XaLeap*vLevel.label:			0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+XaLeap.title:			XLEaP
+XaLeap.wcChildren:		commandPanelAndText
+XaLeap.preferredPaneSize:	200
+XaLeap*background:		White
+XaLeap*foreground:		Black
+XaLeap*borderColor:		Black
+XaLeap*Command.background:	White
+XaLeap*Toggle.background:	White
+XaLeap*Viewport*background:	White
+XaLeap*SimpleMenu*background:	White
+XaLeap*MenuButton.background:	White
+
+XaLeap*autoFill:		True
+
+!
+!	PANEL_BUTTON($1,$2,$3)
+!
+!	$1 - name of button Widget to create
+!	$2 - Label for button
+!	$3 - Widget to popup when button is pressed
+!
+
+
+
+XaLeap*commandPanelAndText.wcClassName:	Paned
+XaLeap*commandPanelAndText.wcChildren:	commandPanel commands
+XaLeap*commandPanelAndText.orientation:	Horizontal
+XaLeap*commandPanelAndText*showGrip:		False
+
+
+
+XaLeap*commandPanel.wcClassName:	Paned
+XaLeap*commandPanel.wcChildren:		cLogo commandButtons
+XaLeap*commandPanel*showGrips:		False
+
+XaLeap*cLogo.wcClassName:		Label
+XaLeap*cLogo.wcCallback:		xtcpXATDefineBitmap( bitmap, xaLogo)
+
+
+XaLeap*commandButtons.wcClassName:	Box
+XaLeap*commandButtons.hSpace:		10
+XaLeap*commandButtons.vSpace:		10
+XaLeap*commandButtons.wcChildren:	panelLoad panelSave \
+					panelLAP panelLoadPdb \
+					panelImpose panelEdit \
+					panelSource \
+					panelVerbosity \
+					panelQuit 
+
+
+XaLeap*panelLoad.wcClassName:		Command
+XaLeap*panelLoad.wcPopups:			dbLoad
+XaLeap*panelLoad.label:			load
+XaLeap*panelLoad.callback:			WcPopupCB(*dbLoad)
+XaLeap*panelLoad.width:			150
+
+XaLeap*panelSave.wcClassName:		Command
+XaLeap*panelSave.wcPopups:			dbSave
+XaLeap*panelSave.label:			save
+XaLeap*panelSave.callback:			WcPopupCB(*dbSave)
+XaLeap*panelSave.width:			150
+
+XaLeap*panelLAP.wcClassName:		Command
+XaLeap*panelLAP.wcPopups:			dbLAP
+XaLeap*panelLAP.label:			loadAmberPrep
+XaLeap*panelLAP.callback:			WcPopupCB(*dbLAP)
+XaLeap*panelLAP.width:			150
+
+XaLeap*panelLoadPdb.wcClassName:		Command
+XaLeap*panelLoadPdb.wcPopups:			dbLoadPdb
+XaLeap*panelLoadPdb.label:			loadPdb
+XaLeap*panelLoadPdb.callback:			WcPopupCB(*dbLoadPdb)
+XaLeap*panelLoadPdb.width:			150
+
+XaLeap*panelImpose.wcClassName:		Command
+XaLeap*panelImpose.wcPopups:			dbImpose
+XaLeap*panelImpose.label:			impose
+XaLeap*panelImpose.callback:			WcPopupCB(*dbImpose)
+XaLeap*panelImpose.width:			150
+
+XaLeap*panelEdit.wcClassName:		Command
+XaLeap*panelEdit.wcPopups:			dbEdit
+XaLeap*panelEdit.label:			edit
+XaLeap*panelEdit.callback:			WcPopupCB(*dbEdit)
+XaLeap*panelEdit.width:			150
+
+XaLeap*panelSource.wcClassName:		Command
+XaLeap*panelSource.wcPopups:			dbSource
+XaLeap*panelSource.label:			source
+XaLeap*panelSource.callback:			WcPopupCB(*dbSource)
+XaLeap*panelSource.width:			150
+
+XaLeap*panelVerbosity.wcClassName:		Command
+XaLeap*panelVerbosity.wcPopups:			dbVerbosity
+XaLeap*panelVerbosity.label:			verbosity
+XaLeap*panelVerbosity.callback:			WcPopupCB(*dbVerbosity)
+XaLeap*panelVerbosity.width:			150
+
+XaLeap*panelQuit.wcClassName:		Command
+XaLeap*panelQuit.wcPopups:			dbQuit
+XaLeap*panelQuit.label:			quit
+XaLeap*panelQuit.callback:			WcPopupCB(*dbQuit)
+XaLeap*panelQuit.width:			150
+
+
+
+
+
+!
+!	The asciiText widget for the command line interface.
+!
+XaLeap*commands.wcClass:		asciiTextWidgetClass
+XaLeap*commands.wcCallback:		xtcpXACCmdWidgetRegister()
+XaLeap*commands.type:			string
+XaLeap*commands.textSource.editType:	append
+XaLeap*commands.scrollVertical:		always
+XaLeap*commands.scrollHorizontal:	whenNeeded
+XaLeap*commands.useStringInPlace:	False
+XaLeap*commands.preferredPaneSize:	200
+XaLeap*commands.translations:		#override\
+	<Key>BackSpace:	end-of-file() \
+			xtapXACTextProcessRubout()\n\
+	<Key>Delete:	end-of-file() \
+			xtapXACTextProcessRubout()\n\
+	Ctrl<Key>u:	xtapXACTextProcessRuboutLine()\n\
+	Ctrl<Key>c:	xtapXACTextProcessCancel()\n\
+	<Key>Return:	end-of-file()\
+			xtapXACTextProcessKeys()\n\
+	<Key>:		end-of-file() \
+			xtapXACTextProcessKeys()\n\
+	<Btn2Down>:	xtapXACTextProcessInsertSelection(CUT_BUFFER0) \n\
+
+
+
+!#####################################################################
+!#####################################################################
+!#####################################################################
+!#####################################################################
+!#####################################################################
+!#####################################################################
+!
+!	Define how the unitEditor shell will look.
+!
+!
+
+XaLeap*unitEditor.wcClassName:	TopLevelShell
+XaLeap*unitEditor.wcChildren:		ueAll
+XaLeap*unitEditor.wcCallback:		XAUERegisterUnitEditor
+
+
+XaLeap*ueAll.wcClassName:		Paned
+XaLeap*ueAll.wcChildren:		controls menuStatusTank
+XaLeap*ueAll.orientation:		horizontal
+
+XaLeap*menuStatusTank.wcClassName:	Paned
+XaLeap*menuStatusTank.wcChildren:	ueMenu status tank
+XaLeap*menuStatusTank.orientation:	vertical
+
+XaLeap*ueMenu.wcClassName:		Box
+XaLeap*ueMenu.wcChildren:		bWindow bBuild bDisplay bSelection bCommands
+XaLeap*ueMenu.skipAdjust:		True
+XaLeap*ueMenu.showGrip:		False
+
+!
+!	Window menu
+!
+XaLeap*bWindow.wcClassName:		MenuButton
+XaLeap*bWindow.label:			Window
+XaLeap*bWindow.wcPopups:		mWindow
+XaLeap*bWindow.menuName:		mWindow
+
+XaLeap*mWindow.wcClassName:		SimpleMenu
+XaLeap*mWindow.wcChildren:		xaueClose
+
+XaLeap*xaueClose.wcClassName:		SmeBSB
+XaLeap*xaueClose.label:			Close
+XaLeap*xaueClose.callback:			XAUEClose
+
+
+
+
+!
+!	Build menu
+!
+XaLeap*bBuild.wcClassName:		MenuButton
+XaLeap*bBuild.label:			Build
+XaLeap*bBuild.wcPopups:		mBuild
+XaLeap*bBuild.menuName:		mBuild
+
+XaLeap*mBuild.wcClassName:		SimpleMenu
+XaLeap*mBuild.wcChildren:		build addHBuild
+
+XaLeap*build.wcClassName:		SmeBSB
+XaLeap*build.label:			Build
+XaLeap*build.callback:			XAUEBuildExternals
+
+XaLeap*addHBuild.wcClassName:		SmeBSB
+XaLeap*addHBuild.label:			Add H & Build
+XaLeap*addHBuild.callback:			XAUEAddHydrogensAndBuildExternals
+
+
+
+!
+!	Display menu
+!
+XaLeap*bDisplay.wcClass:		menuButtonWidgetClass
+XaLeap*bDisplay.label:		Display
+XaLeap*bDisplay.wcPopups:		mDisplay
+XaLeap*bDisplay.menuName:		mDisplay
+
+
+XaLeap*mDisplay.wcClass:		simpleMenuWidgetClass
+XaLeap*mDisplay.wcChildren:		dispNames dispPertNames dispTypes \
+				dispPertTypes dispResNames dispAxis dispBox
+
+XaLeap*dispNames.wcClassName:		SmeBSB
+XaLeap*dispNames.label:			Names
+XaLeap*dispNames.callback:			XAUEToggleShowNames
+
+XaLeap*dispPertNames.wcClassName:		SmeBSB
+XaLeap*dispPertNames.label:			Perturbed names
+XaLeap*dispPertNames.callback:			XAUEToggleShowPertNames
+
+XaLeap*dispTypes.wcClassName:		SmeBSB
+XaLeap*dispTypes.label:			Types
+XaLeap*dispTypes.callback:			XAUEToggleShowTypes
+
+XaLeap*dispPertTypes.wcClassName:		SmeBSB
+XaLeap*dispPertTypes.label:			Perturbed types
+XaLeap*dispPertTypes.callback:			XAUEToggleSHowPertTypes
+
+XaLeap*dispResNames.wcClassName:		SmeBSB
+XaLeap*dispResNames.label:			Residue names
+XaLeap*dispResNames.callback:			XAUEToggleShowResidues
+
+XaLeap*dispAxis.wcClassName:		SmeBSB
+XaLeap*dispAxis.label:			Axes
+XaLeap*dispAxis.callback:			XAUEToggleSHowAxis
+
+XaLeap*dispBox.wcClassName:		SmeBSB
+XaLeap*dispBox.label:			Periodic box
+XaLeap*dispBox.callback:			XAUEToggleShowBox
+
+
+
+XaLeap*bSelection.wcClass:		menuButtonWidgetClass
+XaLeap*bSelection.label:		Selection
+XaLeap*bSelection.wcPopups:		mSelection
+XaLeap*bSelection.menuName:		mSelection
+
+XaLeap*mSelection.wcClass:		simpleMenuWidgetClass
+XaLeap*mSelection.wcChildren:		selRings selRes selMols selLine selUnhideAll \
+				selHide selHideAllBut selLine \
+				selRelax selFlipChir selEdit\
+				z1line markUnBuilt markBuilt
+
+XaLeap*selRings.wcClassName:		SmeBSB
+XaLeap*selRings.label:			Select Rings
+XaLeap*selRings.callback:			XAUESelectRings
+
+XaLeap*selRes.wcClassName:		SmeBSB
+XaLeap*selRes.label:			Select Residues
+XaLeap*selRes.callback:			XAUESelectResidues
+
+XaLeap*selMols.wcClassName:		SmeBSB
+XaLeap*selMols.label:			Select Molecules
+XaLeap*selMols.callback:			XAUESelectMolecules
+
+XaLeap*selLine.wcClassName:		SmeBSB
+XaLeap*selLine.label:			--------------
+XaLeap*selLine.callback:			
+
+XaLeap*selUnhideAll.wcClassName:		SmeBSB
+XaLeap*selUnhideAll.label:			Show everything
+XaLeap*selUnhideAll.callback:			XAUEUnhideAll
+
+XaLeap*selHide.wcClassName:		SmeBSB
+XaLeap*selHide.label:			Hide selection
+XaLeap*selHide.callback:			XAUEHideSelection
+
+XaLeap*selHideAllBut.wcClassName:		SmeBSB
+XaLeap*selHideAllBut.label:			Show selection only
+XaLeap*selHideAllBut.callback:			XAUEHideAllButSelection
+
+XaLeap*selRelax.wcClassName:		SmeBSB
+XaLeap*selRelax.label:			Relax selection
+XaLeap*selRelax.callback:			XAUERelaxSelectionInFramework
+
+XaLeap*selFlipChir.wcClassName:		SmeBSB
+XaLeap*selFlipChir.label:			Flip chirality
+XaLeap*selFlipChir.callback:			XAUESelectedAtomsFlipChirality
+
+XaLeap*selEdit.wcClassName:		SmeBSB
+XaLeap*selEdit.label:			Edit selected atoms
+XaLeap*selEdit.callback:			XAUEEditSelectedAtoms
+
+XaLeap*z1line.wcClassName:		SmeBSB
+XaLeap*z1line.label:			--------------
+XaLeap*z1line.callback:			
+
+XaLeap*markUnBuilt.wcClassName:		SmeBSB
+XaLeap*markUnBuilt.label:			Mark unbuilt
+XaLeap*markUnBuilt.callback:			XAUEMarkUnBuilt
+
+XaLeap*markBuilt.wcClassName:		SmeBSB
+XaLeap*markBuilt.label:			Mark built
+XaLeap*markBuilt.callback:			XAUEMarkBuilt
+
+
+!
+!	Commands menu
+!
+XaLeap*bCommands.wcClassName:		MenuButton
+XaLeap*bCommands.label:		Commands
+XaLeap*bCommands.wcPopups:		mCommands
+XaLeap*bCommands.menuName:		mCommands
+
+XaLeap*mCommands.wcClassName:		SimpleMenu
+XaLeap*mCommands.wcChildren:		cCheck cCharge cImport
+
+XaLeap*cCheck.wcClassName:		SmeBSB
+XaLeap*cCheck.label:			Check unit
+XaLeap*cCheck.callback:			XAUECheck
+
+XaLeap*cCharge.wcClassName:		SmeBSB
+XaLeap*cCharge.label:			Calculate charge
+XaLeap*cCharge.callback:			XAUECharge
+
+XaLeap*cTest.wcClassName:		SmeBSB
+XaLeap*cTest.label:			Print bonds&angles&torsions
+XaLeap*cTest.callback:			XAUEPrintAllInternals
+
+XaLeap*cImport.wcClassName:		SmeBSB
+XaLeap*cImport.label:			Import unit
+XaLeap*cImport.callback:			WcPopupCB(~~*importDialog)
+
+XaLeap*unitEditor.wcPopups:		importDialog
+
+
+XaLeap*importDialog.wcClassName:		TransientShell
+XaLeap*importDialog.wcChildren:			dForm
+XaLeap*importDialog*Form*resizable:		False
+XaLeap*importDialog.title:			Dialog
+XaLeap*importDialog.popupCallback:		xtcpXACInitializeList(~*importUnitList,U)
+XaLeap*importDialog.popdownCallback:		xtcpXACDestroyList(~*importUnitList) 
+
+XaLeap*importDialog.dForm.wcClassName:		Form
+XaLeap*importDialog.dForm.wcChildren:		importUnitTop dAccept dCancel
+
+XaLeap*importDialog*dAccept.wcClassName:	Command
+
+!
+!	DO NOT Popdown the dialog box before you parse the command!
+!		Otherwise values could be read from empty lists.
+!
+XaLeap*importDialog*dAccept.callback:		XAUEImport(~*importUnit) WcPopdownCB(~~*importDialog)
+
+XaLeap*importDialog*dAccept.label:		Accept
+XaLeap*importDialog*dAccept.fromVert:		importUnitTop
+
+XaLeap*importDialog*dCancel.wcClassName:	Command
+XaLeap*importDialog*dCancel.callback:		WcPopdownCB(~~*importDialog)
+XaLeap*importDialog*dCancel.label:		Cancel
+XaLeap*importDialog*dCancel.fromVert:		importUnitTop
+XaLeap*importDialog*dCancel.fromHoriz:		dAccept
+
+
+
+XaLeap*importUnitTop.wcClassName:	Form
+XaLeap*importUnitTop.wcChildren:	importUnitForm importLabel importUnit
+
+XaLeap*importUnitForm.wcClassName:	Form
+XaLeap*importUnitForm.wcChildren:		listTitle listViewPort
+XaLeap*importUnitForm.borderWidth:		0
+
+
+XaLeap*importUnitForm.listTitle.wcClassName:	Label
+XaLeap*importUnitForm.listTitle.label:		Unit to import:
+XaLeap*importUnitForm.listTitle.borderWidth:		0
+
+
+XaLeap*importUnitForm.listViewPort.wcClassName:	ViewPort
+XaLeap*importUnitForm.listViewPort.wcChildren:	importUnitList
+XaLeap*importUnitForm.listViewPort.allowVert:	True
+XaLeap*importUnitForm.listViewPort.forceBars:	True
+XaLeap*importUnitForm.listViewPort.height:	200
+XaLeap*importUnitForm.listViewPort.fromVert:	listTitle
+XaLeap*importUnitForm.listViewPort.width:		200
+
+XaLeap*importUnitList.wcClassName:		List
+XaLeap*importUnitList.defaultColumns:		1
+XaLeap*importUnitList.forceColumns:		True
+XaLeap*importUnitList.callback:			xtcpXACCopyValueTo(~*importUnit)
+
+
+XaLeap*importLabel.wcClassName:	Label
+XaLeap*importLabel.label:		Import:
+XaLeap*importLabel.fromVert:		importUnitForm
+XaLeap*importLabel.borderWidth:		0
+
+
+
+XaLeap*importUnit.wcClassName:	Label
+XaLeap*importUnit.label:
+XaLeap*importUnit.width:		100
+XaLeap*importUnit.fromHoriz:		importLabel
+XaLeap*importUnit.fromVert:		importUnitForm
+
+
+
+!
+!	The widget that contains the display tank and the controls for
+!	the display tank.
+!
+XaLeap*tankControl.wcClass:		panedWidgetClass
+XaLeap*tankControl.wcChildren:	controls statusTank
+XaLeap*tankControl.orientation:	horizontal
+
+
+!
+
+XaLeap*statusTank.wcClass:		panedWidgetClass
+XaLeap*statusTank.wcChildren:		status tank
+XaLeap*statusTank.orientation:	vertical
+XaLeap*statusTank.showGrip:		False
+
+XaLeap*status.wcClass:		asciiTextWidgetClass
+! IMPORTANT: You must add wcCallback to register the TextWidget with the
+!		application pass as the argument the name of the Action
+!		which is used to insert strings into the TextWidget
+!
+XaLeap*status.wcCallback:	XAUEStatusWidgetRegister(insert-string)
+XaLeap*status*type:		string
+XaLeap*status*editType:		append
+XaLeap*status*scrollVertical:	always
+XaLeap*status*useStringInPlace:	False
+XaLeap*status.preferredPaneSize:50
+
+!
+!	The widget for the display tank
+!
+! IMPORTANT: You must add wcCallback to register the TANK with the
+!		application
+XaLeap*tank.wcClass:		tankWidgetClass
+XaLeap*tank.wcCallback:		XAUETankWidgetRegister() XAUEStateSelect()
+XaLeap*tank.preferredPaneSize:	500
+XaLeap*tank.height:		500
+XaLeap*tank.width:		600
+XaLeap*tank.translations:	#override\n\
+	Ctrl<Key>C	:	xtapActionSetCancelHit()\n\
+	<Btn1Down>	:	xtapActionButtonADown()\n\
+	<Btn1Up>	:	xtapActionButtonAUp()\n\
+	<Btn2Down>	:	xtapActionButtonBDown()\n\
+	<Btn2Up>	:	xtapActionButtonBUp()\n\
+	<Btn3Down>	:	xtapActionButtonCDown()\n\
+	<Btn3Up>	:	xtapActionButtonCUp()\n\
+	<Motion>	:	xtapActionMouseMotion()\n\
+	<KeyDown>Control_L:	xtapActionButtonBDown()\n\
+	<KeyDown>Control_R:	xtapActionButtonBDown()\n\
+	<KeyUp>Control_L:	xtapActionButtonBUp()\n\
+	<KeyUp>Control_R:	xtapActionButtonBUp()\n\
+	<KeyDown>Shift_L:	xtapActionButtonDDown()\n\
+	<KeyDown>Shift_R:	xtapActionButtonDDown()\n\
+	<KeyUp>Shift_L	:	xtapActionButtonDUp()\n\
+	<KeyUp>Shift_R	:	xtapActionButtonDUp()\n\
+	<Key>space	:	xtapActionCenterUnit()\n
+
+
+!
+!	The box widget for the control buttons and toggles
+!
+!		The background for the control panel should be a light
+!		green color.
+!
+
+
+XaLeap*controls.wcClassName:	Box
+XaLeap*controls.showGrip:	False
+XaLeap*controls.wcChildren:	sStat bSelect bErase bDraw
+XaLeap*controls.vSpace:		20
+XaLeap*controls.hSpace:		20
+
+
+XaLeap*controls.Toggle.translations:	#override\
+	<EnterWindow>:		highlight(Always)\n\
+	<LeaveWindow>:		unhighlight()\n\
+	<Btn1Down>,<Btn1Up>:	set() notify()\n
+
+XaLeap*sStat.wcClassName:	Box
+XaLeap*sStat.wcChildren:	sStatMess sStatMode
+XaLeap*sStat.borderWidth:	0
+
+XaLeap*sStatMess.wcClassName:	Label
+XaLeap*sStatMess.borderWidth:	0
+XaLeap*sStatMess.label:		Mode:
+
+XaLeap*sStatMode.wcClassName:	Label
+XaLeap*sStatMode.borderWidth:	0
+XaLeap*sStatMode.label:		SELECT
+
+
+
+!
+!	Select
+!
+!
+XaLeap*bSelect.wcClassName:	Box
+XaLeap*bSelect.wcChildren:	cSelect cTwist cManipulate
+
+XaLeap*cSelect.wcClassName:	Command
+XaLeap*cSelect.label:		SELECT    
+XaLeap*cSelect.callback:	WcSetValueCB( *sStatMode.label:SELECT) XAUEStateSelect()
+XaLeap*cSelect.state:		True
+
+XaLeap*cTwist.wcClassName:	Command
+!XaLeap*cTwist.wcCallback:	WcSetValueCB( XaLeap*cTwist.radioGroup: cSelect)
+XaLeap*cTwist.label:		Twist
+XaLeap*cTwist.callback:		WcSetValueCB( *sStatMode.label:TWIST) XAUEStateSelectTwist()
+
+XaLeap*cManipulate.wcClassName:	Command
+!XaLeap*cManipulate.wcCallback:	WcSetValueCB( XaLeap*cDrag.radioGroup: cSelect)
+XaLeap*cManipulate.label:	Manipulate
+XaLeap*cManipulate.callback:	WcSetValueCB( *sStatMode.label:MANIPULATE) XAUEStateSelectDragRotate()
+
+!
+!	Erase
+!
+XaLeap*bErase.wcClassName:	Box
+XaLeap*bErase.wcChildren:	cErase
+
+XaLeap*cErase.wcClassName:	Command
+!XaLeap*cErase.wcCallback:	WcSetValueCB( XaLeap*cErase.radioGroup: cSelect)
+XaLeap*cErase.label:		ERASE     
+XaLeap*cErase.callback:		WcSetValueCB( *sStatMode.label:ERASE) XAUEStateErase()
+
+
+
+!
+!	Draw
+!
+!
+XaLeap*bDraw.wcClassName:	Box
+XaLeap*bDraw.wcChildren:	cDraw mmElements cC cH cO cN cS cP
+
+XaLeap*cDraw.wcClassName:	Command
+!XaLeap*cDraw.wcCallback:	WcSetValueCB( XaLeap*cDraw.radioGroup: cSelect)
+XaLeap*cDraw.label:		DRAW      
+XaLeap*cDraw.callback:		WcSetValueCB( *sStatMode.label:DRAW) XAUEStateDraw()
+
+
+
+!
+!	Elements menu
+!
+
+XaLeap*mmElements.wcClassName:	MenuButton
+XaLeap*mmElements.label:		Elements
+XaLeap*mmElements.wcPopups:		mElements
+XaLeap*mmElements.menuName:		mElements
+
+XaLeap*mElements.wcClassName:		SimpleMenu
+XaLeap*mElements.wcChildren:		eLp eH eHe \
+				eLi eBe eB  eC  eN eO eF eNe \
+				eNa eMg eAl eSi eK eS eCl eAr \
+				eK eCa
+
+!
+!	Elements available on menu
+!
+
+
+
+XaLeap*eLp.wcClassName:	SmeBSB
+XaLeap*eLp.label:		Lone pair
+XaLeap*eLp.callback:		XAUESetDrawingElement(Lp)
+
+XaLeap*eH.wcClassName:	SmeBSB
+XaLeap*eH.label:		Hydrogen
+XaLeap*eH.callback:		XAUESetDrawingElement(H)
+
+XaLeap*eHe.wcClassName:	SmeBSB
+XaLeap*eHe.label:		Helium
+XaLeap*eHe.callback:		XAUESetDrawingElement(He)
+
+
+XaLeap*eLi.wcClassName:	SmeBSB
+XaLeap*eLi.label:		Lithium
+XaLeap*eLi.callback:		XAUESetDrawingElement(Li)
+
+XaLeap*eBe.wcClassName:	SmeBSB
+XaLeap*eBe.label:		Berelium
+XaLeap*eBe.callback:		XAUESetDrawingElement(Be)
+
+XaLeap*eB.wcClassName:	SmeBSB
+XaLeap*eB.label:		Boron
+XaLeap*eB.callback:		XAUESetDrawingElement(B)
+
+XaLeap*eC.wcClassName:	SmeBSB
+XaLeap*eC.label:		Carbon
+XaLeap*eC.callback:		XAUESetDrawingElement(C)
+
+XaLeap*eN.wcClassName:	SmeBSB
+XaLeap*eN.label:		Nitrogen
+XaLeap*eN.callback:		XAUESetDrawingElement(N)
+
+XaLeap*eO.wcClassName:	SmeBSB
+XaLeap*eO.label:		Oxygen
+XaLeap*eO.callback:		XAUESetDrawingElement(O)
+
+XaLeap*eF.wcClassName:	SmeBSB
+XaLeap*eF.label:		Fluorine
+XaLeap*eF.callback:		XAUESetDrawingElement(F)
+
+XaLeap*eNe.wcClassName:	SmeBSB
+XaLeap*eNe.label:		Neon
+XaLeap*eNe.callback:		XAUESetDrawingElement(Ne)
+
+
+XaLeap*eNa.wcClassName:	SmeBSB
+XaLeap*eNa.label:		Sodium
+XaLeap*eNa.callback:		XAUESetDrawingElement(Na)
+
+XaLeap*eMg.wcClassName:	SmeBSB
+XaLeap*eMg.label:		Magnesium
+XaLeap*eMg.callback:		XAUESetDrawingElement(Mg)
+
+XaLeap*eAl.wcClassName:	SmeBSB
+XaLeap*eAl.label:		Aluminum
+XaLeap*eAl.callback:		XAUESetDrawingElement(Al)
+
+XaLeap*eSi.wcClassName:	SmeBSB
+XaLeap*eSi.label:		Silicon
+XaLeap*eSi.callback:		XAUESetDrawingElement(Si)
+
+XaLeap*eP.wcClassName:	SmeBSB
+XaLeap*eP.label:		Phosphorous
+XaLeap*eP.callback:		XAUESetDrawingElement(P)
+
+XaLeap*eS.wcClassName:	SmeBSB
+XaLeap*eS.label:		Sulphur
+XaLeap*eS.callback:		XAUESetDrawingElement(S)
+
+XaLeap*eCl.wcClassName:	SmeBSB
+XaLeap*eCl.label:		Chlorine
+XaLeap*eCl.callback:		XAUESetDrawingElement(Cl)
+
+XaLeap*eAr.wcClassName:	SmeBSB
+XaLeap*eAr.label:		Argon
+XaLeap*eAr.callback:		XAUESetDrawingElement(Ar)
+
+
+XaLeap*eK.wcClassName:	SmeBSB
+XaLeap*eK.label:		Potassium
+XaLeap*eK.callback:		XAUESetDrawingElement(K)
+
+XaLeap*eCa.wcClassName:	SmeBSB
+XaLeap*eCa.label:		Calcium
+XaLeap*eCa.callback:		XAUESetDrawingElement(Ca)
+
+
+
+
+!
+!	Elements that are available in the drawing box
+!	all of the time.
+!
+
+
+
+XaLeap*cC.wcClassName:		Command
+XaLeap*cC.label:		C
+XaLeap*cC.callback:		XAUESetDrawingElement(C)
+
+XaLeap*cH.wcClassName:		Command
+XaLeap*cH.label:		H
+XaLeap*cH.callback:		XAUESetDrawingElement(H)
+
+XaLeap*cO.wcClassName:		Command
+XaLeap*cO.label:		O
+XaLeap*cO.callback:		XAUESetDrawingElement(O)
+
+XaLeap*cN.wcClassName:		Command
+XaLeap*cN.label:		N
+XaLeap*cN.callback:		XAUESetDrawingElement(N)
+					
+XaLeap*cS.wcClassName:		Command
+XaLeap*cS.label:		S
+XaLeap*cS.callback:		XAUESetDrawingElement(S)
+
+XaLeap*cP.wcClassName:		Command
+XaLeap*cP.label:		P
+XaLeap*cP.callback:		XAUESetDrawingElement(P)
+
+
+
+!#####################################################################
+!#####################################################################
+!#####################################################################
+!#####################################################################
+!#####################################################################
+!#####################################################################
+!
+!	ATOM PROPERTIES TABLE
+!
+!
+
+XaLeap*aTableShell.wcClassName:	TopLevelShell
+XaLeap*aTableShell.wcChildren:	aTable
+XaLeap*aTableShell.wcCallback:	XATRegisterTable()
+
+
+XaLeap*aTable.wcClassName:		Paned
+XaLeap*aTable.wcChildren:		aMenu aStatus aInput aTitles aData
+XaLeap*aTable.internalBorderWidth:	3
+XaLeap*aTable*showGrip:		False
+XaLeap*aTable.orientation:		vertical
+
+!
+!	Define some GLOBAL variables
+!
+
+
+XaLeap*aTableShell*Toggle.preferredPaneSize:	100
+XaLeap*aTableShell*Toggle.justify:		left
+
+!
+!	Menu for ATOM properties table
+!
+XaLeap*aMenu.wcClassName:		Box
+XaLeap*aMenu.wcChildren:		aProps
+
+XaLeap*aProps.wcClassName:		MenuButton
+XaLeap*aProps.label:			Properties
+XaLeap*aProps.wcPopups:		maProps
+XaLeap*aProps.menuName:		maProps
+
+XaLeap*maProps.wcClassName:		SimpleMenu
+XaLeap*maProps.wcChildren:		oaAccept oaCancel
+
+XaLeap*oaAccept.wcClassName:		SmeBSB
+XaLeap*oaAccept.label:		Accept
+XaLeap*oaAccept.callback:		XATAccept()
+
+XaLeap*oaCancel.wcClassName:		SmeBSB
+XaLeap*oaCancel.label:		Cancel
+XaLeap*oaCancel.callback:		XATReject()
+
+!
+!	Status window for ATOM properties table
+!
+
+XaLeap*aStatus.wcClassName:		AsciiText
+XaLeap*aStatus.wcCallback:		XATRegisterStatusWidget
+XaLeap*aStatus*editType:		append
+XaLeap*aStatus.preferredPaneSize:	60
+XaLeap*aStatus*scrollVertical:	always
+XaLeap*aStatus.translations:		#override\
+		<Key>:		\n
+
+
+!
+!	Input window for ATOM properties
+!
+
+XaLeap*aInput.wcClassName:		AsciiText
+XaLeap*aInput.wcCallback:		XATRegisterInputWidget
+XaLeap*aInput*string:			Input
+XaLeap*aInput*editType:		edit
+
+
+!
+!	Titles for ATOM properties columns
+!
+XaLeap*aTitles.wcClassName:		ViewPort
+XaLeap*aTitles.wcChildren:		baTitles
+XaLeap*aTitles.forceBars:		True
+XaLeap*aTitles.allowVert:		True
+
+XaLeap*baTitles.wcClassName:		Box
+XaLeap*baTitles.wcChildren:		paTitles
+
+XaLeap*paTitles.wcClassName:		Paned
+XaLeap*paTitles.wcChildren:		faTitles
+XaLeap*paTitles*showGrip:		False
+
+XaLeap*faTitles.wcClassName:		Paned
+XaLeap*faTitles.orientation:		horizontal
+XaLeap*faTitles.wcChildren:		saName saType saCharge saElement \
+					saPerturb \
+					saPertName saPertType saPertCharge \
+					saPertElement 
+XaLeap*faTitles*displayCaret:		False
+XaLeap*faTitles*borderWidth:		1
+
+
+
+XaLeap*saName.wcClassName:	Toggle
+XaLeap*saName.label:	NAME
+XaLeap*saName.translations:	#replace\n
+
+XaLeap*saType.wcClassName:	Toggle
+XaLeap*saType.label:	TYPE
+XaLeap*saType.translations:	#replace\n
+
+XaLeap*saCharge.wcClassName:	Toggle
+XaLeap*saCharge.label:	CHARGE
+XaLeap*saCharge.translations:	#replace\n
+
+XaLeap*saElement.wcClassName:	Toggle
+XaLeap*saElement.label:	ELEMENT
+XaLeap*saElement.translations:	#replace\n
+
+XaLeap*saPerturb.wcClassName:	Toggle
+XaLeap*saPerturb.label:	PERTURB
+XaLeap*saPerturb.translations:	#replace\n
+
+XaLeap*saPertName.wcClassName:	Toggle
+XaLeap*saPertName.label:	PERT.NAME
+XaLeap*saPertName.translations:	#replace\n
+
+XaLeap*saPertType.wcClassName:	Toggle
+XaLeap*saPertType.label:	PERT.TYPE
+XaLeap*saPertType.translations:	#replace\n
+
+XaLeap*saPertCharge.wcClassName:	Toggle
+XaLeap*saPertCharge.label:	PERT.CHARGE
+XaLeap*saPertCharge.translations:	#replace\n
+
+XaLeap*saPertElement.wcClassName:	Toggle
+XaLeap*saPertElement.label:	PERT.ELEMENT
+XaLeap*saPertElement.translations:	#replace\n
+
+
+
+!
+!	Actual table for ATOM properties
+!
+
+XaLeap*aData.wcClassName:		ViewPort
+XaLeap*aData.wcChildren:		baData
+XaLeap*aData.forceBars:		True
+XaLeap*aData.allowVert:		True
+
+
+XaLeap*baData.wcClassName:		Box
+XaLeap*baData.wcChildren:		aRowCont
+
+
+XaLeap*aRowCont.wcClassName:		Paned
+XaLeap*aRowCont.wcCallback:		XATRegisterRowContainer()
+XaLeap*aRowCont*showGrip:		False
+
+
+XaLeap*aRow.wcClassName:		Paned
+XaLeap*aRow.orientation:		horizontal
+XaLeap*aRow.wcChildren:			aName aType aCharge aElement \
+					aPerturb \
+					aPertName aPertType aPertCharge aPertElement
+
+
+
+XaLeap*aName.wcClassName:		Toggle
+XaLeap*aName.wcCallback:		XATGetElement
+
+XaLeap*aType.wcClassName:		Toggle
+XaLeap*aType.wcCallback:		XATGetElement
+
+XaLeap*aCharge.wcClassName:		Toggle
+XaLeap*aCharge.wcCallback:		XATGetElement
+
+XaLeap*aElement.wcClassName:		Toggle
+XaLeap*aElement.wcCallback:		XATGetElement
+
+XaLeap*aPerturb.wcClassName:		Toggle
+XaLeap*aPerturb.wcCallback:		XATGetElement
+
+XaLeap*aPertName.wcClassName:		Toggle
+XaLeap*aPertName.wcCallback:		XATGetElement
+
+XaLeap*aPertType.wcClassName:		Toggle
+XaLeap*aPertType.wcCallback:		XATGetElement
+
+XaLeap*aPertCharge.wcClassName:		Toggle
+XaLeap*aPertCharge.wcCallback:		XATGetElement
+
+XaLeap*aPertElement.wcClassName:		Toggle
+XaLeap*aPertElement.wcCallback:		XATGetElement
+
+
+
+
+
+
+
+
+
+

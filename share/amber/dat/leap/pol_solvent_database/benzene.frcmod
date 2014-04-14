@@ -1,0 +1,25 @@
+remark goes here
+MASS
+ca      12.010     1.295
+ha       1.008     0.425
+
+BOND
+ca-ha   344.300     1.087
+ca-ca   478.400     1.387
+
+ANGLE
+ca-ca-ha    48.460   120.010
+ca-ca-ca    67.180   119.970
+
+DIHE
+ha-ca-ca-ha   1    3.625000000        180.000          2.000
+ca-ca-ca-ha   1    3.625000000        180.000          2.000
+ca-ca-ca-ca   1    3.625000000        180.000          2.000
+
+IMPROPER
+
+NONBON
+  ca          1.8807  0.1022
+  ha          1.5738  0.0060
+
+

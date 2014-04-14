@@ -1,0 +1,683 @@
+!#####################################################################
+!#####################################################################
+!#####################################################################
+!#####################################################################
+!#####################################################################
+!#####################################################################
+!
+!	Define how the unitEditor shell will look.
+!
+!
+
+!Type of unitEditor shell is according to UNITEDITORCLASS in xaUnitEditor.c
+
+XaLeap*unitEditor.wcClassName:		TopLevelShell
+XaLeap*unitEditor.iconPixmap:		icon
+XaLeap*unitEditor.iconMask:		icon_mask
+XaLeap*unitEditor.wcChildren:		menuStatusTank
+XaLeap*unitEditor.wcCallback:		XAUERegisterUnitEditor
+XaLeap*unitEditor*SimpleMenu*shadowWidth: 2
+
+
+
+XaLeap*ueAll.wcClassName:		Paned
+XaLeap*ueAll.wcChildren:		controls menuStatusTank
+XaLeap*ueAll.orientation:		horizontal
+XaLeap*ueAll.internalBorderWidth:	8
+
+XaLeap*menuStatusTank.wcClassName:	Form
+XaLeap*menuStatusTank.wcChildren:	ueMenu controls ueTank 
+XaLeap*menuStatusTank.defaultDistance:	0
+XaLeap*menuStatusTank.shadowWidth:	0
+
+MENU_BAR( ueMenu, bUnit bEdit bDisplay blank)
+
+
+XaLeap*controls.left:			ChainLeft
+XaLeap*controls.right:			ChainForm
+XaLeap*controls.top:			ChainTop
+XaLeap*controls.bottom:			ChainTop
+XaLeap*controls.fromVert:		^ueMenu
+
+XaLeap*ueTank.wcClassName:		Paned
+XaLeap*ueTank.wcChildren:		tankFrame statusFrame
+XaLeap*ueTank.horizontal:		vertical
+XaLeap*ueTank.left:			ChainLeft
+XaLeap*ueTank.right:			ChainForm
+XaLeap*ueTank.top:			ChainTop
+XaLeap*ueTank.bottom:			ChainForm
+XaLeap*ueTank.fromVert:			^controls
+XaLeap*ueTank.wcAfterChildren:		XAUEStateSelect()
+
+!
+!	bUnit menu
+!
+XaLeap*bUnit.wcClassName:		MenuButton
+XaLeap*bUnit.label:			Unit
+XaLeap*bUnit.wcPopups:			mUnit
+XaLeap*bUnit.menuName:			mUnit
+
+XaLeap*mUnit.wcClassName:		SimpleMenu
+XaLeap*mUnit.wcChildren:		cCheck cCharge 		\
+					menuLine			\
+					build addHBuild 	\
+					menuLine			\
+					cImport			\
+					menuLine			\
+					xaueClose
+
+!!
+!!  cCheck, cCharge, build, addHBuild, cClose
+!!
+MENUOPTION( cCheck, Check unit, XAUECheck)
+MENUOPTION( cCharge, Calculate net charge, XAUECharge)
+
+MENUOPTION( build,     Build,         XAUEBuildExternals)
+MENUOPTION( addHBuild, Add H & Build, XAUEAddHydrogensAndBuildExternals)
+
+MENUOPTION( xaueClose, Close, XAUEClose)
+
+!!
+!!	cImport
+!!
+MENUOPTION( cImport, Import unit, WcPopupCB(~~*importDialog))
+
+XaLeap*unitEditor.wcPopups:		importDialog
+
+CMD_DIALOG(
+	importDialog,
+	importUnitTop,
+	XAUEImport(~*importUnitAsciiText),
+	cImport,
+	xtcpXACInitializeList(~*importUnitList,U) \
+	WcSetValueCB((this.height:400) (this.width:400)),
+	xtcpXACDestroyList(~*importUnitList),
+	Import Unit )
+
+
+XaLeap*importUnitTop.wcClassName:	Form
+XaLeap*importUnitTop.wcChildren:	importUnitForm importLabel importUnit
+
+XaLeap*importUnitForm.top:		ChainTop
+XaLeap*importUnitForm.bottom:		ChainBottom
+XaLeap*importUnitForm.left:		ChainLeft
+XaLeap*importUnitForm.right:		ChainForm
+
+DEFAULT_LIST(
+	importUnitForm, 
+	importUnitList, 
+	xtcpXACCopyValueTo(~*importUnitAsciiText), 
+	Unit to import:)
+
+
+XaLeap*importLabel.wcClassName:		Label
+XaLeap*importLabel.label:		Import:
+XaLeap*importLabel.fromVert:		^importUnitForm
+XaLeap*importLabel.top:                 ChainBottom
+XaLeap*importLabel.left:                ChainLeft
+XaLeap*importLabel.bottom:              ChainForm
+XaLeap*importLabel.right:               ChainLeft
+
+!XaLeap*importUnit.wcClassName:	Label
+XaLeap*importUnit.label:
+!XaLeap*importUnit.width:		100
+XaLeap*importUnit.fromHoriz:		^importLabel
+XaLeap*importUnit.fromVert:		^importUnitForm
+XaLeap*importUnit.top:                  ChainBottom
+XaLeap*importUnit.bottom:               ChainForm
+XaLeap*importUnit.right:                ChainForm
+XaLeap*importUnit.left:                 ChainLeft
+
+SINGLE_LINE_FRAME_ASCIITEXT(importUnit)
+
+!
+!	Display menu
+!
+XaLeap*bDisplay.wcClass:	menuButtonWidgetClass
+XaLeap*bDisplay.label:		Display
+XaLeap*bDisplay.wcPopups:	mDisplay
+XaLeap*bDisplay.menuName:	mDisplay
+
+
+XaLeap*mDisplay.wcClass:	SimpleMenu
+XaLeap*mDisplay.wcChildren:	dispNames \
+				dispPertNames \
+				dispTypes \
+				dispPertTypes \
+				dispCharges \
+				dispResNames \
+				dispAxis \
+				dispBox
+
+XaLeap*mDisplay.SmeBSB.switched:	True
+XaLeap*mDisplay.SmeBSB.leftMargin:      28
+
+MENUOPTION( dispNames, 	   Names,           XAUEToggleShowNames)
+MENUOPTION( dispPertNames, Perturbed names, XAUEToggleShowPertNames)
+MENUOPTION( dispTypes,     Types,           XAUEToggleShowTypes)
+MENUOPTION( dispPertTypes, Perturbed types, XAUEToggleSHowPertTypes)
+MENUOPTION( dispCharges,   Charges,         XAUEToggleShowCharges)
+MENUOPTION( dispResNames,  Residue names,   XAUEToggleShowResidues)
+MENUOPTION( dispAxis,      Axes,            XAUEToggleSHowAxis)
+MENUOPTION( dispBox,       Periodic box,    XAUEToggleShowBox)
+
+
+XaLeap*bEdit.wcClass:		menuButtonWidgetClass
+XaLeap*bEdit.label:		Edit
+XaLeap*bEdit.wcPopups:		mEdit
+XaLeap*bEdit.menuName:		mEdit
+
+XaLeap*mEdit.wcClass:		simpleMenuWidgetClass
+XaLeap*mEdit.wcChildren: 		selRelax 	\
+					selEdit		\
+					selFlipChir	\
+					menuLine		\
+					selRings	\
+					selRes		\
+					selMols		\
+					menuLine 	\
+					selUnhideAll	\
+					selHide 	\
+					selHideAllBut 	\
+					menuLine 	\
+					markUnBuilt 	\
+					markBuilt
+
+MENUOPTION( selRelax, 	   Relax selection,     XAUERelaxSelectionInFramework)
+MENUOPTION( selEdit, 	   Edit selected atoms, XAUEEditSelectedAtoms)
+MENUOPTION( selFlipChir,   Flip chirality,      XAUESelectedAtomsFlipChirality)
+
+MENUOPTION( selRings, 	   Select Rings,        XAUESelectRings)
+MENUOPTION( selRes,        Select Residues,     XAUESelectResidues)
+MENUOPTION( selMols,       Select Molecules,    XAUESelectMolecules)
+
+MENUOPTION( selUnhideAll,  Show everything,     XAUEUnhideAll)
+MENUOPTION( selHide, 	   Hide selection,      XAUEHideSelection)
+MENUOPTION( selHideAllBut, Show selection only, XAUEHideAllButSelection)
+
+MENUOPTION( markUnBuilt,   Mark selection unbuilt,        XAUEMarkUnBuilt)
+MENUOPTION( markBuilt, 	   Mark selection built,          XAUEMarkBuilt)
+
+XaLeap*selEdit.wcCallback: XAUECheckUnitEdit()
+
+XaLeap*menuLine.wcClassName:	SmeLine
+
+
+!!
+!!	The widget that contains the display tank and the controls for
+!!	the display tank.
+!!
+XaLeap*tankControl.wcClass:		Paned
+XaLeap*tankControl.wcChildren:		controls statusTank
+XaLeap*tankControl.orientation:		horizontal
+
+
+!
+
+XaLeap*statusTank.wcClass:		Paned
+XaLeap*statusTank.wcChildren:		statusFrame tankFrame
+XaLeap*statusTank.orientation:		vertical
+XaLeap*statusTank.showGrip:		False
+
+XaLeap*statusFrame.wcClass:		Frame
+XaLeap*statusFrame.wcChildren:	        status
+XaLeap*statusFrame.frameType:		tack
+XaLeap*statusFrame.shadowWidth:	4
+XaLeap*statusFrame.vSpace:		0
+XaLeap*statusFrame.hSpace:		0
+XaLeap*statusFrame.preferredPaneSize:	60
+XaLeap*statusFrame.showGrip:		True
+XaLeap*statusFrame.skipAdjust:		True
+XaLeap*statusFrame.min:			40
+
+XaLeap*tankFrame.wcClass:		Frame
+XaLeap*tankFrame.wcChildren:	        tank
+XaLeap*tankFrame.frameType:		Sunken
+XaLeap*tankFrame.shadowWidth:		2
+XaLeap*tankFrame.vSpace:		0
+XaLeap*tankFrame.hSpace:		0
+XaLeap*tankFrame.preferredPaneSize:	500
+XaLeap*tankFrame.min:			100
+XaLeap*tankFrame.skipAdjust:		False
+
+
+!================================================================
+! IMPORTANT: You must add wcCallback to register the TextWidget with the
+!		application pass as the argument the name of the Action
+!		which is used to insert strings into the TextWidget
+!
+XaLeap*status.wcClass:			AsciiText
+XaLeap*status.wcCallback:		XAUEStatusWidgetRegister(insert-string)
+XaLeap*status*type:			string
+XaLeap*status*editType:			append
+XaLeap*status*scrollVertical:		always
+XaLeap*status*useStringInPlace:		False
+XaLeap*status.preferredPaneSize:	50
+XaLeap*status*Scrollbar.background:	TABLE_STATUS_BACKGROUND
+XaLeap*status*foreground:             	TABLE_STATUS_FOREGROUND
+XaLeap*status*font:                   	TABLE_STATUS_FONT
+XaLeap*status*editType:			append
+XaLeap*status.preferredPaneSize:	60
+XaLeap*status*scrollVertical:		always
+XaLeap*status.translations:		`#override'\
+					<Key>:      no-op() \n\
+					<Btn2Up>:   no-op() \n\
+					<Btn2Down>: no-op() \n
+
+
+!
+!	The widget for the display tank
+!
+! IMPORTANT: You must add wcCallback to register the TANK with the
+!		application
+XaLeap*tank.wcClass:		Tank
+XaLeap*tank.wcCallback:		XAUETankWidgetRegister()
+XaLeap*tank.background:		black
+XaLeap*tank.borderWidth:	0
+XaLeap*tank.preferredPaneSize:	500
+XaLeap*tank.height:		500
+XaLeap*tank.width:		650
+XaLeap*tank.translations:	#override\n\
+	Ctrl<Key>C	:	xtapActionSetCancelHit()\n\
+	<Btn1Down>	:	xtapActionButtonADown()\n\
+	<Btn1Up>	:	xtapActionButtonAUp()\n\
+	<Btn2Down>	:	xtapActionButtonBDown()\n\
+	<Btn2Up>	:	xtapActionButtonBUp()\n\
+	<Btn3Down>	:	xtapActionButtonCDown()\n\
+	<Btn3Up>	:	xtapActionButtonCUp()\n\
+	<Motion>	:	xtapActionMouseMotion()\n\
+	<KeyDown>Control_L:	xtapActionButtonBDown()\n\
+	<KeyDown>Control_R:	xtapActionButtonBDown()\n\
+	<KeyUp>Control_L:	xtapActionButtonBUp()\n\
+	<KeyUp>Control_R:	xtapActionButtonBUp()\n\
+	<KeyDown>Shift_L:	xtapActionButtonDDown()\n\
+	<KeyDown>Shift_R:	xtapActionButtonDDown()\n\
+	<KeyUp>Shift_L	:	xtapActionButtonDUp()\n\
+	<KeyUp>Shift_R	:	xtapActionButtonDUp()\n\
+	<Key>space	:	xtapActionCenterUnit()\n
+
+
+!
+!	The box widget for the control buttons and toggles
+!
+!		The background for the control panel should be a light
+!		green color.
+!
+define(CONTROL_SEPARATE, 20)
+
+XaLeap*controls.wcClassName:			Paned
+XaLeap*controls.showGrip:			False
+XaLeap*controls.internalBorderWidth:		0
+XaLeap*controls.wcChildren:			bSelect bDrawBox
+XaLeap*controls.orientation:			vertical
+XaLeap*controls*showGrip:			False
+
+XaLeap*controls.Frame.frameType:		chiseled
+
+XaLeap*controls*Command.justify:		left
+
+
+define( ORDINARY, FOREGROUND)
+define( ALARM, maroon)
+define( UNSET_TOG, SELECT_BACKGROUND)
+define( SET_TOG, khaki2)
+
+define( UNSET_MODE, WcSetValueCB( $1.background:SELECT_BACKGROUND))
+define( SET_MODE, 
+UNSET_MODE(/*cSelect) \ UNSET_MODE(/*cTwist) \ UNSET_MODE(/*cManipulate) \
+UNSET_MODE(/*cErase) \ UNSET_MODE(/*cDraw) \
+WcSetValueCB( (this.background:SET_TOG )))
+
+
+XaLeap*sStat.wcClassName:	Form
+XaLeap*sStat.wcChildren:	sStatMess sStatModeFrame
+
+XaLeap*sStatMess.wcClassName:	Label
+XaLeap*sStatMess.label:		Mode:
+XaLeap*sStatMess.font:		-*-times-medium-r-*-*-18-*-*-*-*-*-*-*
+XaLeap*sStatMess.borderWidth:	0
+XaLeap*sStatMess.justify:	centr
+XaLeap*sStatMess.top:		ChainTop
+XaLeap*sStatMess.left:		ChainLeft
+XaLeap*sStatMess.right:		ChainRight
+
+XaLeap*controls*sStatModeFrame.wcClassName:	Frame
+XaLeap*controls*sStatModeFrame.wcChildren:	sStatMode
+XaLeap*controls*sStatModeFrame.layoutPolicy:	single
+XaLeap*controls*sStatModeFrame.frameType:	sunken
+XaLeap*controls*sStatModeFrame.bottom:		ChainBottom
+XaLeap*controls*sStatModeFrame.fromVert:	^sStatMess
+XaLeap*controls*sStatModeFrame.left:		ChainLeft
+XaLeap*controls*sStatModeFrame.right:		ChainRight
+
+XaLeap*sStatMode.wcClassName:	Label
+XaLeap*sStatMode.foreground:	COMMAND_BACKGROUND
+XaLeap*sStatMode.background:	FOREGROUND
+XaLeap*sStatMode.font:		-*-times-*-r-*-*-14-*-*-*-*-*-*-*
+XaLeap*sStatMode.label:		SELECT
+
+!
+!	Select
+!
+!
+XaLeap*bSelect.wcClassName:	Frame
+XaLeap*bSelect.wcChildren:	paned
+XaLeap*bSelect.layoutPolicy:	single
+XaLeap*bSelect.captionOn:	True
+XaLeap*bSelect.captionLabel:	Manipulation
+XaLeap*bSelect.font:		SINGLE_TEXT_FONT
+XaLeap*bSelect.xFraction:	16
+XaLeap*bSelect.Command.top:	10
+XaLeap*bSelect.Command.bottom:	90
+XaLeap*bSelect.shadowWidth:	0
+
+XaLeap*bSelect.paned.wcClassName:		Paned
+XaLeap*bSelect.paned.orientation:		horizontal
+XaLeap*bSelect.paned*showGrip:			False
+XaLeap*bSelect.paned.internalBorderWidth:	0
+XaLeap*bSelect.paned.Toggle.background:		BACKGROUND
+XaLeap*bSelect.paned.Toggle.font:		DIALOG_BUTTON_FONT
+XaLeap*bSelect.paned.wcChildren:		cSelect \
+						cTwist \
+						cManipulate \
+						cErase \
+						cDraw \
+						blank
+
+XaLeap*controls*blank.wcClassName:	Simple
+XaLeap*controls*blank.background:	BACKGROUND
+
+
+define(UNIT_RADIO_GROUP, WcSetValueCB( this.radioGroup: ^$1))
+
+XaLeap*cSelect.wcClassName:	Toggle
+XaLeap*cSelect.label:		Select
+XaLeap*cSelect.callback:	XAUEStateSelect()
+XaLeap*cSelect.state:		True
+XaLeap*cSelect.left:		1
+XaLeap*cSelect.right:		3
+XaLeap*cSelect.armedColor:	TOGGLE_ARMED
+
+XaLeap*cTwist.wcClassName:	Toggle
+XaLeap*cTwist.wcCallback:	UNIT_RADIO_GROUP(cSelect)
+XaLeap*cTwist.label:		Twist
+XaLeap*cTwist.background:	UNSET_TOG
+XaLeap*cTwist.callback:         XAUEStateSelectTwist()
+XaLeap*cTwist.armedColor:	TOGGLE_ARMED
+
+XaLeap*cTwist.left:		4
+XaLeap*cTwist.right:		6
+
+XaLeap*cManipulate.wcClassName:	Toggle
+XaLeap*cManipulate.wcCallback:	UNIT_RADIO_GROUP(cSelect)
+XaLeap*cManipulate.label:	Move
+XaLeap*cManipulate.background:	UNSET_TOG
+XaLeap*cManipulate.left:	7
+XaLeap*cManipulate.right:	9
+XaLeap*cManipulate.callback:	XAUEStateSelectDragRotate()
+XaLeap*cManipulate.armedColor:	TOGGLE_ARMED
+
+
+
+!
+!	Erase
+!
+XaLeap*bErase.wcClassName:	Frame
+XaLeap*bErase.wcChildren:	cErase
+
+XaLeap*cErase.wcClassName:	Toggle
+XaLeap*cErase.wcCallback:	UNIT_RADIO_GROUP(cSelect)
+XaLeap*cErase.label:		Erase
+XaLeap*cErase.background:	UNSET_TOG
+XaLeap*cErase.callback:		XAUEStateErase()
+XaLeap*cErase.left:		10
+XaLeap*cErase.right:		12
+XaLeap*cErase.armedColor:	red
+
+!
+!	Draw
+!
+!
+XaLeap*bDraw.wcClassName:	Frame
+
+XaLeap*bDrawBox.wcClassName:	Frame
+XaLeap*bDrawBox.wcChildren:	box
+XaLeap*bDrawBox.captionOn:	True
+XaLeap*bDrawBox.captionLabel:	Elements
+XaLeap*bDrawBox.vSpace:		6
+XaLeap*bDrawBox.font:		SINGLE_TEXT_FONT
+XaLeap*bDrawBox.shadowWidth:	0
+
+XaLeap*bDrawBox.box.wcClassName:		Paned
+XaLeap*bDrawBox.box.orientation:		horizontal
+XaLeap*bDrawBox.box*showGrip:			False
+XaLeap*bDrawBox.box.Command.font: 		COMMAND_BUTTON_FONT
+XaLeap*bDrawBox.box.Command.highlightThickness: 0
+XaLeap*bDrawBox.box.Command.background:		BACKGROUND
+XaLeap*bDrawBox.box.wcChildren:			cC \
+						cH \
+						cO \
+						cN \
+						cS \
+						cP \
+						mmElementsFrame \
+						blank
+
+
+XaLeap*cDraw.wcClassName:	Toggle
+XaLeap*cDraw.wcCallback:	UNIT_RADIO_GROUP(cSelect)
+XaLeap*cDraw.label:		Draw
+XaLeap*cDraw.armedColor:	TOGGLE_ARMED
+XaLeap*cDraw.background:	UNSET_TOG
+XaLeap*cDraw.callback:		XAUEStateDraw()
+XaLeap*cDraw.left:		13
+XaLeap*cDraw.right:		15
+
+
+!
+!	Elements menu
+!
+XaLeap*mmElementsFrame.wcClassName:		Frame
+XaLeap*mmElementsFrame.wcChildren:		mmElements
+XaLeap*mmElementsFrame.background:		BACKGROUND
+XaLeap*mmElementsFrame.orientation:		Horizontal
+XaLeap*mmElementsFrame.allowResize:		True
+XaLeap*mmElementsFrame.resizeToPreferred:	True
+XaLeap*mmElementsFrame.frameType:		RAISED
+XaLeap*mmElementsFrame.shadowWidth:		2
+XaLeap*mmElementsFrame.vSpace:			0
+
+
+XaLeap*mmSelectedElements.wcClassName:	Label
+XaLeap*mmSelectedElements.font:		SINGLE_TEXT_FONT
+XaLeap*mmSelectedElements.background:	MENU_BACKGROUND
+XaLeap*mmSelectedElements.wcManaged:	False
+XaLeap*mmSelectedElements.showGrip:	False
+XaLeap*mmSelectedElements.resize:	True
+XaLeap*mmSelectedElements.allowResize:	True
+XaLeap*mmSelectedElements.resizeToPreferred:True
+
+
+
+XaLeap*mmElements.wcClassName:		MenuButton
+XaLeap*mmElements.label:		other elements
+XaLeap*mmElements.resize:		True
+XaLeap*mmElements.leftBitmap:		menu_sign
+XaLeap*mmElements.wcPopups:		mElements
+XaLeap*mmElements.menuName:		mElements
+XaLeap*mmElements.shadowWidth:		0
+XaLeap*mmElements.highlightThickness:	0
+XaLeap*mmElements.background:		BACKGROUND
+XaLeap*mmElements.font:			SINGLE_TEXT_FONT
+XaLeap*mmElements.showGrip:		False
+XaLeap*mmElements.fromHoriz:		^mmSelectedElements
+
+XaLeap*mElements.wcClassName:		SimpleMenu
+XaLeap*mElements.wcChildren:		eLp eH eHe \
+					eLi eBe eB  eC  eN  eO  eF  eNe \
+					eNa eMg eAl eSi eP  eS  eCl \
+					eK  eCa eMn eFe eCo eCu eZn eSe \
+					eBr eRb eAg eCs ePt ePb
+
+!
+!	Elements available on menu
+!
+define(SELECTED_ELEMENT, ``#''A88877)
+
+define( MELEMENT,
+XaLeap*e$1.wcClassName:	SmeBSB
+XaLeap*e$1.label:	$2
+XaLeap*e$1.callback:	XAUESetDrawingElement($1) \
+			WcSetValues(/*mmElements.label: ($2) other elements)\
+			WcSetValues(/*cDraw.state:	On) \
+			SetCommandColoursCB(/*mmElements SELECTED_ELEMENT)\
+			SetCommandColoursCB(/*mmElementsFrame SELECTED_ELEMENT)\
+			SetCommandColoursCB(/*cC BACKGROUND) \
+			SetCommandColoursCB(/*cH BACKGROUND) \
+			SetCommandColoursCB(/*cO BACKGROUND) \
+			SetCommandColoursCB(/*cN BACKGROUND) \
+			SetCommandColoursCB(/*cS BACKGROUND) \
+			SetCommandColoursCB(/*cP BACKGROUND)
+)
+
+MELEMENT(Lp,Lone pair)
+MELEMENT(H,Hydrogen)
+MELEMENT(He,Helium)
+
+MELEMENT(Li,Lithium)
+MELEMENT(Be,Beryllium)
+MELEMENT(B,Boron)
+MELEMENT(C,Carbon)
+MELEMENT(N,Nitrogen)
+MELEMENT(O,Oxygen)
+MELEMENT(F,Fluorine)
+MELEMENT(Ne,Neon)
+
+MELEMENT(Na,Sodium)
+MELEMENT(Mg,Magnesium)
+MELEMENT(Al,Aluminum)
+MELEMENT(Si,Silicon)
+MELEMENT(P,Phosphorous)
+MELEMENT(S,Sulphur)
+MELEMENT(Cl,Chlorine)
+MELEMENT(Ar,Argon)
+
+MELEMENT(K,Potassium)
+MELEMENT(Ca,Calcium)
+
+MELEMENT(Rb,Rubidium)
+MELEMENT(Cs,Cesium)
+
+MELEMENT(Mn,Manganese)
+MELEMENT(Fe,Iron)
+MELEMENT(Co,Cobalt)
+MELEMENT(Cu,Copper)
+MELEMENT(Zn,Zinc)
+MELEMENT(Se,Selenium)
+MELEMENT(Br,Bromine)
+MELEMENT(Ag,Silver)
+MELEMENT(Pt,Platinum)
+MELEMENT(Pb,Lead)
+
+!
+!	Elements that are available in the drawing box
+!	all of the time.
+!
+
+
+define(ELEMENT_SELECTED_COLOUR,SetCommandColoursCB(this SELECTED_ELEMENT))
+
+XaLeap*cC.wcClassName:	Command
+XaLeap*cC.label:	C
+XaLeap*cC.backgroud:	yellow
+XaLeap*cC.wcCallback:   ELEMENT_SELECTED_COLOUR
+
+XaLeap*cC.callback:	XAUESetDrawingElement(C)\
+			WcSetValues(/*cDraw.state:	On)\
+			WcSetValues(^*mmElements.label:other elements) \
+			SetCommandColoursCB(/*mmElements BACKGROUND)\
+			SetCommandColoursCB(/*mmElementsFrame BACKGROUND)\
+			ELEMENT_SELECTED_COLOUR \
+			SetCommandColoursCB(^cH BACKGROUND) \
+			SetCommandColoursCB(^cO BACKGROUND) \
+			SetCommandColoursCB(^cN BACKGROUND) \
+			SetCommandColoursCB(^cS BACKGROUND) \
+			SetCommandColoursCB(^cP BACKGROUND)
+
+
+XaLeap*cH.wcClassName:	Command
+XaLeap*cH.label:	H
+XaLeap*cH.callback:	XAUESetDrawingElement(H)\
+			WcSetValues(/*cDraw.state:	On)\
+			WcSetValues(^*mmElements.label:other elements) \
+			SetCommandColoursCB(/*mmElements BACKGROUND)\
+			SetCommandColoursCB(/*mmElementsFrame BACKGROUND)\
+			ELEMENT_SELECTED_COLOUR \
+			SetCommandColoursCB(^cC BACKGROUND) \
+			SetCommandColoursCB(^cO BACKGROUND) \
+			SetCommandColoursCB(^cN BACKGROUND) \
+			SetCommandColoursCB(^cS BACKGROUND) \
+			SetCommandColoursCB(^cP BACKGROUND)
+
+
+XaLeap*cO.wcClassName:	Command
+XaLeap*cO.label:	O
+XaLeap*cO.callback:	XAUESetDrawingElement(O)\
+			WcSetValues(/*cDraw.state:	On)\
+			WcSetValues(^*mmElements.label:other elements) \
+			SetCommandColoursCB(/*mmElements BACKGROUND)\
+			SetCommandColoursCB(/*mmElementsFrame BACKGROUND)\
+			ELEMENT_SELECTED_COLOUR \
+			SetCommandColoursCB(^cC BACKGROUND) \
+			SetCommandColoursCB(^cH BACKGROUND) \
+			SetCommandColoursCB(^cN BACKGROUND) \
+			SetCommandColoursCB(^cS BACKGROUND) \
+			SetCommandColoursCB(^cP BACKGROUND)
+
+
+XaLeap*cN.wcClassName:	Command
+XaLeap*cN.label:	N
+XaLeap*cN.callback:	XAUESetDrawingElement(N)\
+			WcSetValues(/*cDraw.state:	On)\
+			WcSetValues(^*mmElements.label:other elements) \
+			SetCommandColoursCB(/*mmElements BACKGROUND)\
+			SetCommandColoursCB(/*mmElementsFrame BACKGROUND)\
+			ELEMENT_SELECTED_COLOUR \
+			SetCommandColoursCB(^cC BACKGROUND) \
+			SetCommandColoursCB(^cH BACKGROUND) \
+			SetCommandColoursCB(^cO BACKGROUND) \
+			SetCommandColoursCB(^cS BACKGROUND) \
+			SetCommandColoursCB(^cP BACKGROUND)
+
+
+XaLeap*cS.wcClassName:	Command
+XaLeap*cS.label:	S
+XaLeap*cS.callback:	XAUESetDrawingElement(S)\
+			WcSetValues(/*cDraw.state:	On)\
+			WcSetValues(^*mmElements.label:other elements) \
+			SetCommandColoursCB(/*mmElements BACKGROUND)\
+			SetCommandColoursCB(/*mmElementsFrame BACKGROUND)\
+			ELEMENT_SELECTED_COLOUR \
+			SetCommandColoursCB(^cC BACKGROUND) \
+			SetCommandColoursCB(^cH BACKGROUND) \
+			SetCommandColoursCB(^cO BACKGROUND) \
+			SetCommandColoursCB(^cN BACKGROUND) \
+			SetCommandColoursCB(^cP BACKGROUND)
+
+
+XaLeap*cP.wcClassName:	Command
+XaLeap*cP.label:	P
+XaLeap*cP.callback:	XAUESetDrawingElement(P)\
+			WcSetValues(/*cDraw.state:	On)\
+			WcSetValues(^*mmElements.label:other elements) \
+			SetCommandColoursCB(/*mmElements BACKGROUND)\
+			SetCommandColoursCB(/*mmElementsFrame BACKGROUND)\
+			ELEMENT_SELECTED_COLOUR \
+			SetCommandColoursCB(^cC BACKGROUND) \
+			SetCommandColoursCB(^cH BACKGROUND) \
+			SetCommandColoursCB(^cO BACKGROUND) \
+			SetCommandColoursCB(^cN BACKGROUND) \
+			SetCommandColoursCB(^cS BACKGROUND)
+
+
+

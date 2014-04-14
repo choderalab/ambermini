@@ -1,0 +1,22 @@
+#!/usr/bin/perl
+
+#  cycle through C files, determine which headers are included;
+#      the "used" array eliminates duplicate enties
+
+
+foreach $file ( <*.c> ){
+
+	($fileroot) = $file =~ /(.+)\.c$/;
+	open( F, "$file" ) || die "unable to open $file\n";
+	while( <F> ){
+
+		next unless /^# *include/;
+		($head,$included) = /(# *include) +"(.*)"/;
+		next if $included eq "mpif.h";
+		if( !defined $used{ $fileroot,$included } ){
+			printf "$fileroot.o: $included\n";
+		}
+		$used{ $fileroot,$included } = 1;
+
+	}
+}

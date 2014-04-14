@@ -1,0 +1,22 @@
+!##########################################################################
+!
+!		IMPROPER TORSION PARAMETERS TABLE
+!
+!
+TABLE_SHELL(	iParm,
+		Improper torsion parameters table,
+		SetSensitiveCB(*improperParms),
+		True,
+		edit,
+		TYPE_W TYPE_W TYPE_W TYPE_W DOUBLE_W DOUBLE_W DOUBLE_W DESC_W )
+
+!
+!       Titles for Torsion Parameters columns
+!
+TITLE_INSIDE(	iParmDataTitles,
+		TYPE_W TYPE_W TYPE_W TYPE_W DOUBLE_W DOUBLE_W DOUBLE_W DESC_W ,
+		8,
+		TYPE_1 TYPE_2 TYPE_3 TYPE_4 N Kp P0 DESCRIPTION )
+!
+!
+!##########################################################################

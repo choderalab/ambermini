@@ -1,0 +1,1 @@
+/thr/slater/amber5/exe.R10000/parm.CHARMM -i prmin -o prmout -f ../parm22.pro.dat -O

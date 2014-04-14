@@ -1,0 +1,103 @@
+
+
+
+
+
+XaUtilMessageFilter.title:		xaUtilMessageFilter
+XaUtilMessageFilter.wcChildren:	paned
+XaUtilMessageFilter.wcPopups:		textShell
+XaUtilMessageFilter.height:		600
+
+XaUtilMessageFilter*Command.background:	Red
+XaUtilMessageFilter*Toggle.background:		Green
+
+
+XaUtilMessageFilter*paned.wcClassName:		Paned
+XaUtilMessageFilter*paned.wcChildren:		cmdBox vP
+
+XaUtilMessageFilter*cmdBox.wcClassName:	Box
+XaUtilMessageFilter*cmdBox.wcChildren:		rebuild save quit
+
+XaUtilMessageFilter*rebuild.wcClassName:	Command
+XaUtilMessageFilter*rebuild.label:		Rebuild Message list
+XaUtilMessageFilter*rebuild.callback:		XUMFRebuildMessBuffer() WcPopupCB(~*textShell)
+
+XaUtilMessageFilter*save.wcClassName:		Command
+XaUtilMessageFilter*save.label:		Save ON functions
+
+XaUtilMessageFilter*quit.wcClassName:		Command
+XaUtilMessageFilter*quit.label:		Quit
+XaUtilMessageFilter*quit.callback:		WcDestroyCB(~)
+
+XaUtilMessageFilter*vP.wcClassName:		ViewPort
+XaUtilMessageFilter*vP.wcChildren:		fileBox
+XaUtilMessageFilter*vP.allowVert:		True
+
+XaUtilMessageFilter*fileBox.wcClassName:	Paned
+XaUtilMessageFilter*fileBox.wcCallback:	XUMFFileContainerWidgetRegister()
+XaUtilMessageFilter*fileBox*showGrip:		False
+
+XaUtilMessageFilter*file.wcClassName:		Command
+XaUtilMessageFilter*file.wcCallback:		XUMFFileWidgetRegister()
+XaUtilMessageFilter*file.callback:		XUMFFilePopup()
+XaUtilMessageFilter*file.justify:		left
+
+XaUtilMessageFilter*funcShell.wcClassName:	TopLevelShell
+XaUtilMessageFilter*funcShell.wcChildren:	funcPaned
+XaUtilMessageFilter*funcShell.wcCallback:	XUMFFunctionShellWidgetRegister()
+
+XaUtilMessageFilter*funcPaned.wcClassName:	Paned
+XaUtilMessageFilter*funcPaned.wcChildren:	funcCmd funcVP
+
+XaUtilMessageFilter*funcCmd.wcClassName:	Box
+XaUtilMessageFilter*funcCmd.wcChildren:	funcSetAll funcResetAll funcClose
+
+XaUtilMessageFilter*funcClose.wcClassName:	Command
+XaUtilMessageFilter*funcClose.label:		Popdown window
+XaUtilMessageFilter*funcClose.callback:	WcPopdownCB(~)
+
+XaUtilMessageFilter*funcSetAll.wcClassName:	Command
+XaUtilMessageFilter*funcSetAll.label:		Set all
+XaUtilMessageFilter*funcSetAll.callback:	XUMFSetAllWithin(~*funcBox)
+
+XaUtilMessageFilter*funcResetAll.wcClassName:	Command
+XaUtilMessageFilter*funcResetAll.label:	Reset all
+XaUtilMessageFilter*funcResetAll.callback:	XUMFResetAllWithin(~*funcBox)
+
+XaUtilMessageFilter*funcVP.wcClassName:	ViewPort
+XaUtilMessageFilter*funcVP.wcChildren:		funcBox
+XaUtilMessageFilter*funcVP.allowVert:		True
+
+XaUtilMessageFilter*funcBox.wcClassName:	Paned
+XaUtilMessageFilter*funcBox.wcCallback:	XUMFToggleContainerWidgetRegister()
+XaUtilMessageFilter*funcBox*showGrip:		False
+
+XaUtilMessageFilter*function.wcClassName:	Toggle
+XaUtilMessageFilter*function.wcCallback:	XUMFToggleWidgetRegister()
+XaUtilMessageFilter*function.callback:		XUMFToggleNotify()
+XaUtilMessageFilter*function.justify:		left
+
+
+
+
+XaUtilMessageFilter*textShell.wcClassName:	TopLevelShell
+XaUtilMessageFilter*textShell.wcChildren:	tPaned
+XaUtilMessageFilter*textShell.height:		500
+XaUtilMessageFilter*textShell.width:		500
+
+XaUtilMessageFilter*tPaned.wcClassName:	Paned
+XaUtilMessageFilter*tPaned.wcChildren:		tBox text
+
+XaUtilMessageFilter*tBox.wcClassName:		Box
+XaUtilMessageFilter*tBox.wcChildren:		tPopdown
+
+XaUtilMessageFilter*tPopdown.wcClassName:	Command
+XaUtilMessageFilter*tPopdown.label:		Popdown
+XaUtilMessageFilter*tPopdown.callback:		WcPopdownCB(~)
+
+XaUtilMessageFilter*text.wcClassName:		AsciiText
+XaUtilMessageFilter*text.wcCallback:		XUMFTextWidgetRegister()
+XaUtilMessageFilter*text.scrollHorizontal:	WhenNeeded
+XaUtilMessageFilter*text.scrollVertical:	Always
+
+

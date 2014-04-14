@@ -1,0 +1,1364 @@
+!! 
+!!	The XaLeap WCL (Widget Creation Library) resource file is
+!!	used by xaLeap to define widgets == windows. It is built
+!!	from a set of .rm4 files in src/leap/src/leap/. At runtime,
+!!	its location and name are specified by the XENVIRONMENT 
+!!	variable in the 'xleap' shell script. Its name is also
+!!	apparently specified in xaLeapc.c by capitalizing the first
+!!	letter of the program name (xaLeap). However, changing the
+!!	name in xleap and xaLeapc.c is not sufficient to get a
+!!	differently-named file loaded. The reason for this remains
+!!	a mystery that is buried either in Wc/WcCreate.c or in
+!!	Xt itself.
+!!
+!! ----------------------------------------------------------------
+!!
+!! 	File: xaLeap.rm4
+!! 
+!! 	Description:
+!! 		This file describes the xaLeap user interface.
+!! 		It is a WCL (Widget Creation Library) resource file.
+!! 		This is an file that contains 'm4' macros.
+!! 
+
+
+!! xaLeap.graphicMode:	offscreen
+
+!! 
+!! 	Colors
+!! 
+ifdef(`MONOCHROME',`
+!!  Monochrome mode
+define( INPUT_FOREGROUND, 		Black)
+define( INPUT_BACKGROUND, 		White)
+define( COMMAND_BACKGROUND, 		White)
+define( BACKGROUND, 			White)
+define( TABLE_BACKGROUND, 		White)
+define( DIALOG_BACKGROUND, 		White)
+define( TABLE_CONTAINER_BACKGROUND, 	White)
+define( TABLE_CELL_BACKGROUND, 		White)
+define( TABLE_TITLE_BACKGROUND, 	Black)
+define( TABLE_TITLE_FOREGROUND, 	White)
+define( TABLE_STATUS_BACKGROUND, 	White)
+define( TABLE_STATUS_FOREGROUND, 	Black)
+define( TABLE_ROW_FOREGROUND,		Black)
+define( TABLE_COLUMN_FOREGROUND,	Black)
+define( MENU_BACKGROUND,	 	White)
+define( MENU_FOREGROUND,      		Black)
+define( BACKGROUND_2, 			White)
+define( BACKGROUND_3, 			White)
+define( BACKGROUND_4, 			White)
+define( BACKGROUND_5, 			White)
+define( FOREGROUND, 			Black)
+define( BORDER, 			Black)
+define( INTERNAL_BORDER_WIDTH, 		1)
+define( GRAPHICS, 			Monochrome)
+define( SELECT_BACKGROUND,		White)
+define( TOGGLE_ARMED,			Black)
+',`
+!!  Color mode
+define( INPUT_FOREGROUND, 		`#202020')
+define( INPUT_BACKGROUND, 		`#A5B8D1')
+define( COMMAND_BACKGROUND, 		`#A5B8D1')
+define( BACKGROUND, 			Tan)
+define( TABLE_BACKGROUND, 		`#A5B8D1')
+define( DIALOG_BACKGROUND, 		Tan)
+define( TABLE_CONTAINER_BACKGROUND, 	DeepSkyBlue4)
+define( TABLE_CELL_BACKGROUND, 		khaki)
+define( TABLE_TITLE_BACKGROUND, 	DeepSkyBlue4)
+define( TABLE_TITLE_FOREGROUND, 	gray83)
+define( TABLE_STATUS_BACKGROUND, 	Tan)
+define( TABLE_STATUS_FOREGROUND, 	maroon)
+define( TABLE_ROW_FOREGROUND,		black)
+define( TABLE_COLUMN_FOREGROUND,	maroon)
+define( MENU_BACKGROUND, 		`#A88877')
+define( MENU_FOREGROUND, 		Black)
+define( BACKGROUND_2, 			`#6A4734')
+define( BACKGROUND_3, 			`#8A5C43')
+define( BACKGROUND_4, 			`#AA7A60')
+define( BACKGROUND_5, 			`#C4A391')
+define( FOREGROUND, 			Black)
+define( BORDER, 			White)
+define( INTERNAL_BORDER_WIDTH, 		0)
+define( GRAPHICS, 			Color)
+define( SELECT_BACKGROUND,		LightBlue3)
+define( TOGGLE_ARMED,			Yellow)
+')
+
+define( DIALOG_LABEL_FONT,	-*-helvetica-medium-o-*-*-14-*-*-*-*-*-*-*)
+define( DIALOG_INFO_FONT,	-*-helvetica-medium-r-*-*-18-*-*-*-*-*-*-*)
+define( DIALOG_BUTTON_FONT,	-*-helvetica-bold-r-*-14-*)
+define( TABLE_FONT,		-*-helvetica-medium-r-*-*-14-*-*-*-p-*-*-*)
+define( TABLE_TITLE_FONT,	-*-helvetica-bold-r-*-*-14-*-*-*-*-*-*-*)
+define( TABLE_STATUS_FONT,	-*-times-medium-r-*-*-14-*-*-*-*-*-*-*)
+define( MENU_BUTTON_FONT,	-*-helvetica-medium-o-*-*-18-*-*-*-*-*-*-*)
+define( MENU_ITEM_FONT,		-*-helvetica-bold-r-*-14-*)
+define( SINGLE_TEXT_FONT,	-*-courier-bold-r-*-*-14-*-*-*-*-*-*-*)
+define( COMMAND_BUTTON_FONT,	-*-times-bold-r-*-*-14-*-*-*-*-*-*-*)
+define( LABEL_BUTTON_FONT,	-*-courier-medium-r-*-*-14-*-*-*-*-*-*-*)
+
+!! 
+!! 	Graphics mode = GRAPHICS
+!! 
+
+define(DIALOGSHELL,TransientShell)
+define(LIST_HEIGHT,200)
+define(LIST_WIDTH,400)
+
+!! 
+!! 	Macro to define menu options
+!! 
+define( MENUOPTION,
+XaLeap*$1.wcClassName:		SmeBSB
+XaLeap*$1.label:		$2
+XaLeap*$1.callback:		$3
+)
+
+
+define(NO_BORDER,
+XaLeap*$1.borderWidth:		0
+)
+
+define(EMPTY, )
+
+
+!! 
+!! 	Macro to define Radio Groups
+!! 
+
+define( RADIO_GROUP, WcSetValueCB( XaLeap*$1.radioGroup: ^$2))
+
+!! 
+!! 	Define a popup box for unfinished features
+!! 
+
+define( POPUP_STUB,
+XaLeap*$1.wcClassName:	DIALOGSHELL
+XaLeap*$1.wcChildren:	stCommand
+
+XaLeap*$1.stCommand.wcClassName:	Command
+XaLeap*$1.stCommand.callback:		WcPopdownCB(^)
+XaLeap*$1.stCommand.label:		This feature is not finished
+)
+
+!! ##########################################################
+!! 
+!! 	DIALOG_QUEST_OK_CANCEL($1,$2,$3,$4,$5,$6,$7,$8)
+!! 
+!! 	$1 - name of Dialog
+!! 	$2 - Label of Quest
+!! 	$3 - command to execute on OK
+!! 	$4 - commands to execute at popup
+!! 	$5 - commands to execute at popdown
+!! 	$6 - Title of dialog box
+!!      $7 - ok button name 
+!!      $8 - cansel button name
+!!
+define( DIALOG_QUEST_OK_CANCEL,
+XaLeap*$1.wcClassName:  			DIALOGSHELL
+XaLeap*$1.wcChildren:   			dialogPaned
+XaLeap*$1.wcCallback:				SetParentShellAsGroup(/)
+XaLeap*$1.title:				XLEaP: $6
+XaLeap*$1.popupCallback:			xtcpXACReplaceShell() $4
+XaLeap*$1.popdownCallback:    			$5
+XaLeap*$1*Command.font:				DIALOG_BUTTON_FONT
+XaLeap*$1*Command.background:			COMMAND_BACKGROUND
+XaLeap*$1*Label.font:				DIALOG_LABEL_FONT
+XaLeap*$1*background:           		DIALOG_BACKGROUND
+
+
+XaLeap*$1*Form.defaultDistance:				12
+
+XaLeap*$1.dialogPaned.wcClassName: 			Paned
+XaLeap*$1.dialogPaned.internalBorderWidth:		INTERNAL_BORDER_WIDTH
+XaLeap*$1.dialogPaned*borderWidth:			0
+XaLeap*$1.dialogPaned.shadowWidth:			2
+XaLeap*$1.dialogPaned*skipAdjust:			True
+XaLeap*$1.dialogPaned.orientation:			vertical
+XaLeap*$1.dialogPaned.wcChildren:  			form_Label \
+							separator  \
+							formCommand
+
+XaLeap*$1.dialogPaned.form_Label.showGrip:		False
+XaLeap*$1.dialogPaned.separator.showGrip:		False
+XaLeap*$1.dialogPaned.formCommand.showGrip:		False
+
+XaLeap*$1.dialogPaned.form_Label.wcClassName:		Form
+XaLeap*$1.dialogPaned.form_Label.wcChildren:		lbl
+XaLeap*$1.dialogPaned.form_Label.skipAdjust:		False
+XaLeap*$1.dialogPaned.form_Label.min:			60
+
+XaLeap*$1.dialogPaned.form_Label.lbl.wcClassName: 	Label
+XaLeap*$1.dialogPaned.form_Label.lbl.wcCallback:   \
+				xtcpXATDefineBitmap( leftBitmap,exclaim)
+XaLeap*$1.dialogPaned.form_Label.lbl.font:		DIALOG_INFO_FONT
+XaLeap*$1.dialogPaned.form_Label.lbl.label:       	$2
+XaLeap*$1.dialogPaned.form_Label.lbl.left:		ChainLeft
+XaLeap*$1.dialogPaned.form_Label.lbl.right:		ChainRight
+XaLeap*$1.dialogPaned.form_Label.lbl.shadowWidth:	0
+XaLeap*$1.dialogPaned.form_Label.lbl.skipAdjust:	False
+
+XaLeap*$1.dialogPaned.separator.wcClassName:		Separator
+XaLeap*$1.dialogPaned.separator.height:			10
+XaLeap*$1.dialogPaned.separator.shadowWidth:		0
+XaLeap*$1.dialogPaned.separator.width:			1
+
+
+XaLeap*$1.dialogPaned.formCommand.wcClassName:		Frame
+XaLeap*$1.dialogPaned.formCommand.borderWidth:		0
+XaLeap*$1.dialogPaned.formCommand.layoutPolicy:		fraction
+XaLeap*$1.dialogPaned.formCommand.wcChildren:  		yes no
+XaLeap*$1.dialogPaned.formCommand.shadowWidth:		0
+
+XaLeap*$1.dialogPaned.formCommand.yes.wcClassName: 	Command
+XaLeap*$1.dialogPaned.formCommand.yes.label:		$7
+XaLeap*$1.dialogPaned.formCommand.yes.callback:		$3 WcPopdownCB(~)
+XaLeap*$1.dialogPaned.formCommand.yes.top:		10
+XaLeap*$1.dialogPaned.formCommand.yes.bottom:		90
+XaLeap*$1.dialogPaned.formCommand.yes.left:		20
+XaLeap*$1.dialogPaned.formCommand.yes.right:		40
+
+XaLeap*$1.dialogPaned.formCommand.no.wcClassName:	Command
+XaLeap*$1.dialogPaned.formCommand.no.label:		$8
+XaLeap*$1.dialogPaned.formCommand.no.callback:		WcPopdownCB(~)
+XaLeap*$1.dialogPaned.formCommand.no.top:		10
+XaLeap*$1.dialogPaned.formCommand.no.bottom:		90
+XaLeap*$1.dialogPaned.formCommand.no.left:		60
+XaLeap*$1.dialogPaned.formCommand.no.right:		80
+
+)
+
+!! ##########################################################
+!! 
+!! 	DIALOG_QUEST_LONG_OK_CANCEL($1,$2,$3,$4,$5,$6,$7,$8)
+!! 
+!! 	$1 - name of Dialog
+!! 	$2 - Label of Quest
+!! 	$3 - command to execute on OK
+!! 	$4 - commands to execute at popup
+!! 	$5 - commands to execute at popdown
+!! 	$6 - Title of dialog box
+!!      $7 - ok button name 
+!!      $8 - cansel button name
+!!
+define( DIALOG_QUEST_LONG_OK_CANCEL,
+XaLeap*$1.wcClassName:  			DIALOGSHELL
+XaLeap*$1.wcChildren:   			dialogPaned
+XaLeap*$1.wcCallback:				SetParentShellAsGroup(/)
+XaLeap*$1.title:				XLEaP: $6
+XaLeap*$1.popupCallback:			xtcpXACReplaceShell() $4
+XaLeap*$1.popdownCallback:    			$5
+XaLeap*$1*Command.font:				DIALOG_BUTTON_FONT
+XaLeap*$1*Command.background:			COMMAND_BACKGROUND
+XaLeap*$1*Label.font:				DIALOG_LABEL_FONT
+XaLeap*$1*background:           		DIALOG_BACKGROUND
+
+
+XaLeap*$1*Form.defaultDistance:				12
+
+XaLeap*$1.dialogPaned.wcClassName: 			Paned
+XaLeap*$1.dialogPaned.internalBorderWidth:		INTERNAL_BORDER_WIDTH
+XaLeap*$1.dialogPaned*borderWidth:			0
+XaLeap*$1.dialogPaned.shadowWidth:			2
+XaLeap*$1.dialogPaned*skipAdjust:			True
+XaLeap*$1.dialogPaned.orientation:			vertical
+XaLeap*$1.dialogPaned.wcChildren:  			form_Label \
+							separator  \
+							formCommand
+
+XaLeap*$1.dialogPaned.form_Label.showGrip:		False
+XaLeap*$1.dialogPaned.separator.showGrip:		False
+XaLeap*$1.dialogPaned.formCommand.showGrip:		False
+
+XaLeap*$1.dialogPaned.form_Label.wcClassName:		Form
+XaLeap*$1.dialogPaned.form_Label.wcChildren:		lbl
+XaLeap*$1.dialogPaned.form_Label.skipAdjust:		False
+XaLeap*$1.dialogPaned.form_Label.min:			60
+
+XaLeap*$1.dialogPaned.form_Label.lbl.wcClassName: 	Label
+XaLeap*$1.dialogPaned.form_Label.lbl.wcCallback:   \
+				xtcpXATDefineBitmap( leftBitmap,exclaim)
+XaLeap*$1.dialogPaned.form_Label.lbl.font:		DIALOG_INFO_FONT
+XaLeap*$1.dialogPaned.form_Label.lbl.label:       	$2
+XaLeap*$1.dialogPaned.form_Label.lbl.left:		ChainLeft
+XaLeap*$1.dialogPaned.form_Label.lbl.right:		ChainRight
+XaLeap*$1.dialogPaned.form_Label.lbl.shadowWidth:	0
+XaLeap*$1.dialogPaned.form_Label.lbl.skipAdjust:	False
+
+XaLeap*$1.dialogPaned.separator.wcClassName:		Separator
+XaLeap*$1.dialogPaned.separator.height:			10
+XaLeap*$1.dialogPaned.separator.shadowWidth:		0
+XaLeap*$1.dialogPaned.separator.width:			1
+
+
+XaLeap*$1.dialogPaned.formCommand.wcClassName:		Frame
+XaLeap*$1.dialogPaned.formCommand.borderWidth:		0
+XaLeap*$1.dialogPaned.formCommand.layoutPolicy:		fraction
+XaLeap*$1.dialogPaned.formCommand.wcChildren:  		yes no
+XaLeap*$1.dialogPaned.formCommand.shadowWidth:		0
+XaLeap*$1.dialogPaned.formCommand.Command.internalWidth:4
+XaLeap*$1.dialogPaned.formCommand.Command.internalHeight:4
+
+XaLeap*$1.dialogPaned.formCommand.yes.wcClassName: 	Command
+XaLeap*$1.dialogPaned.formCommand.yes.label:		$7
+XaLeap*$1.dialogPaned.formCommand.yes.callback:		$3 WcPopdownCB(~)
+XaLeap*$1.dialogPaned.formCommand.yes.top:		10
+XaLeap*$1.dialogPaned.formCommand.yes.bottom:		90
+XaLeap*$1.dialogPaned.formCommand.yes.left:		4
+XaLeap*$1.dialogPaned.formCommand.yes.right:		48
+
+XaLeap*$1.dialogPaned.formCommand.no.wcClassName:	Command
+XaLeap*$1.dialogPaned.formCommand.no.label:		$8
+XaLeap*$1.dialogPaned.formCommand.no.callback:		WcPopdownCB(~)
+XaLeap*$1.dialogPaned.formCommand.no.top:		10
+XaLeap*$1.dialogPaned.formCommand.no.bottom:		90
+XaLeap*$1.dialogPaned.formCommand.no.left:		52
+XaLeap*$1.dialogPaned.formCommand.no.right:		98
+
+)
+
+!! ##########################################################
+!! 
+!! 	DIALOG_QUEST_YES_NO_CANCEL($1,$2,$3)
+!! 
+!! 	$1 - name of Dialog
+!! 	$2 - Label of Quest
+!! 	$3 - command to execute on Yes
+!!        $4 - command to execute on No
+!! 	$5 - commands to execute at popup
+!! 	$6 - commands to execute at popdown
+!! 	$7 - Title of dialog box
+!! 
+define( DIALOG_QUEST_YES_NO_CANCEL,
+XaLeap*$1.wcClassName:  	DIALOGSHELL
+XaLeap*$1.wcChildren:   	$1_Dlog_Paned
+XaLeap*$1.wcCallback:		SetParentShellAsGroup(/)
+XaLeap*$1.title:		XLEaP: $7
+XaLeap*$1.popupCallback:	xtcpXACReplaceShell() $5
+XaLeap*$1.popdownCallback:    	$6
+XaLeap*$1*Command*font:		DIALOG_BUTTON_FONT
+XaLeap*$1*Label.font:		DIALOG_LABEL_FONT
+XaLeap*$1*background:           DIALOG_BACKGROUND
+
+
+XaLeap*$1*Form.defaultDistance:			12
+
+XaLeap*$1_Dlog_Paned.wcClassName: 		Paned
+XaLeap*$1_Dlog_Paned.internalBorderWidth:	INTERNAL_BORDER_WIDTH
+XaLeap*$1_Dlog_Paned*borderWidth:		0
+XaLeap*$1_Dlog_Paned.shadowWidth:		2
+XaLeap*$1_Dlog_Paned*skipAdjust:		True
+XaLeap*$1_Dlog_Paned.orientation:		vertical
+XaLeap*$1_Dlog_Paned*resizeToPrefered:		True
+XaLeap*$1_Dlog_Paned.wcChildren:  		$1_Dlog_Form_Label \
+						$1_Dlog_Separator \
+						$1_Dlog_Form_Command
+
+XaLeap*$1_Dlog_Paned.$1_Dlog_Form_Label.showGrip:	False
+XaLeap*$1_Dlog_Paned.$1_Dlog_Separator.showGrip:	False
+XaLeap*$1_Dlog_Paned.$1_Dlog_Form_Command.showGrip:	False
+
+XaLeap*$1_Dlog_Form_Label.wcClassName:		Form
+XaLeap*$1_Dlog_Form_Label.wcChildren:		lbl
+
+
+XaLeap*$1_Dlog_Form_Label.lbl.wcClassName: 	Label
+XaLeap*$1_Dlog_Form_Label.lbl.wcCallback:   \
+				xtcpXATDefineBitmap( leftBitmap,exclaim)
+XaLeap*$1_Dlog_Form_Label.lbl.font:		DIALOG_INFO_FONT
+XaLeap*$1_Dlog_Form_Label.lbl.label:       	$2
+XaLeap*$1_Dlog_Form_Label.lbl.left:		ChainLeft
+XaLeap*$1_Dlog_Form_Label.lbl.right:		ChainRight
+XaLeap*$1_Dlog_Form_Label.lbl.shadowWidth:	0
+
+XaLeap*$1_Dlog_Separator.wcClassName:		Separator
+XaLeap*$1_Dlog_Separator.height:		10
+XaLeap*$1_Dlog_Separator.width:			1
+XaLeap*$1_Dlog_Separator.shadowWidth:		0
+
+XaLeap*$1_Dlog_Form_Command.wcClassName: 	Form
+XaLeap*$1_Dlog_Form_Command.borderWidth:	0
+XaLeap*$1_Dlog_Form_Command.max:		50
+XaLeap*$1_Dlog_Form_Command.min:		30
+XaLeap*$1_Dlog_Form_Command*Command.width:	60
+XaLeap*$1_Dlog_Form_Command.wcChildren:  	yes not no
+
+XaLeap*$1_Dlog_Form_Command.yes.wcClassName: 	Command
+XaLeap*$1_Dlog_Form_Command.yes.left:		ChainLeft
+XaLeap*$1_Dlog_Form_Command.yes.label:		Yes
+XaLeap*$1_Dlog_Form_Command.yes.callback:	$3 WcPopdownCB(~)
+
+XaLeap*$1_Dlog_Form_Command.not.wcClassName: 	Command
+XaLeap*$1_Dlog_Form_Command.not.label:		No
+XaLeap*$1_Dlog_Form_Command.not.fromHoriz:	^yes
+XaLeap*$1_Dlog_Form_Command.not.callback:	$4 WcPopdownCB(~)
+
+XaLeap*$1_Dlog_Form_Command.no.wcClassName:	Command
+XaLeap*$1_Dlog_Form_Command.no.right:	ChainRight
+XaLeap*$1_Dlog_Form_Command.no.fromHoriz:	^not
+XaLeap*$1_Dlog_Form_Command.no.label:	Cancel
+XaLeap*$1_Dlog_Form_Command.no.callback:	WcPopdownCB(~)
+
+)
+
+!! 
+!! 
+!! 	This macro creates a dialog box containing Widgets
+!! 	defined by the user and Accept and Cancel buttons.
+!! 
+!! 	The dialog executes a command when the user selects Accept.
+!! 
+!! 	DIALOG_BOX($1,$2,$3,$4,$5,$6)
+!! 
+!! 	$1 - name of main shell
+!! 	$2 - name of Box that contains children
+!! 	$3 - command to execute on Accept
+!! 	$4 - Widget that created this one
+!! 	$5 - commands to execute at popup
+!! 	$6 - commands to execute at popdown
+!! 
+define(DIALOG_BOX,
+XaLeap*$1.wcClassName:		DIALOGSHELL
+XaLeap*$1.wcChildren:			dForm
+XaLeap*$1*Form*resizable:		False
+XaLeap*$1.title:			XLEaP: Dialog
+XaLeap*$1.popupCallback:		xtcpXACReplaceShell() $5
+XaLeap*$1.popdownCallback:		$6
+
+XaLeap*$1.dForm.wcClassName:		Form
+XaLeap*$1.dForm.wcChildren:		$2 dAccept dCancel
+XaLeap*$1.dForm.shadowWidth:		2
+
+XaLeap*$1*dAccept.wcClassName:		Command
+
+!! 
+!! 	DO NOT Popdown the dialog box before you parse the command!! 
+!! 		Otherwise values could be read from empty lists.
+!! 
+XaLeap*$1*dAccept.callback:		$3 WcPopdownCB(~~*$1)
+
+XaLeap*$1*dAccept.label:		Accept
+XaLeap*$1*dAccept.fromVert:		^$2
+
+XaLeap*$1*dCancel.wcClassName:		Command
+XaLeap*$1*dCancel.callback:		WcPopdownCB(~~*$1)
+XaLeap*$1*dCancel.label:		Cancel
+XaLeap*$1*dCancel.fromVert:		^$2
+XaLeap*$1*dCancel.fromHoriz:		^dAccept
+)
+
+
+
+
+!! 
+!! 
+!! 	This macro creates a dialog box containing Widgets
+!! 	defined by the user and Accept and Cancel buttons.
+!! 
+!! 	This macro also causes the Widget that invoked the
+!! 	dialog box to become Insensitive until Accept or Cancel is
+!! 	pressed.
+!! 
+!! 	COMMON_CMD_DIALOG($1,$2,$3,$4,$5,$6,$7)
+!! 
+!! 	$1 - name of main shell
+!! 	$2 - name of Box that contains children
+!! 	$3 - command to execute
+!! 	$4 - Widget that created this one
+!! 	$5 - commands to execute at popup
+!! 	$6 - commands to execute at popdown
+!! 	$7 - Title of dialog box.
+!!
+define(COMMON_CMD_DIALOG,
+XaLeap*$1.wcClassName:			DIALOGSHELL
+XaLeap*$1.wcChildren:			dForm
+XaLeap*$1.wcCallback:			SetParentShellAsGroup(/)
+XaLeap*$1.title:			XLEaP: $7
+XaLeap*$1.popdownCallback:		WcSetSensitiveCB(*$4) $6
+XaLeap*$1.popupCallback:		xtcpXACReplaceShell() \
+					WcSetInsensitiveCB(*$4) $5
+
+XaLeap*$1.dForm.wcClassName:		Paned
+XaLeap*$1.dForm.wcChildren:		$2 sprt commFrame
+XaLeap*$1.dForm.orientation:		vertical
+XaLeap*$1.dForm.vSpace:			4
+XaLeap*$1.dForm.hSpace:			4
+XaLeap*$1.dForm.shadowWidth:		2
+XaLeap*$1.dForm.internalBorderWidth:	0
+
+XaLeap*$1*sprt:wcClassName:		Separator
+
+
+XaLeap*$1.dForm.$2.showGrip:		False
+XaLeap*$1.dForm.commFrame.showGrip:	False
+XaLeap*$1.dForm.commFrame.skipAdjust:	True
+
+XaLeap*$1.dForm.$2.left:		ChainLeft
+XaLeap*$1.dForm.$2.right:		ChainForm
+XaLeap*$1.dForm.$2.top:			ChainTop
+XaLeap*$1.dForm.$2.bottom:		ChainBottom
+
+XaLeap*$1.dForm.sprt.wcClassName:	Separator
+XaLeap*$1.dForm.sprt.left:		ChainLeft
+XaLeap*$1.dForm.sprt.right:		ChainForm
+XaLeap*$1.dForm.sprt.top:		ChainTop
+XaLeap*$1.dForm.sprt.bottom:		ChainBottom
+XaLeap*$1.dForm.sprt.fromVert:		^$2
+
+XaLeap*$1.dForm.commFrame.left:		ChainLeft
+XaLeap*$1.dForm.commFrame.right:	ChainForm
+XaLeap*$1.dForm.commFrame.top:		ChainBottom
+XaLeap*$1.dForm.commFrame.bottom:	ChainForm
+XaLeap*$1.dForm.commFrame.fromVert:	^sprt
+
+
+XaLeap*$1.dForm.commFrame.wcClassName:	Frame
+XaLeap*$1.dForm.commFrame.wcChildren:	dAccept  dCancel
+XaLeap*$1.dForm.commFrame.layoutPolicy:	fraction
+XaLeap*$1.dForm.commFrame.shadowWidth:	0
+!! 
+!! 	DO NOT Popdown the dialog box before you parse the command!! 
+!! 		Otherwise values could be read from empty lists.
+!! 
+XaLeap*$1*dAccept.wcClassName:		Command
+XaLeap*$1*dAccept.callback:		$3 WcPopdownCB(/) SetSensitiveCB(*$4)
+!XaLeap*$1*dAccept.callback:		xtcpXACParseCommand($3)
+XaLeap*$1*dAccept.label:		Accept
+XaLeap*$1*dAccept.left:			20
+XaLeap*$1*dAccept.right:		40
+XaLeap*$1*dAccept.top:			10
+XaLeap*$1*dAccept.bottom:		90
+
+
+XaLeap*$1*dCancel.wcClassName:		Command
+XaLeap*$1*dCancel.callback:		WcPopdownCB(/) SetSensitiveCB(*$4)
+XaLeap*$1*dCancel.label:		Cancel
+XaLeap*$1*dCancel.left:			60
+XaLeap*$1*dCancel.right:		80
+XaLeap*$1*dCancel.top:			10
+XaLeap*$1*dCancel.bottom:		90
+)
+
+ 
+define(Parse_CMD_DIALOG,
+	COMMON_CMD_DIALOG($1,$2,xtcpXACParseCommand($3),$4,$5,$6,$7)
+)
+
+define(CMD_DIALOG,
+	COMMON_CMD_DIALOG($1,$2,$3 WcPopdownCB(~~*$1),$4,$5,$6,$7)
+)
+
+
+!! 
+!! 	DEFAULT_LIST($1,$2,$3,$4)
+!! 		$1 - Name of Widget to contain everything
+!! 		$2 - Name of list
+!! 		$3 - Callbacks to execute when item is selected
+!! 		$4 - Title for List
+!! 
+define(DEFAULT_LIST,
+XaLeap*$1.wcClassName:				Form
+XaLeap*$1.wcChildren:				listTitle listViewPort
+XaLeap*$1.shadowWidth:				0
+
+XaLeap*$1*listTitle.wcClassName:		Label
+XaLeap*$1*listTitle.justify:			left
+XaLeap*$1*listTitle.label:			$4
+XaLeap*$1*listTitle.font:			DIALOG_LABEL_FONT
+XaLeap*$1*listTitle.top:			ChainTop
+XaLeap*$1*listTitle.bottom:			ChainTop
+XaLeap*$1*listTitle.left:			ChainLeft
+XaLeap*$1*listTitle.right:			ChainLeft
+XaLeap*$1*listTitle.vertDistance:		2
+
+XaLeap*$1*listViewPort.wcClassName:		ViewPort
+XaLeap*$1*listViewPort.wcChildren:		$2
+XaLeap*$1*listViewPort.allowVert:		True
+XaLeap*$1*listViewPort.allowHoriz:		False
+!!XaLeap*$1*listViewPort.height:		LIST_HEIGHT
+!!XaLeap*$1*listViewPort.width:			LIST_WIDTH
+XaLeap*$1*listViewPort.fromVert:		^listTitle
+XaLeap*$1*listViewPort.shadowWidth:		1
+XaLeap*$1*listViewPort.left:			ChainLeft
+XaLeap*$1*listViewPort.right:			ChainForm
+XaLeap*$1*listViewPort.top:			ChainTop
+XaLeap*$1*listViewPort.bottom:			ChainForm
+XaLeap*$1*listViewPort.vertDistance:		0
+
+XaLeap*$1*$2.wcClassName:			List
+XaLeap*$1*$2.defaultColumns:			1
+XaLeap*$1*$2.forceColumns:			True
+XaLeap*$1*$2.callback:				$3
+XaLeap*$1*$2.font:				SINGLE_TEXT_FONT
+)
+
+
+
+!! 
+!! 	SINGLE_LINE_ASCIITEXT($1)
+!! 
+!! 		$1 -	Name of the AsciiText Widget
+!! 
+!! 	Define an ASCIITEXT widget that can only be used to enter single
+!! 	lines of text.
+!! 
+define(SINGLE_LINE_ASCIITEXT,
+XaLeap*$1.wcClassName:		AsciiText
+XaLeap*$1.textSource.editType:	edit
+XaLeap*$1*foreground:		INPUT_FOREGROUND
+XaLeap*$1*background:		INPUT_BACKGROUND
+XaLeap*$1*font:			SINGLE_TEXT_FONT
+XaLeap*$1.height:		24
+!! Reseting translations
+XaLeap*$1.translations:	`#override'\n\
+	<Key>Return:	no-op()\n\
+	<Key>Linefeed:	no-op()\n\
+	<Key>Down:	no-op()\n\
+	<Key>Up:	no-op()\n
+)
+
+define(SINGLE_LINE_FRAME_ASCIITEXT,
+XaLeap*$1.wcClassName:			Frame
+XaLeap*$1.wcChildren:			$1AsciiText
+XaLeap*$1.frameType:			Sunken
+XaLeap*$1.layoutPolicy:			single
+XaLeap*$1.shadowWidth:			2
+!XaLeap*$1.foreground:			INPUT_FOREGROUND
+!XaLeap*$1.background:			INPUT_BACKGROUND
+XaLeap*$1.vSpace:			0
+XaLeap*$1.hSpace:			0
+SINGLE_LINE_ASCIITEXT($1AsciiText)
+NO_BORDER($1AsciiText)
+)
+
+
+!! 
+!! 	File selector dialog
+!! 
+!! 	FILE_SELECTOR( $1, $2, $3, $4 )
+!! 
+!! 		$1 -	Name of file selector Form
+!! 		$2 -	Name of file selector pathname Label
+!! 		$3 -	Name of file selector file list.
+!! 		$4 -	Name of file selector file name Text Widget.
+!! 
+
+define(FILE_SELECTOR,
+XaLeap*$1.wcClassName:				Paned
+XaLeap*$1.internalBorderWidth:			0
+XaLeap*$1*showGrip:				False
+XaLeap*$1.orientation:				vertical
+XaLeap*$1.shadowWidth:				0
+XaLeap*$1.wcChildren:				fileListVp 	\
+						blnk		\
+						listViewPort 	\
+						blnk		\
+						fileName
+
+XaLeap*$1*blnk.wcClassName:			Simple
+XaLeap*$1*blnk.width:				1
+XaLeap*$1*blnk.height:				4
+XaLeap*$1*blnk.skipAdjust:			True
+
+XaLeap*$1*fileListVp.wcClassName:		Paned
+XaLeap*$1*fileListVp.wcChildren:		listTitle framePath 
+XaLeap*$1*fileListVp.internalBorderWidth:	0
+XaLeap*$1*fileListVp.orientation:		horizontal
+XaLeap*$1*fileListVp.min:			1
+XaLeap*$1*fileListVp.skipAdjust:		True
+XaLeap*$1*fileListVp.shadowWidth:		0
+
+XaLeap*$1*fileListVp.listTitle.wcClassName:	Label
+XaLeap*$1*fileListVp.listTitle.label:		Path:
+XaLeap*$1*fileListVp.listTitle.font:		DIALOG_LABEL_FONT
+
+XaLeap*$1*fileListVp.framePath.wcClassName:	Frame
+XaLeap*$1*fileListVp.framePath.wcChildren:	$2
+XaLeap*$1*fileListVp.framePath.frameType:	Sunken
+XaLeap*$1*fileListVp.framePath.layoutPolicy:	single
+XaLeap*$1*fileListVp.framePath.vSpace:		0
+XaLeap*$1*fileListVp.framePath.hSpace:		0
+XaLeap*$1*fileListVp.framePath.shadowWidth:	2
+XaLeap*$1*fileListVp.framePath.preferredPaneSize: 200
+
+XaLeap*$1*fileListVp*$2.wcClassName:		AsciiText
+XaLeap*$1*fileListVp*$2.displayCaret:		False
+XaLeap*$1*fileListVp*$2*font:			SINGLE_TEXT_FONT
+XaLeap*$1*fileListVp*$2.height:			24
+XaLeap*$1*fileListVp*$2*background:		INPUT_BACKGROUND
+NO_BORDER($1*fileListVp*$2)
+
+XaLeap*$1*listViewPort.wcClassName:		ViewPort
+XaLeap*$1*listViewPort.wcChildren:		$3
+XaLeap*$1*listViewPort.allowVert:		True
+!!XaLeap*$1*listViewPort.forceBars:		True
+!!XaLeap*$1*listViewPort.height:		LIST_HEIGHT
+!!XaLeap*$1*listViewPort.preferredPaneSize:	300
+XaLeap*$1*listViewPort.shadowWidth:		1
+
+XaLeap*$1*listViewPort.$3.wcClassName:		List
+XaLeap*$1*listViewPort.$3.defaultColumns:	1
+XaLeap*$1*listViewPort.$3.forceColumns:		True
+XaLeap*$1*listViewPort.$3.verticalList:		True
+XaLeap*$1*listViewPort.$3.callback: 		xtcpXACDirectoryPick(/*$4,/*$2)
+XaLeap*$1*listViewPort.$3.borderWidth:		0
+XaLeap*$1*listViewPort.$3.font: 		SINGLE_TEXT_FONT
+
+XaLeap*$1*fileName.wcClassName:			Paned
+XaLeap*$1*fileName.wcChildren:			prompt frameText 
+XaLeap*$1*fileName.orientation:			horizontal
+XaLeap*$1*fileName.min:				1
+XaLeap*$1*fileName.internalBorderWidth:		0
+XaLeap*$1*fileName.skipAdjust:			True
+XaLeap*$1*fileName.shadowWidth:			0
+	
+XaLeap*$1*fileName.prompt.wcClassName:		Label
+XaLeap*$1*fileName.prompt.label:		File:
+XaLeap*$1*fileName.prompt.font:			DIALOG_LABEL_FONT
+
+XaLeap*$1*fileName.frameText.wcClassName:	Frame
+XaLeap*$1*fileName.frameText.wcChildren:	$4
+XaLeap*$1*fileName.frameText.frameType:		Sunken
+XaLeap*$1*fileName.frameText.layoutPolicy:	single
+XaLeap*$1*fileName.frameText.shadowWidth:	2
+XaLeap*$1*fileName.frameText.vSpace:		0
+XaLeap*$1*fileName.frameText.hSpace:		0
+
+XaLeap*$1*fileName.frameText.$4.wcClassName:	AsciiText
+SINGLE_LINE_ASCIITEXT($1*fileName.frameText.$4)
+
+NO_BORDER($1)
+NO_BORDER($1*fileListVp)
+NO_BORDER($1*fileListVp.listTitle)
+NO_BORDER($1*fileNamePrompt)
+NO_BORDER($1*fileName.frameText.$4)
+)
+
+
+
+!! 
+!!
+!!
+!!     MENU_BAR( $1, $2)
+!!
+!!            $1 - name for widget
+!!            $2 - list of children
+!!
+!!
+define(MENU_BAR,
+XaLeap*$1.wcClassName:			Paned
+XaLeap*$1.wcChildren:			$2
+XaLeap*$1.internalBorderWidth: 		0
+XaLeap*$1.orientation:			horizontal
+XaLeap*$1*showGrip:			False
+XaLeap*$1.background:			MENU_BACKGROUND
+XaLeap*$1.MenuButton.background:	MENU_BACKGROUND
+!!XaLeap*$1*SmeBSB*leftMargin:		8
+!!XaLeap*$1*SmeBSB*rightMargin:		8
+XaLeap*$1.left:				ChainLeft
+XaLeap*$1.right:			ChainForm
+XaLeap*$1.top:				ChainTop
+XaLeap*$1.bottom:			ChainTop
+XaLeap*$1.shadowWidth:			2
+)
+
+
+
+!! 
+!! 	POPUP_FILE_SELECTOR( $1, $2)
+!! 
+!! 		$1 -	File Selector List Widget
+!! 		$2 -	File Selector Path Wiget
+!! 
+!! 	This macro is included as part of the popupCallback resource
+!! 
+define( POPUP_FILE_SELECTOR, xtcpXACInitializeWorkingDirectoryName($2) \
+xtcpXACInitializeDirectoryList($1,$2) )
+
+
+!! 
+!! 	POPDOWN_FILE_SELECTOR($1)
+!! 
+!! 		$1 -	File Selector List Widget
+!! 
+!! 	Macro is included as part of the popdownCallback resource
+!! 
+define( POPDOWN_FILE_SELECTOR, xtcpXACDestroyDirectoryList($1))
+
+
+
+!!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+!!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+!!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+!! 
+!! 	For documentation purposes, add these translations
+!! 	for menus.  This allows the user to hit 'm' on
+!! 	a menu and have it open up.
+!! 
+
+XaLeap*MenuButton.translations:	#augment\
+	<Key>m	:	reset() PopupMenu()\n
+
+
+
+!! 	Davids Changes
+!! 
+!! 	This macro creates a dialog box containing Widgets
+!! 	defined by the user and OK and Cancel buttons.
+!! 
+!! 	This macro also causes the Widget that invoked the
+!! 	dialog box to become Insensitive until Ok or Cancel is
+!! 	pressed.
+!! 
+!! 	WARN_DIALOG_BOX($1,$2,$3,$4,$5,$6)
+!! 
+!! 	$1 - name of main shell
+!! 	$2 - Widget that created this one
+!! 	$3 - Title of dialog box.
+!! 	$4 - Text in dialog box.
+!! 	$5 - command to execute on OK
+!! 	$6 - command to execute on cancel
+!! 
+define(WARN_DIALOG_BOX,
+XaLeap*$1.wcClassName:			TransientShell
+XaLeap*$1.wcChildren:			wdForm
+XaLeap*$1.title:			XLEaP: $3
+XaLeap*$1.popupCallback:		xtcpXACReplaceShell()
+XaLeap*$1*Command*font:			DIALOG_BUTTON_FONT
+
+XaLeap*$1.wdForm.wcClassName:		Form
+XaLeap*$1.wdForm.wcChildren:		warnText warnOK warnCancel  
+XaLeap*$1.wdForm.resizable:		False
+XaLeap*$1.wdForm.shadowWidth:		2
+
+XaLeap*$1*warnText.wcClassName:		Label
+XaLeap*$1*warnText.label:		$4
+XaLeap*$1*warnText.borderWidth:		0
+
+XaLeap*$1*warnOK.wcClassName:		Command
+XaLeap*$1*warnOK.callback:		WcDestroyCB(*$1) SetSensitiveCB(*$2) $5 
+XaLeap*$1*warnOK.label:			OK
+XaLeap*$1*warnOK.fromVert:		^warnText
+
+XaLeap*$1*warnCancel.wcClassName:	Command
+XaLeap*$1*warnCancel.callback:		WcDestroyCB(*$1) SetSensitiveCB(*$2) $6
+XaLeap*$1*warnCancel.label:		Cancel
+XaLeap*$1*warnCancel.fromHoriz:		^warnOK
+XaLeap*$1*warnCancel.fromVert:		^warnText
+)
+
+
+!! 	This macro creates a dialog box containing Widgets
+!! 	defined by the user and OK and Cancel buttons.
+!! 
+!! 	This macro also causes the Widget that invoked the
+!! 	dialog box to become Insensitive until Ok or Cancel is
+!! 	pressed.
+!! 
+!! 	ENTRY_DIALOG_BOX($1,$2,$3,$4,$5,$6,$7)
+!! 
+!! 	$1 - Widget name
+!!        $2 - Widget name of parent shell
+!! 	$3 - Title of dialog box.
+!! 	$4 - command to execute on OK
+!! 
+define(ENTRY_DIALOG_BOX,
+XaLeap*$1.wcClassName:			DIALOGSHELL
+XaLeap*$1.wcCallback:			SetParentShellAsGroup($2) 	
+XaLeap*$1.wcChildren:			$1edForm
+XaLeap*$1.popupCallback:		xtcpXACReplaceShell()
+XaLeap*$1.title:			XLEaP: $3
+XaLeap*$1*Command*font:			DIALOG_BUTTON_FONT
+
+
+XaLeap*$1edForm.wcClassName:		Dialog 
+XaLeap*$1edForm.wcChildren:		ok cancel  
+XaLeap*$1edForm*resizable:		False
+XaLeap*$1edForm.value:			?
+XaLeap*$1edForm.label:			Find the following:
+XaLeap*$1.shadowWidth:			2
+
+!!XaLeap*$1edForm*Text.width:		300
+XaLeap*$1edForm*Text.borderColor:	red
+XaLeap*$1edForm*Text.borderWidth:	2
+
+XaLeap*$1edForm.ok.wcClassName:		Command
+XaLeap*$1edForm.ok.label:		OK
+XaLeap*$1edForm.ok.callback:		$4 WcPopdown(~)
+
+XaLeap*$1edForm.cancel.wcClassName:	Command
+XaLeap*$1edForm.cancel.label:		Cancel
+XaLeap*$1edForm.cancel.callback:	WcPopdown(~) 
+XaLeap*$1edForm.cancel.fromHoriz:	^ok
+)
+
+!! ############################################################
+!! 
+!! 		TITLE_INSIDE
+!! 
+!! 	$1 -name table row
+!! 	$2 -column's width
+!! 	$3 -count of columns + 1
+!! 	$4 -labels for columns 
+define(TITLE_INSIDE,
+!XaLeap*$1.wcClassName:			Form
+!XaLeap*$1.wcChildren:			tbl
+!XaLeap*$1.vSpace:			0
+!XaLeap*$1.hSpace:			0
+!XaLeap*$1.borderWidth:			0
+!XaLeap*$1.defaultDistance:		0
+
+
+XaLeap*$1.wcClassName:		Table
+XaLeap*$1.wcCallback:		XATRegisterTitle( $4 ) \
+				XATSetColumnsWidth( $2 ) \
+				WcSetValueCB(^.rowWidget: ^*$1)
+XaLeap*$1.editable:		False
+XaLeap*$1.background:		TABLE_TITLE_BACKGROUND
+XaLeap*$1.foreground:		TABLE_TITLE_FOREGROUND
+XaLeap*$1.font:			TABLE_TITLE_FONT
+XaLeap*$1.rows:			1
+XaLeap*$1.columns:		$3
+XaLeap*$1.shadowWidth:		0
+XaLeap*$1.tableMargin:		0
+)
+
+!! ############################################################
+!! 
+!!        TABLE_INSIDE                                
+!! 
+!! 	$1 - name
+!!      $2 - column's width
+!! 
+define(TABLE_INSIDE,
+XaLeap*$1.wcClassName:			ScrolledTable
+XaLeap*$1.wcChildren:			table $1Titles 
+XaLeap*$1.shadowWidth:			0
+!!XaLeap*$1.preferredPaneSize:            400
+
+!XaLeap*$1.forceBars:			True
+!XaLeap*$1.allowVert:			True
+XaLeap*$1*Scrollbar.background: 	BACKGROUND
+XaLeap*$1*Scrollbar.foreground: 	TABLE_BACKGROUND
+
+XaLeap*$1.table.wcClassName:		Table
+XaLeap*$1.table.wcCallback:		XATRegisterTable() \
+					XATSetColumnsWidth($2) \
+					WcSetValueCB(^.stuffWidget: ^*table)
+XaLeap*$1.table.background:		TABLE_BACKGROUND
+XaLeap*$1.table.labelShadowWidth:	1
+XaLeap*$1.table.rowMargin:		1
+!XaLeap*$1.table.rowForeground:		TABLE_ROW_FOREGROUND
+!XaLeap*$1.table.columnForeground:	TABLE_COLUMN_FOREGROUND
+XaLeap*$1.table.deleteRow:		XATVerifyDeleteRow()
+XaLeap*$1.table.changedCell:		XATVerifyChangedCell()
+XaLeap*$1.table.showGrip:		False
+XaLeap*$1.table.shadowWidth:		0
+XaLeap*$1.table.tableMargin:		0
+)
+
+
+
+!! ######################################################
+!! 
+!! 	TABLE_SHELL($1,$2,$3,$4,$5,$6)
+!! 
+!! 	$1 - name of main shell
+!! 	$2 - title for shell
+!! 	$3 - distroyCallback
+!! 	$4 - sensitive for Insert and Delete button in Menu
+!!      $5 - edit if need Insert and Delete button in Menu or nothing
+!!      $6 - column's wigth
+!!
+define(TABLE_SHELL,
+XaLeap*$1TableShell.wcClassName:	TopLevelShell
+XaLeap*$1TableShell.wcChildren:		$1TablePanel
+XaLeap*$1TableShell.wcCallback:		XATRegisterShell()
+XaLeap*$1TableShell.wcPopups:		findDialog
+XaLeap*$1TableShell.title:		XLEaP: $2
+XaLeap*$1TableShell.iconName:		$2
+XaLeap*$1TableShell.iconPixmap:		table1
+XaLeap*$1TableShell.destroyCallback:    $3 WcDestroyCB( .*findDialog )
+
+XaLeap*$1TableShell.wcAfterChildren:		\
+	XASetPopdown( .*findDialog  .*$1Find .*findDialog*cancel)
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!  The name of this widget is using in file xaTable.c (XATSaveTable)
+!! 
+DIALOG_QUEST_OK_CANCEL(verify_save_none_corect_table, \
+      The table is not correct !! \n\
+Do you really want to save the table ? \n,
+XATReallySaveTable(//),EMPTY,EMPTY,Save notify, Save, Cancel)
+
+
+DIALOG_QUEST_OK_CANCEL(verify_save_none_corect_table_and_quit, \
+      The table is not correct !! \n\
+Do you really want to save the table ? \n,
+XATReallySaveTable(//) XATReject(//),EMPTY,EMPTY,Save and quit notify,
+Save, Cancel)
+
+
+DIALOG_QUEST_LONG_OK_CANCEL(verify_close_modified, \
+      The table was modified - close anyway?\n,
+XATReject(//),EMPTY,EMPTY,Close notify, Close & discard changes, Cancel close)
+
+
+DIALOG_QUEST_YES_NO_CANCEL(verify_close_correct_table,\
+    The table was edited and is still correct !! \n\
+Let's save the table ? \n,
+XATReallySaveTable(//) XATReject(//),XATReject(//),EMPTY,EMPTY,Close notify)
+!!
+!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+XaLeap*$1TablePanel.wcClassName:	Form
+XaLeap*$1TablePanel*Command.background:	TABLE_BACKGROUND
+XaLeap*$1TablePanel.shadowWidth:	0
+XaLeap*$1TablePanel.wcChildren:		$1Menu $1Table
+XaLeap*$1TablePanel.defaultDistance:	0
+
+XaLeap*$1TablePanel.wcPopups:	verify_save_none_corect_table \
+				verify_save_none_corect_table_and_quit \
+				verify_close_modified
+
+
+
+XaLeap*$1TablePanel.$1Table.wcClassName:	Paned
+XaLeap*$1TablePanel.$1Table.orientation:	vertical
+XaLeap*$1TablePanel.$1Table.internalBorderWidth:8
+XaLeap*$1TablePanel*Command.background:		TABLE_BACKGROUND
+XaLeap*$1TablePanel.$1Table.shadowWidth:	0
+XaLeap*$1TablePanel.$1Table.left:		ChainLeft
+XaLeap*$1TablePanel.$1Table.right:		ChainForm
+XaLeap*$1TablePanel.$1Table.top:		ChainTop
+XaLeap*$1TablePanel.$1Table.bottom:		ChainForm
+XaLeap*$1TablePanel.$1Table.fromVert:		^$1Menu
+XaLeap*$1TablePanel.$1Table.wcChildren: 	$1StatusFrame $1Data
+XaLeap*$1TablePanel.$1Table.hSpace:		0
+
+
+
+XaLeap*$1Table.$1StatusFrame.wcClass:		Frame
+XaLeap*$1Table.$1StatusFrame.wcChildren:	$1Status
+XaLeap*$1Table.$1StatusFrame.frameType:		tack
+XaLeap*$1Table.$1StatusFrame.shadowWidth:	4
+XaLeap*$1Table.$1StatusFrame.vSpace:		0
+XaLeap*$1Table.$1StatusFrame.hSpace:		0
+XaLeap*$1Table.$1StatusFrame.preferredPaneSize:	70
+XaLeap*$1Table.$1StatusFrame.showGrip:		True
+XaLeap*$1Table.$1StatusFrame.skipAdjust:	True
+XaLeap*$1Table.$1StatusFrame.min:		40
+
+
+!! #####################################################################
+!! 	Menu for Angle Parmameters table
+!!
+MENU_BAR($1Menu, $1Parms $5 $1Operations blank)
+ 
+XaLeap*$1Menu.$1Parms.showGrip:		False
+XaLeap*$1Menu.$5.showGrip:		False
+XaLeap*$1Menu.$1Operations.showGrip:	False
+XaLeap*$1Menu.blank.showGrip:		False
+
+XaLeap*$1Parms.wcClassName:		MenuButton
+XaLeap*$1Parms.label:			Table
+XaLeap*$1Parms.wcPopups:		m$1Parms
+XaLeap*$1Parms.menuName:		m$1Parms
+
+XaLeap*m$1Parms.wcClassName:		SimpleMenu
+XaLeap*m$1Parms.wcChildren:		o$1Save o$1SaveQuit o$1Break o$1Close
+
+XaLeap*o$1Save.wcClassName:		SmeBSB
+XaLeap*o$1Save.label:			Save
+XaLeap*o$1Save.callback:		XATSaveTable(/*$1SearchError) 
+
+XaLeap*o$1SaveQuit.wcClassName:		SmeBSB
+XaLeap*o$1SaveQuit.label:		Save and quit
+XaLeap*o$1SaveQuit.callback:		XATSaveQuitTable(/*$1SearchError) 
+
+XaLeap*o$1Break.wcClassName:		SmeLine
+
+XaLeap*o$1Close.wcClassName:		SmeBSB
+XaLeap*o$1Close.label:			Close table
+XaLeap*o$1Close.callback:		XATCloseTable()
+
+!! #####################################################################
+!! 	Edit Menu Buttons:  Add Insert Delete
+!! 
+
+XaLeap*$1Menu.edit.wcClassName:		MenuButton
+XaLeap*$1Menu.edit.label:			Edit
+XaLeap*$1Menu.edit.wcPopups:			m$1Edit
+XaLeap*$1Menu.edit.menuName:			m$1Edit
+
+XaLeap*m$1Edit.wcClassName:		SimpleMenu
+XaLeap*m$1Edit.wcChildren:		$1Add    \
+					$1Insert \
+					$1Delete
+
+XaLeap*$1Add.wcClassName:		SmeBSB
+XaLeap*$1Add.label:			Add row at end
+XaLeap*$1Add.callback:			XATAddRow 
+XaLeap*$1Add.sensitive:	        	$4
+
+
+XaLeap*$1Insert.wcClassName:		SmeBSB
+XaLeap*$1Insert.label:			Insert row before selection
+XaLeap*$1Insert.callback:		XATInsertRow
+XaLeap*$1Insert.sensitive:		$4
+
+XaLeap*$1Delete.wcClassName:		SmeBSB
+XaLeap*$1Delete.label:			Delete row
+XaLeap*$1Delete.callback:		XATDeleteRow
+XaLeap*$1Delete.sensitive:		$4
+
+XaLeap*$1Break.wcClassName:		SmeLine
+
+
+XaLeap*$1Operations.wcClassName:	MenuButton
+XaLeap*$1Operations.label:		Operations
+XaLeap*$1Operations.wcPopups:		m$1Operations
+XaLeap*$1Operations.menuName:		m$1Operations
+
+XaLeap*m$1Operations.wcClassName:	SimpleMenu
+XaLeap*m$1Operations.wcChildren: 	$1Find       \
+					$1Again      \
+					$1Break      \
+					$1CheckTable \
+					$1SearchError
+
+
+XaLeap*$1Find.wcClassName:		SmeBSB
+XaLeap*$1Find.label:			Find...
+XaLeap*$1Find.wcCallback:               XATSetWidgetFind(this)
+XaLeap*$1Find.callback:			WcSetInsensitiveCB(this)     \
+					WcPopupGrab(~~*findDialog)
+
+XaLeap*$1Again.wcClassName:		SmeBSB
+XaLeap*$1Again.label:			Find Again
+XaLeap*$1Again.sensitive:		False
+XaLeap*$1Again.callback:		XATFindElementAgain
+
+XaLeap*$1SearchError.wcClassName:	SmeBSB
+XaLeap*$1SearchError.label:		Go to next error
+XaLeap*$1SearchError.sensitive:		False
+XaLeap*$1SearchError.callback:		XATGoToNextError()
+
+XaLeap*$1CheckTable.wcClassName:	SmeBSB
+XaLeap*$1CheckTable.label:		Check Table
+XaLeap*$1CheckTable.sensitive:		True
+XaLeap*$1CheckTable.callback:		XATCheckTable(/*$1SearchError)
+
+
+XaLeap*$1TableShell.findDialog.wcClassName:	TransientShell
+XaLeap*$1TableShell.findDialog.wcCallback:	SetParentShellAsGroup(/)
+XaLeap*$1TableShell.findDialog.popupCallback:	xtcpXACReplaceShell()
+XaLeap*$1TableShell.findDialog.wcChildren:	form
+XaLeap*$1TableShell.findDialog.title:		XLEaP: Find...
+XaLeap*$1TableShell.findDialog*Command.font: 	DIALOG_BUTTON_FONT
+
+XaLeap*$1TableShell*form.wcClassName:		Form
+XaLeap*$1TableShell*form.wcChildren:		cont sprt commFrame
+XaLeap*$1TableShell*form.defaultDistance:	8
+XaLeap*$1TableShell*form.shadowWidth:		2
+
+XaLeap*$1TableShell*cont.wcClassName:		Paned
+XaLeap*$1TableShell*cont.wcChildren:		lbl findTxt
+XaLeap*$1TableShell*cont.orientation:		horizontal
+XaLeap*$1TableShell*cont.internalBorderWidth:	0
+XaLeap*$1TableShell*cont.shadowWidth:		0
+XaLeap*$1TableShell*cont.top:			ChainTop
+XaLeap*$1TableShell*cont.bottom:		ChainTop
+XaLeap*$1TableShell*cont.left:			ChainLeft
+XaLeap*$1TableShell*cont.right:			ChainForm
+XaLeap*$1TableShell*cont.vertDistance:		14
+
+XaLeap*$1TableShell*cont.lbl.showGrip:		False
+XaLeap*$1TableShell*cont.findTxt.showGrip:	False
+
+XaLeap*$1TableShell*cont.lbl.wcClassName:	Label
+XaLeap*$1TableShell*cont.lbl.label:		Find the following:
+XaLeap*$1TableShell*cont.lbl.font:		DIALOG_LABEL_FONT
+
+SINGLE_LINE_FRAME_ASCIITEXT(findTxt)
+
+XaLeap*$1TableShell*findTxt.preferredPaneSize:	200
+XaLeap*$1TableShell*findTxtAsciiText.wcCallback: XASetKeyboardFocus(~.form)
+!! Reseting translations
+XaLeap*$1TableShell*findTxtAsciiText.translations:	#override\n\
+	<Key>Return:	find_return(~^ ~^*$1Again ~*findTxtAsciiText) \n\
+	<Key>Linefeed:	no-op()          \n\
+	<Key>Down:	no-op()          \n\
+	<Key>Up:	no-op()          
+
+XaLeap*$1TableShell*sprt.wcClassName:	Separator
+XaLeap*$1TableShell*sprt.height:	8
+XaLeap*$1TableShell*sprt.separatorType:	shadowEtchedIn
+XaLeap*$1TableShell*sprt.shadowWidth:	0
+XaLeap*$1TableShell*sprt.width:		1
+XaLeap*$1TableShell*sprt.skipAdjust:	False
+XaLeap*$1TableShell*sprt.top:		ChainTop
+XaLeap*$1TableShell*sprt.bottom:	ChainTop
+XaLeap*$1TableShell*sprt.left:		ChainLeft
+XaLeap*$1TableShell*sprt.right:		ChainForm
+XaLeap*$1TableShell*sprt.fromVert:	^cont
+
+
+XaLeap*$1TableShell*commFrame.wcClassName:	Frame
+XaLeap*$1TableShell*commFrame.wcChildren:	ok clear cancel
+XaLeap*$1TableShell*commFrame.borderWidth:	0
+XaLeap*$1TableShell*commFrame.layoutPolicy:	fraction
+XaLeap*$1TableShell*commFrame.xFraction:	15
+XaLeap*$1TableShell*commFrame.yFraction:	20
+XaLeap*$1TableShell*commFrame.shadowWidth:	0
+XaLeap*$1TableShell*commFrame.skipAdjust:	True
+XaLeap*$1TableShell*commFrame.top:		ChainTop
+XaLeap*$1TableShell*commFrame.bottom:		ChainForm
+XaLeap*$1TableShell*commFrame.left:		ChainLeft
+XaLeap*$1TableShell*commFrame.right:		ChainForm
+XaLeap*$1TableShell*commFrame.fromVert:		^sprt
+XaLeap*$1TableShell*commFrame.horizDistance:	2
+XaLeap*$1TableShell*commFrame.vertDistance:	2
+
+!!  This widget will find by name in file xaTable.c (XATFindReturn)
+XaLeap*$1TableShell*commFrame.ok.wcClassName:		Command
+XaLeap*$1TableShell*commFrame.ok.label:			Find
+XaLeap*$1TableShell*commFrame.ok.left:		1
+XaLeap*$1TableShell*commFrame.ok.right:		4
+XaLeap*$1TableShell*commFrame.ok.top:		1
+XaLeap*$1TableShell*commFrame.ok.bottom:	19
+XaLeap*$1TableShell*commFrame.ok.callback:	\
+			XATFindElement( ~^ ~^*$1Again ~*findTxtAsciiText) \
+			WcPopdown(~)	
+
+
+XaLeap*$1TableShell*commFrame.clear.wcClassName:	Command
+XaLeap*$1TableShell*commFrame.clear.label:		Clear
+XaLeap*$1TableShell*commFrame.clear.left:	6
+XaLeap*$1TableShell*commFrame.clear.right:	9
+XaLeap*$1TableShell*commFrame.clear.top:	1
+XaLeap*$1TableShell*commFrame.clear.bottom:	19
+XaLeap*$1TableShell*commFrame.clear.callback:	XAClearText(~*findTxtAsciiText)
+
+
+XaLeap*$1TableShell*commFrame.cancel.wcClassName:	Command
+XaLeap*$1TableShell*commFrame.cancel.label:		Close
+XaLeap*$1TableShell*commFrame.cancel.left:	11
+XaLeap*$1TableShell*commFrame.cancel.right:	14
+XaLeap*$1TableShell*commFrame.cancel.top:	1
+XaLeap*$1TableShell*commFrame.cancel.bottom:	19
+XaLeap*$1TableShell*commFrame.cancel.callback:		WcPopdownCB(~)
+
+!! #####################################################################
+!! 
+!! 	Status window for Angle Parameters table
+!! 
+
+XaLeap*$1Status.wcClassName:		AsciiText
+XaLeap*$1Status.wcCallback:		XATRegisterStatusWidget 
+
+XaLeap*$1Status*Scrollbar.background:	TABLE_STATUS_BACKGROUND
+XaLeap*$1Status*foreground:             TABLE_STATUS_FOREGROUND
+XaLeap*$1Status*font:                   TABLE_STATUS_FONT
+XaLeap*$1Status*editType:		append
+!XaLeap*$1Status.preferredPaneSize:	60
+XaLeap*$1Status*scrollVertical:		always
+XaLeap*$1Status.translations:		`#override'\
+					<Key>:      no-op() \n\
+					<Btn2Up>:   no-op() \n\
+					<Btn2Down>: no-op() 
+
+!! #####################################################################
+!! 
+!! 	Actual table for Atom Parameters
+!! 
+TABLE_INSIDE($1Data,$6)
+XaLeap*$1Table.$1Data.min:			120
+
+)
+
+!! #####################################################################
+!! 
+!! 
+!! Make the Description label (and field below) larger than the default size
+!! 	the macro is used to keep consitent size of the two
+!! 
+define(TYPE_W,	80)
+define(DOUBLE_W,110)
+define(DESC_W,	300)
+
+!!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+!!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+!!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+!!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+!!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+!! 
+!! 
+!! 	Include dialog boxes used by xaLeap
+!! 
+
+
+
+xaLeap.monoForeground:	White
+xaLeap.monoBackground:	Black
+
+xaLeap.color0:		Black
+xaLeap.color1:		Red
+xaLeap.color2:		Green
+xaLeap.color3:		Blue
+xaLeap.color4:		magenta
+xaLeap.color5:		cyan
+xaLeap.color6:		yellow
+xaLeap.color7:		White
+
+XaLeap.width:		800
+
+XaLeap*blank.wcClassName:	Core
+XaLeap*blank.label:
+XaLeap*blank.width:		1
+XaLeap*blank.height:		1
+XaLeap*blank.shadowWidth:	0
+XaLeap*blank.borderWidth:	0
+XaLeap*blnk.shadowWidth:	0
+XaLeap*blank.background:	MENU_BACKGROUND
+
+XaLeap*Grip.gripForeground:	red
+
+NO_BORDER(Box)
+NO_BORDER(Command)
+NO_BORDER(Scrollbar)
+NO_BORDER(Label)
+NO_BORDER(Menu)
+NO_BORDER(List)
+NO_BORDER(Frame)
+
+XaLeap*Label.shadowWidth:	0
+XaLeap*Command.shadowWidth:	2
+XaLeap*Command.internalWidth:	16
+
+XaLeap*MenuButton.background:	MENU_BACKGROUND
+XaLeap*SimpleMenu.background:	MENU_BACKGROUND
+XaLeap*SmeBSB.background:	MENU_BACKGROUND
+
+XaLeap*MenuButton.foreground:	MENU_FOREGROUND
+XaLeap*SimpleMenu.foreground:	MENU_FOREGROUND
+XaLeap*SmeBSB.foreground:	MENU_FOREGROUND
+
+XaLeap*MenuButton.font:		MENU_BUTTON_FONT
+XaLeap*SmeBSB.font:		MENU_ITEM_FONT
+
+XaLeap*Label.font:		LABEL_BUTTON_FONT
+
+include(xaCommand.rm4)
+include(xaUnitEditor.rm4)
+include(xaAtomTable.rm4)
+include(xaParmEditor.rm4)
+include(xaAtomParmTable.rm4)
+include(xaBondParmTable.rm4)
+include(xaAngleParmTable.rm4)
+include(xaTorsionParmTable.rm4)
+include(xaImproperParmTable.rm4)
+include(xaHBondParmTable.rm4)
+
