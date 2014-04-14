@@ -26,7 +26,7 @@ DATDIR=%(basedir)s/dat
 #      included in FLIBS are always searched.)
 
 FLIBS= -L../lib -larpack -llapack -lblas  -lgfortran -w 
-FLIBSF= -larpack -llapack -lblas   
+FLIBSF= -L../lib -larpack -llapack -lblas   
 ###############################################################################
 
 #  (3)  Modify any of the following if you need to change, e.g. to use gcc
