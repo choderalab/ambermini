@@ -35,3 +35,6 @@ clean:
 	-cd sqm && $(MAKE) clean
 	-cd lib && $(MAKE) clean
 	-cd cifparse && $(MAKE) clean
+
+uninstall:
+	cd $(PREFIX)/bin && rm -f $(PROGS)
