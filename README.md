@@ -24,3 +24,6 @@ byacc or yacc
 flex
 Fortran and C compiler
 Python
+blas
+lapack
+arpack
