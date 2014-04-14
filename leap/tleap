@@ -1,12 +1,14 @@
 #!/bin/sh
 
+AMBERHOME=`dirname $0`
+
 if [ "$AMBERHOME" ]; then
 
-   $AMBERHOME/bin/teLeap \
-              -I$AMBERHOME/dat/leap/prep \
-              -I$AMBERHOME/dat/leap/lib \
-              -I$AMBERHOME/dat/leap/parm \
-              -I$AMBERHOME/dat/leap/cmd \
+   $AMBERHOME/teLeap \
+              -I$AMBERHOME/../share/amber/dat/leap/prep \
+              -I$AMBERHOME/../share/amber/dat/leap/lib \
+              -I$AMBERHOME/../share/amber/dat/leap/parm \
+              -I$AMBERHOME/../share/amber/dat/leap/cmd \
                $*
 
 else

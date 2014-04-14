@@ -1,6 +1,8 @@
 include config.h
 
-PROGS=antechamber 
+PROGS=antechamber acdoctor am1bcc antechamber_pvt atomtype bondtype charmmgen \
+		database espgen parmcal parmchk parmchk2 prepgen residuegen sqm teLeap \
+		tleap translate
 
 all: prep libs
 	$(MAKE) antechamber
@@ -8,8 +10,9 @@ all: prep libs
 	$(MAKE) sqm
 
 install: all
+	mkdir -p $(PREFIX)/bin $(PREFIX)/share
 	cd bin && /bin/mv $(PROGS) $(PREFIX)/bin
-	cp -r share/amber $(PREFIX)/share
+	cp -r share/amber $(PREFIX)/share/
 
 prep:
 	mkdir -p bin

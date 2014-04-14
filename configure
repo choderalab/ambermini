@@ -146,13 +146,13 @@ parser = OptionParser()
 parser.add_option('--prefix', dest='prefix', default='/usr/local',
                   help='Directory to install programs and files to.')
 parser.add_option('--yacc', dest='yacc', default=None,
-                  help='Which YACC implementation to use. Looks for bison '
+                  help='Which YACC implementation to use. Looks for byacc '
                   'first then looks for yacc if not given')
 
 opt, arg = parser.parse_args()
 
 if opt.yacc is None:
-    yacc = which('bison')
+    yacc = which('byacc')
     if yacc is None:
         yacc = which('yacc')
         if yacc is None:
