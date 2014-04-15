@@ -87,6 +87,13 @@ program sqm
          owrite = 'R'   ! output status: Replace
       else if (arg == ' ') then
          continue
+      else if (arg == '-h') then
+         write(6,'(a)') 'sqm [-O] -i <input> -o <output>'
+         write(6,'(a)') '   -O           Overwrite output file if it exists'
+         write(6,'(a)') '   -i <input>   Input file'
+         write(6,'(a)') '   -o <output>  Output file'
+         write(6,'(a)') '   -h           Show this message'
+         call mexit(6, 0)
       else
          write(0,'(/,5x,a,a)') 'Error unknown flag: ',arg
          call mexit(6, 1)
