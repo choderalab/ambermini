@@ -148,22 +148,29 @@ parser.add_option('--prefix', dest='prefix', default='/usr/local',
                   help='Directory to install programs and files to.')
 parser.add_option('--yacc', dest='yacc', default=None,
                   help='Which YACC implementation to use. Looks for byacc '
-                  'first then looks for yacc if not given')
+                  'first then looks for bison or yacc if not given')
 
 opt, arg = parser.parse_args()
 
-if opt.yacc is None:
-    yacc = which('byacc')
-    if yacc is None:
-        yacc = which('yacc')
-        if yacc is None:
-            sys.exit('YACC cannot be found!')
+if opt.yacc is not None:
+    myyacc = opt.yacc
 else:
-    yacc = opt.yacc
+    yaccs = [which('byacc'), which('bison'), which('yacc')]
+    myyacc = None
+    for yacc in yaccs:
+        if yacc is not None:
+            myyacc = yacc
+            break
+
+if myyacc is None:
+    sys.exit('Could not find a YACC-compatible parser generator!')
 
 options['prefix'] = os.path.abspath(opt.prefix)
-options['yacc'] = yacc
+options['yacc'] = myyacc
 options['command'] = ' '.join(sys.argv)
+
+if myyacc.endswith('bison'):
+    options['yacc'] += ' -y'
 
 with open(os.path.join(cwd, 'config.h'), 'w') as f:
     f.write(CONFIG_H % options)
