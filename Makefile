@@ -12,7 +12,7 @@ all: prep libs
 install: all
 	mkdir -p $(PREFIX)/bin $(PREFIX)/share
 	cd bin && /bin/mv $(PROGS) $(PREFIX)/bin
-	cp -r share/amber $(PREFIX)/share/
+	cp -r share/amber/dat $(PREFIX)
 
 prep:
 	mkdir -p bin
@@ -38,4 +38,4 @@ clean:
 
 uninstall:
 	cd $(PREFIX)/bin && rm -f $(PROGS)
-	rm -fr $(PREFIX)/share/amber
+	rm -fr $(PREFIX)/dat

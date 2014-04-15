@@ -6,6 +6,6 @@
 amberhome=`dirname $0`
 
 # Point AMBERHOME to the location that has dat/leap
-export AMBERHOME="$amberhome/../share/amber"
+export AMBERHOME="$amberhome/.."
 
 `dirname $0`/antechamber_pvt $@
