@@ -161,7 +161,7 @@ if opt.yacc is None:
 else:
     yacc = opt.yacc
 
-options['prefix'] = opt.prefix
+options['prefix'] = os.abspath(opt.prefix)
 options['yacc'] = yacc
 options['command'] = ' '.join(sys.argv)
 
