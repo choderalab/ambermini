@@ -6897,6 +6897,7 @@ if (bPolar && GDefaults.iIPOL <= 0) // NOT allowed to save IPOL=0 for polarizabl
     VarArrayDestroy(&vaExcludedCount);
     VarArrayDestroy(&vaNBIndex);
     VarArrayDestroy(&vaNonBonds);
+    fclose( fCrd );
 
 }
 
@@ -8528,6 +8529,7 @@ IX_DESC         iResIx;
     VarArrayDestroy( &vaExcludedCount );
     VarArrayDestroy( &vaNBIndex );
     VarArrayDestroy( &vaNonBonds );
+    fclose( fCrd );
 
 }
 static char *prepfmt = "   %-3d %-4s  %-4s  %c      %f  %f  %f    %f\n";
