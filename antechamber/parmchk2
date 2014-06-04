@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# Shell script to wrap parmchk2 so it knows where to find the necessary data
+# files
+
+amberhome=`dirname $0`
+
+# Point AMBERHOME to the location that has dat/leap
+export AMBERHOME="$amberhome/.."
+
+`dirname $0`/parmchk2_pvt $@

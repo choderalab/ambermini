@@ -2,7 +2,7 @@ include config.h
 
 PROGS=antechamber acdoctor am1bcc antechamber_pvt atomtype bondtype charmmgen \
 		database espgen parmcal parmchk parmchk2 prepgen residuegen sqm teLeap \
-		tleap translate
+		tleap translate parmchk_pvt parmchk2_pvt
 
 all: prep libs
 	$(MAKE) antechamber

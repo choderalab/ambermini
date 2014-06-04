@@ -14,7 +14,9 @@ PROGS = \
 	$(BINDIR)/espgen$(SFX) \
 	$(BINDIR)/parmcal$(SFX) \
 	$(BINDIR)/parmchk$(SFX) \
+	$(BINDIR)/parmchk_pvt$(SFX) \
 	$(BINDIR)/parmchk2$(SFX) \
+	$(BINDIR)/parmchk2_pvt$(SFX) \
 	$(BINDIR)/prepgen$(SFX) \
 	$(BINDIR)/residuegen$(SFX) \
 	$(BINDIR)/respgen$(SFX) \
@@ -270,11 +272,17 @@ $(BINDIR)/espgen$(SFX): espgen.o
 $(BINDIR)/parmcal$(SFX): parmcal.o
 	$(CC) $(CFLAGS) $(AMBERCFLAGS) $(LDFLAGS) $(AMBERLDFLAGS) parmcal.o $(LM) -o $(BINDIR)/parmcal$(SFX)
 
-$(BINDIR)/parmchk$(SFX): parmchk.o
-	$(CC) $(CFLAGS) $(AMBERCFLAGS) $(LDFLAGS) $(AMBERLDFLAGS) parmchk.o $(LM) -o $(BINDIR)/parmchk$(SFX)
+$(BINDIR)/parmchk$(SFX):
+	/bin/cp -L parmchk $(BINDIR)
 
-$(BINDIR)/parmchk2$(SFX): parmchk2.o
-	$(CC) $(CFLAGS) $(AMBERCFLAGS) $(LDFLAGS) $(AMBERLDFLAGS) parmchk2.o $(LM) -o $(BINDIR)/parmchk2$(SFX)
+$(BINDIR)/parmchk_pvt$(SFX): parmchk.o
+	$(CC) $(CFLAGS) $(AMBERCFLAGS) $(LDFLAGS) $(AMBERLDFLAGS) parmchk.o $(LM) -o $(BINDIR)/parmchk_pvt$(SFX)
+
+$(BINDIR)/parmchk2$(SFX):
+	/bin/cp -L parmchk2 $(BINDIR)
+
+$(BINDIR)/parmchk2_pvt$(SFX): parmchk2.o
+	$(CC) $(CFLAGS) $(AMBERCFLAGS) $(LDFLAGS) $(AMBERLDFLAGS) parmchk2.o $(LM) -o $(BINDIR)/parmchk2_pvt$(SFX)
 
 $(BINDIR)/parmjoin$(SFX): parmjoin.o
 	$(CC) $(CFLAGS) $(AMBERCFLAGS) $(LDFLAGS) $(AMBERLDFLAGS) parmjoin.o -o $(BINDIR)/parmjoin$(SFX)
