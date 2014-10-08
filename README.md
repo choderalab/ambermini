@@ -15,7 +15,7 @@ Disclaimer
 While this package is derived from the AmberTools source code (see
 http://ambermd.org), it is *NOT* supported or maintained by the Amber community.
 
-If you need support or plan to use the tools here directly, you are recommended
+If you need support or plan to use these tools directly, you are recommended
 to use the official release of AmberTools.
 
 
