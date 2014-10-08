@@ -41,6 +41,9 @@ To uninstall
 Prerequisites
 -------------
 byacc or yacc
+
 flex
+
 Fortran and C compiler
+
 Python
