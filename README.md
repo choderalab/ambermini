@@ -40,7 +40,7 @@ To uninstall
 
 Prerequisites
 -------------
-byacc or yacc
+byacc, yacc, or bison
 
 flex
 
