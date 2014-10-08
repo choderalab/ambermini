@@ -25,9 +25,11 @@ For Developers
 To install
 ----------
 
-`./configure --prefix <destination>`
+```
+./configure --prefix <destination>
 make
 make install
+```
 
 
 To uninstall
