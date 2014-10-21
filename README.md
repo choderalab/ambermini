@@ -1,8 +1,8 @@
-ambermini
-=========
+To obtain AmberTools, go to [the Amber webpage](http://ambermd.org).
 
-A stripped-down set of just antechamber, sqm, and tleap.
+**NOTE: This is not an officially-supported AmberTools distribution.**
 
+`ambermini` is an internal dependency for [omnia](http://omnia.md), and contains a stripped-down set of just antechamber, sqm, and tleap.
 
 To install
 ==========
