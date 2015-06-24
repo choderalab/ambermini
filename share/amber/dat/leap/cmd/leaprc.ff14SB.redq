@@ -4,6 +4,10 @@ logFile leap.log
 # ----- NOTE: this is designed for PDB format 3!
 #    Uses frcmod.ff14SB for proteins; ff99bsc0 for DNA; ff99bsc0_chiOL3 for RNA
 #
+#    Uses reduced charges: charged side chains and terminii for proteins
+#       have a net charge of +/- 0.5 (instead of 1); phosphates in nucleic
+#       acids have a net charge of -0.2 (rather than -1)
+#
 #	load atom type hybridizations
 #
 addAtomTypes {
@@ -99,11 +103,12 @@ parm10 = loadamberparams parm10.dat
 frcmod14SB = loadamberparams frcmod.ff14SB
 #
 #	Load main chain and terminating amino acid libraries, nucleic acids
+#     (reduced charge versions)
 #
-loadOff amino12.lib
-loadOff aminoct12.lib
-loadOff aminont12.lib
-loadOff nucleic12.lib
+loadOff amino12.redq.lib
+loadOff aminoct12.redq.lib
+loadOff aminont12.redq.lib
+loadOff nucleic12.redq.lib
 #
 #       Load water and ions
 # 

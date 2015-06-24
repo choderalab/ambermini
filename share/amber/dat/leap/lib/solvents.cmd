@@ -281,7 +281,7 @@ zMatrix T4E  {
 
 
 #
-#  OPC water (Izadi, Anandakrishnan & Onufriev, 2014, In Prep)
+#  OPC water (JPCL, 2014, 5 (21), pp 3863–3871)
 #
 
 h1 = createAtom  H1   HW  0.679142
