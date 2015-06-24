@@ -28,7 +28,7 @@ SHELL=/bin/sh
 VPATH=
 
 #SQMOBJ = Objects specific to the standalone SQM
-SQMOBJ= file_io_dat.o constants.o findmask.o sqm.o \
+SQMOBJ= file_io_dat.o constants.o findmask.o sqm.SQM.o \
 	xmin.o xminC.o \
 	amopen.o mexit.o assert.o \
 	timer_dummy.o nmlsrc.o \
