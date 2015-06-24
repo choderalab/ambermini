@@ -65,5 +65,5 @@ common/memory/ &
 ! Modified by WJM
  !Hai Nguyen: add GB arrays here
 
-! BC_MEMORY is the size of the MEMORY common block
-#define BC_MEMORY 156
+! MEMORY_H_BC_MEMORY is the size of the MEMORY common block
+#define MEMORY_H_BC_MEMORY 156
