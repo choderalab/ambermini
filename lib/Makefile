@@ -24,7 +24,7 @@ PREC=DPREC
 include ../config.h
 
 OBJ=  \
-sys.o wallclock.o random.o veclib.o amopen.o mexit.o nxtsec.o rgroup.o \
+sys.o wallclock.o veclib.o amopen.o mexit.o nxtsec.o rgroup.o \
 rfree.o matinv.o
 
 #  default rules for Fortran and C compilation:
@@ -52,8 +52,8 @@ new2oldparm$(SFX):  new2oldparm.o nxtsec.o
 			nxtsec.o $(LDFLAGS) $(AMBERLDFLAGS)
 
 
-sys.a:   sys.o wallclock.o random.o veclib.o
-		$(AR) sys.a sys.o wallclock.o random.o veclib.o
+sys.a:   sys.o wallclock.o veclib.o
+		$(AR) sys.a sys.o wallclock.o veclib.o
 		$(RANLIB) sys.a
 
 sys2.a:            $(OBJ)

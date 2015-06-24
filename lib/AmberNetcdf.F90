@@ -33,6 +33,8 @@ module AmberNetcdf_mod
   character(4), parameter  :: NCBINS = "bins"
   double precision, parameter :: velocityScale = 20.455d0
 
+  logical, public, save :: verbose_netcdf = .true.
+
   public NC_create, NC_setupAmberNetcdf, NetcdfFileExists, NC_error, &
          NC_openRead, NC_openWrite, &
          NC_setupMdcrd, NC_defineRemdIndices, NC_close, &
@@ -55,9 +57,11 @@ logical function NC_error(err, location)
 
   NC_error=.false.
   if (err .ne. nf90_noerr) then
-    write(mdout, '(a,a)') 'NetCDF error: ', trim(nf90_strerror(err))
-    if (present(location)) then
-      write(mdout, '(a,a)') '  at ', location
+    if (verbose_netcdf) then
+      write(mdout, '(a,a)') 'NetCDF error: ', trim(nf90_strerror(err))
+      if (present(location)) then
+        write(mdout, '(a,a)') '  at ', location
+      end if
     end if
     NC_error=.true.
   endif
@@ -71,7 +75,7 @@ subroutine checkNCerror(err, location)
   implicit none
   integer, intent(in)                :: err
   character(*), optional, intent(in) :: location
-  if (err .ne. nf90_noerr) then
+  if (err .ne. nf90_noerr .and. verbose_netcdf) then
     write(mdout, '(a,a)') 'NetCDF error: ', trim(nf90_strerror(err))
     if (present(location)) then
       write(mdout, '(a,a)') '  at ', location
@@ -135,7 +139,6 @@ subroutine NC_close(ncid)
   use netcdf
   implicit none
   integer, intent(in) :: ncid
-  integer ierr
   call checkNCerror(nf90_close( ncid ), 'Closing NetCDF file')
 end subroutine NC_close
 
@@ -308,8 +311,7 @@ logical function NC_setupTime(ncid, timeVID)
   integer, intent(in)  :: ncid
   integer, intent(out) :: timeVID
   NC_setupTime=.true.
-  if ( NC_error( nf90_inq_varid(ncid, NCTIME, timeVID),&
-                   'Getting Netcdf time VID')) return
+  if (nf90_inq_varid(ncid, NCTIME, timeVID) .ne. NF90_NOERR) return
   if (CheckAttrText(ncid, timeVID, "units", "picosecond")) return
   NC_setupTime=.false.
 end function NC_setupTime
@@ -657,8 +659,11 @@ logical function NC_setupMdcrd(ncid, title, nframes, ncatom, &
     write(mdout,'(a)') 'Error: NetCDF file has no coordinates.'
     return
   endif
-  ! Setup Time
-  if (NC_setupTime( ncid, timeVID )) return
+  ! Setup Time - Allowed to fail, these values are not needed for traj.
+  if (NC_setupTime( ncid, timeVID )) then
+    write(mdout,'(a)'), 'Warning: NetCDF trajectory has no time values.'
+    timeVID = -1
+  endif
   ! Setup box: If no box info cellLengthVID/cellAngleVID will be set to
   !            -1. It is the responsibility of the calling routine to
   !            decide if this is OK.
@@ -751,7 +756,7 @@ logical function NC_defineRemdIndices(ncid, remd_dimension, indicesVID, &
   integer, optional, intent(out)    :: remd_groupsVID
   ! Local vars
   integer, dimension(NF90_MAX_DIMS) :: dimensionID
-  integer :: remd_dim_id, remd_dimtype_var_id, old_mode, ierr
+  integer :: remd_dim_id, remd_dimtype_var_id, old_mode
 
   NC_defineRemdIndices=.true.
   ! If ncid is < 0 we are not writing coords, exit cleanly
@@ -832,10 +837,15 @@ logical function NC_setupRestart(ncid, title, ncatom, coordVID, &
     write(mdout,'(a)') 'Error: NetCDF file has no coordinates.'
     return
   endif 
-  ! Setup time
-  if (NC_setupTime(ncid, timeVID)) return
-  if (NC_error(nf90_get_var(ncid, timeVID, Time),&
-                "read_nc_restart(): Getting restart time")) return
+  ! Setup time. Allowed to fail since not all restarts have this.
+  if (NC_setupTime(ncid, timeVID)) then
+    write(mdout,'(a)') 'Warning: NetCDF restart has no time value.'
+    Time = 0.d0
+    timeVID = -1
+  else
+    if (NC_error(nf90_get_var(ncid, timeVID, Time),&
+                  "read_nc_restart(): Getting restart time")) return
+  endif
   ! Temperature
   TempVID = NC_setupTemperature(ncid) 
   ! All is well
