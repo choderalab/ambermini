@@ -59,7 +59,16 @@ size_t build_dat_path( char *path, const char *command, size_t sizeof_path, int 
 void default_minfo(MOLINFO * minfo) {
 	strcpy((*minfo).dkeyword, "CARTESIAN AM1 STANDARD DIRECT OPT=BFGS XTEST=0.0001");
 	strcpy((*minfo).mkeyword, "AM1 ANALYT MMOK GEO-OK PRECISE");
-	strcpy((*minfo).skeyword, "  qm_theory='AM1', grms_tol=0.0002,\n  tight_p_conv=1, scfconv=1.d-10, ");
+
+/* RCW Below is the old setting from AMBER 12, 14. It is ridiculously tight. 
+ * As of AmberTools 15 remove tight_p_conv and set grms_tol to 0.0005
+ * tests show it makes no major difference to the charges - max diff = 0.001.
+ *
+ * strcpy((*minfo).skeyword, "  qm_theory='AM1', grms_tol=0.0002,\n  tight_p_conv=1, scfconv=1.d-10, ");
+ *
+*/
+	strcpy((*minfo).skeyword, "  qm_theory='AM1', grms_tol=0.0005,\n  scfconv=1.d-10, ");
+
 	strcpy((*minfo).gkeyword, "#HF/6-31G* SCF=tight Test Pop=MK iop(6/33=2) iop(6/42=6) opt");
 	strcpy((*minfo).gesp,   "g09.gesp");
 	strcpy((*minfo).ekeyword, "");
