@@ -38,7 +38,7 @@ module opnq
    
   contains
   
-subroutine Opnq_fock(fock, density)
+subroutine Opnq_fock(fock)
 !***********************************************************************        
 !                                                                               
 !  This subroutine calculates the OPNQ contributions to the Fock matrix
@@ -48,17 +48,15 @@ subroutine Opnq_fock(fock, density)
 !***********************************************************************  
     use constants, only:  A_TO_BOHRS, zero     
     use ElementOrbitalIndex, only:MaxValenceOrbitals 
-    use qmmm_module, only : qmmm_struct, qm2_struct, qm2_params, qmmm_opnq
+    use qmmm_module, only : qmmm_struct, qm2_params, qmmm_opnq
     implicit none
 
     _REAL_, intent(inout) :: fock(:)
-    _REAL_, intent(in) :: density(:)
     
 ! local
     integer::i,j,iqm, jmm, norbital
     _REAL_::fock_opnq, eOPNQ, LJ 
     _REAL_::fock_opnq_pair, eOPNQ_pair, LJ_pair
-    _REAL_,dimension(MaxValenceOrbitals)::fock_atom_diag, density_atom_diag 
 
 !  Check if initilization is necessary
     if (initialized) then
@@ -89,11 +87,6 @@ subroutine Opnq_fock(fock, density)
        norbital=qm2_params%natomic_orbs(iqm)
        
        fock_opnq=zero
-       do i=qm2_params%orb_loc(1,iqm),qm2_params%orb_loc(2,iqm)
-         j=qm2_params%pascal_tri2(i)
-         density_atom_diag(i)=density(j)
-       end do ! i
-       
        do jmm=1,qmmm_struct%qm_mm_pairs
            call Opnq_fock_atom_pair(iqm, jmm, eOPNQ_pair, fock_opnq_pair)
            call Opnq_LJ_atom_pair(iqm, jmm, LJ_pair) 
@@ -127,7 +120,7 @@ subroutine Opnq_fock_atom_pair(iqm, jmm, eOPNQ_pair, fock_opnq_pair, dx, dy, dz 
 !                                         
 !*********************************************************************** 
     use constants, only:  A_TO_BOHRS, AU_TO_EV, zero     
-    use qmmm_module, only : qmmm_struct, qm2_struct, qm2_params, qmmm_opnq
+    use qmmm_module, only : qmmm_struct, qm2_params, qmmm_opnq
     use QM2_parameters, only : core_chg
     use opnq_switching, only : switchoff
     
@@ -138,7 +131,7 @@ subroutine Opnq_fock_atom_pair(iqm, jmm, eOPNQ_pair, fock_opnq_pair, dx, dy, dz 
     _REAL_, intent(out), optional::dx, dy, dz
     
 !local
-    integer::i, jmm_index, qmtype, mmtype, atomic_number
+    integer::jmm_index, qmtype, mmtype, atomic_number
     _REAL_:: qm_charge, r2, rij, rijInAu, core_charge
     _REAL_::  ee, dEdQi, dEdQj, switching, dSwitching, x, y, z, temp
     type(MM_opnq)::myOpnq
@@ -202,7 +195,7 @@ subroutine Opnq_fock_atom_pair(iqm, jmm, eOPNQ_pair, fock_opnq_pair, dx, dy, dz 
                    dx,dy,dz)  
 
                  if (qmmm_opnq%switching) then
-                     temp=-dSwitching/rij
+                     temp= ee * ( -dSwitching/rij )
 
                      x=qmmm_struct%qm_xcrd(1,jmm)-qmmm_struct%qm_coords(1,iqm)
                      dx=dx*switching + x*temp
@@ -241,7 +234,7 @@ subroutine Opnq_LJ_atom_pair(iqm, jmm, LJ_pair, dx, dy, dz)
 !                                         
 !*********************************************************************** 
     use constants, only:  KCAL_TO_EV, zero     
-    use qmmm_module, only : qmmm_struct, qm2_struct, qm2_params, qmmm_opnq
+    use qmmm_module, only : qmmm_struct, qm2_params, qmmm_opnq
     use opnq_switching, only : switchoff
     
     implicit none
@@ -251,7 +244,7 @@ subroutine Opnq_LJ_atom_pair(iqm, jmm, LJ_pair, dx, dy, dz)
     _REAL_, intent(out), optional::dx, dy, dz
     
 !local
-    integer::j, jmm_index, qmType, mmtype, mmtype_for_iqm
+    integer::jmm_index, qmType, mmtype, mmtype_for_iqm
     _REAL_:: r2, rij
     _REAL_::temp1, temp2, temp3, temp4, x, y, z, switching, dSwitching
    

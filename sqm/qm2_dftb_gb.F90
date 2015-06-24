@@ -24,7 +24,10 @@ subroutine qm2_dftb_gb_shift(scf_mchg)
 
 
 !! Modules
-   use qmmm_module, only: qmmm_struct, qm_gb, qmmm_mpi, qmmm_scratch
+   use qmmm_module, only: qmmm_struct, qm_gb, qmmm_mpi
+#ifdef MPI
+   use qmmm_module, only: qmmm_scratch
+#endif
    use qm2_dftb_module, only: ks_struct
    use constants, only: BOHRS_TO_A, zero
 
@@ -35,10 +38,11 @@ subroutine qm2_dftb_gb_shift(scf_mchg)
 
 #ifdef MPI
    include 'mpif.h'
+   integer :: ier
 #endif
 
 !! Locals
-   integer :: i, ier
+   integer :: i
 
    !Step 1 - calculate the potential at QM atoms due to QM atoms with current Mulliken charges
    !Parallel

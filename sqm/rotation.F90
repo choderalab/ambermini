@@ -60,7 +60,7 @@ subroutine GenerateRotationMatrix(xij, matrix, hasDOrbital)
       _REAL_,PARAMETER::SMALL=1.0D-07
       _REAL_,PARAMETER::PT5SQ3=0.8660254037841D0, PT5=half, PT25=fourth
 
-      integer::i,j,k,l, kl,ij
+      integer::k,l, kl
       _REAL_::P(3,3),D(5,5) 
       _REAL_::x11, x22, x33, B, R
       _REAL_:: CA, CB, C2A, C2B, SA, SB, S2A, S2B
@@ -759,7 +759,7 @@ SUBROUTINE RotateCore(IA,JA,IORBS,JORBS,IP,JP,CORE,matrix,H)
 
 !local
 
-      integer::i,j,k,l,is, ii,jj,kk
+      integer::i,j,k,l,is, kk
       integer::ix,iy,iz,idp,idd,id
       _REAL_::HPP(6),HDP(15),HDD(15)
       

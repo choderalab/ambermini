@@ -134,7 +134,7 @@ subroutine InitializeParameter(currentTheory)
   
 ! local variables
 
-  integer :: atomic_number, n, i, j
+  integer :: atomic_number, n, i
   logical :: userDefinedVariable
   _REAL_ ::  tempIntegerInReal
   

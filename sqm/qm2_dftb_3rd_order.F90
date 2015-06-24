@@ -4,7 +4,7 @@
 #include "../include/dprec.fh"
 
 
-subroutine check_dftb_3rd_order(dftb_3rd_order)
+subroutine check_dftb_3rd_order()
 
    ! Called during the reading of the qmmm namelist, this
    ! routine checks the validity of the 3rd order keyword.
@@ -17,27 +17,25 @@ subroutine check_dftb_3rd_order(dftb_3rd_order)
    !  '<file>' -->   Reads the namelist from file <file>. (NOT IMPLEMENTED YET)
 
    use qm2_dftb_module, only: DFTB_3rd_order_str
+
    implicit none
-   character(len=4), intent(in) :: dftb_3rd_order
 
    dftb_3rd_order_str%do_3rd_order = .true.
    return
    
 end subroutine check_dftb_3rd_order
 
-subroutine qm2_dftb_read_3rd_order(qm_natoms,qm_ntypes,izp,skroot) 
+subroutine qm2_dftb_read_3rd_order(qm_natoms,skroot) 
 
    use qmmm_module, only : qmmm_nml,qmmm_struct
    use ElementOrbitalIndex, only : elementSymbol
-   use qm2_dftb_module, only: mol, DFTB_3rd_order_str
+   use qm2_dftb_module, only: DFTB_3rd_order_str
    implicit none
 #  include "files.h"
 
 
 !! Passed in:
    integer, intent(in ) :: qm_natoms ! qmmm_struct%nquant_nlink
-   integer, intent(in ) :: qm_ntypes ! qmmm_struct%qm_ntypes
-   integer, intent(in ) :: izp(*)    ! izp_str%izp
    character(len=*), intent(in ) :: skroot ! The path to the sk-files directory
    
 !! Locals

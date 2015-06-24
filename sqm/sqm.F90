@@ -7,8 +7,9 @@
 
 program sqm
 
-   use qmmm_module, only : qmmm_nml, qmmm_struct, qmmm_mpi, qm2_struct, qm_gb, &
+   use qmmm_module, only : qmmm_nml, qmmm_struct, qmmm_mpi, qm2_struct, &
                            qmmm_vsolv, qm2_params, deallocate_qmmm
+   use sqm_qmmm_read_and_alloc, only : read_qmmm_nm_and_alloc
    use qm2_dftb_module, only : ks_struct
    use constants, only : KCAL_TO_EV, EV_TO_KCAL
    use qm2_pm6_hof_module, only : cct, nsp2, print, strlen
@@ -18,7 +19,7 @@ program sqm
 
    implicit none
 
-   _REAL_ x(3000), f(3000), escf, reff(1000), onereff(1000), work(18000)
+   _REAL_ x(3000), f(3000), escf
    character(len=8) atnam(1000)
    _REAL_ born_radii(1000), one_born_radii(1000)
    _REAL_ intdiel, extdiel, Arad
@@ -87,13 +88,6 @@ program sqm
          owrite = 'R'   ! output status: Replace
       else if (arg == ' ') then
          continue
-      else if (arg == '-h') then
-         write(6,'(a)') 'sqm [-O] -i <input> -o <output>'
-         write(6,'(a)') '   -O           Overwrite output file if it exists'
-         write(6,'(a)') '   -i <input>   Input file'
-         write(6,'(a)') '   -o <output>  Output file'
-         write(6,'(a)') '   -h           Show this message'
-         call mexit(6, 0)
       else
          write(0,'(/,5x,a,a)') 'Error unknown flag: ',arg
          call mexit(6, 1)
@@ -116,7 +110,7 @@ program sqm
    write(6,*) ''                  
 
    call getsqmx( natom, x, atnam, atnum, ncharge, excharge, chgnam, chgatnum )
-   call read_qmmm_nm_and_alloc(natom,igb,atnam,atnum,maxcyc,grms_tol,ntpr, &
+   call read_qmmm_nm_and_alloc(natom,igb,atnum,maxcyc,grms_tol,ntpr, &
                                ncharge,excharge,chgatnum )
    call qm_assign_atom_types
 
@@ -250,8 +244,7 @@ subroutine sqm_energy(natom,coords,escf, &
 !    one_born_radii(1->natom)  - 1.0d0/born_radii(i)
 !    scf_mchg                  - nquant long, gets filled with the mulliken charges during scf.
 
-   use qmmm_module, only : qmmm_nml,qmmm_struct, qm2_struct, qm2_rij_eqns, &
-                           qm_gb, qmmm_mpi, qmmm_scratch, qm2_params
+   use qmmm_module, only : qmmm_nml,qmmm_struct, qm_gb, qmmm_mpi
    use constants, only : EV_TO_KCAL, KCAL_TO_EV, zero, one, alpb_alpha
   
    implicit none
@@ -271,17 +264,10 @@ subroutine sqm_energy(natom,coords,escf, &
    _REAL_ , intent(inout) :: scf_mchg(qmmm_struct%nquant_nlink)
 
 !Locals
-   _REAL_ , dimension(2,3) :: bxbnd
-   _REAL_ :: mulliken_charge, total_mulliken_charge, total_energy
    _REAL_ :: alpb_beta
-   _REAL_ :: scaled_mm_charges(2)
 
    integer :: ier=0
-   integer i, j, offset, qm_no, i3
-
-!Locals for link atoms
-   _REAL_ :: forcemod(3)
-   integer :: lnk_no, mm_no
+   integer i, i3
 
   ! interface
   !   subroutine qm2_calc_dipole(coord,mass,ipres,lbres,nres)
@@ -338,7 +324,7 @@ subroutine sqm_energy(natom,coords,escf, &
           write(6,'(/80(1H-)/''  QM CALCULATION INFO'',/80(1H-))')
        end if
 
-       call qm2_load_params_and_allocate() !Load the parameters
+       call qm2_load_params_and_allocate(.false.) !Load the parameters
              !Also does a lot of memory allocation and pre-calculates all
              !the STO-6G orbital expansions.
 
@@ -362,8 +348,7 @@ subroutine sqm_energy(natom,coords,escf, &
    !============================
    ! Calculate SCF Energy
    !============================
-   call qm2_energy(escf, scf_mchg, natom, born_radii, one_born_radii, &
-                   coords, scaled_mm_charges)
+   call qm2_energy(escf, scf_mchg, natom, born_radii, one_born_radii)
 
    !=============================
    !   Print Mulliken Charges
@@ -523,8 +508,8 @@ subroutine getsqmx(natom,x,atnam,atnum,ncharge,excharge,chgnam,chgatnum)
 
    implicit none
    _REAL_ x(*)
-   integer i,j,i3,lun
-   integer natom,ier,atnum(*)
+   integer i,i3,lun
+   integer natom,atnum(*)
    character(len=8) atnam(*)
    character(len=80) line
    ! test-local

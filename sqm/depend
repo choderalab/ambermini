@@ -289,7 +289,6 @@ qm2_dftb_ewevge.o:   qm2_dftb_ewevge.F90
 
 qm2_dftb_externalshift.o: \
                     ../include/dprec.fh\
-                    qm2_dftb_module.o\
                     qmmm_module.o\
                     constants.o
 
@@ -392,7 +391,6 @@ qm2_dftb_mulliken.o:   qm2_dftb_mulliken.F90
 
 qm2_dftb_read_cm3.o: \
                     ../include/dprec.fh\
-                    qmmm_module.o\
                     qm2_dftb_module.o
 
 
@@ -1004,6 +1002,7 @@ sqm.o: \
                     ../include/dprec.fh\
                     ../include/assert.fh\
                     qmmm_module.o\
+                    qm2_read_nm_and_alloc.o\
                     qm2_dftb_module.o\
                     constants.o\
                     qm2_pm6_hof_module.o\

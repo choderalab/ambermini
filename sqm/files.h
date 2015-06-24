@@ -7,14 +7,14 @@ character(len=4096) groupbuffer
 character(len=MAX_FN_LEN) mdin, mdout, inpcrd, parm, restrt, &
       refc, mdvel, mden, mdcrd, mdinfo, mtmd, nmrf, mincor, &
       vecs, radii, freqe,redir(9),rstdip,mddip,inpdip,groups,gpes, &
-      cpin, cpout, cprestrt, evbin, evbout, mmtsb_setup_file,pimdout, &
+      cpin, cpout, cprestrt, evbin, evbout, pimdout, &
       inptraj
 
 character owrite, facc
 common /files/ groupbuffer, mdin, mdout, inpcrd, parm, restrt, &
       refc, mdvel, mden, mdcrd, mdinfo, mtmd, nmrf, mincor, &
       vecs, radii, freqe, owrite, facc,rstdip,mddip,inpdip,groups,gpes, &
-      cpin, cpout, cprestrt, evbin, evbout, mmtsb_setup_file,pimdout, &
+      cpin, cpout, cprestrt, evbin, evbout, pimdout, &
       inptraj
 
 #ifdef RISM
@@ -39,10 +39,6 @@ parameter ( INPTRAJ_UNIT = 24 )
 parameter ( MDEN_UNIT   = 15 )
 parameter ( MDVEL_UNIT  = 13 )
 integer, parameter :: CNSTPH_UNIT = 18, CPOUT_UNIT = 19
-
-! 18 was picked because CNSTPH uses it; conflicts are not expected.
-integer     MMTSB_UNIT
-parameter ( MMTSB_UNIT = 18 )
 
 !!
 !! EVB I/O unit

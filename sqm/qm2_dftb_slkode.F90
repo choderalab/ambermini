@@ -13,7 +13,7 @@ subroutine slkmatrices_a_to_bohrs(i,j,qm_coords,ham,over,matsize)
    !   over: The Overlap matrix
 
    use constants, only: A_TO_BOHRS
-   use qm2_dftb_module, only: lmax, izp_str
+   use qm2_dftb_module, only: izp_str
 
    implicit none
 
@@ -63,7 +63,7 @@ subroutine slkmatrices(i,j,qm_coords,ham,over,matsize)
    !   ham:  The Hamiltonian matrix
    !   over: The Overlap matrix
 
-   use qm2_dftb_module, only: lmax, izp_str
+   use qm2_dftb_module, only: izp_str
    use constants, only: A_TO_BOHRS
 
    implicit none
@@ -120,7 +120,7 @@ subroutine slkode(dist,i,j,em,LDIM,iovpar)
 
   !Locals
   _REAL_  :: x(6),x2(6),r2,r2i,ri
-  integer :: l,k, maxmax, minmax
+  integer :: l, maxmax, minmax
 
 
 
@@ -147,21 +147,21 @@ subroutine slkode(dist,i,j,em,LDIM,iovpar)
      minmax = min(lmax(i),lmax(j))
 
      ! Get s-s interactions
-     call skss(x,x2,i,j,r2,iovpar,em,ldim)
+     call skss(i,j,r2,iovpar,em)
      if (maxmax <= 1) return
 
      ! Get s-p and p-p interactions
      if(minmax >= 2)then
         call skpp(x,x2,i,j,r2,iovpar,em(2,2),ldim)
-        call sksp(x,x2,i,j,r2,iovpar,em(1,2),em(2,1),ldim)
+        call sksp(x,i,j,r2,iovpar,em(1,2),em(2,1),ldim)
         if(i /= j)then
-           call sksp(x,x2,j,i,r2,iovpar,dummy,em(2,1),ldim)
+           call sksp(x,j,i,r2,iovpar,dummy,em(2,1),ldim)
         endif
      else
         if(lmax(j) >= 2)then
-           call sksp(x,x2,i,j,r2,iovpar,em(1,2),em(2,1),ldim)
+           call sksp(x,i,j,r2,iovpar,em(1,2),em(2,1),ldim)
         else
-           call sksp(x,x2,j,i,r2,iovpar,dummy,em(2,1),ldim)
+           call sksp(x,j,i,r2,iovpar,dummy,em(2,1),ldim)
         endif
      endif
      if(maxmax <= 2) return

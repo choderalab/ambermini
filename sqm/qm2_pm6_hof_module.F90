@@ -391,7 +391,7 @@ contains
     integer, intent(in)    :: n, i, j, k
     _REAL_,  intent(inout) :: dxyz(3,*)
 
-    _REAL_ :: ea, eb, ec, ab, ac, bc, tot, cosa, cosb, cosc
+    _REAL_ :: ea, eb, ec, ab, ac, bc, cosa, cosb, cosc
     _REAL_ :: vea(3), veb(3), vec(3), vab(3), vac(3), vbc(3)
     _REAL_ :: tmp, tmp1, tmp2, ua, ub, uc
     _REAL_ :: grad(3,4) ! n/e=1, i/a=2, j/b=3, k/c=4

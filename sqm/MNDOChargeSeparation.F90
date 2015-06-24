@@ -210,7 +210,7 @@ function GetOneCenter2Electron(qmType, index) result(integral)
    _REAL_::ES, EP, ED
    _REAL_::R016, R036, R066, R155, R125, R244, R236, R266, R234, R246
    _REAL_::R355, R466
-   _REAL_::F0DD, F2DD, F0PD, F2FD, F4DD, F2PD, G1PD, G3PD
+   _REAL_::F0DD, F2DD, F0PD, F4DD, F2PD, G1PD, G3PD
   
    if((qmType_saved.ne.qmType) .or. (.not.initialized)) then
 

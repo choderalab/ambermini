@@ -7,6 +7,7 @@ subroutine qm2_scf(fock_matrix, hmatrix, W, escf, den_matrix, scf_mchg, num_qmmm
 !---------------------------------------------------------------------
 ! This is the main SCF routine.
 ! Written by Ross Walker (TSRI, 2005)
+! Bugfixes and Optimization for AmberTools 15 by Ross Walker (SDSC)
 !
 ! This routine generates a self consistent field
 ! and returns the energy in the variable ESCF.
@@ -29,8 +30,8 @@ subroutine qm2_scf(fock_matrix, hmatrix, W, escf, den_matrix, scf_mchg, num_qmmm
 !                           J. COMP. CHEM.,3, 227, (1982)
 !---------------------------------------------------------------------
 
-    use qmmm_module, only : qmmm_struct, qm2_struct, qm2_params, qmewald, qmmm_nml, &
-                            qm_gb, qmmm_mpi, qmmm_scratch
+    use qmmm_module, only : qmmm_struct, qm2_struct, qmewald, qmmm_nml, &
+                            qmmm_mpi
     use constants, only : EV_TO_KCAL, zero, two
 
     use qm2_iterator_mod, only : scf_iterator_value     ! this is an integer function
@@ -93,22 +94,13 @@ subroutine qm2_scf(fock_matrix, hmatrix, W, escf, den_matrix, scf_mchg, num_qmmm
 ! current_scf_errval is a function
     _REAL_ :: current_scf_errval
 
-!qm2_Helect is a function
-    _REAL_ qm2_HELECT
-
 !dlamch is a function
     _REAL_ dlamch
 
 #ifdef MPI
-    _REAL_ tmp_recv(2)
     logical :: conv_controls(4)
-# ifndef USE_MPI_IN_PLACE
-    _REAL_ tmp_send(2)
-# endif
 #endif
     
-    integer lapack_info
-
     !AWG damping and level shifting
     _REAL_, allocatable :: old_fock_matrix(:)
     logical :: damping, vshifting
@@ -229,8 +221,13 @@ subroutine qm2_scf(fock_matrix, hmatrix, W, escf, den_matrix, scf_mchg, num_qmmm
         end do
       end if
 
+#ifdef MPI
       CALL qm2_cpt_fock_and_energy(SIZE(fock_matrix), fock_matrix, hmatrix, den_matrix, &
-           & SIZE(W), W, SIZE(scf_mchg), scf_mchg, density_diff, first_iteration)  ! lam81
+           & SIZE(W), W, SIZE(scf_mchg), scf_mchg, density_diff, first_iteration)
+#else
+      CALL qm2_cpt_fock_and_energy(SIZE(fock_matrix), fock_matrix, hmatrix, den_matrix, &
+           & SIZE(W), W, SIZE(scf_mchg), scf_mchg, first_iteration)
+#endif
 
       call timer_start(TIME_QMMMENERGYSCFELEC)
 
@@ -632,7 +629,10 @@ subroutine qm2_cnvg(den_matrix, old_den_matrix, old2_density,norbs, scf_iteratio
 !           density_diff     = LARGEST DIFFERENCE BETWEEN OLD AND NEW DENSITY             
 !                    MATRIX DIAGONAL ELEMENTS                                   
 !***********************************************************************        
+#ifdef OPENMP_CNVG
       use qmmm_module, only : qm2_params
+#endif
+
       implicit none
 
 !Passed in
@@ -1151,10 +1151,9 @@ subroutine qm2_pseudo_diag(matrix,vectors,noccupied,eigen,norbs,smallsum, &
 !  MATRIX - On input should contain the matrix to be diagonalised in the 
 !           form of a packed lower half triangle.
 !
+  use qmmm_module, only : qm2_struct
 #ifdef OPENMP
-  use qmmm_module, only : qm2_struct, qmmm_mpi, qmmm_omp
-#else
-  use qmmm_module, only : qm2_struct, qmmm_mpi
+  use qmmm_module, only : qmmm_omp
 #endif
   implicit none
 
@@ -1379,6 +1378,7 @@ subroutine qm2_full_diagonalize(diag_routine,matrix,matrix_dimension,eigen_vecto
                                       !4=dspevx
                                       !5=dsyev
                                       !6=dsyevd
+                                      !7=dsyevr
 
   _REAL_, intent(inout) :: matrix(*)  !The matrix to be diagonalized
   integer, intent(in) :: matrix_dimension !The dimension of the matrix (1D).
@@ -1588,7 +1588,9 @@ SUBROUTINE qm2_diag( n, fock_matrix,    &
      & allow_pseudo_diag, density_diff, doing_pseudo_diag, & ! control
      & smallsum, abstol                 ) ! machine precision limits
 
+#ifdef MPI
   USE qmmm_module, ONLY : qmmm_mpi
+#endif
   USE qmmm_module, ONLY : qmmm_scratch
   USE qmmm_module, ONLY : qmmm_nml
   USE qmmm_module, ONLY : qm2_struct
@@ -1603,20 +1605,12 @@ SUBROUTINE qm2_diag( n, fock_matrix,    &
   _REAL_,INTENT(IN) :: smallsum
   _REAL_,INTENT(IN) :: abstol
 
-
-
-#ifdef MPI
-  include 'mpif.h'
-  integer :: ier
-#endif
-
   ! Step 1 - We haven't converged so we need to get a better Fock matrix.
   !         Diagonalise the RHF secular determinant
   ! Diagonalise the RHF secular determinant
   ! We have two options here. If we are allowed, and the density matrix 
   ! fluctuations are small enough we should do a pseudo diagonalisation 
   ! instead of a full one.
-
 
   if (allow_pseudo_diag .AND. density_diff <= qmmm_nml%pseudo_diag_criteria) then
 
@@ -1657,23 +1651,26 @@ SUBROUTINE qm2_diag( n, fock_matrix,    &
   end if !pseudo diag.
   !End of step 1
 
-
 END SUBROUTINE qm2_diag
 
 
 SUBROUTINE qm2_cpt_fock_and_energy(nfock, fock_matrix, hmatrix, den_matrix, &
-      & nW, W, nchg, scf_mchg, density_diff, first_iteration)  ! lam81
+                                   nW, W, nchg, scf_mchg, &
+#ifdef MPI
+                                   density_diff, &
+#endif
+                                   first_iteration) 
 
-  USE qmmm_module, ONLY : qmmm_nml
-  USE qmmm_module, ONLY : qmmm_mpi
-  USE qmmm_module, ONLY : qmmm_scratch
-  USE qmmm_module, ONLY : qmmm_struct
-  USE qmmm_module, ONLY : qm2_struct
-  USE qmmm_module, ONLY : qm2_params
-  USE qmmm_module, ONLY : qm_gb
-  USE qmmm_module, ONLY : qmewald
-  USE qmmm_module, ONLY : qmmm_opnq
-  USE constants, ONLY : zero
+#ifdef MPI
+  use qmmm_module, only : qmmm_mpi, qmmm_scratch
+#endif
+#ifdef SQM
+  use qmmm_module, only : qmmm_struct, qmmm_nml, qm2_struct, qm_gb, qmmm_opnq
+#else
+  use qmmm_module, only : qmmm_struct, qmmm_nml, qm2_struct, qm_gb, qmewald, &
+                          qmmm_opnq
+#endif
+  use constants, ONLY : zero
   ! module subroutines
   use qm2_fock_d, only : qm2_fock1_d, qm2_fock2_d
   use opnq, only : Opnq_fock
@@ -1688,8 +1685,10 @@ SUBROUTINE qm2_cpt_fock_and_energy(nfock, fock_matrix, hmatrix, den_matrix, &
   _REAL_ ,INTENT(IN) :: W(nW)
   INTEGER,INTENT(IN) :: nchg
   _REAL_ ,INTENT(IN) :: scf_mchg(nchg)
+#ifdef MPI
   _REAL_ ,INTENT(INOUT) :: density_diff ! COMPLETE HACK
-  LOGICAL,INTENT(IN) :: first_iteration ! lam81
+#endif
+  LOGICAL,INTENT(IN) :: first_iteration
 
   !qm2_Helect is a function
   _REAL_ qm2_HELECT
@@ -1763,7 +1762,7 @@ SUBROUTINE qm2_cpt_fock_and_energy(nfock, fock_matrix, hmatrix, den_matrix, &
   ! calculating total electronic energy
   ! AWG: So move this down after calculating the electronic energy
   if (qmmm_opnq%useOPNQ) then
-    call Opnq_fock(fock_matrix, den_matrix)
+    call Opnq_fock(fock_matrix)
   end if 
 
 #ifndef SQM
@@ -1852,8 +1851,11 @@ END SUBROUTINE qm2_cpt_fock_and_energy
 
 SUBROUTINE qm2_densmat(scf_iteration,n,den_matrix,density_diff)
 
-  USE qmmm_module, ONLY : qmmm_mpi,qm2_struct
-  USE qm2_iterator_mod, ONLY : scf_iterator_value
+#ifdef MPI
+  use qmmm_module, only : qmmm_mpi
+#endif
+  use qmmm_module, only : qm2_struct
+  use qm2_iterator_mod, only : scf_iterator_value
 
 #ifdef MPI
   USE constants, only : zero

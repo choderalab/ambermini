@@ -19,9 +19,9 @@ subroutine qm2_dftb_energy(escf,scf_mchg)
   
 !In parallel all threads enter here.
 
-   use qmmm_module, only : qmmm_nml, qmmm_struct, qm2_struct, qmmm_mpi
+   use qmmm_module, only : qmmm_nml, qmmm_struct, qmmm_mpi
    use ElementOrbitalIndex, only : elementSymbol
-   use qm2_dftb_module, only: disper,mol, lmax, izp_str,mcharge
+   use qm2_dftb_module, only: disper, lmax, izp_str
    use constants, only: AU_TO_EV, AU_TO_KCAL, A_TO_BOHRS, BOHRS_TO_A
 
    implicit none
@@ -31,12 +31,7 @@ subroutine qm2_dftb_energy(escf,scf_mchg)
    _REAL_, intent(inout) :: scf_mchg(qmmm_struct%nquant_nlink)
 
    !Locals
-   !     Calculation results
-   !
-   _REAL_ total_e, geseatom
-
-   integer k, i, j
-   integer mm_link_atom
+   integer i, j
 
    !=======================
    !     Initializaton

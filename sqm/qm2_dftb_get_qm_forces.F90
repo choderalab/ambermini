@@ -21,7 +21,7 @@ subroutine qm2_dftb_get_qm_forces(dxyzqm)
 !     coord(3,qmmm_struct%nquant_nlink) - Cartesian coordinates of qm atoms.
 !     qmmm_struct%nquant_nlink    - Total number of qm atoms. (Real + link)
 
-      use qm2_dftb_module, only : izp_str, mcharge, mol, lmax
+      use qm2_dftb_module, only : izp_str, mcharge, lmax
       use qmmm_module, only : qmmm_struct, qmmm_nml, qmmm_mpi
       use constants, only: AU_TO_KCAL, A_TO_BOHRS
 
@@ -158,8 +158,6 @@ subroutine dftb_gammamatrix_deriv(nquant_nlink,DIM,qm_coords,atomtype,u,gammamat
    _REAL_ :: r(3),gdrv
    _REAL_ :: norm
 
-   _REAL_  :: short_deriv(3), tol, basis(3,3)
-
    do i=1,nquant_nlink
       do j=1,(i-1)
          r(1:3)=(qm_coords(1:3,j)-qm_coords(1:3,i))*A_TO_BOHRS
@@ -190,7 +188,6 @@ subroutine dftb_hzero_grad(nquant_nlink,izp,lmax,qm_coords,grad)
 
    use constants, only : BOHRS_TO_A
    use qm2_dftb_module, only: NDIM,LDIM, ks_struct
-   use qmmm_module, only : qmmm_nml
    implicit none
 
 ! Passed in:
@@ -214,9 +211,9 @@ subroutine dftb_hzero_grad(nquant_nlink,izp,lmax,qm_coords,grad)
    _REAL_ , pointer :: buh(:,:) ! (ldim,ldim)
 
 !!Locals:
-   integer :: m,n,i,j,k,lj,lk,mj,mk
-   integer :: mu,nu,izpj,izpk,indj,indk
-   _REAL_  :: ocmcc,dgrh,xhelp,dgrs,dgr,dtmp
+   integer :: m,n,i,j,k
+   integer :: mu,nu
+   _REAL_  :: ocmcc,dgrh,xhelp,dgrs,dtmp
 !!new locals:
    _REAL_  :: p(ndim,ndim),ep(ndim,ndim)
    integer :: iend(nquant_nlink)

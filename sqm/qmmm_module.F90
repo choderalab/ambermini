@@ -18,7 +18,7 @@
 
 module qmmm_module
 
-  use constants         , only : A2_TO_BOHRS2, one, zero
+  use constants         , only : A2_TO_BOHRS2, one, zero, MAX_QUANTUM_ATOMS
   use qmmm_nml_module   , only : qmmm_nml_type
   use qmmm_struct_module, only : qmmm_struct_type
   use qmmm_vsolv_module , only : qmmm_vsolv_type
@@ -36,7 +36,7 @@ module qmmm_module
   public :: qmmm_scratch_structure, qmmm_div_structure
   public :: qm2_structure, qm2_rij_eqns_structure
   public :: qm_ewald_structure, qm_gb_structure
-  public :: qmmm_opnq_structure
+  public :: qmmm_opnq_structure, qmmm_input_options
 
   ! objects - these *should* not be public (meaning, globally accessible)
   ! do not use these in new subroutines but rather pass them to
@@ -53,6 +53,7 @@ module qmmm_module
   public :: get_atomic_number
   public :: allocate_qmmm
   public :: deallocate_qmmm
+  public :: default_qmmm_input_options
 #ifdef MPI
   public :: qmmm_mpi_setup
 #endif
@@ -310,22 +311,45 @@ module qmmm_module
      integer, dimension(:), pointer :: all_atom_numbers !atomic numbers of ALL atoms (MM and QM)
   end type qmmm_div_structure
 
-    type qmmm_opnq_structure
-        ! only variables to be set up in qm_mm startup are stored here
-        ! the qmmm_opnq variabel serves as the common data connection between
-        ! the OPNQ modules and other modules
-        ! the "real" opnq parameters are stored in qm2_params
-        logical::useOPNQ=.false.
-        _REAL_::OPNQCorrection, vdWCorrection ! in EV
-        logical::switching=.true.
-        _REAL_::NB_cutoff  ! the non-bond cutoff used in the MM region--required for MM-correction in OPNQ
-        _REAL_::switch_cutoff1  ! the distance where the opnq correction will begin being switched off        
-        _REAL_::switch_cutoff2  ! the distance where the opnq correction will be totally zeroed
-        integer, dimension(:), pointer::MM_atomType  ! the MM atom types for each atom
-        logical, dimension(:), pointer::supported
-        integer, dimension(:), pointer::atomic_number ! atomic number for each atom
-        _REAL_, dimension(:), pointer::LJ_r, LJ_epsilon  ! the MM 6-12 parameters for each type
-    end type qmmm_opnq_structure
+  type qmmm_opnq_structure
+     ! only variables to be set up in qm_mm startup are stored here
+     ! the qmmm_opnq variabel serves as the common data connection between
+     ! the OPNQ modules and other modules
+     ! the "real" opnq parameters are stored in qm2_params
+     logical::useOPNQ=.false.
+     _REAL_::OPNQCorrection, vdWCorrection ! in EV
+     logical::switching=.true.
+     _REAL_::NB_cutoff  ! the non-bond cutoff used in the MM region--required for MM-correction in OPNQ
+     _REAL_::switch_cutoff1  ! the distance where the opnq correction will begin being switched off        
+     _REAL_::switch_cutoff2  ! the distance where the opnq correction will be totally zeroed
+     integer, dimension(:), pointer::MM_atomType  ! the MM atom types for each atom
+     logical, dimension(:), pointer::supported
+     integer, dimension(:), pointer::atomic_number ! atomic number for each atom
+     _REAL_, dimension(:), pointer::LJ_r, LJ_epsilon  ! the MM 6-12 parameters for each type
+  end type qmmm_opnq_structure
+
+  type qmmm_input_options
+     ! Allow a way to input options programmatically through an API rather than
+     ! requiring an input file
+     sequence
+     _REAL_ :: qmcut, lnk_dis, scfconv, errconv, dftb_telec, dftb_telec_step, &
+               fockp_d1, fockp_d2, fockp_d3, fockp_d4, damp, vshift, kappa, &
+               pseudo_diag_criteria, min_heavy_mass, r_switch_hi, r_switch_lo
+     integer :: iqmatoms(MAX_QUANTUM_ATOMS), qmgb, lnk_atomic_no, &
+                ndiis_matrices, ndiis_attempts, lnk_method, qmcharge, &
+                corecharge, buffercharge, spin, qmqmdx, verbosity, &
+                printcharges, printdipole, print_eigenvalues, peptide_corr, &
+                itrmax, printbondorders, qmshake, qmmmrij_incore, &
+                qmqm_erep_incore, pseudo_diag, qm_ewald, qm_pme, kmaxqx, &
+                kmaxqy, kmaxqz, ksqmaxq, qmmm_int, adjust_q, tight_p_conv, &
+                diag_routine, density_predict, fock_predict, vsolv, &
+                dftb_maxiter, dftb_disper, dftb_chg, abfqmmm, hot_spot, &
+                qmmm_switch, core_iqmatoms(MAX_QUANTUM_ATOMS), &
+                buffer_iqmatoms(MAX_QUANTUM_ATOMS)
+     character(len=8192) :: qmmask, coremask, buffermask, centermask
+     character(len=256) :: dftb_3rd_order
+     character(len=12) :: qm_theory
+  end type qmmm_input_options
 
   ! --------------
   ! GLOBAL OBJECTS
@@ -371,7 +395,7 @@ contains
 
      integer :: mpi_division, i, istartend(2)
      integer :: loop_extent, loop_extent_begin, loop_extent_end
-     integer :: j, jstart, jend
+     integer :: jstart, jend
      integer :: ier=0, istatus=0
 
      !Note, this routine should be used for namelist variables only. It also broadcasts a few things
@@ -582,6 +606,88 @@ contains
   !+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #endif
   
+   ! Set default options
+   subroutine default_qmmm_input_options(options)
+
+      implicit none
+
+      type(qmmm_input_options), intent(out) :: options
+
+!Setup defaults
+      options%qmcut = 9999.d0
+      options%lnk_dis=1.09d0  !Methyl C-H distance
+      options%lnk_atomic_no=1 !Hydrogen
+      options%lnk_method=1 !treat MMLink as being MM atom.
+      options%qmgb = 0 !Gets set to zero if igb==6 or igb==0.
+      options%qm_theory = ' '
+      options%qmcharge = 0
+      options%corecharge = 0
+      options%buffercharge = 0
+      options%spin = 1
+      options%qmqmdx = 1
+      options%verbosity = 0
+      options%scfconv = 1.0D-8
+      options%errconv = 1.0D-1
+      options%ndiis_matrices = 6
+      options%ndiis_attempts = 0
+      options%printcharges = 0
+      options%printbondorders = 0
+      options%printdipole = 0
+      options%print_eigenvalues = 1
+      options%peptide_corr = 0
+      options%itrmax = 1000
+      options%qmshake = 1
+      options%qmmask=' '
+      options%coremask=' '
+      options%buffermask=' '
+      options%iqmatoms(1:MAX_QUANTUM_ATOMS) = 0
+      options%core_iqmatoms(1:MAX_QUANTUM_ATOMS) = 0
+      options%buffer_iqmatoms(1:MAX_QUANTUM_ATOMS) = 0
+      options%centermask=''
+      options%qmmmrij_incore = 1
+      options%qmqm_erep_incore = 1
+      options%pseudo_diag = 1
+      options%pseudo_diag_criteria = 0.05d0
+      options%qm_ewald=1 !Default is to do QMEwald, with varying charges, if ntb=0 or use_pme=0 then this will get turned off
+      options%qm_pme = 1 !use pme for QM-MM
+      options%kmaxqx=8
+      options%kmaxqy=8
+      options%kmaxqz=8    !Maximum K space vectors
+      options%kappa=-1.0
+      options%ksqmaxq=100 !Maximum K squared values for spherical cutoff in k space.
+      options%qmmm_int = 1 !Default, do full interaction without extra Gaussian terms for PM3 / AM1 etc.
+      options%adjust_q = 2 !Default adjust q over all atoms.
+      options%tight_p_conv = 0 !Loose density matrix convergence.
+      options%diag_routine = 0 !Test the various different diagonalizers
+      options%density_predict = 0 !Use density matrix from previous MD step.
+      options%fock_predict = 0 !Do not attempt to predict the Fock matrix.
+      options%fockp_d1 = 2.4d0
+      options%fockp_d2 = -1.2d0
+      options%fockp_d3 = -0.8d0
+      options%fockp_d4 = 0.6d0
+      options%damp = 1.0
+      options%vshift = 0.0
+      options%vsolv = 0 ! by default do not use simple vsolv QM/MM or adaptive QM/MM based on vsolv
+      options%qmmm_switch = 0              !Use QM/MM switching function
+      options%r_switch_hi = options%qmcut
+      options%r_switch_lo = options%r_switch_hi - 2.0D0
+
+      !DFTB
+      options%dftb_maxiter     = 70   
+      options%dftb_disper      = 0
+      options%dftb_chg         = 0
+      options%dftb_telec       = 0.0d0
+      options%dftb_telec_step  = 0.0d0
+      options%dftb_3rd_order   = 'NONE'
+
+      !ABFQMMM
+      options%abfqmmm      = 0
+      options%hot_spot     = 0
+
+      options%min_heavy_mass = 4.0
+
+   end subroutine default_qmmm_input_options
+
   subroutine allocate_qmmm( qmmm_nml, qmmm_struct, natom )
 
      ! allocates space for qmmm variables and arrays that depend only on nquant or natom
@@ -1154,7 +1260,10 @@ contains
            ! what to do next---Taisung Lee (Rutgers, 2011)
            errorFlag=.true.
        else
-           write(6,*) 'Unable to correctly identify element ', atom_name
+           write(6,'(2a)') 'Unable to correctly identify element ', atom_name
+           write(6,'(a)') 'Note: element guessing does not work with Hydrogen'
+           write(6,'(a)') '      Mass Repartitioning if ATOMIC_NUMBER is not'
+           write(6,'(a)') '      present in the topology file'
            call mexit(6,1)
        end if          
     end if

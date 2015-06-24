@@ -170,7 +170,7 @@ module qmmm_nml_module
      !   4 = Use lapack dspevx.
      !   5 = Use lapack dsyev.
      !   6 = Use lapack dsyevd.
-     !   7 = Use lapack dsyevr. (not currently implemented)
+     !   7 = Use lapack dsyevr.
      !   8 = Use lapack dsyevx. (not currently implemented)
      integer :: diag_routine
 

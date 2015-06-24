@@ -25,7 +25,7 @@ subroutine qm2_hcore_qmqm(COORD,H,W,ENUCLR)
  
       use constants, only : zero, one, A2_TO_BOHRS2, A_TO_BOHRS
       use ElementOrbitalIndex, only: MaxValenceOrbitals, MaxValenceDimension
-      use qmmm_module, only : qmmm_nml, qmmm_struct, qm2_struct, qm2_params, qm2_rij_eqns, &
+      use qmmm_module, only : qmmm_struct, qm2_struct, qm2_params, &
                               qmmm_mpi, OVERLAP_CUTOFF      
       use Rotation, only : GetRotationMatrix, Rotate2Center2Electron, RotateCore
 !DEBUG      use utilitiesModule, only : Print
@@ -42,14 +42,14 @@ subroutine qm2_hcore_qmqm(COORD,H,W,ENUCLR)
       _REAL_ ::SHMAT(MaxValenceOrbitals,MaxValenceOrbitals)
                  
       integer:: i, j, k, ni, i1, i2
-      integer:: kr, j1, first_sj, last_pj, ii, j2, jj, ki
+      integer:: kr, j1, ii, j2, jj, ki
       integer:: loop_count, jstart, jend
       integer:: naoi, naoj, qmitype, qmjtype
-      _REAL_:: enuc, elec_ke_p
-      _REAL_:: half_num, r2, r2InAu, rij, rijInAu, oneOverRij
+      _REAL_:: enuc
+      _REAL_:: r2, r2InAu, rij, rijInAu, oneOverRij
       _REAL_, allocatable :: WW(:,:)
       
-      _REAL_ :: X(3),Y(3),Z(3), RI(22), CORE(10,2)
+      _REAL_ :: RI(22), CORE(10,2)
       _REAL_ :: rotationMatrix(15,45)
       
       integer:: firstIndexAO_i, firstIndexAO_j, lastIndexAO_i, lastIndexAO_j
@@ -172,8 +172,8 @@ subroutine qm2_hcore_qmqm(COORD,H,W,ENUCLR)
             core=0.0D0
             call GetRotationMatrix(coord(1:3,j)-coord(1:3,i), rotationMatrix, hasDOrbital)   
             
-            call qm2_rotate_qmqm(loop_count,i,j,NI,qmmm_struct%iqm_atomic_numbers(J),COORD(1,I),COORD(1,J), &
-                       W(KR),KI,RI, core)
+            call qm2_rotate_qmqm(loop_count,i,j,COORD(1,I),COORD(1,J),&
+                                 W(KR),KI,RI, core)
 
             if (hasDOrbital) then   ! spd case   
                   

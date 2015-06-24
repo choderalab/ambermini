@@ -34,12 +34,11 @@ subroutine qm2_calc_rij_and_eqns(coords, nquant_nlink, crdsmm, natom, npairs)
    logical :: sp_atom, spd_atom
    _REAL_ :: r2, rr2, rr, vec(3), onerij, rij
    _REAL_ :: qmi_oneBDD1, qmi_oneBDD2, qmi_oneBDD3
-   _REAL_ :: qmj_oneBDD1, pddge1i, pddge2i,qmi_alpa
-   _REAL_ :: ijBDD1, qmi_DD, qmi_QQ, qmi_QQ2
+   _REAL_ :: qmi_alpa
+   _REAL_ :: qmi_DD, qmi_QQ, qmi_QQ2
    _REAL_ :: RRADD, RRMDD, RRAQQ, RRMQQ
-   _REAL_ :: RIJ_temp, qmx(3)
    integer :: ier=0
-   integer :: num_per_thread, jstart, jend
+   integer :: num_per_thread
 
 #include "qm2_array_locations.h"
  

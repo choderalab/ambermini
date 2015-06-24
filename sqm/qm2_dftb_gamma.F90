@@ -18,11 +18,11 @@
 subroutine gam12(r,uhub1,uhub2,gval)
   IMPLICIT NONE
   _REAL_, parameter :: zero=1.0d-4
-  _REAL_ :: gval,a1,a2,src,avg,uhub1,uhub2,rrc,rrc3
+  _REAL_ :: gval,a1,a2,src,avg,uhub1,uhub2,rrc
   _REAL_ :: val12,val21,drv12,drv21,r,fac,fac2,efac
   ! neu fuer H-bonds
-  _REAL_ :: fhbond,uhubh,cut1,cut2,rcuth
-  _REAL_ :: kl1,kl2,kl3,kkk
+  _REAL_ :: fhbond,uhubh
+  _REAL_ :: kl1
 
 
   ! This will define an adjustment in case one (or both)
@@ -131,9 +131,9 @@ subroutine gam121(r,uhub1,uhub2,gdrv)
   _REAL_ :: val12,val21,drv12,drv21,r,fac,fac2,efac
   ! neu fuer H-bonds
 
-  _REAL_ :: fhbond,uhubh,cut1,cut2,rcuth,cutab(5,5)
+  _REAL_ :: fhbond,uhubh
   _REAL_ :: dhbond
-  _REAL_ :: kl1,kl2,kl3,kkk
+  _REAL_ :: kl1
   ! open(111,file='switch')
   ! read(111,*)  kl1
   ! close(111)

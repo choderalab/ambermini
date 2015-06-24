@@ -32,8 +32,10 @@ subroutine qm2_dftb_get_qmmm_forces(dxyzcl,dxyzqm, vectmp1,vectmp2,vectmp3,vectm
   !Passed in
   _REAL_ , intent(out) :: dxyzcl(3,qmmm_struct%qm_mm_pairs)
   _REAL_ , intent(inout) :: dxyzqm(3,qmmm_struct%nquant_nlink)
-  _REAL_ , intent(out) :: vectmp1(*), vectmp2(*), &
-                          vectmp3(*), vectmp4(*)
+  _REAL_ , intent(out) :: vectmp1(qmmm_struct%qm_mm_pairs)
+  _REAL_ , intent(out) :: vectmp2(qmmm_struct%qm_mm_pairs)
+  _REAL_ , intent(out) :: vectmp3(qmmm_struct%qm_mm_pairs)
+  _REAL_ , intent(out) :: vectmp4(qmmm_struct%qm_mm_pairs)
                          !These should have been allocated to at least qm_mm_npair long.
   
   !Local

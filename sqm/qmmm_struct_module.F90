@@ -39,7 +39,8 @@ module qmmm_struct_module
 #ifdef MPI
   public :: broadcast
 #endif
-  public :: new, delete, print
+  public :: new, delete
+! public :: print ! not implemented yet!
 
   type qmmm_struct_type
 
@@ -240,9 +241,9 @@ module qmmm_struct_module
   end interface
 #endif
 
-  interface print
-     module procedure print_qmmm_struct_type
-  end interface
+! interface print
+!    module procedure print_qmmm_struct_type
+! end interface
 
   interface extend
      module procedure extend_integer_array
@@ -554,15 +555,15 @@ contains
   end subroutine broadcast_qmmm_struct_type
 #endif
 
-
-  subroutine print_qmmm_struct_type(self)
-
-    implicit none
-
-    type(qmmm_struct_type), intent(in) :: self
-
-    write(6,'(a)') 'PRINTING OF QMMM_STRUCT_TYPE NOT IMPLEMENTED'
-    
-  end subroutine print_qmmm_struct_type
+! This is not implemented yet (ever?)
+! subroutine print_qmmm_struct_type(self)
+!
+!   implicit none
+!
+!   type(qmmm_struct_type), intent(in) :: self
+!
+!   write(6,'(a)') 'PRINTING OF QMMM_STRUCT_TYPE NOT IMPLEMENTED'
+!
+! end subroutine print_qmmm_struct_type
 
 end module qmmm_struct_module

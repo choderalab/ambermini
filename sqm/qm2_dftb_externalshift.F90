@@ -14,23 +14,21 @@
 !
 ! include only REAL QM-MM interactions - skip link atoms.
 !==================================================
-subroutine externalshift(qm_coords,izp,shiftE)
+subroutine externalshift(qm_coords,shiftE)
 
-   use qm2_dftb_module, only: mcharge
-   use qmmm_module, only : qmmm_struct,qmmm_mpi
+!  use qm2_dftb_module, only: mcharge
+   use qmmm_module, only : qmmm_struct !,qmmm_mpi
    use constants, only : A_TO_BOHRS
 
    implicit none
 
    ! Passed in:
-   integer, intent(in)  :: izp(qmmm_struct%nquant_nlink)     ! IZP for each atom
    _REAL_,  intent(in)  :: qm_coords(3,qmmm_struct%nquant_nlink)     ! Coordinates
    _REAL_,  intent(out) :: shiftE(qmmm_struct%nquant_nlink)  ! Energy shift for each atom
 
    !Locals 
-   integer :: i,j,k
+   integer :: j,k
    _REAL_  :: dif(3)
-   _REAL_  :: r
    _REAL_  :: r2
    _REAL_  :: gamma
 

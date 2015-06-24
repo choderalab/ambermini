@@ -275,8 +275,6 @@ contains
     _REAL_, parameter :: parCutCsp3 = 0.5d0
     _REAL_, parameter :: kjtokc = 0.23900573613766730401d0
 
-    logical :: lDiffMols
-
     dCorrEner=0.0d0
 
     if (qmtheory%PM6) then
@@ -387,7 +385,6 @@ contains
 
     _REAL_ :: parHCorr(natom)
     _REAL_ :: constN, constO
-    _REAL_ :: const1, const2
     _REAL_ :: corren 
     _REAL_, parameter :: autokc = 627.509541d0
     _REAL_, parameter :: botoan = 0.52917726d0
@@ -468,9 +465,8 @@ contains
     _REAL_, intent(out) :: corren
 
     _REAL_ :: angAHD, ang1(2), ang2(2)
-    _REAL_ :: distXH, distAD, dist
+    _REAL_ :: distXH, distAD
     _REAL_ :: fbond, fgeom, fdamp
-    _REAL_ :: vec(3)
     _REAL_ :: shift, dih_check
     _REAL_ :: dum1, dum2, dum3
     integer :: adlist(2), ijtype(2)
@@ -883,10 +879,9 @@ contains
   integer, intent(in) :: natom
   _REAL_, intent(out) :: bo_matrix(natom,natom)
 
-  integer :: orb_beg_i, orb_end_i, tri_i
-  integer :: orb_beg_j, orb_end_j, tri_j, tri
-  integer :: i,j,k, tri_k1, tri_k2, iqm, jqm
-  _REAL_, dimension(:), pointer :: den_matrix2
+  integer :: orb_beg_i, orb_end_i
+  integer :: orb_beg_j, orb_end_j, tri
+  integer :: i, j, iqm, jqm
   _REAL_ :: BO
 
 

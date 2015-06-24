@@ -2,7 +2,11 @@
 #include "copyright.h"
 #include "../include/dprec.fh"
 #include "def_time.h"
+#ifdef SQM
+subroutine qm2_energy(escf,scf_mchg,natom,born_radii, one_born_radii)
+#else
 subroutine qm2_energy(escf,scf_mchg,natom,born_radii, one_born_radii, coords, scaled_mm_charges)
+#endif
 
    ! qm2_energy calculates the energy of the QMMM system in KCal/mol and places 
    ! the answer in escf.
@@ -14,8 +18,13 @@ subroutine qm2_energy(escf,scf_mchg,natom,born_radii, one_born_radii, coords, sc
    !                                                   most routines want qm_xcrd which is the coordinates
    !                                                   of the pair list.)
    !
+#ifdef SQM
+   use qmmm_module, only : qmmm_nml,qmmm_struct, qm2_struct, qm2_params, &
+         qm_gb, qmmm_mpi, qmmm_opnq
+#else
    use qmmm_module, only : qmmm_nml,qmmm_struct, qm2_struct, qmewald, qm2_params, &
          qm2_rij_eqns, qm_gb, qmmm_mpi, qmmm_opnq, qmmm_scratch
+#endif
    use qm2_pm6_hof_module
    use dh_correction_module, only : dh_correction
    use constants, only : EV_TO_KCAL, zero
@@ -24,7 +33,6 @@ subroutine qm2_energy(escf,scf_mchg,natom,born_radii, one_born_radii, coords, sc
 #ifdef MPI
    include 'mpif.h'
    integer :: ier
-   _REAL_ :: tmp_send, tmp_recv
 #endif
 
    !Passed in
@@ -32,8 +40,10 @@ subroutine qm2_energy(escf,scf_mchg,natom,born_radii, one_born_radii, coords, sc
    _REAL_, intent(out) :: escf
    _REAL_, intent(inout) :: scf_mchg(qmmm_struct%nquant_nlink)
    _REAL_, intent(in) :: born_radii(natom), one_born_radii(natom)
+#ifndef SQM
    _REAL_, intent(in) :: coords(3*natom)
    _REAL_, intent(in) :: scaled_mm_charges(natom)
+#endif
 
    !Local
    integer i
@@ -144,8 +154,9 @@ subroutine qm2_energy(escf,scf_mchg,natom,born_radii, one_born_radii, coords, sc
 
 #ifndef SQM
       call qmgb_calc_mm_pot(natom, qm_gb%gb_mmpot, qmmm_struct%atom_mask, &
-           & scaled_mm_charges,qmmm_scratch%qm_real_scratch(1), &
-           & qmmm_scratch%qm_real_scratch(natom+1), qmmm_scratch%qm_int_scratch(1), &
+           & scaled_mm_charges,qmmm_scratch%qm_real_scratch, &
+           & qmmm_scratch%qm_real_scratch(natom+1:natom+natom), &
+           & qmmm_scratch%qm_int_scratch(1:natom), &
            & qmmm_struct%qm_coords, &
            & coords, born_radii, one_born_radii, qmmm_struct%iqmatoms)
 #endif

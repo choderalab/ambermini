@@ -12,7 +12,12 @@ subroutine qm2_allocate_qmqm_e_repul(n2el)
 !optionally the one electron repulsion integrals. It should only be called once
 !per sander run on the first call to QM_MM.
 
-  use qmmm_module, only : qmmm_nml,qm2_struct, qmmm_struct, qmmm_mpi
+#ifdef MPI
+  use qmmm_module, only : qmmm_nml,qm2_struct, qmmm_mpi
+#else
+  use qmmm_module, only : qmmm_nml, qm2_struct, qmmm_struct
+#endif
+
   implicit none
 
 !Passed in

@@ -25,7 +25,7 @@ subroutine qm2_h1elec_d(R2,XI,XJ, n_atomic_orbi,n_atomic_orbj,indexi, indexj, qm
       use Rotation           , only : GetRotationMatrix, Rotate1Elec
       use ElementOrbitalIndex, only: MaxValenceOrbitals,MaxGaussianExpansion, MaxValenceDimension
       use SlaterOverlap      , only :GetSlaterOverlap
-      use qmmm_module        , only : qm2_params, qm2_struct, EXPONENTIAL_CUTOFF
+      use qmmm_module        , only : qm2_params, EXPONENTIAL_CUTOFF
       use utilitiesmodule, only : print
 
       implicit none
@@ -48,8 +48,7 @@ subroutine qm2_h1elec_d(R2,XI,XJ, n_atomic_orbi,n_atomic_orbj,indexi, indexj, qm
 
       _REAL_ ::rab
       _REAL_ ::zeta_si, zeta_sj, zeta_pi, zeta_pj, zeta_di, zeta_dj
-      integer:: i,j,k,l, ii,jj
-      integer:: ng, ni, nj, ndi, ndj
+      integer:: ni, nj, ndi, ndj
 
       logical::isISAtom=.false., isISPAtom=.false.,isISPDAtom=.false.
       logical::isJSAtom=.false., isJSPAtom=.false.,isJSPDAtom=.false.

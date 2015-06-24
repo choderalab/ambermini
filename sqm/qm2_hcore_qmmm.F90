@@ -28,7 +28,7 @@ subroutine  qm2_hcore_qmmm(H,ENUCLR,qm_xcrd)
 
 ! Keeps track of the nquant * ni_mm loop iterations
       _REAL_ qm_atom_coord(3)
-      integer loop_count, i, j, ia, ib, i2, i1, j1, ii,jj
+      integer loop_count, i, j, ia, ib, i2, i1, j1, ii
       logical s_atom, sp_atom, spd_atom
       _REAL_ enucij
       _REAL_ E1B(10), E1B_light
@@ -174,7 +174,7 @@ SUBROUTINE qm2_rotate_qmmm_light(loop_count,IQM,jpair,xyz_qm,xyz_mm,E1B,ENUC)
 !-----------------------------------
 !See heavy routine below for notes.
 
-      use qmmm_module, only : qmmm_nml, qm2_struct, qmmm_struct, qm2_params, qm2_rij_eqns,alph_mm, &
+      use qmmm_module, only : qmmm_nml, qmmm_struct, qm2_params, qm2_rij_eqns,alph_mm, &
                               EXPONENTIAL_CUTOFF
       use constants  , only : A2_TO_BOHRS2, AU_TO_EV, BOHRS_TO_A, one, zero
       implicit none
@@ -192,7 +192,7 @@ SUBROUTINE qm2_rotate_qmmm_light(loop_count,IQM,jpair,xyz_qm,xyz_mm,E1B,ENUC)
       _REAL_ :: sf1, sf2, rho_pm3mmx
       _REAL_ :: qm2_switch_func  ! function
       _REAL_ :: f_switch, pot_tmp
-      integer :: i, qmitype, mm_natomic
+      integer :: i, qmitype
     
 #include "qm2_array_locations.h"
 
@@ -327,7 +327,7 @@ SUBROUTINE qm2_rotate_qmmm_heavy(loop_count,IQM,xyz_qm,xyz_mm,E1B,ENUC)
 !       ENUC - QM-MM core core interaction in KCal/mol.
 !-----------------------------------
 
-      use qmmm_module, only : qmmm_nml, qmmm_struct, qm2_struct, qm2_params, qm2_rij_eqns, &
+      use qmmm_module, only : qmmm_nml, qmmm_struct, qm2_params, qm2_rij_eqns, &
                               alph_mm, AXIS_TOL, EXPONENTIAL_CUTOFF
       use constants  , only : A_TO_BOHRS, A2_TO_BOHRS2, AU_TO_EV, HALF_AU_TO_EV, FOURTH_AU_TO_EV, &
                               BOHRS_TO_A, one, zero
@@ -537,7 +537,7 @@ subroutine qm2_hcore_add_switched(H, switched_mmpot)
 ! of the H matrix.
 !--------------------------------------------------------------------
 
-   use qmmm_module, only : qmmm_struct, qm2_params, qmmm_mpi
+   use qmmm_module, only : qm2_params, qmmm_mpi
 
    implicit none
 
@@ -547,10 +547,9 @@ subroutine qm2_hcore_add_switched(H, switched_mmpot)
 
    ! Local
    _REAL_ :: temp_pot
-   integer :: i, ia, ib, i1, i2, k
+   integer :: i, ia, ib, i1, i2
 
    ! add the switched_mmpot to the diagonal elements of the H matrix
-   !do i = 1, qmmm_struct%nquant_nlink
    do i=qmmm_mpi%nquant_nlink_start,qmmm_mpi%nquant_nlink_end
       ia = qm2_params%orb_loc(1,i)
       ib = qm2_params%orb_loc(2,i)

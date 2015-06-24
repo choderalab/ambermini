@@ -8,7 +8,7 @@
 #include "copyright.h"
 #include "../include/dprec.fh"
 
-subroutine qm2_dftb_load_params
+subroutine qm2_dftb_load_params(silence)
 
 !In parallel all threads call this routine
 
@@ -19,10 +19,12 @@ subroutine qm2_dftb_load_params
    use qm2_dftb_module, only: NDIM, LDIM, MDIM, &     ! Fixed parameters
          MAX_BRD_ITER, IMATSZ,&                       ! Broyden mixing
          NNDIM, MAXSIZ, mol, lmax, mcharge, izp_str, &
-         sktab, log_racc, dacc, dispfile, ks_struct, fermi_str, DFTB_3rd_order_str
+         sktab, log_racc, dacc, ks_struct, fermi_str, DFTB_3rd_order_str
 
    implicit none
 
+   !Passed parameters
+   logical, intent(in) :: silence
 
    !Locals
    logical do_repeat
@@ -31,7 +33,7 @@ subroutine qm2_dftb_load_params
    _REAL_ :: yhlp ! Used to set sktab%slkcutoff
    _REAL_ :: racc ! Used for calculating machine precision limit.
 
-   integer k, i, j
+   integer i, j
 
    !===
    character(LEN=2) :: atom_uc, atom_lc
@@ -171,27 +173,27 @@ if (qmmm_mpi%commqmmm_master) then
       atom_lc=lowercase_atom(atom_uc)
       sktab%latyp( izp_str%izp(i)) = TRIM(atom_lc)
    end do
-   if(qmmm_struct%abfqmmm == 0) then ! lam81
-   write(6,'(a,i4)') ' DFTB: Number of atom types = ', qmmm_struct%qm_ntypes
-   write(6,*)
-   write(6, '(a)') " Parameter files:"
-   write(6,'( 5X,"TYP (AT)",2X,"TYP (AT)",5X, "SK integral FILE")')
-   end if                            ! lam81
+   if(qmmm_struct%abfqmmm == 0 .and. .not. silence) then
+      write(6,'(a,i4)') ' DFTB: Number of atom types = ', qmmm_struct%qm_ntypes
+      write(6,*)
+      write(6, '(a)') " Parameter files:"
+      write(6,'( 5X,"TYP (AT)",2X,"TYP (AT)",5X, "SK integral FILE")')
+   end if
    pair_count = 0
    do i = 1, qmmm_struct%qm_ntypes
       do j = 1, qmmm_struct%qm_ntypes
          pair_count = pair_count + 1
          ! New file naming convention from www.dftb.org
          sktab%skfiles(i,j)=TRIM(skroot)//TRIM(mol%atyp(i))//"-"//TRIM(mol%atyp(j))//skext 
-         if(qmmm_struct%abfqmmm == 0) then ! lam81
-         write (6,'("|",i3,1x,i2,2x,"(",a2,")",2x,i2,2x,"(",a2,")",5x,A)') &
-               pair_count, &
-               i, &         
-               mol%atyp(i), &
-               j, & 
-               mol%atyp(j), &
-               TRIM(sktab%skfiles(i,j))
-         end if                            ! lam81
+         if(qmmm_struct%abfqmmm == 0 .and. .not. silence) then
+            write (6,'("|",i3,1x,i2,2x,"(",a2,")",2x,i2,2x,"(",a2,")",5x,A)') &
+                  pair_count, &
+                  i, &
+                  mol%atyp(i), &
+                  j, &
+                  mol%atyp(j), &
+                  TRIM(sktab%skfiles(i,j))
+         end if
          call qm2_dftb_check_slko_file(sktab%skfiles(i,j))
       end do
    end do
@@ -223,8 +225,7 @@ if (qmmm_mpi%commqmmm_master) then
 !!    Third order
 !!=================================
    if (DFTB_3rd_order_str%do_3rd_order) then
-      call qm2_dftb_read_3rd_order(qmmm_struct%nquant_nlink,qmmm_struct%qm_ntypes, & 
-            izp_str%izp,skroot)
+      call qm2_dftb_read_3rd_order(qmmm_struct%nquant_nlink, skroot)
    end if
 
 
@@ -233,12 +234,12 @@ if (qmmm_mpi%commqmmm_master) then
 !!=================================
    if (qmmm_nml%dftb_chg == 1) then
 
-      if(qmmm_struct%abfqmmm == 0) then ! lam81
-      write(6,*) "READING CM3 CHARGES PARAMETERS..."
-      end if                            ! lam81
+      if(qmmm_struct%abfqmmm == 0 .and. .not. silence) then
+         write(6,*) "READING CM3 CHARGES PARAMETERS..."
+      end if
 
       cm3_file = TRIM(skroot)//"CM3_PARAMETERS.DAT"
-      call read_cm3(qmmm_struct%nquant_nlink, qmmm_struct%qm_ntypes, izp_str%izp, cm3_file)
+      call read_cm3(qmmm_struct%qm_ntypes, cm3_file)
    end if
 
 !!=================================
@@ -254,12 +255,12 @@ if (qmmm_mpi%commqmmm_master) then
    mol%qmat(1:qmmm_struct%nquant_nlink) = mcharge%qzero( izp_str%izp(1:qmmm_struct%nquant_nlink) )
 
    ! Mulliken Charges
-   !   WRITE(22,*)"DBG PRT qm2_dftb_load_params",qmmm_struct%nquant_nlink,ASSOCIATED(qm2_struct%scf_mchg)
-   IF ( .NOT. ASSOCIATED( qm2_struct%scf_mchg ) ) THEN
-      WRITE(6,'(A)')"sqm/qm2_dftb_load_params: scf_mchg is not associated"
-      WRITE(6,'(A)')"Cannot currently use DFTB"
-      STOP
-   END IF
+   !   write(22,*)"DBG PRT qm2_dftb_load_params",qmmm_struct%nquant_nlink,associated(qm2_struct%scf_mchg)
+   if ( .not. associated( qm2_struct%scf_mchg ) ) then
+      write(6,'(A)')"sqm/qm2_dftb_load_params: scf_mchg is not associated"
+      write(6,'(A)')"Cannot currently use DFTB"
+      stop 1
+   end if
    qm2_struct%scf_mchg(1:qmmm_struct%nquant_nlink) = 0.0d0
 
    ! Calculates the number of electrons in the system.
@@ -283,7 +284,7 @@ if (qmmm_mpi%commqmmm_master) then
    ! Static memory limitation
    if (ndim > MDIM) then
       write(6,*) ' eglcao: ndim > ', MDIM
-      stop
+      stop 1
    endif
 end if
 

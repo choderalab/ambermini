@@ -41,10 +41,9 @@ subroutine qm2_dftb_cm3(scf_mchg,scf_cm3)
    integer :: lambda_begin, lambda_end, omega_begin, omega_end, l
    _REAL_  :: PS1, PS2, temp_b, temp_c, temp_d,temp_b2
 
-!! For Matrix Printing   
-   integer :: tot_n
-   integer :: n_blocks_to_print, n_extra_columns,begin
-   _REAL_  :: tr
+!! For Matrix Printing -- commented out currently
+!  integer :: n_blocks_to_print, n_extra_columns, begin
+!  _REAL_  :: tr
 
 !--
 
@@ -216,12 +215,11 @@ subroutine qm2_dftb_cm3(scf_mchg,scf_cm3)
 
 end subroutine qm2_dftb_cm3
 
-subroutine print_orbitals(nstep,eigenvalues,eigenvectors, m, n, ldm, first, last)
+subroutine print_orbitals(nstep,eigenvalues,eigenvectors, n, ldm, first, last)
    implicit none
    
    !! Passed in
    integer, intent(in) :: nstep ! MD step number  
-   integer, intent(in) :: m     ! Number of colums
    integer, intent(in) :: n     ! Number of lines
    integer, intent(in) :: ldm   ! Linear dimension of the matrix
                                 ! (number of atomic orbitals)

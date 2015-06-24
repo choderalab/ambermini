@@ -103,7 +103,6 @@
 
 
  !local    
-      _REAL_:: LX(6,6) 
       _REAL_:: X(405) 
       _REAL_:: XM(14) 
       _REAL_::dd(6,2), po(9,2), tore(2)
@@ -111,7 +110,7 @@
       _REAL_::QB, DB, QBS, AB, ADDAS, ADDBS, AA, ADDSS
       _REAL_::ZZZZ, XYXY, SIG, TORENC, FACTOR
       integer:: N, NI, NJ, I, LIJ, IJ, KL, LIJMAX, LKLMAX
-      integer::NC, NE, LE, ICMAX, IFIRST, ILAST 
+      integer::NC, NE, LE, ICMAX, IFIRST, ILAST, LX(6,6)
     
       NI=1
       NJ=2     

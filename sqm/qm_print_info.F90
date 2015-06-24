@@ -251,7 +251,7 @@ subroutine qm_print_dyn_mem(natom,npairs)
 !Assumes _REAL_ is double precision = 8 bytes.
 !================================================
 
-  use qmmm_module, only : qmmm_nml,qmmm_struct, qm2_struct, qm2_params, qm2_rij_eqns, &
+  use qmmm_module, only : qmmm_nml,qmmm_struct, qm2_struct, qm2_params, &
                           qmewald, qm_gb, qmmm_mpi, qmmm_scratch
   implicit none
 
