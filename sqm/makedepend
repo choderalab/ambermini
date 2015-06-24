@@ -14,14 +14,16 @@ printf <<EOF;
 #
 EOF
 
-$SQM{"qm2_dftb_scf"} = $SQM{"qm2_energy"} = $SQM{"qm2_scf"} =
+$SQM{"sqm"} = $SQM{"qm2_dftb_scf"} = $SQM{"qm2_energy"} = $SQM{"qm2_scf"} =
 $SQM{"qm2_read_nm_and_alloc"} = $SQM{"qm_print_info"} = 1;
 
 
 #  in order to get a mapping between module names and file names, we have
 #  have to set up the following hash. 
 
-$modulefile{"netcdf"} = "";  #special case, since this mod file is elsewhere
+# Special-case NetCDF and constants, since the source code is elsewhere
+$modulefile{"NETCDF"} = "netcdf";
+$modulefile{"CONSTANTS"} = "constants";
 
 foreach $file ( <*.F90> ){
 	next if $file =~ /^_/;
@@ -65,7 +67,7 @@ foreach $file ( <*.F90> ){
 		if( /^ *use /i ){
 			($head,$usee) = /( *[Uu][Ss][Ee]) +(\w*)/;
                         $usee=uc($usee);
-# 			printf STDERR "     usee: $usee; modulefile is $modulefile{$usee}\n";
+#			printf STDERR "     usee: $usee; modulefile is $modulefile{$usee}\n";
 			if( !defined $modulefile{$usee} ){
 				printf STDERR "No file name associated with module $usee\n";
 				exit(1);
@@ -102,10 +104,10 @@ foreach $file ( <*.F90> ){
 
 	if( $optimized{$fileroot} ){
 		printf "\n$fileroot.o:   $fileroot.F90\n";
-		printf "\t\$(FC) \$(FPPFLAGS) -c \$(FOPTFLAGS) \$(FFLAGS) \$(AMBERFFLAGS) -o \$@ $fileroot.F90\n\n";
+		printf "\t\$(FC) \$(FWARNFLAGS) \$(FPPFLAGS) -c \$(FOPTFLAGS) \$(FFLAGS) \$(AMBERFFLAGS) -o \$@ $fileroot.F90\n\n";
 	} else {
 		printf "\n$fileroot.o:   $fileroot.F90\n";
-		printf "\t\$(FC) \$(FPPFLAGS) -c \$(FNOOPTFLAGS) \$(FFLAGS) \$(AMBERFFLAGS) -o \$@ $fileroot.F90\n\n";
+		printf "\t\$(FC) \$(FWARNFLAGS) \$(FPPFLAGS) -c \$(FNOOPTFLAGS) \$(FFLAGS) \$(AMBERFFLAGS) -o \$@ $fileroot.F90\n\n";
 	}
 	if( defined $SQM{$fileroot} ){
 #	    print STDERR $fileroot,"\n";
@@ -113,9 +115,12 @@ foreach $file ( <*.F90> ){
 		printf "$fileroot.SQM.o: $depsSQM\n" unless $depsSQM eq "";
 		printf "\n$fileroot.SQM.o:   $fileroot.F90\n";
 		if( $optimized{$fileroot} ){
-			printf "\t\$(FC) \$(FPPFLAGS) -DSQM -c \$(FOPTFLAGS) \$(FFLAGS) \$(AMBERFFLAGS) -o \$@ $fileroot.F90\n\n";
+			printf "\t\$(FC) \$(FWARNFLAGS) \$(FPPFLAGS) -DSQM -c \$(FOPTFLAGS) \$(FFLAGS) \$(AMBERFFLAGS) -o \$@ $fileroot.F90\n\n";
 		} else {
-			printf "\t\$(FC) \$(FPPFLAGS) -DSQM -c \$(FNOOPTFLAGS) \$(FFLAGS) \$(AMBERFFLAGS) -o \$@ $fileroot.F90\n\n";
+			printf "\t\$(FC) \$(FWARNFLAGS) \$(FPPFLAGS) -DSQM -c \$(FNOOPTFLAGS) \$(FFLAGS) \$(AMBERFFLAGS) -o \$@ $fileroot.F90\n\n";
 		}
 	}
 }
+
+printf "constants.o: ../lib/constants.F90\n";
+printf "\t\$(FC) \$(FWARNFLAGS) \$(FPPFLAGS) -c \$(FOPTFLAGS) \$(FFLAGS) \$(AMBERFFLAGS) -o constants.o ../lib/constants.F90\n\n";
