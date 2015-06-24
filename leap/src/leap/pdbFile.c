@@ -133,7 +133,6 @@ static  DICTIONARY      SdAtomNameMap = NULL;
 
 
 extern int zUnitIOAmberOrderResidues( UNIT );
-extern unsigned int sleep(unsigned int);
 
 
 /*
@@ -721,7 +720,6 @@ char            cInsertionCode;
                         iPdbSequence, cInsertionCode, rnName.sName, resname));
                     bProblemWithResidueNameAlreadyDetected = TRUE;
                     iResidueProblems++;
-                    sleep(1);
                 } 
                 if ( p.pdb.atom.residue.seq_num != iPdbSequence ||
                             strcmp( rnName.sName, resname ) ||
@@ -840,7 +838,6 @@ char            cInsertionCode;
         VP0(( "%d residues had naming warnings.\n", iResidueProblems ));
         VP0(( " There are split residues;\n residue sequence numbers will not "
                     "correspond to those in the pdb.\n"));
-        sleep(2);
     }
 
     /*

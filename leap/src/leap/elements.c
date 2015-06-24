@@ -40,7 +40,7 @@
 
 #include        "elements.h"
 
-/*	1st 6 rows of periodic table	*/
+/*	1st 7 rows of periodic table	*/
 
 ELEMENTt        GeaElements[] = {
 
@@ -50,12 +50,12 @@ ELEMENTt        GeaElements[] = {
 	{       "He",   HELIUM          },
 	
 	{       "Li",   LITHIUM         },
-	{       "Be",   BERILIUM        },
+	{       "Be",   BERYLLIUM       },
 	{       "B",    BORON           },
 	{       "C",    CARBON          },
 	{       "N",    NITROGEN        },
 	{       "O",    OXYGEN          },
-	{       "F",    FLOURINE        },
+	{       "F",    FLUORINE        },
 	{       "Ne",   NEON            },
 	
 	{       "Na",   SODIUM          },
@@ -108,7 +108,20 @@ ELEMENTt        GeaElements[] = {
 	{	"Cs",	CESIUM		},
 	{	"Ba",	BARIUM		},
 	{	"La",	LANTHANUM	},
+	{	"Ce",	CERIUM		},
+	{	"Pr",	PRASEODYMIUM	},
+	{	"Nd",	NEODYMIUM	},
+	{	"Pm",	PROMETHIUM	},
+	{	"Sm",	SAMARIUM	},
+	{	"Eu",	EUROPIUM	},
 	{	"Gd",	GADOLINIUM	},
+	{	"Tb",	TERBIUM		},
+	{	"Dy",	DYSPROSIUM	},
+	{	"Ho",	HOLMIUM		},
+	{	"Er",	ERBIUM		},
+	{	"Tm",	THULIUM		},
+	{	"Yb",	YTTERBIUM	},
+	{	"Lu",	LUTETIUM	},
 	{	"Hf",	HAFNIUM		},
 	{	"Ta",	TANTALUM	},
 	{	"W",	TUNGSTEN	},
@@ -124,7 +137,40 @@ ELEMENTt        GeaElements[] = {
 	{	"Po",	POLONIUM	},
 	{	"At",	ASTATINE	},
 	{	"Rn",	RADON		},
-	
+
+	{	"Fr",	FRANCIUM	},
+	{	"Ra",	RADIUM		},
+	{	"Ac",	ACTINIUM	},
+	{	"Th",	THORIUM		},
+	{	"Pa",	PROTACTINIUM	},
+	{	"U",	URANIUM		},
+	{	"Np",	NEPTUNIUM	},
+	{	"Pu",	PLUTONIUM	},
+	{	"Am",	AMERICIUM	},
+	{	"Cm",	CURIUM		},
+	{	"Bk",	BERKELIUM	},
+	{	"Cf",	CALIFORNIUM	},
+	{	"Es",	EINSTEINIUM	},
+	{	"Fm",	FERMIUM		},
+	{	"Md",	MENDELEVIUM	},
+	{	"No",	NOBELIUM	},
+	{	"Lr",	LAWRENCIUM	},
+	{	"Rf",	RUTHERFORDIUM	},
+	{	"Db",	DUBNIUM		},
+	{	"Sg",	SEABORGIUM	},
+	{	"Bh",	BOHRIUM		},
+	{	"Hs",	HASSIUM		},
+	{	"Mt",	MEITNERIUM	},
+	{	"Ds",	DARMSTADTIUM	},
+	{	"Rg",	ROENTGENIUM	},
+	{	"Cn",	COPERNICIUM	},
+	{	"Uut",  UNUNTRIUM	},
+	{	"Fl",	FLEROVIUM	},
+	{	"Uup",	UNUNPENTIUM	},
+	{	"Lv",	LIVERMORIUM	},
+	{	"Uus",	UNUNSEPTIUM	},
+	{	"Uuo",	UNUNOCTIUM	},
+
 	/* Last one must be empty */
 	{       "",     NOELEMENT       }
 };

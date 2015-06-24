@@ -105,7 +105,7 @@ typedef struct  ATOMSTRUCT {
         double                  dPertCharge;
         double                  dPolar;
         double                  dPertPolar;
-	double			dScreenF;
+        double                  dScreenF;
         int                     iIndex;
         VECTOR                  vPosition;
         VECTOR                  vVelocity;

@@ -34,7 +34,7 @@ ATOMs within RESIDUEs, and RESIDUEs within UNITs.
         { "HO"  "H" "sp3" }
         ...
     }
- 
+
 Add mapping of AMBER atom type to element and hybridization. Typically in
 leaprc.
 @@endHelp
@@ -42,13 +42,13 @@ leaprc.
 @@beginHelp:  addIons
 
     addIons unit ion1 #ion1 [ion2 #ion2]
- 
-	UNIT			_unit_
-	UNIT			_ion1_
-	NUMBER			_#ion1_
-	UNIT			_ion2_
-	NUMBER			_#ion2_
- 
+
+      UNIT                      _unit_
+      UNIT                      _ion1_
+      NUMBER                    _#ion1_
+      UNIT                      _ion2_
+      NUMBER                    _#ion2_
+
 Adds counterions in a shell around _unit_ using a Coulombic potential
 on a grid. If _#ion1_ is 0, the _unit_ is neutralized (_ion1_ must be
 opposite in charge to _unit_, and _ion2_ cannot be specified). Otherwise,
@@ -56,11 +56,11 @@ the specified numbers of _ion1_ [_ion2_] are added [in alternating order].
 If solvent is present, it is ignored in the charge and steric calculations,
 and if an ion has a steric conflict with a solvent molecule, the ion is
 moved to the center of said molecule, and the latter is deleted. (To
-avoid this behavior, either solvate _after_ addions, or use addIons2.)
+avoid this behavior, either solvate _after_ addIons, or use addIons2.)
 
 Ions must be monoatomic. Note that the one-at-a-time procedure is not
 guaranteed to globally minimize the electrostatic energy. When neutralizing
-regular-backbone nucleic acids, the first cations will generally be added 
+regular-backbone nucleic acids, the first cations will generally be added
 between phosphates, leaving the final two ions to be placed somewhere around
 the middle of the molecule.
 
@@ -157,7 +157,7 @@ for files specified by other commands.
 
 
 
-Add an angle restraint to _unit_ between atoms _a_, _b_, and _c_, 
+Add an angle restraint to _unit_ between atoms _a_, _b_, and _c_,
 having force constant of _force_, and equilibrium angle _angle_.
 
 
@@ -183,7 +183,7 @@ having force constant of _force_, and equilibrium angle _angle_.
 
 
 
-Add a bond (distance) restraint to _unit_ between atoms _a_ and _b_ 
+Add a bond (distance) restraint to _unit_ between atoms _a_ and _b_
 with a force constant of _force_ and an equilibrium distance of _length_.
 
 
@@ -214,20 +214,20 @@ with a force constant of _force_ and an equilibrium distance of _length_.
 
 
 
-Add a torsion restraint to _unit_ between atoms _a_, _b_, _c_, and 
-_d_, with a force constant of _force_, an equilibrium torsion angle 
+Add a torsion restraint to _unit_ between atoms _a_, _b_, _c_, and
+_d_, with a force constant of _force_, an equilibrium torsion angle
 of _phi_, and a multiplicity of _multiplicity_.
 
 
 @@endHelp
 
 
-@@beginHelp: alias
+@@beginHelp:  alias
 
 alias [alias[ string]]
 
-	STRING		_alias_
-	STRING		_alias_
+      STRING                    _alias_
+      STRING                    _string_
 
 
 alias string1 command - equivalence string1 to command.
@@ -235,6 +235,7 @@ alias string1         - delete the alias for string1.
 alias                 - report all current aliases.
 
 @@endHelp
+
 
 @@beginHelp:  alignAxes
 
@@ -249,8 +250,8 @@ alias                 - report all current aliases.
 Translate the geometric center of _unit_ to the origin and align
 the principle axes of the ATOMs within _unit_ along the coordinate
 axes.  This is done by calculating the moment of inertia of the UNIT
-using unit mass for each ATOM, and then diagonalizing the resulting 
-matrix and aligning the eigenvectors along the coordinate axes.  
+using unit mass for each ATOM, and then diagonalizing the resulting
+matrix and aligning the eigenvectors along the coordinate axes.
 This command modifies the coordinates of the UNIT. It may be
 especially useful for preparing long solutes such as nucleic acids
 for solvation.
@@ -262,7 +263,7 @@ for solvation.
 @@beginHelp:  loadAmberParams
 
 
-    variable = loadAmberParams filename 
+    variable = loadAmberParams filename
 
       PARMSET                      _variable_
 
@@ -273,8 +274,8 @@ for solvation.
 Load an AMBER format parameter set file and place it in _variable_.
 All interactions defined in the parameter set will be contained within
 _variable_.   This command causes the loaded parameter set to be included
-in LEaP's list of parameter sets that are searched when parameters are 
-required.  General proper and improper torsion parameters are modified, 
+in LEaP's list of parameter sets that are searched when parameters are
+required.  General proper and improper torsion parameters are modified,
 the AMBER general type "X" is replaced with the LEaP general type "?".
 
 
@@ -344,16 +345,16 @@ The unperturbed and perturbed total charge are displayed.
 
     check unit [ parmset ]
 
-      UNIT                         _unit_
-      PARMSET/STRING		   _parmset_
+      UNIT                      _unit_
+      PARMSET/STRING            _parmset_
 
 
 This command can be used to check the UNIT for internal inconsistencies
 that could cause problems when performing calculations.  This is
 a very useful command that should be used before a UNIT is saved
-with saveAmberParm or its variations.   
+with saveAmberParm or its variations.
 
-With the optional parmset, all missing parameters are placed in the 
+With the optional parmset, all missing parameters are placed in the
 PARMSET to allow for easy editing of those parameters.  If a string is
 passed, a PARMSET will be created with that name.
 
@@ -430,9 +431,9 @@ together.
 
 
 Create an exact duplicate of the object _variable_. Changing the object
-_variable_ will not affect the object _newvariable_. 
+_variable_ will not affect the object _newvariable_.
 
-This is in contrast to the situation created by "newvariable = variable" 
+This is in contrast to the situation created by "newvariable = variable"
 in which both names reference the same object.
 
 
@@ -488,8 +489,7 @@ $connect5
 
 
 
-Clears the SELECT flag on all ATOMs within _obj_.  See the 'select'
-command.
+Clears the SELECT flag on all ATOMs within _obj_.  See the select command.
 
 @@endHelp
 
@@ -569,13 +569,13 @@ Print a description of the object.
     bondByDistance container [ maxBond ]
 
 
-      UNIT/RESIDUE/ATOM		_container_
+      UNIT/RESIDUE/ATOM         _container_
 
-      NUMBER			_maxBond_
+      NUMBER                    _maxBond_
 
 
 
-Create single bonds between all ATOMs in _container_ that are within 
+Create single bonds between all ATOMs in _container_ that are within
 _maxBond_ angstroms of each other.   If _maxBond_ is not specified,
 a default distance of 2 angstroms used.
 
@@ -587,13 +587,13 @@ a default distance of 2 angstroms used.
 
     edit unit-parmset
 
-      UNIT/PARMSET		_unit-parmset_
+      UNIT/PARMSET              _unit-parmset_
 
 
 
-In xLEaP this command creates a unit editor or parameter set editor 
+In xLEaP this command creates a unit editor or parameter set editor
 that contains the UNIT or PARMSET _unit-parmset_.   The user can view
-and edit the contents of the UNIT or PARMSET by using the mouse.  
+and edit the contents of the UNIT or PARMSET by using the mouse.
 If _unit-parmset_ is a PARMSET, then the user may select the Atom, Bond,
 Angle, Torsion, Improper Torsion, or Hydrogen Bond Parameters to
 edit by selecting the appropriate button.
@@ -668,7 +668,7 @@ is a LIST of NUMBERs that represent sequence numbers or ranges of
 sequence numbers.  Ranges of sequence numbers are represented by
 two-element LISTs that contain the first and last sequence number
 in the range.  The user can specify sequence number ranges that are
-larger than what is found in the UNIT. For example the range { 1 999 } 
+larger than what is found in the UNIT. For example the range { 1 999 }
 represents all RESIDUEs in a 200 RESIDUE UNIT.
 
 The _internals_ argument is a LIST of LISTs.  Each sublist contains
@@ -717,10 +717,10 @@ List all of the variables currently defined.
 
 
 
-This command loads the Object File Format library within the file named 
+This command loads the Object File Format library within the file named
 _filename_.  All UNITs and PARMSETs within the library will be loaded.
-The objects are loaded into LEaP under the variable names the objects 
-had when they were saved.  Variables already in existence that have the 
+The objects are loaded into LEaP under the variable names the objects
+had when they were saved.  Variables already in existence that have the
 same names as the objects being loaded will be overwritten.  PARMSETs
 loaded using this command are included in LEaP's library of PARMSETs
 that is searched whenever parameters are required.
@@ -802,20 +802,20 @@ http://q4md-forcefieldtools.org/Tutorial/leap-mol3.php
 
 Load a Protein Databank format file with the file name _filename_.
 The sequence numbers of the RESIDUEs will be determined from the
-order of residues within the PDB file ATOM records.  For each 
-residue in the PDB file, LEaP searches the variables currently 
-defined for variable names that match the residue name.  If a 
-match is found, then the contents of the variable are copied into 
-the UNIT created for the PDB structure.  If no PDB `TER' card 
-separates the current residue from the previous one, a bond is 
-created between the connect1 ATOM of the previous residue and the 
-connect0 atom of the new one.  As atoms are read from the ATOM 
-records, their coordinates are written into the correspondingly 
-named ATOMs within the residue being built.  If the entire residue 
-is read and it is found that ATOM coordinates are missing, then 
-external coordinates are built from the internal coordinates that 
-were defined in the matching UNIT (residue) variable.  This allows 
-LEaP to build coordinates for hydrogens and lone pairs which are not 
+order of residues within the PDB file ATOM records.  For each
+residue in the PDB file, LEaP searches the variables currently
+defined for variable names that match the residue name.  If a
+match is found, then the contents of the variable are copied into
+the UNIT created for the PDB structure.  If no PDB `TER' card
+separates the current residue from the previous one, a bond is
+created between the connect1 ATOM of the previous residue and the
+connect0 atom of the new one.  As atoms are read from the ATOM
+records, their coordinates are written into the correspondingly
+named ATOMs within the residue being built.  If the entire residue
+is read and it is found that ATOM coordinates are missing, then
+external coordinates are built from the internal coordinates that
+were defined in the matching UNIT (residue) variable.  This allows
+LEaP to build coordinates for hydrogens and lone pairs which are not
 specified in PDB files.
 
 
@@ -925,9 +925,9 @@ Return a new and empty UNIT with the name _name_.
 
     variable = createParmset name
 
-      PARMSET			_variable_
+      PARMSET                   _variable_
 
-      STRING			_name_
+      STRING                    _name_
 
 
 
@@ -1035,7 +1035,7 @@ file _filename_ already exists then the new objects will be added
 to the file.  If there are objects within the file with the same
 names as objects being saved then the old objects will be overwritten.
 The argument _object_ can be a single UNIT, a single PARMSET, or
-a LIST of mixed UNITs and PARMSETs.  
+a LIST of mixed UNITs and PARMSETs.
 
 
 @@endHelp
@@ -1057,15 +1057,15 @@ a LIST of mixed UNITs and PARMSETs.
 
 Save the AMBER topology and coordinate files for the UNIT into the
 files named _topologyfilename_ and _coordinatefilename_ respectively.
-This command will cause LEaP to search its list of PARMSETs for 
-parameters defining all of the interactions between the ATOMs within 
+This command will cause LEaP to search its list of PARMSETs for
+parameters defining all of the interactions between the ATOMs within
 the UNIT.  This command produces a topology file and a coordinate file
 which are identical in format to those produced by the AMBER program
 PARM, and which can be read into AMBER and SPASMS for energy minimization,
-dynamics, or nmode calculations.  
+dynamics, or nmode calculations.
 
-See also: saveAmberParmPol, saveAmberParmPert, and saveAmberParmPolPert 
-for including atomic polarizabilities and preparing free energy 
+See also: saveAmberParmPol, saveAmberParmPert, and saveAmberParmPolPert
+for including atomic polarizabilities and preparing free energy
 perturbation calculations and saveAmberParmNetcdf for saving in a
 binary format.
 
@@ -1089,8 +1089,8 @@ STRING                       _coordinatefilename_
 
 Save the AMBER topology and coordinate files for the UNIT into the
 files named _topologyfilename_ and _coordinatefilename_ respectively.
-This command will cause LEaP to search its list of PARMSETs for 
-parameters defining all of the interactions between the ATOMs within 
+This command will cause LEaP to search its list of PARMSETs for
+parameters defining all of the interactions between the ATOMs within
 the UNIT.  This command produces a topology file and a coordinate file
 which can be read into AMBER and SPASMS for energy minimization, dynamics,
 or nmode calculations.
@@ -1101,7 +1101,7 @@ Use saveAmberParm for the regular ASCII coordinate format.
 
 
 @@endHelp
-  
+
 
 @@beginHelp:  saveAmberParmPol
 
@@ -1110,8 +1110,8 @@ Use saveAmberParm for the regular ASCII coordinate format.
 
 
 Like saveAmberParm, but includes atomic polarizabilities in the topology
-file for use with IPOL=1 in Sander. The polarizabilities are according 
-to atom type, and are defined in the 'mass' section of the parm.dat or 
+file for use with IPOL=1 in Sander. The polarizabilities are according
+to atom type, and are defined in the 'mass' section of the parm.dat or
 frcmod file. Note: charges are normally scaled when polarizabilities are
 used - see scaleCharges for an easy way of doing this.
 
@@ -1134,13 +1134,13 @@ used - see scaleCharges for an easy way of doing this.
 
 Save the AMBER topology and coordinate files for the UNIT into the
 files named _topologyfilename_ and _coordinatefilename_ respectively.
-This command will cause LEaP to search its list of PARMSETs for 
-parameters defining all of the interactions between the ATOMs within 
+This command will cause LEaP to search its list of PARMSETs for
+parameters defining all of the interactions between the ATOMs within
 the UNIT - including the perturbed ATOMs (which are ignored by the
-vanilla saveAmberParm command).  This command produces a topology file 
-and a coordinate file that are identical in format to those produced by 
-the AMBER PARM program using the PERT option, and which can be read into 
-AMBER and SPASMS for free energy calculations.   
+vanilla saveAmberParm command).  This command produces a topology file
+and a coordinate file that are identical in format to those produced by
+the AMBER PARM program using the PERT option, and which can be read into
+AMBER and SPASMS for free energy calculations.
 
 
 @@endHelp
@@ -1152,9 +1152,9 @@ AMBER and SPASMS for free energy calculations.
 
 
 Like saveAmberParmPert, but includes atomic polarizabilities in the topology
-file for use with IPOL=1 in Gibbs. The polarizabilities are according to 
-atom type, and are defined in the 'mass' section of the parm.dat or frcmod 
-file. Note: charges are normally scaled when polarizabilities are used - 
+file for use with IPOL=1 in Gibbs. The polarizabilities are according to
+atom type, and are defined in the 'mass' section of the parm.dat or frcmod
+file. Note: charges are normally scaled when polarizabilities are used -
 see scaleCharges for an easy way of doing this.
 
 
@@ -1196,7 +1196,7 @@ for each residue.
       LIST                         _list_
 
 
-The atom Name Map is used to try to map atom names read from PDB files 
+The atom Name Map is used to try to map atom names read from PDB files
 to atoms within residue UNITs when the atom name in the PDB file does
 not match an atom in the residue.  This enables PDB files to be read
 in without extensive editing of atom names.  The LIST is a LIST of LISTs:
@@ -1207,7 +1207,7 @@ where each sublist is of the form
 
       { "OddAtomName" "LibAtomName" }
 
-Many `odd' atom names can map to one `standard' atom name, but any single 
+Many `odd' atom names can map to one `standard' atom name, but any single
 odd atom name maps only to the last standard atom name it was mapped to.
 
 @@endHelp
@@ -1233,7 +1233,7 @@ Each sublist contains two or three entries to add to the Name Map:
 where the PDBName will be mapped to the LEaPVar. The terminalflag indicates
 the special cases of terminal residues: allowable values are 0 for beginning
 residues (N-terminal for proteins, 5' for nucleic acids) and 1 for ending
-residues (C-terminal for proteins, 3' for nucleic acids).  If the 
+residues (C-terminal for proteins, 3' for nucleic acids).  If the
 terminalflag is given, the PDBName->LEaPVar name map will only be applied
 for the appropriate terminal residue.  The `leaprc' file included with
 the distribution contains default mappings.
@@ -1248,7 +1248,7 @@ the distribution contains default mappings.
     clearPdbAtomMap
 
 
-Clear the Name Map used for ``second-chance'' mapping of atom names in 
+Clear the Name Map used for ``second-chance'' mapping of atom names in
 PDB files to atoms within residue UNITs.  See addPdbAtomMap.
 
 @@endHelp
@@ -1272,7 +1272,7 @@ names within LEaP.  See addPdbResMap.
     displayPdbAtomMap
 
 
-Display the Name Map used for ``second chance'' mapping of atom names 
+Display the Name Map used for ``second chance'' mapping of atom names
 in PDB files to atoms within residue UNITs.  See addPdbAtomMap.
 
 
@@ -1320,11 +1320,11 @@ Write UNIT to the file _filename_ as a PDB format file.
 
       STRING                       _filename_
 
-	  NUMBER                       _option_
+      NUMBER                       _option_
 
 
 Write UNIT to the file _filename_ as a Mol2 format file.
-option = 0 for Default atom types 
+option = 0 for Default atom types
 option = 1 for AMBER atom types
 
 
@@ -1345,11 +1345,11 @@ http://q4md-forcefieldtools.org/Tutorial/leap.php
 
       STRING                       _filename_
 
-	  NUMBER                       _option_
+      NUMBER                       _option_
 
 
 Write UNIT to the file _filename_ as a Mol3 format file.
-option = 0 for Default atom types 
+option = 0 for Default atom types
 option = 1 for AMBER atom types
 
 
@@ -1370,8 +1370,7 @@ http://q4md-forcefieldtools.org/Tutorial/leap-mol3.php
 
 
 
-Sets the SELECT flag on all ATOMs within _obj_.  See the 'deSelect'
-command.
+Sets the SELECT flag on all ATOMs within _obj_.  See the deSelect command.
 
 
 @@endHelp
@@ -1387,16 +1386,16 @@ command.
 
 
 The sequence command is used to create a new UNIT by copying the
-contents of a LIST of UNITs.  As each UNIT in the list is copied, 
-a bond is created between its head atom and the tail ATOM of the 
-previous UNIT, if both connect ATOMs are defined.  If only one of 
-the connect pair is defined, a warning is generated and no bond is 
-created.  If neither connection ATOM is defined then no bond is 
-created.  As each RESIDUE within a UNIT is copied, it is assigned a 
+contents of a LIST of UNITs.  As each UNIT in the list is copied,
+a bond is created between its head atom and the tail ATOM of the
+previous UNIT, if both connect ATOMs are defined.  If only one of
+the connect pair is defined, a warning is generated and no bond is
+created.  If neither connection ATOM is defined then no bond is
+created.  As each RESIDUE within a UNIT is copied, it is assigned a
 sequence number reflecting the order added.  The order of RESIDUEs
 in multi-RESIDUE UNITs is maintained.
 
-This command builds reasonable starting coordinates for the new UNIT 
+This command builds reasonable starting coordinates for the new UNIT
 by assigning internal coordinates to the linkages between the component
 UNITs and building the Cartesian coordinates from these and the
 internal coordinates of the component UNITs.
@@ -1419,7 +1418,7 @@ internal coordinates of the component UNITs.
 
 This command scales the charges in the object by _scale_factor_,
 which must be > 0.  It is useful for building systems for use
-with polarizable atoms, e.g. 
+with polarizable atoms, e.g.
 
 > x = copy solute
 > scaleCharges x 0.8
@@ -1437,28 +1436,72 @@ with polarizable atoms, e.g.
 
    set default variable value
 
-      STRING                     _variable_
+      STRING                       _variable_
 
-      STRING                     _value_
+      STRING                       _value_
 
 OR
 
     set container parameter object
 
-      UNIT/RESIDUE/ATOM/STRING   _container_ 
+      UNIT/RESIDUE/ATOM/STRING     _container_
 
-      STRING                     _parameter_
+      STRING                       _parameter_
 
-      object                     _object/value_
+      object                       _object/value_
 
 
 This command sets the values of some global parameters (when the first
 argument is "default") or sets various parameters associated with _container_.
 
-The possible variables for "set default" are:
+
+To see the possible variables for "set default", type "help set_default".
 
 
-  PdbWriteCharges  "on"         add charges to each ATOM record 
+The box parameter of a UNIT defines the bounding box of the UNIT; this is
+not a UNIT's periodic box.  The setBox and solvate family of commands add a
+periodic box to a UNIT; for a description, type, e.g., "help setBox".
+
+
+The more useful parameters for each type of _container_ are the following:
+
+  container    parameters           values
+
+
+  UNIT         name                 STRING
+               head, tail           ATOM [e.g. unit.1.1]
+               restype              "protein" "nucleic" "saccharide" "solvent"
+                                    "undefined" [sets all residues in UNIT]
+               box                  LIST [side lengths: {A B C}]
+                                    or NUMBER [cube side length] or "null"
+               cap                  LIST [center, radius: {X Y Z  R}]
+                                    or "null"
+
+
+  RESIDUE      name                 STRING
+  [e.g.        restype              [see UNIT]
+   unit.1]     connect0, connect1   ATOM [e.g. unit.1.1]
+               imagingAtom          ATOM [e.g. unit.1.1]
+
+
+  ATOM         name, pertName       STRING [<= 4 chars]
+  [e.g.        type, pertType       STRING [<= 2 chars]
+   unit.1.1]   element              STRING
+               pert                 "true" [or pert flag unset]
+               charge, pertCharge   DOUBLE
+               position             LIST [{X Y Z}]
+
+@@endHelp
+
+
+@@beginHelp:  set_default
+
+Allowed arguments to "set default variable value" are these:
+
+  variables        values       descriptions
+
+
+  PdbWriteCharges  "on"         add charges to each ATOM record
                    "off"        don't do this (default)
 
 
@@ -1507,20 +1550,17 @@ The possible variables for "set default" are:
                    "constant"   use constant dielectric
 
 
-  dipole_damp_factor	real
-                                sets the default value for "DIPOLE_DAMP_FACTOR" 
+  dipole_damp_factor    real    sets the default value for "DIPOLE_DAMP_FACTOR"
                                 for dipole screening factors in Thole models.
                                 Valid value > 0.0
 
 
-  sceescalefactor	real
-                                sets the default value for "SCEE_SCALE_FACTOR" 
+  sceescalefactor  real         sets the default value for "SCEE_SCALE_FACTOR"
                                 for 1-4 EEL scaling factors. Valid value > 0.0.
                                 Default=1.2.
 
 
-  scnbscalefactor	real
-                                sets the default value for "SCNB_SCALE_FACTOR" 
+  scnbscalefactor  real         sets the default value for "SCNB_SCALE_FACTOR"
                                 for 1-4 NB scaling factors. Valid value > 0.0.
                                 Default=2.0.
 
@@ -1533,40 +1573,19 @@ The possible variables for "set default" are:
                    "off"        don't include these (default)
 
 
-  ipol              integer
-                                Sets the default value for IPOL.
+  ipol             integer      Sets the default value for IPOL.
                                 Valid values are 0 - 4.
                                 Default value is 0, meaning disabled.
 
-  nocenter         "on"	        coordinates will not be centered in the periodic simulation box
+
+  nocenter         "on"         coordinates will not be centered in the
+                                periodic simulation box
                    "off"        coordinates will be centered (default)
 
-The more useful parameters for each type of _container_ are:
 
-
-  container    attributes           values
-
-
-  UNIT         name                 STRING
-               head, tail           ATOM [e.g. unit.1.1]
-               restype              "protein" "nucleic" "saccharide" "solvent"
-                                    "undefined" [sets all residues in UNIT]
-               cap                  LIST [center, radius: {X Y Z  R}]
-                                    or "null"
-
-
-  RESIDUE      name                 STRING
-  [e.g.        restype              [see UNIT]
-   unit.1]     connect0, connect1   ATOM [e.g. unit.1.1]
-               imagingAtom          ATOM [e.g. unit.1.1]
-
-
-  ATOM         name, pertName       STRING [<= 4 chars]
-  [e.g.        type, pertType       STRING [<= 2 chars]
-   unit.1.1]   element              STRING
-               pert                 "true" [or pert flag unset]
-               charge, pertCharge   DOUBLE
-               position             LIST [{X Y Z}]
+  reorder_residues "on"         solvent will be moved to the end (default)
+                   "off"        residue order will be maintained as input.
+                                Beta feature: use at your own risk!
 
 @@endHelp
 
@@ -1574,30 +1593,37 @@ The more useful parameters for each type of _container_ are:
 @@beginHelp:  setBox
 
 
-    setBox <unit>  vdw OR centers  [ buffer OR buffer_xyz_list ]
+    setBox solute enclosure [ buffer ]
+
+      UNIT                         _solute_
+
+      "vdw" OR "centers"           _enclosure_
+
+      object                       _buffer_
 
 
-The setBox command adds a periodic box to the UNIT, turning it into
-a periodic system for the simulation programs.  It does not add any
-solvent to the system. The choice of 'vdw' or 'centers' determines
-whether the box encloses the entire atoms or just the atom centers - 
-use 'centers' if the system has been previously equilibrated as a 
-periodic box. See the solvateBox command for a description of the 
-buffer variable, which extends either type of box by an arbitrary 
-amount.
+The setBox command creates a periodic box around the _solute_ UNIT, turning
+it into a periodic system for the simulation programs.  It does not add
+any solvent to the system. The choice of "vdw" or "centers" determines
+whether the box encloses all entire atoms or just all atom centers -
+use "centers" if the system has been previously equilibrated as a
+periodic box. See the solvateBox command for a description of the
+buffer object, which extends either type of box by an arbitrary amount.
 
 
 @@endHelp
 
-@@beginHelp:   showdefault
+@@beginHelp:  showdefault
 
 
-    showDefault [ variable or all or * ]
+    showDefault [ variable OR all OR * ]
+
+      STRING                       _variable_
 
 
 The showdefault command shows the values assigned to the variables by
-Set Default command. Without variable, with "all" or "*", all default
-variables are shown.
+the "set default" command. Without variable, with "all", or with "*",
+all default variables are shown.
 
 
 @@endHelp
@@ -1606,7 +1632,7 @@ variables are shown.
 @@beginHelp:  solvateBox
 
 
-    solvateBox solute solvent buffer [iso] [ closeness ]
+    solvateBox solute solvent buffer [ "iso" ] [ closeness ]
 
 
       UNIT                         _solute_
@@ -1627,48 +1653,48 @@ The user may want to first align long solutes that are not expected
 to tumble using alignAxes, in order to minimize box volume.
 
 
-The normal choice for a TIP3 _solvent_ UNIT is WATBOX216. Note that 
-constant pressure equilibration is required to bring the artificial box 
+The normal choice for a TIP3 _solvent_ UNIT is WATBOX216. Note that
+constant pressure equilibration is required to bring the artificial box
 to reasonable density, since Van der Waals voids remain due to the
 impossibility of natural packing of solvent around the solute and at
 the edges of the box.
 
 
-The solvent box UNIT is copied and repeated in all three spatial directions 
-to create a box containing the entire solute and a buffer zone defined 
-by the _buffer_ argument. The _buffer_ argument defines the distance, 
-in angstroms, between the wall of the box and the closest ATOM in the 
-solute.  
+The solvent box UNIT is copied and repeated in all three spatial directions
+to create a box containing the entire solute and a buffer zone defined
+by the _buffer_ argument. The _buffer_ argument defines the distance,
+in angstroms, between the wall of the box and the closest ATOM in the
+solute.
 
 
 If the buffer argument is a single NUMBER, then the buffer distance is
-the same for the x, y, and z directions, unless the 'iso' option is used
+the same for the x, y, and z directions, unless the "iso" option is used
 to make the box isometric, with the shortest box clearance = buffer. If
-'iso' is used, the solute is rotated to orient the principal axes,
+"iso" is used, the solute is rotated to orient the principal axes,
 otherwise it is just centered on the origin.
 
 
-If the buffer argument is a LIST of three NUMBERS, then the NUMBERs are 
-applied to the x, y, and z axes respectively. As the larger box is created 
-and superimposed on the solute, solvent molecules overlapping the solute 
+If the buffer argument is a LIST of three NUMBERS, then the NUMBERs are
+applied to the x, y, and z axes respectively. As the larger box is created
+and superimposed on the solute, solvent molecules overlapping the solute
 are removed.
 
 
 The optional _closeness_ parameter can be used to control the extent to
 which _solvent_ ATOMs overlap _solute_ ATOMs.  The default value of
-the _closeness_ argument is 1.0, which allows no overlap.  Smaller 
+the _closeness_ argument is 1.0, which allows no overlap.  Smaller
 values allow solvent ATOMs to overlap _solute_ ATOMs by (1 - closeness) *
 R*ij, where R*ij is the sum of the Van der Waals radii of solute and
-solvent atoms.  Values greater than 1 enforce a minimum gap between 
+solvent atoms.  Values greater than 1 enforce a minimum gap between
 solvent and solute of (closeness - 1) * R*ij.
 
 
-This command modifies the _solute_ UNIT in several ways.  First, the 
-coordinates of the ATOMs are modified to move the center of a box 
-enclosing the Van der Waals radii of the atoms to the origin.  Secondly, 
-the UNIT is modified by the addition of _solvent_ RESIDUEs copied from 
-the _solvent_ UNIT. Finally, the box parameter of the new system (still 
-named for the _solute_) is modified to reflect the fact that a periodic, 
+This command modifies the _solute_ UNIT in several ways.  First, the
+coordinates of the ATOMs are modified to move the center of a box
+enclosing the Van der Waals radii of the atoms to the origin.  Secondly,
+the UNIT is modified by the addition of _solvent_ RESIDUEs copied from
+the _solvent_ UNIT. Finally, the box parameter of the new system (still
+named for the _solute_) is modified to reflect the fact that a periodic,
 rectilinear solvent box has been created around it.
 
 @@endHelp
@@ -1678,7 +1704,7 @@ rectilinear solvent box has been created around it.
 @@beginHelp:  solvateOct
 
 
-    solvateOct solute solvent buffer [iso] [ closeness ]
+    solvateOct solute solvent buffer [ "iso" ] [ closeness ]
 
 
       UNIT                         _solute_
@@ -1694,19 +1720,19 @@ rectilinear solvent box has been created around it.
 The solvateOct command is the same as solvateBox, except the corners
 of the box are sliced off, resulting in a truncated octahedron, which
 typically gives a more uniform distribution of solvent around the
-solute. 
- 
+solute.
+
 
 In solvateOct, when a LIST is given for the buffer argument, four
 numbers are given instead of three, where the fourth is the diagonal
-clearance. If 0.0 is given as the fourth number, the diagonal clearance 
-resulting from the application of the x,y,z clearances is reported. If 
+clearance. If 0.0 is given as the fourth number, the diagonal clearance
+resulting from the application of the x,y,z clearances is reported. If
 a non-0 value is given, this may require scaling up the other clearances,
-which is also reported. Similarly, if a single number is given, any 
+which is also reported. Similarly, if a single number is given, any
 scaleup of the x,y,z buffer to accommodate the diagonal clip is reported.
 
 
-If the 'iso' option is used, the isometric truncated octahedron is
+If the "iso" option is used, the isometric truncated octahedron is
 rotated to an orientation used by the PME code, and the box and angle
 dimensions output by the saveAmberParm* commands are adjusted for PME
 code imaging.
@@ -1732,12 +1758,12 @@ code imaging.
       NUMBER                       _closeness_
 
 
-The _solvateCap_ command creates a solvent cap around the _solute_ UNIT
-or a part thereof.  The _solute_ UNIT is modified by the addition of 
+The solvateCap command creates a solvent cap around the _solute_ UNIT
+or a part thereof.  The _solute_ UNIT is modified by the addition of
 _solvent_ RESIDUEs.
 
-The normal choice for a TIP3 _solvent_ UNIT is WATBOX216. The _solvent_ 
-box is repeated in all three spatial directions and _solvent_ RESIDUEs 
+The normal choice for a TIP3 _solvent_ UNIT is WATBOX216. The _solvent_
+box is repeated in all three spatial directions and _solvent_ RESIDUEs
 selected to create a solvent sphere with a radius of _radius_ Angstroms.
 
 
@@ -1752,10 +1778,10 @@ the solvent cap sphere center.
 
 The optional _closeness_ parameter can be used to control the extent to
 which _solvent_ ATOMs overlap _solute_ ATOMs.  The default value of
-the _closeness_ argument is 1.0, which allows no overlap.  Smaller 
+the _closeness_ argument is 1.0, which allows no overlap.  Smaller
 values allow solvent ATOMs to overlap _solute_ ATOMs by (1 - closeness) *
 R*ij, where R*ij is the sum of the Van der Waals radii of solute and
-solvent atoms.  Values greater than 1 enforce a minimum gap between 
+solvent atoms.  Values greater than 1 enforce a minimum gap between
 solvent and solute of (closeness - 1) * R*ij.
 
 
@@ -1813,23 +1839,23 @@ forming.
       NUMBER                       _closeness_
 
 
-The _solvateShell_ command creates a solvent shell around the _solute_ UNIT.
+The solvateShell command creates a solvent shell around the _solute_ UNIT.
 The _solute_ UNIT is modified by the addition of _solvent_ RESIDUEs.
 
 
-The normal choice for a TIP3 _solvent_ UNIT is WATBOX216. The _solvent_ box 
-is repeated in all three spatial directions and _solvent_ RESIDUEs selected 
-to create a solvent shell with a radius of _thickness_ Angstroms around the 
+The normal choice for a TIP3 _solvent_ UNIT is WATBOX216. The _solvent_ box
+is repeated in all three spatial directions and _solvent_ RESIDUEs selected
+to create a solvent shell with a radius of _thickness_ Angstroms around the
 _solute_.
 
 
-The _thickness_ argument defines the maximum distance a _solvent_ ATOM may 
-be from the closest _solute_ ATOM. 
+The _thickness_ argument defines the maximum distance a _solvent_ ATOM may
+be from the closest _solute_ ATOM.
 
 
 The optional _closeness_ parameter can be used to control overlap of _solvent_
-with _solute_ ATOMs.   The default value of the _closeness_ argument is 
-1.0, which allows contact but no overlap.  Please see the solvateBox 
+with _solute_ ATOMs.   The default value of the _closeness_ argument is
+1.0, which allows contact but no overlap.  Please see the solvateBox
 command for more details on the _closeness_ parameter.
 
 
@@ -1859,7 +1885,7 @@ respectively.
       STRING                       _library_
 
 
-List the UNITs/PARMSETs stored within the Object File Format file 
+List the UNITs/PARMSETs stored within the Object File Format file
 named _library_.
 
 
@@ -1932,7 +1958,7 @@ the three NUMBERs in the LIST _ direction_.
 
 
 Translate all of the ATOMs within _atoms_ by the (3X3) or (4X4) matrix
-defined by the 9 or 16 NUMBERs in the LIST of LISTs _matrix_. 
+defined by the 9 or 16 NUMBERs in the LIST of LISTs _matrix_.
 
     { { r11  r12  r13  -tx }
       { r21  r22  r23  -ty }
@@ -1941,7 +1967,7 @@ defined by the 9 or 16 NUMBERs in the LIST of LISTs _matrix_.
 
 The diagonal upper left elements, rII can be used for symmetry operations,
 e.g. a reflection in the XY plane can be produced with r11=1, r22=1, r33=-1
-where the other rIJ elements are 0. The -t column is used to specify 
+where the other rIJ elements are 0. The -t column is used to specify
 translations along the appropriate axes (0 for no translation).
 
 
@@ -1960,7 +1986,7 @@ translations along the appropriate axes (0 for no translation).
 
 
 Create a LIST of variables with names that match _string_. The _string_
-argument can contain the wildcard characters `?' and `*' to match any
+argument can contain the wildcard characters "?" and "*" to match any
 single character or substring of characters, respectively.
 
 
@@ -2051,7 +2077,7 @@ _a4_ ) are either ATOMs or STRINGs containing names of ATOMs within
 _obj_.   The subsequent arguments are all NUMBERs.   Any ATOM can be
 placed at the _a1_ position, even those that have coordinates defined.
 This feature can be used to provide an endless supply of dummy atoms,
-if they are required.   A predefined dummy atom with the name `*'
+if they are required.   A predefined dummy atom with the name "*"
 (a single asterisk, no quotes)  can also be used.
 
 No order is imposed in the sub-lists.  The user can place sub-lists
@@ -2068,9 +2094,9 @@ a bond length.
     UNIT      A collection of ATOMs, perhaps grouped into one or more
                 RESIDUEs.  In combination with PARMSET parameters, a UNIT
                 contains all the information needed for a simulation.
-    RESIDUE   A collection of ATOMs, some of which may be designated 
+    RESIDUE   A collection of ATOMs, some of which may be designated
                 as "connect"ing. A RESIDUE has a chemical type such as
-                "protein," "nucleic," "saccharide," "solvent," or 
+                "protein," "nucleic," "saccharide," "solvent," or
                 "undefined."
     ATOM      Has a name, a force field type, an element type, a charge,
                 perturbed name-types-charge, and a position.
@@ -2078,10 +2104,10 @@ a bond length.
                 associated with parameters, the PARMSETs that have been
                 loaded are searched in order of most recently loaded to
                 first loaded.
-    LIST      A sequence of objects within '{' and '}', delimited by
+    LIST      A sequence of objects within "{" and "}", delimited by
                 spaces. LISTs can contain other lists.
     STRING    A series of any characters within quotes or alphanumeric
-                characters preceded by a '$'. Also, a string of alpha-
+                characters preceded by a "$". Also, a string of alpha-
                 numeric characters standing alone is interpreted as a
                 STRING if it does not correspond to a variable name.
     NUMBER    A number, treated as floating point double precision.
@@ -2099,7 +2125,7 @@ a bond length.
 
 
 
-Relaxes the selected atoms within _obj_.  
+Relaxes the selected atoms within _obj_.
 
 @@endHelp
 
@@ -2129,7 +2155,7 @@ Add missing hydrogens and build external coordinates for _obj_.
 
 
 
-Flips the chirality of the selected atoms within _obj_.  
+Flips the chirality of the selected atoms within _obj_.
 
 
 @@endHelp
@@ -2147,10 +2173,10 @@ The command-line options for starting tleap and xleap are:
 The tleap and xleap shell scripts automatically provide
 
 
-	-I$AMBERHOME/dat -I$AMBERHOME/dat/leap/lib -I$AMBERHOME/dat/leap/cmd
+        -I$AMBERHOME/dat -I$AMBERHOME/dat/leap/lib -I$AMBERHOME/dat/leap/cmd
 
 where $AMBERHOME/dat contains 'parm.dat' force field files,
-      $AMBERHOME/dat/leap/lib contains residue libraries and 
+      $AMBERHOME/dat/leap/lib contains residue libraries and
       $AMBERHOME/dat/leap/cmd contains the default leaprc and other scripts.
 
 @@endHelp

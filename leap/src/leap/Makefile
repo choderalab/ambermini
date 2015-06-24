@@ -231,3 +231,7 @@ XaLeap_wcl: xaLeap.rm4
 XaUtilMessageFilter: xaUtilMessageFilter.rm4
 	$(M4) xaUtilMessageFilter.rm4 >XaUtilMessageFilter
 
+depend::
+	./makedepend > depend
+
+include depend

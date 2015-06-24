@@ -1319,6 +1319,7 @@ BasicsInitialize()
 	GDefaults.iIPOL = 0;
 	GDefaults.iIPOLset = 0;
 	GDefaults.nocenter = 0;
+  GDefaults.reorder_residues = 1;
 
 /*
     signal( SIGSEGV, zBasicsTrapSEGV );

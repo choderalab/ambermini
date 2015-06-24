@@ -37,7 +37,7 @@
  *	WARNING:
  *		NEVER NEVER NEVER remove OBJEKTs from
  *		a LIST that you are currently looping over.
- *		This can lead to inconsistancies.
+ *		This can lead to inconsistencies.
  *		The solution is to change the structure 
  *		LISTLOOP so that it contains a pointer
  *		to the next element in the list instead

@@ -27,7 +27,7 @@
 #include        "defaults.h"
 #include        "atom.h"
 #include        "tripos.h"
-#include        "stdio.h"
+#include        <stdio.h>
 #include        "parmLib.h"
 #include        "unitio.h"
 

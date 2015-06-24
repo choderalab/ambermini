@@ -1131,7 +1131,7 @@ STRING		sName;
 	    case OXYGEN:
 		iNeeded = 2;
 		break;
-	    case FLOURINE:
+	    case FLUORINE:
 	    case CHLORINE:
 	    case BROMINE:
 	    case HYDROGEN:
