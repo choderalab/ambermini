@@ -3,7 +3,7 @@
 #include "../include/assert.fh"
 #include "../include/dprec.fh"
 
-      subroutine qm2_load_params_and_allocate()
+      subroutine qm2_load_params_and_allocate(silence)
 
 
 ! Written by: Ross Walker (TSRI, 2005)
@@ -39,13 +39,15 @@
                                 
     implicit none
 
+    logical, intent(in) :: silence
+
 !Locals
     _REAL_ :: pdiag_guess1, pdiag_guess2, pddg_zaf, pddg_zbf
     _REAL_ :: gssc, gspc, gppc, gp2c, hspc, elec_eng
     _REAL_ :: exponent_temp1, base_temp1, exponent_temp2, base_temp2
     _REAL_ :: HSP1_temp, HSP2_temp, DD1_temp, DD2_temp, DD_diff, DD3_temp, hpp
     _REAL_ :: temp
-    integer :: iostmp, ioptmp, int_dummy
+    integer :: iostmp, ioptmp
     integer :: i, j, k, iat, jat, itmp, iqm_atomic, n_atomic_orb, first_orb, last_orb
     integer :: ns_atoms, nsp_atoms, nspd_atoms, nelectrons, nopen
     integer :: ier=0
@@ -54,8 +56,8 @@
 
 #ifdef MPI
    include 'mpif.h'
-    integer :: jstart, jend, ia, ib, ja, jb, inum, jnum, status
-    integer :: loop_extent_begin, loop_extent_end, loop_extent, loop_count
+    integer :: jstart, jend, ia, ib, ja, jb, inum, jnum
+    integer :: loop_count
     integer, dimension(:), allocatable :: gather_array !Allocated and deallocated in this routine.
 #endif
 
@@ -2086,7 +2088,6 @@
          ! AWG: Load the DFTB parameters AFTER calling the info printing routine
          ! AWG: since qm2_dftb_load_params also prints information
          ! AWG: Otherwise the tests will not pass because the output gets mixed up
-         ! AWG call qm2_dftb_load_params
          continue
       else if (qmmm_nml%qmtheory%EXTERN) then
          ! AWG: We are using the external interface and don't need 99% of the stuff
@@ -2127,13 +2128,14 @@
          ! This should not be called from here but we have to take apart and
          ! modularize the code first and/or adjust the DFTB test outputs
          ! because qm2_dftb_load_params (called below) prints stuff as well...
-         if ( .not. qmmm_nml%qmtheory%EXTERN .and. .not. qmmm_nml%qmtheory%SEBOMD ) then
+         if ( .not. silence .and. .not. qmmm_nml%qmtheory%EXTERN &
+              .and. .not. qmmm_nml%qmtheory%SEBOMD ) then
             call qm2_print_info
          end if
       end if
 
       if (qmmm_nml%qmtheory%DFTB) then
-         call qm2_dftb_load_params
+         call qm2_dftb_load_params(silence)
       end if
 
 !In Parallel calculate the offset into the two electron array for each thread.
@@ -2242,8 +2244,11 @@
       if (.not. ( qmmm_nml%qmtheory%DFTB .or. qmmm_nml%qmtheory%EXTERN .or. qmmm_nml%qmtheory%SEBOMD ) ) then
          call qm2_diagonalizer_setup(qmmm_nml%diag_routine, qmmm_nml%allow_pseudo_diag, &
               qmmm_nml%verbosity, &
-              qmmm_mpi%commqmmm_master, qmmm_mpi%commqmmm, &
-              qm2_struct, qmmm_scratch)
+              qmmm_mpi%commqmmm_master, &
+#ifdef MPI
+              qmmm_mpi%commqmmm, &
+#endif
+              qm2_struct, qmmm_scratch, silence)
       end if
 
       ! ----------------------------------------------------------------

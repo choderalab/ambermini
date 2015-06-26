@@ -13,7 +13,7 @@ subroutine dispersion_params(nn,izp)
   integer, intent(in) :: nn
   integer, intent(in) :: izp(*) ! izp(NNDIM)
 ! Local
-  integer :: i,j,n
+  integer :: i,j
   _REAL_  :: r2
 
 ! if we read from DISPERSION.INP:

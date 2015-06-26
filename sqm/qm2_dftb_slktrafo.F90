@@ -4,17 +4,14 @@
 
 ! geometrical transformation of ss-overlapp and hamilton matrix elements
 
-subroutine skss(x,x2,i,j,r2,iovpar,em,ne)
+subroutine skss(i,j,r2,iovpar,em)
    implicit none
 
 !! Passed in
-   _REAL_ , intent(in ) :: x(6)
-   _REAL_ , intent(in ) :: x2(6)
    integer, intent(in ) :: i,j
    _REAL_ , intent(in ) :: r2
    integer, external    :: iovpar
    _REAL_ , intent(out) :: em(1,1)
-   integer, intent(in ) :: ne
 
 
 !! Locals
@@ -29,12 +26,11 @@ end subroutine skss
 
 
 ! geometrical transformation of sp-overlapp and hamilton matrix elements
-subroutine sksp(x,x2,i,j,r2,iovpar,em,emt,ne)
+subroutine sksp(x,i,j,r2,iovpar,em,emt,ne)
    implicit none 
 
 !! Passed in
    _REAL_ , intent(in ) :: x(6)
-   _REAL_ , intent(in ) :: x2(6)
    integer, intent(in ) :: i,j
    _REAL_ , intent(in ) :: r2
    integer, external    :: iovpar
@@ -119,7 +115,7 @@ subroutine skpp(x,x2,i,j,r2,iovpar,em,ne)
    do l=1,3
       epp(l)=x2(l)
       epp(l+3)=x(l)*x(l+1)
-30 enddo
+   enddo
    do l=1,3
       hp=epp(l)
       dm(l)=hp*parm(6)+(1.0-hp)*parm(7)

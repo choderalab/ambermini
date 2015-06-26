@@ -37,7 +37,7 @@ contains
     
     integer,parameter :: readUnit=21
     
-    integer :: ios, counter, i, j, atomicNumber
+    integer :: ios, counter, atomicNumber
     character(len=80) :: buffer
     type(ParameterEntry), allocatable, dimension(:) :: tempEntries
     integer :: fsize                    ! to estimate file size

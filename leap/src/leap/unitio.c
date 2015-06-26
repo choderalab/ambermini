@@ -2645,44 +2645,56 @@ zUnitIOAmberOrderResidues( UNIT uUnit )
                 }
             }
         }
-
-        /*
-        **  solute residues
-        */
-        lResidues = lLoop((OBJEKT) uUnit, DIRECTCONTENTSBYSEQNUM);
-        while ((rRes = (RESIDUE) oNext(&lResidues)) != NULL) {
-            if (iObjectType(rRes) != RESIDUEid)
-                continue;
-            if (cResidueType(rRes) == RESTYPESOLVENT)
-                continue;
-            zUnitDoResidue(uUnit, rRes, &i);
-        }
-        /*
-        **  solvent non-cap residues
-        */
-        lResidues = lLoop((OBJEKT) uUnit, DIRECTCONTENTSBYSEQNUM);
-        while ((rRes = (RESIDUE) oNext(&lResidues)) != NULL) {
-            if (iObjectType(rRes) != RESIDUEid)
-                continue;
-            if (cResidueType(rRes) != RESTYPESOLVENT)
-                continue;
-            if (bResidueFlagsSet(rRes, RESIDUEINCAP))
-                continue;
-            zUnitDoResidue(uUnit, rRes, &i);
-        }
-        /*
-        **  solvent cap residues
-        */
-        lResidues = lLoop((OBJEKT) uUnit, DIRECTCONTENTSBYSEQNUM);
-        while ((rRes = (RESIDUE) oNext(&lResidues)) != NULL) {
-            if (iObjectType(rRes) != RESIDUEid)
-                continue;
-            if (cResidueType(rRes) != RESTYPESOLVENT)
-                continue;
-            if (bResidueFlagsSet(rRes, RESIDUEINCAP))
-                zUnitDoResidue(uUnit, rRes, &i);
+        
+        if ( !GDefaults.reorder_residues ) {
+          printf("\"order_residues\" off: keep input residue order. This is risky: unkown behavior may ensue!\n");
+          lResidues = lLoop((OBJEKT) uUnit, DIRECTCONTENTSBYSEQNUM);
+          while ((rRes = (RESIDUE) oNext(&lResidues)) != NULL) {
+              if (iObjectType(rRes) != RESIDUEid)
+                  continue;
+              zUnitDoResidue(uUnit, rRes, &i);
+          }
         }
 
+        else {
+          //~ printf("\"reorder_residues\" on: move solvent residues to end.\n");
+          /*
+          **  solute residues
+          */
+          lResidues = lLoop((OBJEKT) uUnit, DIRECTCONTENTSBYSEQNUM);
+          while ((rRes = (RESIDUE) oNext(&lResidues)) != NULL) {
+              if (iObjectType(rRes) != RESIDUEid)
+                  continue;
+              if (cResidueType(rRes) == RESTYPESOLVENT)
+                  continue;
+              zUnitDoResidue(uUnit, rRes, &i);
+          }
+          /*
+          **  solvent non-cap residues
+          */
+          lResidues = lLoop((OBJEKT) uUnit, DIRECTCONTENTSBYSEQNUM);
+          while ((rRes = (RESIDUE) oNext(&lResidues)) != NULL) {
+              if (iObjectType(rRes) != RESIDUEid)
+                  continue;
+              if (cResidueType(rRes) != RESTYPESOLVENT)
+                  continue;
+              if (bResidueFlagsSet(rRes, RESIDUEINCAP))
+                  continue;
+              zUnitDoResidue(uUnit, rRes, &i);
+          }
+          /*
+          **  solvent cap residues
+          */
+          lResidues = lLoop((OBJEKT) uUnit, DIRECTCONTENTSBYSEQNUM);
+          while ((rRes = (RESIDUE) oNext(&lResidues)) != NULL) {
+              if (iObjectType(rRes) != RESIDUEid)
+                  continue;
+              if (cResidueType(rRes) != RESTYPESOLVENT)
+                  continue;
+              if (bResidueFlagsSet(rRes, RESIDUEINCAP))
+                  zUnitDoResidue(uUnit, rRes, &i);
+          }
+        }
         return(iResidueCount);
 }
 
@@ -2815,6 +2827,20 @@ zUnitIOBuildTables(UNIT uUnit, PARMLIB plParameters,
             /* THEM THEMSELVES TO PREVENT INCOMPATIBILITIES */
             /* WITH FUTURE RELEASES!!!!!!!!!!!!!!!!!!!!!!!! */
 
+          if ( !GDefaults.reorder_residues ) {
+            lResidues = lLoop((OBJEKT) uUnit, DIRECTCONTENTSBYSEQNUM);
+            uUnit->iCapTempInt=0;
+            while ((rRes = (RESIDUE) oNext(&lResidues)) != NULL) {
+              if ( !uUnit->iCapTempInt ) {
+                if (cResidueType(rRes) == RESTYPESOLVENT &&
+                    bResidueFlagsSet(rRes, RESIDUEINCAP))
+                  uUnit->iCapTempInt = i;
+              }
+              zUnitDoAtoms(uUnit, plParameters, rRes, &i, 
+                           &bFailedGeneratingParameters, bPert);                                 
+            }
+          }
+          else {
             lResidues = lLoop((OBJEKT) uUnit, DIRECTCONTENTSBYSEQNUM);
             while ((rRes = (RESIDUE) oNext(&lResidues)) != NULL) {
                 if (cResidueType(rRes) != RESTYPESOLVENT)
@@ -2840,9 +2866,9 @@ zUnitIOBuildTables(UNIT uUnit, PARMLIB plParameters,
                     zUnitDoAtoms(uUnit, plParameters, rRes,
                                  &i, &bFailedGeneratingParameters, bPert);
             }
+          }
         }
     }
-
 
 /*
  *. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -4728,7 +4754,7 @@ dZ2 = dZ * 0.5;
     VP0(( "%s: Error closing file\n", filename ));
   }
   free(data);
-  printf("Successfully saved NetCDF trajectory \"%s\"\n", filename);
+  printf("Successfully saved NetCDF inpcrd file \"%s\"\n", filename);
 #   endif
 }
 
@@ -4976,7 +5002,9 @@ if (bPolar && GDefaults.iIPOL <= 0) // NOT allowed to save IPOL=0 for polarizabl
         aD = PVAI(uUnit->vaAtoms, SAVEATOMt, saPAngle->iAtom3 - 1)->aAtom;
         if (bPERT_ANGLE(bPert, aA, aB, aD))
             continue;
-        if (iAtomElement(aA) == HYDROGEN || iAtomElement(aD) == HYDROGEN)
+        if ( iAtomElement(aA) == HYDROGEN 
+                || iAtomElement(aB) == HYDROGEN 
+                || iAtomElement(aD) == HYDROGEN )
             iAngleWith++;
         else
             iAngleWithout++;
@@ -5586,7 +5614,7 @@ if (bPolar && GDefaults.iIPOL <= 0) // NOT allowed to save IPOL=0 for polarizabl
             FortranWriteInt(sbPBond->iParmIndex);
         }
     }
-    /* Write out the (bond w/out H) RESTRAINT interactions */
+    /* Write out the (bond without H) RESTRAINT interactions */
     /* The iParmIndex field is set in RESTRAINTLOOP */
     if ((iMax = iVarArrayElementCount(uUnit->vaRestraints))) {
         srPRestraint = PVAI(uUnit->vaRestraints, SAVERESTRAINTt, 0);
@@ -5617,7 +5645,9 @@ if (bPolar && GDefaults.iIPOL <= 0) // NOT allowed to save IPOL=0 for polarizabl
         aD = PVAI(uUnit->vaAtoms, SAVEATOMt, saPAngle->iAtom3 - 1)->aAtom;
         if (bPERT_ANGLE(bPert, aA, aB, aD))
             continue;
-        if (iAtomElement(aA) == HYDROGEN || iAtomElement(aD) == HYDROGEN) {
+        if ( iAtomElement(aA) == HYDROGEN
+                || iAtomElement(aB) == HYDROGEN
+                || iAtomElement(aD) == HYDROGEN ) {
             FortranWriteInt(AMBERINDEX(saPAngle->iAtom1));
             FortranWriteInt(AMBERINDEX(saPAngle->iAtom2));
             FortranWriteInt(AMBERINDEX(saPAngle->iAtom3));
@@ -5643,8 +5673,9 @@ if (bPolar && GDefaults.iIPOL <= 0) // NOT allowed to save IPOL=0 for polarizabl
         aD = PVAI(uUnit->vaAtoms, SAVEATOMt, saPAngle->iAtom3 - 1)->aAtom;
         if (bPERT_ANGLE(bPert, aA, aB, aD))
             continue;
-        if (!(iAtomElement(aA) == HYDROGEN ||
-              iAtomElement(aD) == HYDROGEN)) {
+        if ( !(iAtomElement(aA) == HYDROGEN
+                || iAtomElement(aB) == HYDROGEN
+                || iAtomElement(aD) == HYDROGEN) ) {
             FortranWriteInt(AMBERINDEX(saPAngle->iAtom1));
             FortranWriteInt(AMBERINDEX(saPAngle->iAtom2));
             FortranWriteInt(AMBERINDEX(saPAngle->iAtom3));
@@ -5739,7 +5770,7 @@ if (bPolar && GDefaults.iIPOL <= 0) // NOT allowed to save IPOL=0 for polarizabl
     /* into the interaction table */
     FortranDebug("-26-");
 
-    MESSAGE(("Writing the torsion interactions w/o hydrogens\n"));
+    MESSAGE(("Writing the torsion interactions without hydrogens\n"));
     FortranFormat(1, "%-80s");
     FortranWriteString("%FLAG DIHEDRALS_WITHOUT_HYDROGEN");
     FortranWriteString("%FORMAT(10I8)");
@@ -7145,9 +7176,12 @@ IX_DESC         iResIx;
         aD = PVAI( uUnit->vaAtoms, SAVEATOMt, saPAngle->iAtom3-1 )->aAtom;
         if ( bPERT_ANGLE(bPert,aA,aB,aD) ) 
                 continue;
-        if ( iAtomElement(aA) == HYDROGEN ||
-                iAtomElement(aD) == HYDROGEN ) iAngleWith++;
-        else iAngleWithout++;
+        if ( iAtomElement(aA) == HYDROGEN 
+                || iAtomElement(aB) == HYDROGEN 
+                || iAtomElement(aD) == HYDROGEN )
+            iAngleWith++;
+        else
+            iAngleWithout++;
     }
 /*NTHETH*/      
     FortranWriteInt( iAngleWith );
@@ -7638,7 +7672,7 @@ IX_DESC         iResIx;
             FortranWriteInt( sbPBond->iParmIndex );
         }
     }
-        /* Write out the (bond w/out H) RESTRAINT interactions */
+        /* Write out the (bond without H) RESTRAINT interactions */
         /* The iParmIndex field is set in RESTRAINTLOOP */
     if ( (iMax = iVarArrayElementCount( uUnit->vaRestraints )) ) {
         srPRestraint = PVAI( uUnit->vaRestraints, SAVERESTRAINTt, 0 );
@@ -7666,8 +7700,9 @@ IX_DESC         iResIx;
         aD = PVAI( uUnit->vaAtoms, SAVEATOMt, saPAngle->iAtom3-1 )->aAtom;
         if ( bPERT_ANGLE(bPert,aA,aB,aD) ) 
             continue;
-        if ( iAtomElement(aA) == HYDROGEN ||
-                iAtomElement(aD) == HYDROGEN ) {
+        if ( iAtomElement(aA) == HYDROGEN
+                || iAtomElement(aB) == HYDROGEN
+                || iAtomElement(aD) == HYDROGEN ) {
             FortranWriteInt( AMBERINDEX(saPAngle->iAtom1) );
             FortranWriteInt( AMBERINDEX(saPAngle->iAtom2) );
             FortranWriteInt( AMBERINDEX(saPAngle->iAtom3) );
@@ -7690,8 +7725,9 @@ IX_DESC         iResIx;
         aD = PVAI( uUnit->vaAtoms, SAVEATOMt, saPAngle->iAtom3-1 )->aAtom;
         if ( bPERT_ANGLE(bPert,aA,aB,aD) ) 
             continue;
-        if ( !(iAtomElement(aA) == HYDROGEN ||
-                iAtomElement(aD) == HYDROGEN ) ) {
+        if ( !(iAtomElement(aA) == HYDROGEN 
+                || iAtomElement(aB) == HYDROGEN 
+                || iAtomElement(aD) == HYDROGEN) ) {
             FortranWriteInt( AMBERINDEX(saPAngle->iAtom1) );
             FortranWriteInt( AMBERINDEX(saPAngle->iAtom2) );
             FortranWriteInt( AMBERINDEX(saPAngle->iAtom3) );
@@ -7775,7 +7811,7 @@ IX_DESC         iResIx;
                 /* into the interaction table */
     FortranDebug( "-26-" );
 
-    MESSAGE(( "Writing the torsion interactions w/o hydrogens\n" ));
+    MESSAGE(( "Writing the torsion interactions without hydrogens\n" ));
     FortranFormat( 12, INTFORMAT );
     for ( i=0; i<iVarArrayElementCount( uUnit->vaTorsions ); i++ ) {
         stPTorsion = PVAI( uUnit->vaTorsions, SAVETORSIONt, i );

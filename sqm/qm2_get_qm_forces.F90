@@ -138,44 +138,44 @@ subroutine qm2_get_qm_forces(dxyzqm)
 
            loop_count=loop_count+1
            if (qmmm_nml%qmqm_erep_incore) then
-             call qm2_deriv_qm_analyt(ii,jj,loop_count,qm2_struct%qm_qm_e_repul(1:22,loop_count), &
+             call qm2_deriv_qm_analyt(ii,jj,qm2_struct%qm_qm_e_repul(1:22,loop_count), &
                        psum,n_atomic_orbj,n_atomic_orbi, &
                        corei,corej,betasas,betasap,betapas,betapap,vec_qm_qm1,vec_qm_qm2,  &
                        vec_qm_qm3, pair_force, qqi, qqi2, qqj, qqj2, ddi, ddj, &
                        bdd1i, bdd2i, bdd3i, bdd1j, bdd2j, bdd3j, &
-                       qm2_params%atom_orb_zz_sxs_over_sas(1,1,qmitype,qmjtype), &
-                       qm2_params%atom_orb_ss_eqn_adb(1,1,qmitype,qmjtype), &
-                       qm2_params%atom_orb_zz_sxp_over_sap(1,1,qmitype,qmjtype), &
-                       qm2_params%atom_orb_zz_sxp_over_sap(1,1,qmjtype,qmitype), &
-                       qm2_params%atom_orb_sp_eqn_xx1(1,1,qmitype,qmjtype), &
-                       qm2_params%atom_orb_sp_eqn_xx2(1,1,qmitype,qmjtype), &
-                       qm2_params%atom_orb_sp_eqn_xx1(1,1,qmjtype,qmitype), &
-                       qm2_params%atom_orb_sp_eqn_xx2(1,1,qmjtype,qmitype), &
-                       qm2_params%atom_orb_sp_eqn_xy(1,1,qmitype,qmjtype), &
-                       qm2_params%atom_orb_sp_eqn_xy(1,1,qmjtype,qmitype), &
-                       qm2_params%atom_orb_zz_pxp_over_pap(1,1,qmitype,qmjtype), &
-                       qm2_params%atom_orb_pp_eqn_xxy1(1,1,qmitype,qmjtype), &
-                       qm2_params%atom_orb_pp_eqn_xxy2(1,1,qmitype,qmjtype))
+                       qm2_params%atom_orb_zz_sxs_over_sas(1:6,1:6,qmitype,qmjtype), &
+                       qm2_params%atom_orb_ss_eqn_adb(1:6,1:6,qmitype,qmjtype), &
+                       qm2_params%atom_orb_zz_sxp_over_sap(1:6,1:6,qmitype,qmjtype), &
+                       qm2_params%atom_orb_zz_sxp_over_sap(1:6,1:6,qmjtype,qmitype), &
+                       qm2_params%atom_orb_sp_eqn_xx1(1:6,1:6,qmitype,qmjtype), &
+                       qm2_params%atom_orb_sp_eqn_xx2(1:6,1:6,qmitype,qmjtype), &
+                       qm2_params%atom_orb_sp_eqn_xx1(1:6,1:6,qmjtype,qmitype), &
+                       qm2_params%atom_orb_sp_eqn_xx2(1:6,1:6,qmjtype,qmitype), &
+                       qm2_params%atom_orb_sp_eqn_xy(1:6,1:6,qmitype,qmjtype), &
+                       qm2_params%atom_orb_sp_eqn_xy(1:6,1:6,qmjtype,qmitype), &
+                       qm2_params%atom_orb_zz_pxp_over_pap(1:6,1:6,qmitype,qmjtype), &
+                       qm2_params%atom_orb_pp_eqn_xxy1(1:6,1:6,qmitype,qmjtype), &
+                       qm2_params%atom_orb_pp_eqn_xxy2(1:6,1:6,qmitype,qmjtype))
            else
 !Same call as above, just qm2_struct%qm_qm_e_repul(1,loop_count) replaced with local e_repul
-             call qm2_deriv_qm_analyt(ii,jj,loop_count,e_repul, &
+             call qm2_deriv_qm_analyt(ii,jj,e_repul, &
                        psum,n_atomic_orbj,n_atomic_orbi, &
                        corei,corej,betasas,betasap,betapas,betapap,vec_qm_qm1,vec_qm_qm2,  &
                        vec_qm_qm3, pair_force, qqi, qqi2, qqj, qqj2, ddi, ddj, &
                        bdd1i, bdd2i, bdd3i, bdd1j, bdd2j, bdd3j, &
-                       qm2_params%atom_orb_zz_sxs_over_sas(1,1,qmitype,qmjtype), &
-                       qm2_params%atom_orb_ss_eqn_adb(1,1,qmitype,qmjtype), &
-                       qm2_params%atom_orb_zz_sxp_over_sap(1,1,qmitype,qmjtype), &
-                       qm2_params%atom_orb_zz_sxp_over_sap(1,1,qmjtype,qmitype), &
-                       qm2_params%atom_orb_sp_eqn_xx1(1,1,qmitype,qmjtype), &
-                       qm2_params%atom_orb_sp_eqn_xx2(1,1,qmitype,qmjtype), &
-                       qm2_params%atom_orb_sp_eqn_xx1(1,1,qmjtype,qmitype), &
-                       qm2_params%atom_orb_sp_eqn_xx2(1,1,qmjtype,qmitype), &
-                       qm2_params%atom_orb_sp_eqn_xy(1,1,qmitype,qmjtype), &
-                       qm2_params%atom_orb_sp_eqn_xy(1,1,qmjtype,qmitype), &
-                       qm2_params%atom_orb_zz_pxp_over_pap(1,1,qmitype,qmjtype), &
-                       qm2_params%atom_orb_pp_eqn_xxy1(1,1,qmitype,qmjtype), &
-                       qm2_params%atom_orb_pp_eqn_xxy2(1,1,qmitype,qmjtype))
+                       qm2_params%atom_orb_zz_sxs_over_sas(1:6,1:6,qmitype,qmjtype), &
+                       qm2_params%atom_orb_ss_eqn_adb(1:6,1:6,qmitype,qmjtype), &
+                       qm2_params%atom_orb_zz_sxp_over_sap(1:6,1:6,qmitype,qmjtype), &
+                       qm2_params%atom_orb_zz_sxp_over_sap(1:6,1:6,qmjtype,qmitype), &
+                       qm2_params%atom_orb_sp_eqn_xx1(1:6,1:6,qmitype,qmjtype), &
+                       qm2_params%atom_orb_sp_eqn_xx2(1:6,1:6,qmitype,qmjtype), &
+                       qm2_params%atom_orb_sp_eqn_xx1(1:6,1:6,qmjtype,qmitype), &
+                       qm2_params%atom_orb_sp_eqn_xx2(1:6,1:6,qmjtype,qmitype), &
+                       qm2_params%atom_orb_sp_eqn_xy(1:6,1:6,qmitype,qmjtype), &
+                       qm2_params%atom_orb_sp_eqn_xy(1:6,1:6,qmjtype,qmitype), &
+                       qm2_params%atom_orb_zz_pxp_over_pap(1:6,1:6,qmitype,qmjtype), &
+                       qm2_params%atom_orb_pp_eqn_xxy1(1:6,1:6,qmitype,qmjtype), &
+                       qm2_params%atom_orb_pp_eqn_xxy2(1:6,1:6,qmitype,qmjtype))
            end if
            fqmii(1:3) = fqmii(1:3) + pair_force(1:3)
            dxyzqm(1:3,JJ)=dxyzqm(1:3,JJ)+pair_force(1:3)                          
@@ -240,10 +240,10 @@ subroutine qm2_get_qm_forces(dxyzqm)
             end do
             do K=1,3
               xyz_qmi(K)=xyz_qmi(K)+halfChange
-              call qm2_dhc(psum,ii,jj,qmitype,qmjtype,xyz_qmi,xyz_qmj,natqmi,natqmj,iif,iil,jjf, &
+              call qm2_dhc(psum,ii,jj,qmitype,qmjtype,xyz_qmi,xyz_qmj,iif,iil,jjf, &
                        jjl,AA)
               xyz_qmi(K)=xyz_qmi(K)-change
-              call qm2_dhc(psum,ii,jj,qmitype,qmjtype,xyz_qmi,xyz_qmj,natqmi,natqmj,iif,iil,jjf, &
+              call qm2_dhc(psum,ii,jj,qmitype,qmjtype,xyz_qmi,xyz_qmj,iif,iil,jjf, &
                        jjl,EE)
               xyz_qmi(K)=xyz_qmi(K)+halfChange
                    
@@ -308,7 +308,7 @@ subroutine qm2_get_qm_forces(dxyzqm)
 
 end subroutine qm2_get_qm_forces
 
-subroutine qm2_deriv_qm_analyt(iqm,jqm,loop_count,qm_qm_e_repul,PSUM, &
+subroutine qm2_deriv_qm_analyt(iqm,jqm,qm_qm_e_repul,PSUM, &
            n_atomic_orbj,n_atomic_orbi,corei,corej,betasas,betasap,betapas,betapap, &
            vec_qm_qm1,vec_qm_qm2, vec_qm_qm3, pair_force, &
            qqi, qqi2, qqj, qqj2, ddi, ddj, bdd1i, bdd2i, bdd3i, bdd1j, bdd2j, &
@@ -340,14 +340,13 @@ subroutine qm2_deriv_qm_analyt(iqm,jqm,loop_count,qm_qm_e_repul,PSUM, &
                                   half, one, two, four, fourth, eighth, sixteenth, thirtysecond, &
                                   EV_TO_KCAL
    use ElementOrbitalIndex, only: NumberElements, MaxValenceOrbitals, MaxValenceDimension
-   use qmmm_module        , only: qmmm_nml,qmmm_struct, qm2_rij_eqns, qm2_struct, qm2_params, &
-                                  AXIS_TOL, OVERLAP_CUTOFF, EXPONENTIAL_CUTOFF
-
+   use qmmm_module        , only: qmmm_nml, qm2_params, AXIS_TOL, &
+                                  OVERLAP_CUTOFF, EXPONENTIAL_CUTOFF
 
    implicit none
 
 !Passed in
-   integer, intent(in) :: iqm,jqm,loop_count
+   integer, intent(in) :: iqm,jqm
    _REAL_, intent(inout) :: qm_qm_e_repul(22) !for qmqm_erep_incore=true it is in, for =false it is out.
    _REAL_, intent(in) :: psum(MaxValenceOrbitals**2*3)
    integer, intent(in) :: n_atomic_orbj, n_atomic_orbi
@@ -381,7 +380,7 @@ subroutine qm2_deriv_qm_analyt(iqm,jqm,loop_count,qm_qm_e_repul,PSUM, &
    _REAL_ vec_qm_qm123, vec_qm_qm12, vec_qm_qm23, vec_qm_qm13
    integer i, j
    _REAL_ ABN, ADBR2, SS
-   _REAL_ temp_real, temp_real2, temp_real3, temp_real4
+   _REAL_ temp_real, temp_real2
    _REAL_  SQRTAEE, bdd1ij
 
 !Originally in delri
@@ -417,11 +416,20 @@ subroutine qm2_deriv_qm_analyt(iqm,jqm,loop_count,qm_qm_e_repul,PSUM, &
    FNUCY = zero
    FNUCZ = zero
 
+   DGX(:) = ZERO
+   DGY(:) = ZERO
+   DGZ(:) = ZERO
+
    if (n_atomic_orbi > 1 .OR. n_atomic_orbj >1) then      
      vec_qm_qm123 = vec_qm_qm1*vec_qm_qm2*vec_qm_qm3
      vec_qm_qm12 = vec_qm_qm1*vec_qm_qm2
      vec_qm_qm23 = vec_qm_qm2*vec_qm_qm3
      vec_qm_qm13 = vec_qm_qm1*vec_qm_qm3
+   else
+     vec_qm_qm123 = ZERO
+     vec_qm_qm12 = ZERO
+     vec_qm_qm23 = ZERO
+     vec_qm_qm13 = ZERO
    end if
 
    vec2_qm_qm1 = vec_qm_qm1*vec_qm_qm1 ! (xi - xj)**2
@@ -1438,8 +1446,8 @@ subroutine qm2_deriv_qm_analyt(iqm,jqm,loop_count,qm_qm_e_repul,PSUM, &
 
 end subroutine qm2_deriv_qm_analyt
 
-subroutine qm2_dhc(P,iqm, jqm,qmitype,qmjtype,xyz_qmi,xyz_qmj,natqmi, &
-                   natqmj, iif, iil, jjf, jjl, DENER)
+subroutine qm2_dhc(P,iqm, jqm,qmitype,qmjtype,xyz_qmi,xyz_qmj, &
+                   iif, iil, jjf, jjl, DENER)
 !***********************************************************************
 !
 ! Ross Walker (SDSC, 2006) : Do 'Pseudo' Numerical Derivatives for QM
@@ -1450,7 +1458,7 @@ subroutine qm2_dhc(P,iqm, jqm,qmitype,qmjtype,xyz_qmi,xyz_qmj,natqmi, &
 
       use constants          , only: ONE, A_TO_BOHRS, A2_TO_BOHRS2, EV_TO_KCAL
       use ElementOrbitalIndex, only: MaxValenceOrbitals,MaxValenceDimension 
-      use qmmm_module        , only: qm2_params, OVERLAP_CUTOFF, qmmm_nml, qm2_struct
+      use qmmm_module        , only: qm2_params, OVERLAP_CUTOFF
       use Rotation           , only: GetRotationMatrix, Rotate2Center2Electron, RotateCore   
       use qm2_fock_d         , only: W2Fock_atompair
  
@@ -1459,7 +1467,7 @@ subroutine qm2_dhc(P,iqm, jqm,qmitype,qmjtype,xyz_qmi,xyz_qmj,natqmi, &
 !Passed in
       _REAL_ P(*)
       _REAL_, intent(in)  :: xyz_qmi(3),xyz_qmj(3)
-      integer, intent(in) :: iqm, jqm, natqmi, natqmj, qmitype, qmjtype
+      integer, intent(in) :: iqm, jqm, qmitype, qmjtype
       integer, intent(in) :: iif, iil, jjf, jjl
       _REAL_, intent(out) :: DENER
 
@@ -1473,13 +1481,13 @@ subroutine qm2_dhc(P,iqm, jqm,qmitype,qmjtype,xyz_qmi,xyz_qmj,natqmi, &
       _REAL_ :: F(MaxValenceOrbitals*(MaxValenceOrbitals*2+1))
       _REAL_ :: SHMAT(MaxValenceOrbitals,MaxValenceOrbitals)
       _REAL_ :: W(MaxValenceDimension**2)
-      _REAL_ :: enuclr, ee, temp
+      _REAL_ :: enuclr, ee
       _REAL_ :: r2, rij, r2InAu, rijInAu, oneOverRij
       
       _REAL_ :: RI(22), CORE(10,2)
       _REAL_ :: rotationMatrix(15,45)
       _REAL_, allocatable:: WW(:,:)
-      integer ::orb_loc(2,2),KR
+      integer :: KR
       logical::hasDOrbital
 
       !qm2_Helect is a function
@@ -1547,8 +1555,7 @@ subroutine qm2_dhc(P,iqm, jqm,qmitype,qmjtype,xyz_qmi,xyz_qmj,natqmi, &
       KR=1
       hasDOrbital=((n_atomic_orbi.ge.9) .or. (n_atomic_orbj.ge.9))
       call GetRotationMatrix(xyz_qmj-xyz_qmi, rotationMatrix, hasDOrbital)        
-      call qm2_rotate_qmqm(-1,iqm,jqm,natqmi,natqmj,xyz_qmi,xyz_qmj,            &
-                  W(KR),KR, RI, core)
+      call qm2_rotate_qmqm(-1,iqm,jqm,xyz_qmi,xyz_qmj,W(KR),KR, RI, core)
 
       if (hasDOrbital) then   ! spd case
 
@@ -1585,7 +1592,7 @@ subroutine qm2_dhc(P,iqm, jqm,qmitype,qmjtype,xyz_qmi,xyz_qmj,natqmi, &
     n_atomic_orbi,n_atomic_orbj,  &
     ii,jj,core,rotationMatrix,H)
    
-   call qm2_core_core_repulsion(iqm, jqm, rij, oneOverRij, RI, enuclr)         
+   call qm2_core_core_repulsion(iqm, jqm, rij, oneOverRij, RI(1), enuclr)         
         
     ! put what we have now to the Fock matrix
     F(1:linear)=H(1:linear)

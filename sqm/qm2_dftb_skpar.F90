@@ -25,7 +25,7 @@ integer function skspar(i,j,r2,dd)
   _REAL_  :: x0,x1,x2,f0,f1,f2
   _REAL_  :: xh,hl
 
-  skspar = 0.0d0
+  skspar = 0
 
   ! Orbital limits
   maxmax = max(lmax(i),lmax(j))
@@ -60,11 +60,11 @@ integer function skspar(i,j,r2,dd)
   ! long as it is not too much larger than
   ! the largest distance stored, basically
   ! seting a confidence limit on the extrapolations.
-  mxind=sktab%dimens(i,j)+(0.3/sktab%sr(i,j)-1.0)
+  mxind=int(sktab%dimens(i,j)+(0.3/sktab%sr(i,j)-1.0))
   r = sqrt(r2)
 
   ! Index for THE integral needed
-  ind = r / sktab%sr(i,j)+1.0
+  ind = int(r / sktab%sr(i,j)+1.0)
 
   if(r2 < 1e-8)then
 
@@ -215,9 +215,9 @@ integer function skhpar(i,j,r2,dd)
         endif
      endif
   endif
-  mxind=sktab%dimens(i,j)+(0.3/sktab%sr(i,j)-1.0)
+  mxind=int(sktab%dimens(i,j)+(0.3/sktab%sr(i,j)-1.0))
   r = sqrt(r2)
-  ind = r/sktab%sr(i,j)+1.0
+  ind = int(r/sktab%sr(i,j)+1.0)
   if(r2 < 1e-8)then
      do in = 1,3
         dd(in+10) = sktab%skself(in,i)

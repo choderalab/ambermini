@@ -20,7 +20,7 @@ subroutine broyden(niter,natoms,qmold,qmat)
    !  University of Florida
 
    use constants, only : zero, one
-   use qm2_dftb_module, only: MAX_BRD_ITER,MAXSIZ, brd_struct
+   use qm2_dftb_module, only: MAX_BRD_ITER, brd_struct
    implicit none
 
 !! Broyden Mixing Parameter

@@ -314,7 +314,7 @@ subroutine qm2_deriv_qmmm_light(iqm,jpair,loop_count,psum_light,xyz_qm,xyz_mm,pa
 !See heavy version of routine for comments
 !  Current Version: Ross Walker (TSRI, 2005)
 
-      use qmmm_module, only : qmmm_nml,qm2_params, qmmm_struct, qm2_struct, qm2_rij_eqns, &
+      use qmmm_module, only : qmmm_nml,qm2_params, qmmm_struct, qm2_rij_eqns, &
                               alph_mm, EXPONENTIAL_CUTOFF
       use constants  , only : A_TO_BOHRS, A2_TO_BOHRS2, AU_TO_EV, A2_TO_BOHRS2xAU_TO_EV, &
                               EV_TO_KCAL, AU_TO_KCAL, BOHRS_TO_A, zero, one, two
@@ -549,7 +549,7 @@ subroutine qm2_deriv_qmmm_heavy(iqm,loop_count,psum,xyz_qm,xyz_mm,n_atomic_orb,p
 !
 !  Current Version: Ross Walker (TSRI, 2004)
     use ElementOrbitalIndex, only : ElementSymbol, MaxValenceOrbitals, MaxValenceDimension
-    use qmmm_module        , only : qmmm_nml,qm2_params, qm2_struct, qm2_rij_eqns, qmmm_struct, &
+    use qmmm_module        , only : qmmm_nml,qm2_params, qm2_rij_eqns, qmmm_struct, &
                                     alph_mm, AXIS_TOL, EXPONENTIAL_CUTOFF
     use constants          , only : A_TO_BOHRS, A2_TO_BOHRS2, AU_TO_EV, HALF_AU_TO_EV, FOURTH_AU_TO_EV, &
                                     A2_TO_BOHRS2xAU_TO_EV, one, zero, four, two, half, EV_TO_KCAL, &

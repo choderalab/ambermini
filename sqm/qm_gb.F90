@@ -10,7 +10,7 @@
 
 subroutine allocate_qmgb(nquant_nlink)
 
-  use qmmm_module, only : qmmm_nml, qmmm_struct, qm_gb
+  use qmmm_module, only : qm_gb
   implicit none
 
   integer, intent(in) :: nquant_nlink
@@ -126,7 +126,7 @@ subroutine qmgb_calc_mm_pot(natom,gb_mmpot,qm_atom_mask,scaled_mm_charges, &
 ! to the diagonal elements of the Fock matrix of each QM atom (i).
 
 ! Needs two real scratch arrays of at least natom long.
-  use qmmm_module, only : qm_gb, qmmm_mpi, qmmm_struct, qmmm_nml
+  use qmmm_module, only : qm_gb, qmmm_mpi, qmmm_struct
   use constants, only : fourth
   implicit none
 

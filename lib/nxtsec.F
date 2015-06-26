@@ -97,9 +97,8 @@ c   down the file, rewind, or exit with an error (flag not found).
 
       integer  NNBCHR
 
-      logical  FIRST
-      SAVE FIRST
-      DATA FIRST/.TRUE./
+      logical, save :: FIRST = .TRUE.
+      logical, save :: PRINTINFO = .TRUE.
 c
 c   MXNXFL is maximum number of %FLAG cards that can be specified
 c
@@ -187,7 +186,7 @@ c
          IPT10 = NNBCHR(AA,IPT9+1,0,1)
          IF (IPT10-1 - IPT9 + 1 .NE. 8) GO TO 9005
          PRTIM = AA(IPT9:IPT10-1)
-         WRITE(IOUT,15) RPVER,PRDAT,PRTIM
+         IF (PRINTINFO) WRITE(IOUT,15) RPVER,PRDAT,PRTIM
    15    FORMAT('| New format PARM file being parsed.',/,
      *          '| Version = ',F8.3,' Date = ',A,' Time = ',A)
          IPRVRR = 0
@@ -199,7 +198,7 @@ c   On subsequent calls, if IPRVRR = 1, we return immediately.
 c
    20 IPRVRR = 1
       IOK = -1
-      WRITE(IOUT,21)
+      IF (PRINTINFO) WRITE(IOUT,21)
    21 FORMAT('|  INFO: Old style PARM file read',/)
       fmt = fmtold
       rewind(iunit)
@@ -322,6 +321,14 @@ c
 c   Update IBLOCK pointer and return
 c
       IBLOCK = IFIND
+      RETURN
+
+      ENTRY NXTSEC_SILENCE
+      PRINTINFO = .FALSE.
+      RETURN
+
+      ENTRY NXTSEC_RESET
+      FIRST = .TRUE.
       RETURN
 c
 c   Errors:
@@ -516,9 +523,8 @@ c   down the file, rewind, or exit with an error (flag not found).
 
       integer  NNBCHR
 
-      logical  FIRST
-      save FIRST
-      DATA FIRST/.TRUE./
+      logical, save ::  FIRST = .TRUE.
+      logical, save ::  PRINTINFO = .TRUE.
 c
 c   MXNXFL is maximum number of %FLAG cards that can be specified
 c
@@ -602,7 +608,7 @@ c
          IPT10 = NNBCHR(AA,IPT9+1,0,1)
          IF (IPT10-1 - IPT9 + 1 .NE. 8) GO TO 9005
          PRTIM = AA(IPT9:IPT10-1)
-         WRITE(IOUT,15) RPVER,PRDAT,PRTIM
+         IF (PRINTINFO) WRITE(IOUT,15) RPVER,PRDAT,PRTIM
    15    FORMAT('| New format inpcrd file being parsed.',/,
      *          '| Version = ',F8.3,' Date = ',A,' Time = ',A)
          IPRVRR = 0
@@ -614,7 +620,7 @@ c   On subsequent calls, if IPRVRR = 1, we return immediately.
 c
    20 IPRVRR = 1
       IOK = -1
-      WRITE(IOUT,21)
+      IF (PRINTINFO) WRITE(IOUT,21)
    21 FORMAT('|  INFO: Old style inpcrd file read',/)
       fmt = fmtold
       rewind(iunit)
@@ -732,6 +738,10 @@ c
 c   Update IBLOCK pointer and return
 c
       IBLOCK = IFIND
+      RETURN
+
+      ENTRY NXTSEC_CRD_SILENCE
+      PRINTINFO = .FALSE.
       RETURN
 c
 c   Errors:

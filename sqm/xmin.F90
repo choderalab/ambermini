@@ -32,7 +32,6 @@ subroutine xmin( natom, x, fg, escf, xmin_iter, maxiter, born_radii, &
    integer :: return_flag
    integer :: status_flag
    _REAL_  :: xmin_time
-   integer :: mytaskid =0
 
    ! The depth of the LBFGS memory for XMIN's LBFGS minimization or TNCG
    ! preconditioning.
@@ -119,6 +118,8 @@ subroutine xmin( natom, x, fg, escf, xmin_iter, maxiter, born_radii, &
                   first = .false.
                end if
                write(6,'(a,i5,f14.4,a,f14.4,a)') 'xmin ', xmin_iter, escf,' kcal/mol', grms, ' kcal/(mol*A)'
+               !flush mdout so people can follow how the convergence is running.
+               call flush(6)
             end if
             call sqm_energy( natom, x, escf, born_radii, one_born_radii, &
                  intdiel, extdiel, Arad, scf_mchg ) 

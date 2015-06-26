@@ -200,11 +200,11 @@ char    *sTemp;
                         return(TRUE);
                 strcat( sNeedType, "number" );
                 break;
-			case 'i':
+            case 'i':
                 if ( iObjectType(oObj) == OINTEGERid ) 
                         return(TRUE);
                 strcat( sNeedType, "integer" );
-                break;	
+                break;
             case 's':
                 if ( iObjectType(oObj) == OSTRINGid ) 
                         return(TRUE);
@@ -1691,14 +1691,14 @@ double          choice;
 
     if ( !bCmdGoodArguments( "saveMol2", iArgCount, aaArgs, "u s n" ) ) {
         VP0(( "usage:  saveMol2 <object> <filename> <option>\n" ));
-		VP0(( "<option> = 0 for Default atom types \n" ));
-		VP0(( "<option> = 1 for AMBER atom types \n" ));
+        VP0(( "<option> = 0 for Default atom types \n" ));
+        VP0(( "<option> = 1 for AMBER atom types \n" ));
         return(NULL);
     }
     sString = sOString( oAssocObject(aaArgs[1]) );
     choice =  (int) dODouble( oAssocObject(aaArgs[2]) ) ;
-	fOut = FOPENCOMPLAIN( sString, "w" );
-	if ( fOut == NULL ) 
+    fOut = FOPENCOMPLAIN( sString, "w" );
+    if ( fOut == NULL ) 
         return(NULL);
     VP0(("Writing mol2 file: %s\n", sString));
     Mol2Write( fOut, (UNIT)oAssocObject(aaArgs[0]), choice);
@@ -1733,14 +1733,14 @@ double          choice;
 
     if ( !bCmdGoodArguments( "saveMol3", iArgCount, aaArgs, "u s n" ) ) {
         VP0(( "usage:  saveMol3 <object> <filename> <option>\n" ));
-		VP0(( "<option> = 0 for Default atom types \n" ));
-		VP0(( "<option> = 1 for AMBER atom types \n" ));
+        VP0(( "<option> = 0 for Default atom types \n" ));
+        VP0(( "<option> = 1 for AMBER atom types \n" ));
         return(NULL);
     }
     sString = sOString( oAssocObject(aaArgs[1]) );
     choice =  (int) dODouble( oAssocObject(aaArgs[2]) );
-	fOut = FOPENCOMPLAIN( sString, "w" );
-	if ( fOut == NULL ) return(NULL);
+    fOut = FOPENCOMPLAIN( sString, "w" );
+    if ( fOut == NULL ) return(NULL);
         
     VP0(("Writing mol3 file: %s\n", sString));
     
@@ -2693,7 +2693,21 @@ char            *sCmd = "set";
                         setUsage();
                 }
                 return(NULL);
-        } 
+        }
+        if ( !strcmp( sString, "reorder_residues" )) {
+          
+                sString = sOString(oAssocObject(aaArgs[2]));
+                StringLower( sString );
+                if ( !strcmp( sString, "on" ) ) {
+                        GDefaults.reorder_residues = 1;
+                } else if ( !strcmp( sString, "off" ) ) {
+                        GDefaults.reorder_residues = 0;
+                } else {
+                        VP0(("Set reorder_residues: must be 'on' or 'off'\n"));
+                        setUsage();
+                }
+                return(NULL);
+        }  
         if ( !strcmp( sString, "oldprmtopformat" )) {
                 sString = sOString(oAssocObject(aaArgs[2]));
                 StringLower( sString );
@@ -2869,18 +2883,18 @@ char            *sCmd = "set";
         }
         if ( !strcmp( sString, "ipol" )) {
             int myinteger = dODouble(oAssocObject(aaArgs[2]));
-	    if ( myinteger < 0 || myinteger > 4 ) {
-	        VP0(("Only IPOL = 0 to 4 is supported. Fall back to IPOL = 0.\n"));
+        if ( myinteger < 0 || myinteger > 4 ) {
+            VP0(("Only IPOL = 0 to 4 is supported. Fall back to IPOL = 0.\n"));
                 myinteger = 0;
-	    } 
+        } 
             if ( GDefaults.iIPOLset > 0 ) {
-	        VP0(("IPOL has already been set to %i in frcmod/parm.dat.\n", GDefaults.iIPOL));
-	        VP0(("Please change the setting in frcmod/parm.dat.\n"));
+            VP0(("IPOL has already been set to %i in frcmod/parm.dat.\n", GDefaults.iIPOL));
+            VP0(("Please change the setting in frcmod/parm.dat.\n"));
             } else {
                 GDefaults.iIPOL = myinteger;
             }
             return(NULL);
-	}
+    }
         if ( !strcmp( sString, "pdbloadsequential" )) {
                 if ( iObjectType(oAssocObject(aaArgs[2])) != OSTRINGid ) {
                         VP0(("expected 'true' or 'false'\n"));
@@ -3763,7 +3777,7 @@ double          dScale;
     oOver = oAssocObject(aaArgs[0]);
     lAtoms = lLoop( oOver, ATOMS );
     while ( (aAtom = (ATOM)oNext(&lAtoms)) ) {
-        /* HACK - resetting charge w/out marking for update */
+        /* HACK - resetting charge without marking for update */
         dAtomCharge( aAtom ) *= dScale;
         dAtomPertCharge( aAtom ) *= dScale;
     }
@@ -5197,13 +5211,6 @@ RET:
  */
 
 /*
- *      CHARGE_TOLERANCE is the granularity between charges for
- *      neutralization when adding ions.
- *      It is used in oCmd_addIons, oCmd_addIons2, and oCmd_addIonSolv.
- */
-const double CHARGE_TOLERANCE = 0.0001 ;
-
-/*
  *  vaSolventResidues() - make array of residue pointers
  *      TODO - maybe restrict it to dShellExtent?
  */
@@ -5384,17 +5391,15 @@ char            *sCmd = "addIons";
                 return(NULL);
         }
         /*
-         *  Do integer division to get the floor; add a fudge
-         *      factor to the charges since they may be
-         *      marginally less than integral owing to
-         *      machine arithmetic
+         *  Get the nearest integer number of ions that
+         *      we need to add to get as close as possible
+         *      to neutral
          */
-        iIon1 = (int)(fabs( dCharge) + CHARGE_TOLERANCE) / 
-                (int)(fabs( dICharge1 ) + CHARGE_TOLERANCE);
+        iIon1 = (int)lrint( fabs(dCharge) / fabs(dICharge1) );
         if ( iIon1 == 0 )
             VP0(( " %f %d %d %d\n", fabs( dCharge),
                 (int)fabs( dCharge), (int)fabs( dICharge1 ),
-                (int)fabs( dCharge) / (int)fabs( dICharge1 ) ));
+                (int)(fabs( dCharge) / fabs( dICharge1 )) ));
         if ( uIon2 ) {
                 VP0(( "%s: Neutralization - can't do 2nd ion.\n", sCmd ));
                 return(NULL);
@@ -5709,17 +5714,15 @@ char            *sCmd = "addIons";
                 return(NULL);
         }
         /*
-         *  Do integer division to get the floor; add a fudge
-         *      factor to the charges since they may be
-         *      marginally less than integral owing to
-         *      machine arithmetic
+         *  Get the nearest integer number of ions that
+         *      we need to add to get as close as possible
+         *      to neutral
          */
-        iIon1 = (int)(fabs( dCharge) + CHARGE_TOLERANCE) / 
-                (int)(fabs( dICharge1 ) + CHARGE_TOLERANCE);
+        iIon1 = (int)lrint( fabs(dCharge) / fabs(dICharge1) );
         if ( iIon1 == 0 )
             VP0(( " %f %d %d %d\n", fabs( dCharge),
                 (int)fabs( dCharge), (int)fabs( dICharge1 ),
-                (int)fabs( dCharge) / (int)fabs( dICharge1 ) ));
+                (int)(fabs( dCharge) / fabs( dICharge1 )) ));
         if ( uIon2 ) {
                 VP0(( "%s: Neutralization - can't do 2nd ion.\n", sCmd ));
                 return(NULL);
@@ -6021,17 +6024,15 @@ char            *sCmd = "addIonSolv";
                 return(NULL);
         }
         /*
-         *  Do integer division to get the floor; add a fudge
-         *      factor to the charges since they may be
-         *      marginally less than integral owing to
-         *      machine arithmetic
+         *  Get the nearest integer number of ions that
+         *      we need to add to get as close as possible
+         *      to neutral
          */
-        iIon1 = (int)(fabs( dCharge) + CHARGE_TOLERANCE) / 
-                (int)(fabs( dICharge1 ) + CHARGE_TOLERANCE);
+        iIon1 = (int)lrint( fabs(dCharge) / fabs(dICharge1) );
         if ( iIon1 == 0 )
             VP0(( " %f %d %d %d\n", fabs( dCharge),
                 (int)fabs( dCharge), (int)fabs( dICharge1 ),
-                (int)fabs( dCharge) / (int)fabs( dICharge1 ) ));
+                (int)(fabs( dCharge) / fabs( dICharge1 )) ));
         if ( uIon2 ) {
                 VP0(( "%s: Neutralization - can't do 2nd ion.\n", sCmd ));
                 return(NULL);
@@ -6340,22 +6341,26 @@ oCmd_addIonsRand( int iArgCount, ASSOC aaArgs[] )
     if ( (dICharge1 < 0  &&  dCharge < 0) ||
       (dICharge1 > 0  &&  dCharge > 0)) {
       VP0(( "%s: 1st Ion & target are the same charge:\n", sCmd ));
-    VP0(( "     can't neutralize.\n" ));
-    return(NULL);
-      }
-      // Integer division with a fudge factor because of machine arithmetic
-      iIon1 = (int)(fabs( dCharge) + CHARGE_TOLERANCE) / 
-      (int)(fabs( dICharge1 ) + CHARGE_TOLERANCE);
-      if ( iIon1 == 0 )
-        VP0(( " %f %d %d %d\n", fabs( dCharge),
-              (int)fabs( dCharge), (int)fabs( dICharge1 ),
-              (int)fabs( dCharge) / (int)fabs( dICharge1 ) ));
-        if ( uIon2 ) {
-          VP0(( "%s: Neutralization - can't do 2nd ion.\n", sCmd ));
-          return(NULL);
-        }
-        VP0(( "%d %s ion%s required to neutralize.\n", iIon1,
-              sAssocName( aaArgs[1] ), (iIon1 > 1 ? "s" : "") ));
+      VP0(( "     can't neutralize.\n" ));
+      return(NULL);
+    }
+    /*
+     *  Get the nearest integer number of ions that
+     *      we need to add to get as close as possible
+     *      to neutral
+     */
+    iIon1 = (int)lrint( fabs(dCharge) / fabs(dICharge1) );
+    if ( iIon1 == 0 ) {
+      VP0(( " %f %d %d %d\n", fabs( dCharge),
+            (int)fabs( dCharge), (int)fabs( dICharge1 ),
+            (int)(fabs( dCharge) / fabs( dICharge1 )) ));
+    }
+    if ( uIon2 ) {
+        VP0(( "%s: Neutralization - can't do 2nd ion.\n", sCmd ));
+        return(NULL);
+    }
+    VP0(( "%d %s ion%s required to neutralize.\n", iIon1,
+          sAssocName( aaArgs[1] ), (iIon1 > 1 ? "s" : "") ));
   } 
   
   // Check ion size and position
@@ -6944,18 +6949,18 @@ NEXTRES2:       ;
 OBJEKT
 oCmd_flip(int iArgCount, ASSOC aaArgs[])
 {
-UNIT		uUnit;
-LOOP		lAtoms;
-ATOM		aAtom;
+UNIT        uUnit;
+LOOP        lAtoms;
+ATOM        aAtom;
 
     uUnit = (UNIT)oAssocObject(aaArgs[0]);
     if ( uUnit == NULL ) return(NULL);
 
     lAtoms = lLoop((OBJEKT) uUnit, ATOMS );
     while ( (aAtom = (ATOM)oNext(&lAtoms)) ) {
-	if ( bAtomFlagsSet( aAtom, ATOMSELECTED ) ) {
-	    bBuildFlipChiralityFor((CONTAINER) uUnit, aAtom );
-	}
+        if ( bAtomFlagsSet( aAtom, ATOMSELECTED ) ) {
+            bBuildFlipChiralityFor((CONTAINER) uUnit, aAtom );
+        }
     }
   
 
@@ -6974,17 +6979,17 @@ OBJEKT
 oCmd_relax(int iArgCount, ASSOC aaArgs[])
 {
 MINIMIZER       mStrain;
-UNIT		uUnit;
+UNIT            uUnit;
     
     uUnit = (UNIT)oAssocObject(aaArgs[0]);
     if ( uUnit == NULL ) return(NULL);
     
-		/* Setup a MINIMIZER and give it a callback to use */
-		/* to update the display every step of the minimization */
+        /* Setup a MINIMIZER and give it a callback to use */
+        /* to update the display every step of the minimization */
 
     mStrain = mMinimizerCreate();
-   		/* Set up the MINIMIZER to use, and turn off any */
-		/* control-c that may have been hit before */
+        /* Set up the MINIMIZER to use, and turn off any */
+        /* control-c that may have been hit before */
 
     BasicsResetInterrupt();
     SelectRelaxInFramework( (UNIT)uUnit, mStrain );

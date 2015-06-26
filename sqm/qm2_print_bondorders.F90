@@ -13,10 +13,9 @@ subroutine qm2_print_bondorders()
       
   implicit none
 
-  integer :: loop_count, orb_beg_i, orb_end_i, tri_i
-  integer :: orb_beg_j, orb_end_j, tri_j, tri
-  integer :: i,j,k, tri_k1, tri_k2, iqm, jqm
-  _REAL_, dimension(:), pointer :: den_matrix2
+  integer :: orb_beg_i, orb_end_i
+  integer :: orb_beg_j, orb_end_j, tri
+  integer :: i,j, iqm, jqm
   _REAL_ :: BO
             
 

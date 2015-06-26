@@ -8,8 +8,8 @@
 !! =============================================================================
 subroutine mulliken(nquant_nlink,NDIM,izp,lmax,dacc,qmat,qzero,scf_mchg)
 
-   use qmmm_module, only : qmmm_struct, qm2_struct, qmmm_nml, qmmm_mpi
-   use qm2_dftb_module, only: MDIM, ks_struct, izp_str, cm3, mol
+   use qmmm_module, only : qmmm_struct
+   use qm2_dftb_module, only: MDIM, ks_struct
    implicit none
 
 !!Passed in:
@@ -24,13 +24,11 @@ subroutine mulliken(nquant_nlink,NDIM,izp,lmax,dacc,qmat,qzero,scf_mchg)
 
 !!Locals
    integer :: i, adim
-   _REAL_ :: sum,qhelp,conv, temp, tr
-   integer :: k
    logical :: calc_dens
 
-!! Testing
-   integer :: n, j, ljmax, indj, lj, jofn, mj, mjmax
-   _REAL_  :: qtot
+   ! Not used yet!
+!  integer :: j
+!  _REAL_  :: qhelp, qtot
 
 !! Find the number of OCCUPIED MO's (adim)
    do  i = 1,NDIM
@@ -45,7 +43,7 @@ subroutine mulliken(nquant_nlink,NDIM,izp,lmax,dacc,qmat,qzero,scf_mchg)
 !! =============================================================================
 
    call qm2_dftb_qmulli(NDIM, MDIM, adim, calc_dens) ! Orbital-based Mulliken pop. (qmulli)
-   call qm2_dftb_mull_pop(nquant_nlink,NDIM,izp,lmax,qmat)     ! Atom-based Mulliken pop.    (qmat)
+   call qm2_dftb_mull_pop(nquant_nlink,izp,lmax,qmat)     ! Atom-based Mulliken pop.    (qmat)
 
    ! MULLIKEN CHARGES
    ! ----------------
@@ -206,7 +204,7 @@ end subroutine qm2_dftb_qmulli
 
 !===============================================================================
 
-subroutine qm2_dftb_mull_pop(nquant_nlink,NDIM,izp,lmax,qmat)
+subroutine qm2_dftb_mull_pop(nquant_nlink,izp,lmax,qmat)
 !! 
 !! MULLIKEN POPULATIONS PER ATOM
 !! =============================
@@ -223,13 +221,12 @@ subroutine qm2_dftb_mull_pop(nquant_nlink,NDIM,izp,lmax,qmat)
 
 !! Passed in
    integer, intent(in)  :: nquant_nlink         ! Number of atoms
-   integer, intent(in)  :: NDIM       ! Total number of orbitals
    integer, intent(in)  :: izp(*)     ! Atom types
    integer, intent(in)  :: lmax(*)    ! Maximum 'l' (per atom type)
    _REAL_ , intent(out) :: qmat(*)    ! Atomic electron populations
 
 !! Locals
-   integer :: i, j, lj, mj, jofn, ljmax, indj, mjmax
+   integer :: j, lj, mj, jofn, ljmax, indj, mjmax
    _REAL_  :: qtot, qhelp
 
 

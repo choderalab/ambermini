@@ -136,7 +136,7 @@ int	i;
 		kill(0,5);
 	}
 	if ( PonNode->iStatus == OCT_PARTIAL  &&  PonNode->PonChildren == NULL ) {
-		fprintf(stderr, "partial w/out children\n");
+		fprintf(stderr, "partial without children\n");
 		kill(0,5);
 	}
 	if ( PonNode->PonChildren != NULL ) {

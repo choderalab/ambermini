@@ -55,7 +55,7 @@
  *              CONTAINER that contains it that it is being removed
  *              using ContainerIAmBeingRemoved, a message that is passed
  *              all the way up the chain.
- *              This is to garentee that the CONTAINERs that contain
+ *              This is to guarantee that the CONTAINERs that contain
  *              the CONTAINER being removed can NULL any pointers
  *              to that CONTAINER, leaving no loose pointers.
  *

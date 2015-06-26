@@ -163,7 +163,7 @@ addPdbResMap {
 # { 0 "GUA" "G5"  } { 1 "GUA" "G3"  } { "GUA" "G" }
 # { 0 "ADE" "A5"  } { 1 "ADE" "A3"  } { "ADE" "A" }
 # { 0 "CYT" "C5"  } { 1 "CYT" "C3"  } { "CYT" "C" }
-# { 0 "THY" "T5"  } { 1 "THY" "T3"  } { "THY" "T" }
+# { 0 "URA" "R5"  } { 1 "URA" "R3"  } { "URA" "R" }
 
 }
 

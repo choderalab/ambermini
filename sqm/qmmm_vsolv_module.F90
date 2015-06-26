@@ -98,6 +98,7 @@ module qmmm_vsolv_module
      ! I.e. the first atom number of the nearest residues to the QM region
      ! that should be treated as QM.
      integer, dimension(:), pointer :: nearest_solvent_pointers => null()
+     integer, dimension(:), pointer :: nearest_solvent_pointers_prev => null()
 
      ! Distances of QM solvents from the QM center
      ! These values are calculated in qmmm_vsolv_identify_nearest_solvent
@@ -261,8 +262,6 @@ contains
     integer, intent(in) :: iita(self%ntheta), ijta(self%ntheta), ikta(self%ntheta), icta(self%ntheta)
     integer, intent(in) :: iiph(self%nphih), ijph(self%nphih), ikph(self%nphih), ilph(self%nphih), icph(self%nphih)
     integer, intent(in) :: iipa(self%nphia), ijpa(self%nphia), ikpa(self%nphia), ilpa(self%nphia), icpa(self%nphia)
-
-    integer :: ierr
 
     if (self%debug) then
        write(6,'(a)') '>>>>> entered qmmm_vsolv_store_parameters'
@@ -497,6 +496,11 @@ contains
 
     if ( associated (self%nearest_solvent_pointers) ) then
        deallocate (self%nearest_solvent_pointers, stat=ierr)
+       REQUIRE (ierr == 0)
+    end if
+
+    if ( associated (self%nearest_solvent_pointers_prev) ) then
+       deallocate (self%nearest_solvent_pointers_prev, stat=ierr)
        REQUIRE (ierr == 0)
     end if
 

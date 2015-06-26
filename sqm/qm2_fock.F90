@@ -9,13 +9,13 @@ subroutine qm2_fock1(F, PTOT)
 ! Current routine streamlined and optimised by Ross Walker (TSRI, 2005)         
 !                                                                               
 ! *********************************************************************         
-   use qmmm_module, only : qmmm_mpi, qmmm_struct, qm2_params
+   use qmmm_module, only : qmmm_mpi, qm2_params
    implicit none
 
    _REAL_, intent(inout) :: F(*)
    _REAL_, intent(in) :: PTOT(*)
   
-   integer ii,ia,ib,ka,l,m,j,iminus,iplus,icc
+   integer ii,ia,ib,ka,l,m,j,iplus,icc
      
    _REAL_ ptpop, GSSII, GSPII, GPPII, GP2II, HSPII 
    _REAL_ GSPIIHSPII, GSPIIHSPIIPTK, HSPIIGSPII, GP2IIGPPII
@@ -69,7 +69,6 @@ subroutine qm2_fock1(F, PTOT)
          end do
                                                                            
          !  F(P,P*)
-         !IMINUS=IB-1
          do J=IB,IB+2
             ICC=J+1
             do L=ICC,IB+2
@@ -92,7 +91,11 @@ subroutine qm2_fock2(F, PTOT, W, orb_loc)
 !                                                                               
 !  ON OUTPUT F   = PARTIAL FOCK MATRIX                                          
 !***********************************************************************        
+#ifdef MPI
    use qmmm_module, only : qmmm_struct, qm2_struct, qm2_params, qmmm_mpi
+#else
+   use qmmm_module, only : qmmm_struct, qm2_struct, qm2_params
+#endif
    implicit none
 
    _REAL_, intent(inout) :: F(*)
@@ -102,14 +105,11 @@ subroutine qm2_fock2(F, PTOT, W, orb_loc)
 
 !Local
    integer JINDEX(256)
-   integer w_index(qmmm_struct%nquant_nlink,qmmm_struct%nquant_nlink)
    _REAL_ PK(16),PJA(16),PJB(16)
    integer m,i,j, ij, ji, k, l, kl, lk, kk, ii, ia, ib, jk, kj, jj, ja, jb
    integer i1, ll, j1, jstart, jend
    _REAL_ sumdia, sumoff, sum, wkk
    
-   _REAL_::Ftest(10000)
-
    SAVE jindex
    if(qmmm_struct%fock_first_call)then
       qmmm_struct%fock_first_call = .false.
@@ -532,7 +532,7 @@ subroutine qm2_fock2_2atm(F, PTOT, W, orb_loc)
 !***********************************************************************        
 
    use ElementOrbitalIndex, only : MaxValenceOrbitals, MaxValenceDimension
-   use qmmm_module, only : qmmm_struct, qm2_struct, qm2_params
+   use qmmm_module, only : qmmm_struct, qm2_params
    implicit none
 
 ! dimension 36 = max of 8*(8+1)/2 = 4 orbs with 4 orbs - S,3P with S,3P

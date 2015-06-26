@@ -32,15 +32,8 @@ addAtomTypes {
 	{ "OA"  "O"  "sp3" }
 	{ "CT"  "C"  "sp3" }
 	{ "CX"  "C"  "sp3" }
-	{ "TA"  "C"  "sp3" }
-	{ "TD"  "C"  "sp3" }
 	{ "TG"  "C"  "sp3" }
-	{ "TI"  "C"  "sp3" }
-	{ "TL"  "C"  "sp3" }
-	{ "TN"  "C"  "sp3" }
 	{ "TP"  "C"  "sp3" }
-	{ "TS"  "C"  "sp3" }
-	{ "TV"  "C"  "sp3" }
 	{ "C8"  "C"  "sp3" }
 	{ "2C"  "C"  "sp3" }
 	{ "3C"  "C"  "sp3" }
@@ -77,6 +70,7 @@ addAtomTypes {
 	{ "NQ"  "N"  "sp2" }
 	{ "NB"  "N"  "sp2" }
 	{ "NC"  "N"  "sp2" }
+	{ "TN"  "N"  "sp2" }
 	{ "NT"  "N"  "sp3" }
 	{ "NY"  "N"  "sp2" }
 	{ "N3"  "N"  "sp3" }
@@ -178,7 +172,7 @@ addPdbResMap {
 # { 0 "GUA" "G5"  } { 1 "GUA" "G3"  } { "GUA" "G" }
 # { 0 "ADE" "A5"  } { 1 "ADE" "A3"  } { "ADE" "A" }
 # { 0 "CYT" "C5"  } { 1 "CYT" "C3"  } { "CYT" "C" }
-# { 0 "THY" "T5"  } { 1 "THY" "T3"  } { "THY" "T" }
+# { 0 "URA" "R5"  } { 1 "URA" "R3"  } { "URA" "R" }
 
 }
 

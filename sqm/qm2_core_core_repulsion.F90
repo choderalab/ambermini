@@ -44,7 +44,7 @@ subroutine qm2_core_core_repulsion(iat, jat, rij, onerij, RI1, enuc)
   _REAL_,  intent(in)  :: rij, onerij, RI1
   _REAL_,  intent(out) :: enuc
 
-  integer :: i, j
+  integer :: i
   integer :: iatyp, jatyp
   integer :: iatnum, jatnum, ijmin, ijmax
   _REAL_  :: alpi, alpj, scale, ccij, giijj

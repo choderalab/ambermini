@@ -23,7 +23,7 @@ and research purposes.
 */
 
 /* 
-  FILE:         ndb_cifparse_lex.l
+  FILE:         cifparse.l
 
   This file is part of the NDBQUERY application,
   a program component of the Nucleic Acid Database Project.
@@ -42,10 +42,10 @@ and research purposes.
 
   Modified to allow multiple lexers in single program, support flex, etc.
     by D.A. Case,  12/97
+  Further modified to recognize some NMR_STAR syntax used for NEF-style 
+    restraints -- DAC, 11/14
 
 */
-
-/*$$LICENSE-NDB$$*/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -117,6 +117,24 @@ static int   buflen;
         strncpy(yylval.TempBuffer,yytext,MAXVALUELENGTH);
         return (DATABLOCK);
       }
+    }
+
+[Ss][Aa][Vv][Ee][_][^\n\t ]*   {                 /* save_ */ 
+      if (isText) alt_yymore();
+      else {
+        strncpy(yylval.TempBuffer,yytext,MAXVALUELENGTH);
+        return (DATABLOCK);
+      }
+    }
+
+[Ss][Aa][Vv][Ee][_][\n\t ]*   {                 /* end of save_ */ 
+      if (isText) alt_yymore();
+      else lineNo++;
+    }
+
+[Ss][Tt][Oo][Pp][_][\n\t ]*   {                 /* end of loop_ */ 
+      if (isText) alt_yymore();
+      else lineNo++;
     }
 
 [Ll][Oo][Oo][Pp][_]      {                        /* loop_ */

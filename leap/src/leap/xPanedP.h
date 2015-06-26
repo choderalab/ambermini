@@ -90,8 +90,8 @@ typedef struct _xPanedConstraintsPart {
   /* Private state. */
     Position	delta;		/* Desired Location */
     Position	olddelta;	/* The last value of dy. */
-    Boolean     xpaned_adjusted_me; /* Has the vxpaned adjusted this widget w/o
-				     user interaction to make things fit? */
+    Boolean     xpaned_adjusted_me; /* Has the vxpaned adjusted this widget
+				     without user action to make things fit? */
     Dimension	wp_size;	/* widget's preferred size */ 
     int         size;		/* the size the widget will actually get. */
     Widget	grip;		/* The grip for this child */

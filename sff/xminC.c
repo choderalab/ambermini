@@ -126,8 +126,6 @@ extern int get_mytaskid();      /* for MPI */
 #  define xminC xminc_
 #endif
 
-double xminC();
-
 
 /*
  Private to libxmin.c:
@@ -327,9 +325,8 @@ hessvec_forward(int *ndim, double *vec_in, double *vec_out, double *xyz,
  */
 {
 	static int i, n;
-	static double *xyz_save = NULL, *grad_save =
-	NULL, sqrt_epsmach, tiny_step, dot, xyz_norm, vec_in_norm, max,
-	vec_in_max;
+	static double *xyz_save = NULL, *grad_save = NULL, sqrt_epsmach,
+                 tiny_step, dot, xyz_norm, vec_in_norm;
 	static int allocated, error_flag;
 	switch (*label) {
 		case 0:
@@ -688,21 +685,20 @@ ls_wolfe( int k, int n, double *x_k, double *fx_k, double *g_k,
  errors prevent further progress. In this case stp only
  satisfies the sufficient decrease condition. */
 {
-	static int status_flag, error_flag;
+	static int error_flag;
 	static double fx_k_save, *x_k_save=NULL;
 	static double dg_init, dg_try, s_k, dmax, dnorm, grms;
 	static double lhs_f_wolfe, rhs_f_wolfe, lhs_g_wolfe, rhs_g_wolfe;
 	static int allocated=NO, i, j, dmax_idx;
         static char dmax_xyz;
  	static int brackt, stage1;
-	static double dg, dgm, dgtest, dgx, dgxm, dgy, dgym;
+	static double dgm, dgtest, dgx, dgxm, dgy, dgym;
 	static double fm, fx, fxm, fy, fym;
 	static double stp, stpmin, stpmax;
 	static double stx, sty, stmin, stmax, width, width1;
 	
 	switch (*label) {
 		case 0:
-			status_flag = 0;
 			error_flag = FALSE;
 			if(!allocated){
 				x_k_save = (double *)my_malloc(malloc,
@@ -811,16 +807,16 @@ L00:
 											i, lhs_f_wolfe, rhs_f_wolfe);
 										fprintf(nabout,"            lhs_g=%16.8g  rhs_g=%16.8g\n",
 											lhs_g_wolfe, rhs_g_wolfe);
-		                                                                fprintf(nabout,"            rel_s=%16.8g  abs_s=%16.8g\n",
-                                                                                        stp, stp*dnorm);
-                                                                                fprintf(nabout,"            max_d=%16.8g  i_xyz=%15d%c\n",
-                                                                                        stp*dmax, dmax_idx+1, dmax_xyz);
-								                fflush(nabout);
+										fprintf(nabout,"            rel_s=%16.8g  abs_s=%16.8g\n",
+											stp, stp*dnorm);
+										fprintf(nabout,"            max_d=%16.8g  i_xyz=%15d%c\n",
+											stp*dmax, dmax_idx+1, dmax_xyz);
+										fflush(nabout);
 									}
 								}
 								/* Test for convergence: */
 								if( lhs_f_wolfe <= rhs_f_wolfe &&
-								   lhs_g_wolfe <= rhs_g_wolfe ){
+									lhs_g_wolfe <= rhs_g_wolfe ){
 									
 									*label = 0;                    /* ls_wolfe() done */
 									break;                         /* LINE SEARCH SUCCESSFUL */
@@ -875,8 +871,8 @@ L00:
 								 obtained but the decrease is not sufficient: */
 								
 								if( stage1 &&
-								   *fx_k <= fx &&
-								   lhs_f_wolfe > rhs_f_wolfe ) {
+									*fx_k <= fx &&
+									lhs_f_wolfe > rhs_f_wolfe ) {
 									
 									/* Define the modified function and derivative values: */
 									
@@ -929,19 +925,19 @@ L00:
 								}
 								
 								if( i < ls_maxiter ) memcpy(x_k, x_k_save, n * sizeof(double));
-                                                                else {
-                                                                  if (DEBUG_MINIMZ) {
-                                                                      fprintf(stderr, "Line minimizer aborted: max number of iterations reached\n");
-                                                                  }
-                                                                  *label = error_flag = LSEARCH_ERROR;
-                                                                }
+								else {
+									if (DEBUG_MINIMZ) {
+										fprintf(stderr, "Line minimizer aborted: max number of iterations reached\n");
+									}
+									*label = error_flag = LSEARCH_ERROR;
+								}
 							}
-	
+
 error_cleanup:
 	*alfa_k  = stp;
 	*ls_iter = MIN( i, ls_maxiter );
 	(*ls_tot_iter) += *ls_iter;
-	
+
 	if( allocated ){
 		my_free( x_k_save );
 		allocated = NO;
@@ -959,7 +955,7 @@ ls_armijo( int k, int n, double *x_k, double *fx_k, double *g_k,
 	  double *d_k, double *alfa_k, int *ls_iter,
 	  int *return_flag, int *label )
 {
-	static int status_flag, error_flag;
+	static int error_flag;
 	static double fx_k_save, *x_k_save=NULL;
 	static double dir_grad, d_k_norm, dmax, dlimit, lhs_armijo, rhs_armijo;
 	static double l_k, s_k, sum_g_k, sum_x_k, mod_test;
@@ -967,7 +963,6 @@ ls_armijo( int k, int n, double *x_k, double *fx_k, double *g_k,
 	
 	switch (*label) {
 		case 0:
-			status_flag = 0;
 			error_flag = FALSE;
 			if(!allocated){
 				x_k_save = (double *)my_malloc(malloc,
@@ -1077,13 +1072,12 @@ line_search( linesearch_t line_search_method, int min_iter, int ndim,
 /* Wrapper for line search routines. */
 {
 	/* Local: */
-	static int status_flag, error_flag;
+	static int status_flag;
 	static int ls_iter;
 	static double alfa;
 	switch (*label) {
 		case 0:
 			status_flag = 0;
-			error_flag = FALSE;
 			goto L00;
 		case 1:
 			goto L01;
@@ -1328,7 +1322,7 @@ tncg_minim(int ndim, int maxiter, double grms_tol, int m_lbfgs,
 {
 	static int i, j, min_iter, min_conv, cg_iter, cg_conv, convex, ls_fail;
 	static int lbfgs_matrix_reloaded, n_lbfgs, current_update, last_update;
-	static double energy, energy_old, grms, rs_old, rs_new;
+	static double energy, grms, rs_old, rs_new;
 	static double dq, alpha, beta, qtest;
 	static double *p = NULL, *r = NULL, *s = NULL, *q = NULL, *d = NULL;
 	static double *s_vec = NULL, *r_old = NULL, *y_vec = NULL, *p_old = NULL;
@@ -1339,12 +1333,11 @@ tncg_minim(int ndim, int maxiter, double grms_tol, int m_lbfgs,
 	switch (*label) {
 		case 0:
 			*total_time = ZERO;
-			energy_old = BIG;
 			allocated = NO;
 			status_flag = 0;
 			error_flag = FALSE;
 			convex = YES;
-                        ls_fail = 0;
+			ls_fail = 0;
 			if (!allocated) {
 				p = (double *)
 				my_malloc(malloc,
@@ -1612,42 +1605,42 @@ L00:
 			 measures the reduction of the quadratic approximation at the
 			 current CG iterate with respect to the average reduction.
 			 */
-                         if (dq != ZERO) {
-			    alpha = rs_old / dq;
-			    for (i = 0; i < ndim; i++) {
-				    p_old[i] = p[i];
-				    r_old[i] = r[i];
-				    p[i] += alpha * d[i];       /* update external/minim search dir
+			if (dq != ZERO) {
+				alpha = rs_old / dq;
+				for (i = 0; i < ndim; i++) {
+					p_old[i] = p[i];
+					r_old[i] = r[i];
+					p[i] += alpha * d[i];       /* update external/minim search dir
 							         (p[] is the CG iterate) */
-				    r[i] -= alpha * q[i];       /* update residual vector */
-				    s_vec[i] = p[i] - p_old[i];
-				    y_vec[i] = r_old[i] - r[i]; /* residual is defined as
+					r[i] -= alpha * q[i];       /* update residual vector */
+					s_vec[i] = p[i] - p_old[i];
+					y_vec[i] = r_old[i] - r[i]; /* residual is defined as
 							         "b-Ax" and not "Ax-b". */
-				    hp[i] += alpha * q[i];      /* Hessian * p[] for quadratic test
+					hp[i] += alpha * q[i];      /* Hessian * p[] for quadratic test
 							         ( p[] = alpha*d[] ) */
-			    }
-			    if (m_lbfgs) {         /* update LBFGS matrix with s_vec[] (iterate)
+				}
+				if (m_lbfgs) {         /* update LBFGS matrix with s_vec[] (iterate)
 						    and y_vec[] (residual) */
-				    n_lbfgs++;
-				    current_update =
-				    load_lbfgs(lbfgs_matrix_buf, cg_iter % m_lbfgs, ndim,
+					n_lbfgs++;
+					current_update =
+					load_lbfgs(lbfgs_matrix_buf, cg_iter % m_lbfgs, ndim,
 					       s_vec, y_vec, &error_flag);
-				    if (error_flag) {
-					    if (allocated)
-						    allocated = NO;
-					    *label = error_flag;
-					    goto error_cleanup;
-				    }
-			    }
-			    for (i = 0, gp = php = ZERO; i < ndim; i++) {
+					if (error_flag) {
+						if (allocated)
+							allocated = NO;
+						*label = error_flag;
+						goto error_cleanup;
+					}
+				}
+				for (i = 0, gp = php = ZERO; i < ndim; i++) {
 				    gp += grad[i] * p[i];
 				    php += p[i] * hp[i];
-			    }
-			    quad_energy_new = gp + 0.5 * php;
-                        }
-                        else {
-                            quad_energy_new = quad_energy_old;  /* singularity due to zero residual */
-                        }
+				}
+				quad_energy_new = gp + 0.5 * php;
+			}
+			else {
+				quad_energy_new = quad_energy_old;  /* singularity due to zero residual */
+			}
 			if (cg_iter && cg_iter >= (m_lbfgs - 1)) {  /* force at least m_lbfgs cg iters for precond */
 				qtest =
 				(cg_iter + 1) * (ONE - quad_energy_old / quad_energy_new);
@@ -1735,22 +1728,20 @@ L00:
 				*label = 3;
 				return;               /* line_search continue */
 			} else if (status_flag < 0) {
-                                if( ++ls_fail >= 3 ) {
-                                  if (allocated)
-                                     allocated = NO;
-                                  *label = status_flag;
-                                  goto error_cleanup; /* exit line_search, abort minimize */
-                                }
-                                else {
-                                  break;              /* exit line_search, continue minim */
-                                }
-                             } else {
-                                energy = *enrg;
-                                ls_fail = 0;
-                                break;                /* line_search done  */
-                             }
+				if( ++ls_fail >= 3 ) {
+					if (allocated) allocated = NO;
+					*label = status_flag;
+					goto error_cleanup; /* exit line_search, abort minimize */
+				}
+				else {
+					break;              /* exit line_search, continue minim */
+				}
+			} else {
+				energy = *enrg;
+				ls_fail = 0;
+				break;                /* line_search done  */
+			}
 		}                         /* end line_search() */
-		energy_old = energy;
 		(*iter_out)++;
 		*total_time += clock() - time_stamp;
 	} while (++min_iter <= maxiter);
@@ -1828,7 +1819,7 @@ prcg_minim(int ndim, int maxiter, double grms_tol, int m_lbfgs,
            int *return_flag, int *label)
 {
 	static int i, min_iter, min_conv, ls_fail;
-	static double energy, energy_old, grms, ggnew, ggold, gamma, dgrad;
+	static double energy, grms, ggnew, ggold, gamma, dgrad;
 	static double *p = NULL, *p_old = NULL, *g_old = NULL;
 	static double *xyz_old = NULL, *step = NULL, *g_dif = NULL;
 	static int allocated, status_flag, error_flag;
@@ -1836,11 +1827,10 @@ prcg_minim(int ndim, int maxiter, double grms_tol, int m_lbfgs,
 	switch (*label) {
 		case 0:
 			*total_time = ZERO;
-			energy_old = BIG;
 			allocated = NO;
 			status_flag = 0;
 			error_flag = FALSE;
-                        ls_fail = 0;
+			ls_fail = 0;
 			if (!allocated) {
 				p = (double *)
 				my_malloc(malloc,
@@ -1996,22 +1986,20 @@ L00:
 				*label = 2;
 				return;             /* line_search continue */
 			} else if (status_flag < 0) {
-                                if( ++ls_fail >= 3 ) {
-                                  if (allocated)
-                                     allocated = NO;
-                                  *label = status_flag;
-                                  goto error_cleanup; /* exit line_search, abort minimize */
-                                }
-                                else {
-                                  break;              /* exit line_search, continue minim */
-                                }
-                             } else {
-                                energy = *enrg;
-                                ls_fail = 0;
-                                break;                /* line_search done  */
-                             }
+				if( ++ls_fail >= 3 ) {
+					if (allocated) allocated = NO;
+					*label = status_flag;
+					goto error_cleanup; /* exit line_search, abort minimize */
+				}
+				else {
+					break;              /* exit line_search, continue minim */
+				}
+			} else {
+				energy = *enrg;
+				ls_fail = 0;
+				break;                /* line_search done  */
+			}
 		}                         /* end line_search() */
-		energy_old = energy;
 		(*iter_out)++;
 		*total_time += clock() - time_stamp;
 	} while (++min_iter <= maxiter);
@@ -2073,7 +2061,7 @@ lbfgs_minim(int ndim, int maxiter, double grms_tol, int m_lbfgs,
             int *return_flag, int *label)
 {
 	static int i, min_iter, min_conv, ls_fail;
-	static double energy, energy_old, grms, ggnew, ggold, gamma, dgrad;
+	static double energy, grms, ggnew, ggold, gamma, dgrad;
 	static double *p = NULL, *p_old = NULL, *g_old = NULL;
 	static double *g_dif = NULL, *step = NULL, *xyz_old = NULL;
 	static int allocated, status_flag, error_flag;
@@ -2081,7 +2069,6 @@ lbfgs_minim(int ndim, int maxiter, double grms_tol, int m_lbfgs,
 	switch (*label) {
 		case 0:
 			*total_time = ZERO;
-			energy_old = BIG;
 			allocated = NO;
 			status_flag = 0;
 			error_flag = FALSE;
@@ -2305,22 +2292,20 @@ L00:
 				*label = 2;
 				return;             /* line_search continue */
 			} else if (status_flag < 0) {
-                                if( ++ls_fail >= 3 ) {
-                                  if (allocated)
-                                     allocated = NO;
-                                  *label = status_flag;
-                                  goto error_cleanup; /* exit line_search, abort minimize */
-                                }
-                                else {
-                                  break;              /* exit line_search, continue minim */
-                                }
-                             } else {
-                                energy = *enrg;
-                                ls_fail = 0;
-                                break;                /* line_search done  */
-                             }
+				if( ++ls_fail >= 3 ) {
+					if (allocated) allocated = NO;
+					*label = status_flag;
+					goto error_cleanup; /* exit line_search, abort minimize */
+				}
+				else {
+					break;              /* exit line_search, continue minim */
+				}
+			} else {
+				energy = *enrg;
+				ls_fail = 0;
+				break;                /* line_search done  */
+			}
 		}                         /* end line_search() */
-		energy_old = energy;
 		(*iter_out)++;
 		*total_time += clock() - time_stamp;
 	} while (++min_iter <= maxiter);
@@ -2381,12 +2366,11 @@ debug_grad(int ndim, int maxiter, double grms_tol, int m_lbfgs,
            double mu_armijo, double ftol_wolfe, double gtol_wolfe,
            int *return_flag, int *label)
 {
-   static int i, error_flag;
+   static int i;
    static double xyz_norm, eps, hold, e1, e2, absdiff, reldiff, numdrv;
 
    switch (*label) {
    case 0:
-      error_flag = FALSE;
       goto L00;
    case 1:
       goto L01;
@@ -2905,17 +2889,17 @@ L00:
 						return 0.;
 				}
 				break;
-                        case DEBUG_GRAD:
-                                minim(debug_grad, hessvec_central, ls_armijo,
-                                      ndim, *maxiter, *grms_tol, *m_lbfgs,
-                                      xyz_local, enrg, grad_local, grms, iter, total_time,
-                                      *ls_maxiter, ls_iter, *ls_maxatmov, *beta_armijo, *c_armijo,
-                                      *mu_armijo, *ftol_wolfe, *gtol_wolfe,
-                                      return_flag, &status_flag);
-                                break;
+			case DEBUG_GRAD:
+				minim(debug_grad, hessvec_central, ls_armijo,
+				      ndim, *maxiter, *grms_tol, *m_lbfgs,
+				      xyz_local, enrg, grad_local, grms, iter, total_time,
+				      *ls_maxiter, ls_iter, *ls_maxatmov, *beta_armijo, *c_armijo,
+				      *mu_armijo, *ftol_wolfe, *gtol_wolfe,
+				      return_flag, &status_flag);
+				break;
 			default:
 				fprintf(stderr,
-					"\nERROR in xmin(): Unknown minimization method.\n");
+				        "\nERROR in xmin(): Unknown minimization method.\n");
 				fflush(stderr);
 				*label = PARAMS_ERROR;
 				return 0.;
@@ -3127,16 +3111,16 @@ REAL_T xmin( REAL_T ( *func )( REAL_T*, REAL_T*, INT_T* ),
 		//      control of NB list updates from calling program:
 		
 		else if( return_flag == 1 || return_flag == 2 || return_flag == 3 ) {
-			
+
 			if( status_flag >= 0 ){
 				*energy = func( xyz, grad,  &xo->iter );
 				nfunc++;
 			}else
 				xo->error_flag = status_flag;
 		}
-		
+
 		//      Force NB list update by passing '-4' to func"="mme():
-		
+
 		else if( return_flag == 4 || return_flag == 5 || return_flag == 6 ) {
 			
 			if( status_flag >= 0 ){
@@ -3145,9 +3129,9 @@ REAL_T xmin( REAL_T ( *func )( REAL_T*, REAL_T*, INT_T* ),
 			}else
 				xo->error_flag = status_flag;
 		}
-		
+
 		//      Prevent NB list update by passing '-2' to func"="mme():
-		
+
 		else if( return_flag == 7 || return_flag == 8 || return_flag == 9 ) {
 			
 			if( status_flag >= 0 ){

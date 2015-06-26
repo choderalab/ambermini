@@ -12,7 +12,7 @@ subroutine hamilshift(qm_coords,atomtype,uhubb,niter,gammamat,shift,scf_mchg)
    ! get the hubbard contribution to the H matrix elements
    !=======================================================
 
-   use qmmm_module, only : qmmm_struct, qm2_struct
+   use qmmm_module, only : qmmm_struct
    use qm2_dftb_module, only : mol, mcharge
 
    implicit none

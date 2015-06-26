@@ -8,6 +8,7 @@ typedef struct {
 	int	iDESPConstant;
 	int	pdbwritecharges;
 	int nocenter;
+  int reorder_residues;
 	double	dGridSpace;
 	double	dShellExtent;
 	int	iDielectricFlag;

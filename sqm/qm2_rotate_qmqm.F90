@@ -1,7 +1,7 @@
 ! <compile=optimized>
 #include "copyright.h"
 #include "../include/dprec.fh"
-subroutine qm2_rotate_qmqm(loop_count,IQM, JQM,NI,NJ,XI,XJ,W,KI,&
+subroutine qm2_rotate_qmqm(loop_count,IQM, JQM,XI,XJ,W,KI,&
                        RI, core)
 
 !********************************************************
@@ -16,8 +16,6 @@ subroutine qm2_rotate_qmqm(loop_count,IQM, JQM,NI,NJ,XI,XJ,W,KI,&
 !   ON INPUT
 !             IQM    = qm atom I number (in 1 to nquant loop)
 !             JQM    = qm atom J number in inner loop
-!             NI     = ATOMIC NUMBER OF FIRST ATOM.
-!             NJ     = ATOMIC NUMBER OF SECOND ATOM.
 !             XI     = COORDINATE OF FIRST ATOM.
 !             XJ     = COORDINATE OF SECOND ATOM.
 !
@@ -38,13 +36,13 @@ subroutine qm2_rotate_qmqm(loop_count,IQM, JQM,NI,NJ,XI,XJ,W,KI,&
 !     (PP/P*P*)=21,   (P*P/P*P)=22.
 !
 !***********************************************************************
-      use constants  , only : one, A_TO_BOHRS, A2_TO_BOHRS2 
-      use qmmm_module, only : qmmm_nml,qmmm_struct, qm2_struct, qm2_params, &
-                              qm2_rij_eqns, EXPONENTIAL_CUTOFF
+      use constants  , only : one, A_TO_BOHRS, A2_TO_BOHRS2, ZERO
+      use qmmm_module, only : qmmm_nml, qm2_struct, qm2_params, &
+                              EXPONENTIAL_CUTOFF
 
       implicit none
 !Passed in
-      integer, intent(in) :: loop_count, iqm, jqm, ni, nj
+      integer, intent(in) :: loop_count, iqm, jqm
       integer, intent(inout) :: ki
       _REAL_, intent(in) :: xi(3), xj(3)
       _REAL_, intent(out) :: W(10*10)
@@ -52,16 +50,21 @@ subroutine qm2_rotate_qmqm(loop_count,IQM, JQM,NI,NJ,XI,XJ,W,KI,&
 
 !Local
       _REAL_ :: X(3),Y(3),Z(3)
-      _REAL_ :: temp_real, temp_real2, anam1, C1, oneRIJ, RIJ
-      _REAL_ :: rr,rr2, exp1i, exp1j, sqrtaee, BDD1i, BDD1j, bdd1ij
+      _REAL_ :: oneRIJ, RIJ
+      _REAL_ :: rr,rr2, sqrtaee, BDD1i, BDD1j, bdd1ij
       _REAL_ :: a, xx11, xx21, xx22, xx31, xx32, xx33, yy11, yy21, yy22
       _REAL_ :: zz11, zz21, zz22, zz31, zz32, zz33, yyzz11, yyzz21, yyzz22
       _REAL_ :: xy11, xy21, xy22, xy31, xy32, xz11, xz21, xz22, xz31, xz32, xz33
-      _REAL_ :: YZ11, yz21, yz22, yz31, yz32, css1, css2, csp1, cpps1, cppp1, csp2, cpps2, cppp2, scale
-      _REAL_ :: PDDG_EXP1, PDDG_EXP2, PDDG_EXP3, PDDG_EXP4, PDDG_CORR
-      integer :: i, j,k
-      integer :: i_dimension, j_dimension
+      _REAL_ :: YZ11, yz21, yz22, yz31, yz32
       logical :: I_IsSAtom, J_IsSAtom, I_IsSPAtom, J_IsSPAtom, I_IsSPDAtom, J_IsSPDAtom 
+
+      xx11=ZERO; xx21=ZERO; xx22=ZERO; xx31=ZERO; xx32=ZERO; xx33=ZERO
+      yy11=ZERO; yy21=ZERO; yy22=ZERO;
+      zz11=ZERO; zz21=ZERO; zz22=ZERO; zz31=ZERO; zz32=ZERO; zz33=ZERO
+      yyzz11=ZERO; yyzz21=ZERO; yyzz22=ZERO
+      xy11=ZERO; xy21=ZERO; xy22=ZERO; xy31=ZERO; xy32=ZERO; xz11=ZERO
+      xz21=ZERO; xz22=ZERO; xz31=ZERO; xz32=ZERO; xz33=ZERO; yz11=ZERO
+      yz21=ZERO; yz22=ZERO; yz31=ZERO; yz32=ZERO
 
       X(1:3) = XI(1:3)-XJ(1:3)
       RIJ = X(1)*X(1) + X(2)*X(2) + X(3)*X(3) 

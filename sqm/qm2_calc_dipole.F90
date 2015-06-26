@@ -21,7 +21,7 @@ subroutine qm2_calc_dipole(coord)
 ! Number of atoms without solvent
 
       _REAL_ :: qmdipole(3), totaldipol
-      _REAL_ :: densisp, summasp
+      _REAL_ :: densisp
       integer :: ndubl
 
       _REAL_ :: sc_const, c2_const, iqm_charge

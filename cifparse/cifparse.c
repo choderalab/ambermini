@@ -177,7 +177,7 @@ int *linePos;
   if (itemValue == NULL || !strcmp(itemValue,"")) { 
     if (*linePos < MxNameLen - 1) {
       (*linePos) +=1;
-      fprintf(fp, null_char);
+      fputs(null_char, fp);
       if (*linePos < MxNameLen -2) {
 	fprintf(fp, "  ");
 	(*linePos) +=2;

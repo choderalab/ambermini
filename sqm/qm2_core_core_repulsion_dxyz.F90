@@ -45,7 +45,7 @@ subroutine qm2_core_core_repulsion_dxyz(iat, jat, rij, onerij, xyzij, gij, dgij,
   _REAL_,  intent(in)  :: gij, dgij(3)
   _REAL_,  intent(out) :: dxyz(3)
 
-  integer :: i, j
+  integer :: i
   integer :: iatyp, jatyp
   integer :: iatnum, jatnum, ijmin, ijmax
   _REAL_  :: alphai, alphaj, alpi, alpj, ccij

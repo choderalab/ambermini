@@ -150,7 +150,8 @@ contains
     case default
        call sander_bomb('qmtheorymodule:SetQmTheoryType','Unknown method specified for qm_theory', &
             'Valid options are: PM3, AM1, RM1, MNDO, PM3-PDDG, PM3-PDDG_08, MNDO-PDDG, PM3-CARB1, '&
-            //'PM3-ZNB, PM3-MAIS, PM6, DFTB, SEBOMD (full QM) and EXTERN (external)')
+            //'PM3-ZNB, PM3-MAIS, AM1-D*, AM1-DH+, MNDO/D, AM1/D, PM6, PM6-D, PM6-DH+, DFTB, '&
+            //'SEBOMD (full QM) and EXTERN (external)')
     end select
 
   end subroutine SetQmTheoryType

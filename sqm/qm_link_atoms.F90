@@ -48,6 +48,8 @@ subroutine identify_link_atoms(nbona,ib,jb)
   integer ier
   logical ii,jj
 
+  kk = 0
+
 !     This subroutine identifies link atoms which are placed along bonds
 !     connecting quantum mechanical and molecular mechanical atoms.
 !     From this routine we need the number of link atoms and the pairs
@@ -281,7 +283,7 @@ subroutine print_link_atom_info( qmcoords, atom_type )
 
 !Writes out link atom info to mdout file
 
-  use qmmm_module, only : qmmm_nml,qmmm_struct
+  use qmmm_module, only : qmmm_struct
   use constants, only : INV_AMBER_ELECTROSTATIC
   implicit none
 
@@ -291,7 +293,7 @@ subroutine print_link_atom_info( qmcoords, atom_type )
 
   integer i,j
 
-  if(qmmm_struct%abfqmmm == 1) return ! lam81
+  if(qmmm_struct%abfqmmm == 1) return
   write(6,'(/"QMMM: Link Atom Information")')
   write(6,'("QMMM: ------------------------------------------------------------------------")')
   !ONLY PRINT XYZ COORDS IF THERE ARE LINK ATOMS

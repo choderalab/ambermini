@@ -26,8 +26,6 @@ subroutine gettab(ntype)
   character(1024) :: skfile
   character(128) :: chdummy
   _REAL_  :: qzeroh(3),uhubbh(3)
-  _REAL_  :: at_mass, polyn_coeff(8), polyn_cutoff, bondmap_cutoff
-  _REAL_  :: dp_dip_int, ps_dip_int, extra_info(7), real_junk(20)
   integer :: ppp, i, j, k, l
 
   do i = 1,ntype

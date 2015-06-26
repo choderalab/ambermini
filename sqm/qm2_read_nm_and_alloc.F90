@@ -3,6 +3,11 @@
 #include "../include/assert.fh"
 #include "../include/dprec.fh"
 
+#ifdef SQM
+module sqm_qmmm_read_and_alloc
+#else
+module qmmm_read_and_alloc
+#endif
 !+++++++++++++++++++++++++++++++++++++++++++++
 !This subroutine reads the QMMM namelist
 !and also calls allocation routines
@@ -12,39 +17,47 @@
 !     Ross Walker (SDSC)
 !+++++++++++++++++++++++++++++++++++++++++++++
 
+   private
+
+   public :: read_qmmm_nm_and_alloc
+
+contains
+
 !+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 !+ Reads the qmmm namelist and calls the qmmm memory allocation routines
 #ifdef SQM
-subroutine read_qmmm_nm_and_alloc( natom_inout, igb, atnam, atnum, maxcyc, &
+subroutine read_qmmm_nm_and_alloc( natom_inout, igb, atnum, maxcyc, &
             grms_tol, ntpr, ncharge_in, excharge, chgatnum )
 #else
-subroutine read_qmmm_nm_and_alloc( igb, ih, ix, x, cut, use_pme, ntb, qmstep, isabfqm, abfqmcharge) ! lam81
+subroutine read_qmmm_nm_and_alloc( igb, ih, ix, x, cut, use_pme, ntb, qmstep, &
+            isabfqm, abfqmcharge, read_file, options)
 #endif
 
    use findmask
-   use constants, only : RETIRED_INPUT_OPTION
+   use constants, only : RETIRED_INPUT_OPTION, MAX_QUANTUM_ATOMS
+#ifdef SQM
+   use qmmm_module, only : qmmm_struct, qm2_struct, qmmm_nml, &
+                           validate_qm_atoms, qmsort, &
+                           allocate_qmmm, get_atomic_number, &
+                           qmmm_opnq, qmmm_input_options
+#else
    use qmmm_module, only : qmmm_struct, qm2_struct, qmmm_nml, &
                            validate_qm_atoms, qmsort, &
                            allocate_qmmm, get_atomic_number, qmmm_div, &
-                           qmmm_opnq, qmmm_vsolv
+                           qmmm_opnq, qmmm_vsolv, qmmm_input_options
    use qmmm_vsolv_module, only : read_vsolv_nml
+#endif
    use qmmm_qmtheorymodule
    use ElementOrbitalIndex, only : numberElements
    use ParameterReader, only : ReadParameterFile
     
    implicit none
 
-!STATIC MEMORY
-integer :: max_quantum_atoms  !Needed in read qmmm namelist since namelists cannot contain pointers
-parameter ( max_quantum_atoms = 10000 )
-!END STATIC MEMORY
-
 !Passed in
    integer :: igb        !Value of igb from cntrl namelist
 #ifdef SQM
    integer use_pme, ntb
    integer, intent(inout) :: natom_inout
-   character(len=8), intent(in) :: atnam(*)
    integer, intent(in)  :: atnum(*)
    integer, intent(out) :: maxcyc, ntpr
    _REAL_, intent(out)  :: grms_tol
@@ -57,9 +70,11 @@ parameter ( max_quantum_atoms = 10000 )
    _REAL_, intent(in) :: x(*)
    _REAL_, intent(in) :: cut !MM-MM cutoff in angstroms
    integer, intent(in) :: use_pme, ntb
-   integer, intent(in) :: qmstep      ! lam81
-   integer, intent(in), optional :: isabfqm(*)   ! lam81
-   integer, intent(in), optional :: abfqmcharge  ! lam81
+   integer, intent(in) :: qmstep
+   integer, intent(in) :: isabfqm(*)
+   integer, intent(in) :: abfqmcharge
+   logical, intent(in) :: read_file ! because the present intrinsic on "options" does not seem to work
+   type(qmmm_input_options), intent(in), optional :: options
 #endif
 
 !local  
@@ -85,8 +100,8 @@ parameter ( max_quantum_atoms = 10000 )
    integer :: qmgb       ! local copied to qmmm_nml%qmgb - flag for type of GB do with QM region
    integer :: qmtheory   ! deprecated flag for level of theory to use for QM region
    integer :: qmcharge   ! local copied to qmmm_nml%qmcharge - value of charge on QM system
-   integer :: corecharge    ! lam81
-   integer :: buffercharge  ! lam81
+   integer :: corecharge
+   integer :: buffercharge
    integer :: spin       ! local copied to qmmm_nml%spin - spin state of system
    integer :: i,j        ! temporary counter for local loops
    integer :: ifind
@@ -141,6 +156,7 @@ parameter ( max_quantum_atoms = 10000 )
    _REAL_ :: damp   ! AWG SCF damping
    _REAL_ :: vshift ! AWG SCF level shift parameter
    logical :: mdin_qmmm=.false.
+   logical :: do_not_print
 
    integer :: idc
    integer :: divpb
@@ -161,80 +177,81 @@ parameter ( max_quantum_atoms = 10000 )
    integer :: qmmm_switch   !0           Turn off QM/MM switching function 
                             !1           Turn on QM/MM switching function 
 
-   integer :: abfqmmm       ! lam81
-   integer :: hot_spot      ! lam8
-   _REAL_ :: r_core_in      ! lam81
-   _REAL_ :: r_core_out     ! lam81
-   _REAL_ :: r_qm_in        ! lam81
-   _REAL_ :: r_qm_out       ! lam81
-   _REAL_ :: r_buffer_in    ! lam81
-   _REAL_ :: r_buffer_out   ! lam81
+   integer :: abfqmmm
+   integer :: hot_spot
+   _REAL_ :: r_core_in
+   _REAL_ :: r_core_out
+   _REAL_ :: r_qm_in
+   _REAL_ :: r_qm_out
+   _REAL_ :: r_buffer_in
+   _REAL_ :: r_buffer_out
 
-   character(len=256) :: cut_bond_list_file          ! lam81
-   character(len=256) :: oxidation_number_list_file  ! lam81
+   character(len=256) :: cut_bond_list_file
+   character(len=256) :: oxidation_number_list_file
 
-   integer :: mom_cons_type            ! lam81
-   integer :: mom_cons_region          ! lam81
+   integer :: mom_cons_type
+   integer :: mom_cons_region
 
-   integer :: fix_atom_list            ! lam81
-   integer :: solvent_atom_number      ! lam81
+   integer :: fix_atom_list
+   integer :: solvent_atom_number
 
-   integer :: selection_type           ! lam81
-   integer :: center_type              ! lam81
-   integer :: initial_selection_type   ! lam81
+   integer :: selection_type
+   integer :: center_type
+   integer :: initial_selection_type
 
-   integer :: max_bonds_per_atom       ! lam81
-   integer :: n_max_recursive          ! lam81
+   integer :: max_bonds_per_atom
+   integer :: n_max_recursive
 
-   _REAL_ :: min_heavy_mass            ! lam81
+   _REAL_ :: min_heavy_mass
 
-   _REAL_ :: gamma_ln_qm               ! lam81
+   _REAL_ :: gamma_ln_qm
 
-   character(len=256) :: read_idrst_file  ! lam81
-   character(len=256) :: write_idrst_file ! lam81
-   integer :: ntwidrst                    ! lam81
+   character(len=256) :: read_idrst_file
+   character(len=256) :: write_idrst_file
+   integer :: ntwidrst
 
-   character(len=256) :: pdb_file      ! lam81
-   integer :: ntwpdb                   ! lam81
+   character(len=256) :: pdb_file
+   integer :: ntwpdb
 
 #include "../include/memory.h"
 
    !Apparently you can't use a pointer in a namelist :-( Therefore
    !we need a local scratch array that will be big enough that 
    !the iqmatoms list never exceeds it
-   integer :: iqmatoms( max_quantum_atoms )
-   integer :: core_iqmatoms( max_quantum_atoms )    ! lam81
-   integer :: buffer_iqmatoms( max_quantum_atoms )  ! lam81
+   integer :: iqmatoms( MAX_QUANTUM_ATOMS )
+   integer :: core_iqmatoms( MAX_QUANTUM_ATOMS )
+   integer :: buffer_iqmatoms( MAX_QUANTUM_ATOMS )
 
-   character(len=8192) :: qmmask        ! lam81
-   character(len=8192) :: coremask      ! lam81
-   character(len=8192) :: buffermask    ! lam81
+   character(len=8192) :: qmmask
+   character(len=8192) :: coremask
+   character(len=8192) :: buffermask
 
-   integer :: qm_subsetatoms( natom )      ! lam81
-   integer :: core_subsetatoms( natom )    ! lam81
-   integer :: buffer_subsetatoms( natom )  ! lam81
+   integer :: qm_subsetatoms( natom )
+   integer :: core_subsetatoms( natom )
+   integer :: buffer_subsetatoms( natom )
 
-   integer :: center_subsetatoms( natom )  ! lam81
+   integer :: center_subsetatoms( natom )
 
-   character(len=8192) :: ext_qmmask_subset      ! lam81
-   character(len=8192) :: ext_coremask_subset    ! lam81
-   character(len=8192) :: ext_buffermask_subset  ! lam81
+   character(len=8192) :: ext_qmmask_subset
+   character(len=8192) :: ext_coremask_subset
+   character(len=8192) :: ext_buffermask_subset
 
-   character(len=8192) :: centermask             ! lam81
+   character(len=8192) :: centermask
 
    character(len=12) :: qm_theory 
         !Options=PM3,AM1,MNDO,PDDG-PM3,PM3PDDG,PDDG-MNDO,PDDGMNDO,
         !        PM3-CARB1,PM3CARB1,DFTB,SCC-DFTB,RM1,PM6,PM3-ZnB,PM3-MAIS
         !        EXTERNAL (for external programs like ADF/GAMESS/TeraChem)
+#ifndef SQM
    integer, dimension(:), pointer :: isqm
+#endif
    integer :: ier=0
    character(len=80) :: parameter_file   
    logical :: qxd
-   logical :: test
 
    namelist /qmmm/ qmcut, iqmatoms,qmmask,qmgb,qm_theory, qmtheory, &
                    qmcharge, qmqmdx, verbosity, tight_p_conv, scfconv, &
-                   errconv,ndiis_matrices,ndiis_attempts, &  !+TJG 01/26/2010
+                   errconv,ndiis_matrices,ndiis_attempts, &
                    parameter_file, qxd,&
                    printcharges, printdipole, print_eigenvalues, peptide_corr, itrmax, qmshake, &
                    qmqm_erep_incore, qmmmrij_incore, &
@@ -253,19 +270,19 @@ parameter ( max_quantum_atoms = 10000 )
 #ifdef SQM
                    maxcyc, ntpr, grms_tol, &
 #endif
-                   chg_lambda, vsolv, &                                              ! lam81
-                   abfqmmm, r_core_in, r_core_out, r_buffer_in, r_buffer_out, &      ! lam81
-                   r_qm_in, r_qm_out, coremask, buffermask, &                        ! lam81
-                   cut_bond_list_file, oxidation_number_list_file, &                 ! lam81
-                   mom_cons_type, mom_cons_region, &                                 ! lam81
-                   fix_atom_list, solvent_atom_number, &                             ! lam81
-                   selection_type, center_type, initial_selection_type, &            ! lam81
-                   corecharge, buffercharge, &                                       ! lam81
-                   max_bonds_per_atom, n_max_recursive, min_heavy_mass, &            ! lam81
-                   gamma_ln_qm, &                                                    ! lam81
-                   read_idrst_file, ntwidrst, write_idrst_file, ntwpdb, pdb_file, &  ! lam81
-                   ext_qmmask_subset, ext_coremask_subset, ext_buffermask_subset, &  ! lam81
-                   centermask, hot_spot                                              ! lam81
+                   chg_lambda, vsolv, &
+                   abfqmmm, r_core_in, r_core_out, r_buffer_in, r_buffer_out, &
+                   r_qm_in, r_qm_out, coremask, buffermask, &
+                   cut_bond_list_file, oxidation_number_list_file, &
+                   mom_cons_type, mom_cons_region, &
+                   fix_atom_list, solvent_atom_number, &
+                   selection_type, center_type, initial_selection_type, &
+                   corecharge, buffercharge, &
+                   max_bonds_per_atom, n_max_recursive, min_heavy_mass, &
+                   gamma_ln_qm, &
+                   read_idrst_file, ntwidrst, write_idrst_file, ntwpdb, pdb_file, &
+                   ext_qmmask_subset, ext_coremask_subset, ext_buffermask_subset, &
+                   centermask, hot_spot
 
 !Setup defaults
 #ifdef SQM
@@ -275,7 +292,9 @@ parameter ( max_quantum_atoms = 10000 )
    maxcyc = 9999
    grms_tol = 0.02
    ntpr=10
+   do_not_print = .false.
 #else
+   do_not_print = .not. read_file
    qmcut = cut
 #endif
    lnk_dis=1.09d0  !Methyl C-H distance
@@ -285,8 +304,8 @@ parameter ( max_quantum_atoms = 10000 )
    qm_theory = ''
    qmtheory = RETIRED_INPUT_OPTION 
    qmcharge = 0
-   corecharge = 0    ! lam81
-   buffercharge = 0  ! lam81
+   corecharge = 0
+   buffercharge = 0
    spin = 1
    qmqmdx = 1
    verbosity = 0
@@ -320,19 +339,19 @@ parameter ( max_quantum_atoms = 10000 )
    itrmax = 1000
    qmshake = 1
    qmmask=''
-   coremask=''   ! lam81
-   buffermask='' ! lam81
-   iqmatoms(1:max_quantum_atoms) = 0
-   core_iqmatoms(1:max_quantum_atoms) = 0    ! lam81
-   buffer_iqmatoms(1:max_quantum_atoms) = 0  ! lam81
-   ext_qmmask_subset=''      ! lam81
-   ext_coremask_subset=''    ! lam81
-   ext_buffermask_subset=''  ! lam81
-   centermask=''             ! lam81
-   qm_subsetatoms(1:natom) = 0       ! lam81
-   core_subsetatoms(1:natom) = 0     ! lam81
-   buffer_subsetatoms(1:natom) = 0   ! lam81
-   center_subsetatoms(1:natom) = 0   ! lam81
+   coremask=''
+   buffermask=''
+   iqmatoms(1:MAX_QUANTUM_ATOMS) = 0
+   core_iqmatoms(1:MAX_QUANTUM_ATOMS) = 0
+   buffer_iqmatoms(1:MAX_QUANTUM_ATOMS) = 0
+   ext_qmmask_subset=''
+   ext_coremask_subset=''
+   ext_buffermask_subset=''
+   centermask=''
+   qm_subsetatoms(1:natom) = 0
+   core_subsetatoms(1:natom) = 0
+   buffer_subsetatoms(1:natom) = 0
+   center_subsetatoms(1:natom) = 0
    qmmmrij_incore = 1
    qmqm_erep_incore = 1
    pseudo_diag = 1
@@ -345,7 +364,7 @@ parameter ( max_quantum_atoms = 10000 )
    writepdb = 0 !Set to 1 to write a pdb on the first step with just the QM region in it.
    qmmm_int = 1 !Default, do full interaction without extra Gaussian terms for PM3 / AM1 etc.
    adjust_q = 2 !Default adjust q over all atoms.
-   diag_routine = 1 !Use default internal diagonalizer.
+   diag_routine = 0 !Select optimum diag routine based on timings
 #ifdef OPENMP
    qmmm_omp_max_threads = 1 !Use just 1 openmp thread by default.
 #endif
@@ -373,69 +392,141 @@ parameter ( max_quantum_atoms = 10000 )
    chg_lambda  = 1.0d0
    dftb_3rd_order   = 'NONE'
 
-   !ABFQMMM          ! lam81
-   abfqmmm      = 0  ! lam81
-   hot_spot     = 0  ! lam81
-   r_core_in    = 0  ! lam81
-   r_core_out   = 0  ! lam81
-   r_qm_in      = 0  ! lam81
-   r_qm_out     = 0  ! lam81
-   r_buffer_in  = 0  ! lam81
-   r_buffer_out = 0  ! lam81
+   !ABFQMMM
+   abfqmmm      = 0
+   hot_spot     = 0
+   r_core_in    = 0
+   r_core_out   = 0
+   r_qm_in      = 0
+   r_qm_out     = 0
+   r_buffer_in  = 0
+   r_buffer_out = 0
 
-   cut_bond_list_file = ''          ! lam81
-   oxidation_number_list_file = ''  ! lam81
+   cut_bond_list_file = ''
+   oxidation_number_list_file = ''
 
-   mom_cons_type = 1            ! lam81
-   mom_cons_region = 1          ! lam81
+   mom_cons_type = 1
+   mom_cons_region = 1
 
-   fix_atom_list = 0            ! lam81
-   solvent_atom_number = 3      ! lam81
+   fix_atom_list = 0
+   solvent_atom_number = 3
 
-   selection_type = 1           ! lam81
-   center_type = 1              ! lam81
-   initial_selection_type = 0   ! lam81
+   selection_type = 1
+   center_type = 1
+   initial_selection_type = 0
 
-   max_bonds_per_atom = 4       ! lam81
-   n_max_recursive = 10000      ! lam81
+   max_bonds_per_atom = 4
+   n_max_recursive = 10000
 
-   min_heavy_mass = 4.0         ! lam81
+   min_heavy_mass = 4.0
 
-   gamma_ln_qm = 0.0d0          ! lam81
+   gamma_ln_qm = 0.0d0
 
-   read_idrst_file = ''                 ! lam81
-   write_idrst_file = 'abfqmmm.idrst'   ! lam81
-   ntwidrst = 0                         ! lam81 
+   read_idrst_file = ''
+   write_idrst_file = 'abfqmmm.idrst'
+   ntwidrst = 0 
 
-   pdb_file = 'abfqmmm.pdb'     ! lam81
-   ntwpdb = 0                   ! lam81
-
-   !Read qmmm namelist
-   rewind 5
-
-   call nmlsrc('qmmm',5,ifind)
-   if (ifind /= 0) mdin_qmmm=.true.
+   pdb_file = 'abfqmmm.pdb'
+   ntwpdb = 0
 
    !Read qmmm namelist
-   rewind 5
-   if ( mdin_qmmm ) then
-     read(5,nml=qmmm)
+#ifndef SQM
+   if (.not. read_file) then
+      ! If we were passed input options, use those instead of trying to read
+      ! them from a file
+      qmcut = options%qmcut
+      lnk_dis = options%lnk_dis
+      lnk_atomic_no = options%lnk_atomic_no
+      lnk_method = options%lnk_method
+      qmgb = options%qmgb
+      qm_theory = options%qm_theory
+      qmcharge = options%qmcharge
+      corecharge = options%corecharge
+      buffercharge = options%buffercharge
+      spin = options%spin
+      qmqmdx = options%qmqmdx
+      verbosity = options%verbosity
+      scfconv = options%scfconv
+      errconv = options%errconv
+      ndiis_matrices = options%ndiis_matrices
+      ndiis_attempts = options%ndiis_attempts
+      printcharges = options%printcharges
+      printbondorders = options%printbondorders
+      printdipole = options%printdipole
+      print_eigenvalues = options%print_eigenvalues
+      peptide_corr = options%peptide_corr
+      itrmax = options%itrmax
+      qmshake = options%qmshake
+      qmmask = options%qmmask
+      coremask = options%coremask
+      buffermask = options%buffermask
+      iqmatoms(1:MAX_QUANTUM_ATOMS) = options%iqmatoms(1:MAX_QUANTUM_ATOMS)
+      core_iqmatoms(1:MAX_QUANTUM_ATOMS) = options%core_iqmatoms(1:MAX_QUANTUM_ATOMS)
+      buffer_iqmatoms(1:MAX_QUANTUM_ATOMS) = options%buffer_iqmatoms(1:MAX_QUANTUM_ATOMS)
+      centermask = options%centermask
+      qmmmrij_incore = options%qmmmrij_incore
+      qmqm_erep_incore = options%qmqm_erep_incore
+      pseudo_diag = options%pseudo_diag
+      pseudo_diag_criteria = options%pseudo_diag_criteria
+      qm_ewald = options%qm_ewald
+      qm_pme = options%qm_pme
+      kmaxqx = options%kmaxqx
+      kmaxqy = options%kmaxqy
+      kmaxqz = options%kmaxqz
+      kappa = options%kappa
+      ksqmaxq = options%ksqmaxq
+      qmmm_int = options%qmmm_int
+      adjust_q = options%adjust_q
+      diag_routine = options%diag_routine
+      density_predict = options%density_predict
+      fock_predict = options%fock_predict
+      fockp_d1 = options%fockp_d1
+      fockp_d2 = options%fockp_d2
+      fockp_d3 = options%fockp_d3
+      fockp_d4 = options%fockp_d4
+      damp = options%damp
+      vshift = options%vshift
+      vsolv = options%vsolv
+      qmmm_switch = options%qmmm_switch
+      r_switch_hi = options%r_switch_hi
+      r_switch_lo = options%r_switch_lo
+      dftb_maxiter = options%dftb_maxiter
+      dftb_disper = options%dftb_disper
+      dftb_chg = options%dftb_chg
+      dftb_telec = options%dftb_telec
+      dftb_telec_step = options%dftb_telec_step
+      dftb_3rd_order = options%dftb_3rd_order
+      abfqmmm = options%abfqmmm
+      hot_spot = options%hot_spot
+      min_heavy_mass = options%min_heavy_mass
+      tight_p_conv = options%tight_p_conv
    else
-     write(6, '(1x,a,/)') 'Could not find qmmm namelist'
-     call mexit(6,1)
-   endif
+#endif
+      rewind 5
 
-   !AWG NEW
+      call nmlsrc('qmmm',5,ifind)
+      if (ifind /= 0) mdin_qmmm=.true.
+
+      !Read qmmm namelist
+      rewind 5
+      if ( mdin_qmmm ) then
+         read(5,nml=qmmm)
+      else
+         write(6, '(1x,a,/)') 'Could not find qmmm namelist'
+         call mexit(6,1)
+      endif
+#ifndef SQM
+   end if
+#endif
+
    call CheckRetiredQmTheoryInputOption(qmtheory)
    call set(qmmm_nml%qmtheory, qm_theory)
-   !AWG END NEW
    
-   !  Read-in the user-defined parameter file 
-    !  TL (Rutgers, 2011)
-    call ReadParameterFile(parameter_file)
+   ! Read-in the user-defined parameter file (TL -- Rutgers, 2011)
+   call ReadParameterFile(parameter_file)
     
-    ! turn on OPNQ if necessary 
-    qmmm_opnq%useOPNQ=qxd
+   ! turn on OPNQ if necessary 
+   qmmm_opnq%useOPNQ=qxd
 
 #ifdef SQM
    ! Disable EXTERN in SQM since
@@ -485,452 +576,497 @@ parameter ( max_quantum_atoms = 10000 )
 #else
 
    if (qmmm_nml%qmtheory%SEBOMD) then
-     qmmm_struct%nquant = 0
+      qmmm_struct%nquant = 0
    else
 
-    if( (qmmask /= '') .or. (coremask /= '') ) then  !  get the quantum atoms from the mask
-       if(abfqmmm == 1 .and. qmmm_struct%abfqmmm /= 1) then                 ! lam81
-        write(6,'(a)') ''                                                   ! lam81
-        write(6,'(/80("-")/"   ADAPTIVE BUFFERED FORCE QM/MM",/80("-")/)')  ! lam81
-        if(hot_spot == 1) then                                              ! lam81
-         write(6,'(a)') ''                                                  ! lam81
-         write(6,'(/80("-")/"   HOT SPOT IS ACTIVE           ",/80("-")/)') ! lam81
-        end if                                                              ! lam81
-       end if
+      if( (qmmask /= '') .or. (coremask /= '') ) then  !  get the quantum atoms from the mask
+         if(abfqmmm == 1 .and. qmmm_struct%abfqmmm /= 1 &
+             .and. .not. do_not_print) then
+            write(6,'(a)') ''
+            write(6,'(/80("-")/"   ADAPTIVE BUFFERED FORCE QM/MM",/80("-")/)')
+            if(hot_spot == 1) then
+               write(6,'(a)') ''
+               write(6,'(/80("-")/"   HOT SPOT IS ACTIVE           ",/80("-")/)')
+            end if
+         end if
 
-       if(qmmm_struct%abfqmmm /= 1) then                                                  ! lam81
-        if(abfqmmm == 1) then                                                             ! lam81
-         write(6,'(a)') ''                                                                ! lam81
-         write(6,'(a)') '------------------------'                                        ! lam81
-         write(6,'(a)') 'Specification of regions'                                        ! lam81
-         write(6,'(a)') '------------------------'                                        ! lam81
-         write(6,'(a)') ''                                                                ! lam81
-         write(6,'(a)') 'QM atoms:'                                                       ! lam81
-         write(6,'(a)') '---------'                                                       ! lam81
-         write(6,'(a)') ''                                                                ! lam81
-         if(qmmask /= '') then                                                            ! lam81
-          write(6,'(a)') 'INFO: loading the quantum atoms as groups'                      ! lam81
-         else                                                                             ! lam81
-          write(6,'(a)') 'INFO: quantum atoms for adaptive QM/MM are not defined'         ! lam81
-          write(6,'(a)') 'INFO: core atoms will be used in reduced calculation'           ! lam81
-         end if                                                                           ! lam81
-        else                                                                              ! lam81
-          write(6,'(a)') 'LOADING THE QUANTUM ATOMS AS GROUPS'                            ! lam81
-        end if                                                                            ! lam81
-       end if                                                                             ! lam81
+         if(qmmm_struct%abfqmmm /= 1 .and. .not. do_not_print) then
+            if(abfqmmm == 1) then
+               write(6,'(a)') ''
+               write(6,'(a)') '------------------------'
+               write(6,'(a)') 'Specification of regions'
+               write(6,'(a)') '------------------------'
+               write(6,'(a)') ''
+               write(6,'(a)') 'QM atoms:'
+               write(6,'(a)') '---------'
+               write(6,'(a)') ''
+               if(qmmask /= '') then
+                  write(6,'(a)') 'INFO: loading the quantum atoms as groups'
+               else
+                  write(6,'(a)') 'INFO: quantum atoms for adaptive QM/MM are not defined'
+                  write(6,'(a)') 'INFO: core atoms will be used in reduced calculation'
+               end if
+            else
+               write(6,'(a)') 'LOADING THE QUANTUM ATOMS AS GROUPS'
+            end if
+         end if
 
-       allocate(isqm( natom ), stat=ier)
-       REQUIRE(ier==0)
+         allocate(isqm( natom ), stat=ier)
+         REQUIRE(ier==0)
 
-       call atommask( natom, nres, 0, ih(m04), ih(m06), &
-          ix(i02), ih(m02), x(lcrd), qmmask, isqm )
+         call atommask(natom, nres, 0, ih(m04), ih(m06), &
+                       ix(i02), ih(m02), x(lcrd), qmmask, isqm )
 
-       if(abfqmmm == 1 .and. qmstep == 0) then      ! lam81
-        if(r_core_in == 0) then                     ! lam81
-         qmmm_struct%r_core_in = r_core_out         ! lam81
-        else                                        ! lam81
-         qmmm_struct%r_core_in = r_core_in          ! lam81
-        end if                                      ! lam81
-        if(r_core_out <= r_core_in) then            ! lam81
-         qmmm_struct%r_core_out = r_core_in         ! lam81
-        else                                        ! lam81
-         qmmm_struct%r_core_out = r_core_out        ! lam81
-        end if                                      ! lam81
-        if(r_qm_in == 0) then                       ! lam81
-         qmmm_struct%r_qm_in = r_qm_out             ! lam81
-        else                                        ! lam81
-         qmmm_struct%r_qm_in = r_qm_in              ! lam81
-        end if                                      ! lam81
-        if(r_qm_out <= r_qm_in) then                ! lam81
-         qmmm_struct%r_qm_out = r_qm_in             ! lam81
-        else                                        ! lam81
-         qmmm_struct%r_qm_out = r_qm_out            ! lam81
-        end if                                      ! lam81
-        if(r_buffer_in == 0) then                   ! lam81
-         qmmm_struct%r_buffer_in = r_buffer_out     ! lam81
-        else                                        ! lam81
-         qmmm_struct%r_buffer_in = r_buffer_in      ! lam81
-        end if                                      ! lam81
-        if(r_buffer_out <= r_buffer_in) then        ! lam81
-         qmmm_struct%r_buffer_out = r_buffer_in     ! lam81
-        else                                        ! lam81
-         qmmm_struct%r_buffer_out = r_buffer_out    ! lam81
-        end if                                      ! lam81
+         if(abfqmmm == 1 .and. qmstep == 0) then
+            if(r_core_in == 0) then
+               qmmm_struct%r_core_in = r_core_out
+            else
+               qmmm_struct%r_core_in = r_core_in
+            end if
+            if(r_core_out <= r_core_in) then
+               qmmm_struct%r_core_out = r_core_in
+            else
+               qmmm_struct%r_core_out = r_core_out
+            end if
+            if(r_qm_in == 0) then
+               qmmm_struct%r_qm_in = r_qm_out
+            else
+               qmmm_struct%r_qm_in = r_qm_in
+            end if
+            if(r_qm_out <= r_qm_in) then
+               qmmm_struct%r_qm_out = r_qm_in
+            else
+               qmmm_struct%r_qm_out = r_qm_out
+            end if
+            if(r_buffer_in == 0) then
+               qmmm_struct%r_buffer_in = r_buffer_out
+            else
+               qmmm_struct%r_buffer_in = r_buffer_in
+            end if
+            if(r_buffer_out <= r_buffer_in) then
+               qmmm_struct%r_buffer_out = r_buffer_in
+            else
+               qmmm_struct%r_buffer_out = r_buffer_out
+            end if
 
-        qmmm_struct%cut_bond_list_file = cut_bond_list_file                  ! lam81
-        qmmm_struct%oxidation_number_list_file = oxidation_number_list_file  ! lam81
+            qmmm_struct%cut_bond_list_file = cut_bond_list_file
+            qmmm_struct%oxidation_number_list_file = oxidation_number_list_file
 
-        qmmm_struct%mom_cons_type = mom_cons_type                      ! lam81
-        qmmm_struct%mom_cons_region = mom_cons_region                  ! lam81
+            qmmm_struct%mom_cons_type = mom_cons_type
+            qmmm_struct%mom_cons_region = mom_cons_region
 
-        qmmm_struct%fix_atom_list = fix_atom_list                      ! lam81
-        qmmm_struct%solvent_atom_number = solvent_atom_number          ! lam81
+            qmmm_struct%fix_atom_list = fix_atom_list
+            qmmm_struct%solvent_atom_number = solvent_atom_number
 
-        qmmm_struct%selection_type = selection_type                    ! lam81
-        qmmm_struct%center_type = center_type                          ! lam81
-        qmmm_struct%initial_selection_type = initial_selection_type    ! lam81
+            qmmm_struct%selection_type = selection_type
+            qmmm_struct%center_type = center_type
+            qmmm_struct%initial_selection_type = initial_selection_type
 
-        qmmm_struct%max_bonds_per_atom = max_bonds_per_atom            ! lam81
-        qmmm_struct%n_max_recursive = n_max_recursive                  ! lam81
+            qmmm_struct%max_bonds_per_atom = max_bonds_per_atom
+            qmmm_struct%n_max_recursive = n_max_recursive
 
-        qmmm_struct%min_heavy_mass = min_heavy_mass                    ! lam81
+            qmmm_struct%min_heavy_mass = min_heavy_mass
 
-        qmmm_struct%gamma_ln_qm = gamma_ln_qm                          ! lam81
+            qmmm_struct%gamma_ln_qm = gamma_ln_qm
 
-        qmmm_struct%read_idrst_file = read_idrst_file                  ! lam81
-        qmmm_struct%write_idrst_file = write_idrst_file                ! lam81
-        qmmm_struct%ntwidrst = ntwidrst                                ! lam81
+            qmmm_struct%read_idrst_file = read_idrst_file
+            qmmm_struct%write_idrst_file = write_idrst_file
+            qmmm_struct%ntwidrst = ntwidrst
 
-        qmmm_struct%pdb_file = pdb_file                                ! lam81
-        qmmm_struct%ntwpdb = ntwpdb                                    ! lam81
+            qmmm_struct%pdb_file = pdb_file
+            qmmm_struct%ntwpdb = ntwpdb
 
-       end if                                       ! lam81
+         end if
 
-       if (qmstep /= 0) isqm(1:natom) = isabfqm(1:natom)  ! lam81
+         if (qmstep /= 0) isqm(1:natom) = isabfqm(1:natom)
 
-       qmmm_struct%nquant = sum(isqm(1:natom))
-       if( (qmmm_struct%abfqmmm /= 1) .and. (qmmask /= '') ) then                                        ! lam81
-        write(6,'(a,a,a,i5,a)') '     Mask ', qmmask(1:len_trim(qmmask)), &                              ! lam81
-          ' matches ',qmmm_struct%nquant,' atoms'                                                        ! lam81
-       end if                                                                                            ! lam81
-       if(abfqmmm == 1 .and. qmmm_struct%abfqmmm /= 1) then                                              ! lam81
-        write(6,'(a,i2)') '     qm-charge: ', qmcharge                                                   ! lam81
-        qmmm_nml%qmcharge = qmcharge                                                                     ! lam81
-       end if
+         qmmm_struct%nquant = sum(isqm(1:natom))
+         if( (qmmm_struct%abfqmmm /= 1) .and. (qmmask /= '') .and. &
+              .not. do_not_print) then
+            write(6,'(a,a,a,i5,a)') '     Mask ', qmmask(1:len_trim(qmmask)), &
+                                    ' matches ',qmmm_struct%nquant,' atoms'
+         end if
+         if(abfqmmm == 1 .and. qmmm_struct%abfqmmm /= 1) then
+            if (.not. do_not_print) &
+               write(6,'(a,i2)') '     qm-charge: ', qmcharge
+            qmmm_nml%qmcharge = qmcharge
+         end if
 
-       j = 0
-       do i=1,natom
-          if( isqm(i)>0 ) then
-             j = j+1
-             iqmatoms(j) = i
-          end if
-       end do
-
-       if(abfqmmm == 1 .and. qmmm_struct%abfqmmm /= 1) then                   ! lam81
-
-        if( ext_qmmask_subset /= '' ) then                                                             ! lam81
-         write(6,'(a)') 'INFO: qm subset was specified for the extended qm region'                     ! lam81
-         write(6,'(a)') 'INFO: loading qm subset atoms'                                                ! lam81
-         
-         call atommask( natom, nres, 0, ih(m04), ih(m06), &                                            ! lam81
-          ix(i02), ih(m02), x(lcrd), ext_qmmask_subset, isqm )                                         ! lam81
-
-         qmmm_struct%qm_nsubset = sum(isqm(1:natom))                                                   ! lam81
-         write(6,'(a,a,a,i5,a)') '     Mask ', ext_qmmask_subset(1:len_trim(ext_qmmask_subset)), &     ! lam81
-         ' matches ',qmmm_struct%qm_nsubset,' atoms'                                                   ! lam81
-         if(qmmm_struct%qm_nsubset == 0) then                                                          ! lam81
-          write(6,'(a)') 'INFO: qm subset is an empty set => all atoms can be in extended qm region'   ! lam81
-         end if                                                                                        ! lam81
-
-         j = 0                           ! lam81
-         do i=1,natom                    ! lam81
-            if( isqm(i)>0 ) then         ! lam81
-               j = j+1                   ! lam81
-               qm_subsetatoms(j) = i     ! lam81
-            end if                       ! lam81
-         end do                          ! lam81
-
-        else                                                                                ! lam81
-         write(6,'(a)') 'INFO: qm subset was not specified for the extended qm region'      ! lam81
-
-         qmmm_struct%qm_nsubset = 0                                                         ! lam81
-        end if                                                                              ! lam81
-
-        write(6,'(a)') ''                                                    ! lam81
-        write(6,'(a)') 'CORE atoms:'                                         ! lam81
-        write(6,'(a)') '-----------'                                         ! lam81
-        write(6,'(a)') ''                                                    ! lam81
-        if( coremask /= '' ) then                                             ! lam81
-          write(6,'(a)') 'INFO: loading the core atoms for adaptive QM/MM'    ! lam81
-
-          call atommask( natom, nres, 0, ih(m04), ih(m06), &               ! lam81
-           ix(i02), ih(m02), x(lcrd), coremask, isqm )                     ! lam81
-
-          qmmm_struct%core_nquant = sum(isqm(1:natom))                     ! lam81
-          write(6,'(a,a,a,i5,a)') '     Mask ', coremask(1:len_trim(coremask)), &     ! lam81
-          ' matches ',qmmm_struct%core_nquant,' atoms'                                ! lam81
-
-          j = 0                           ! lam81
-          do i=1,natom                    ! lam81
-             if( isqm(i)>0 ) then         ! lam81
-                j = j+1                   ! lam81
-                core_iqmatoms(j) = i      ! lam81
-             end if                       ! lam81
-          end do                          ! lam81
-
-        else                                                                            ! lam81
-         write(6,'(a)') 'INFO: core atoms for adaptive QM/MM are not defined'           ! lam81
-         write(6,'(a)') 'INFO: reduced calculation will be full MM calculation'         ! lam81
-         write(6,'(a)') 'INFO: using FF parameters from topology file'                  ! lam81
-         
-         qmmm_struct%core_nquant = 0 ! lam81
-
-        end if                                        ! lam81
-        write(6,'(a,i2)') '     core-charge: ', corecharge              ! lam81
-        qmmm_nml%corecharge = corecharge                                ! lam81
-
-        if( ext_coremask_subset /= '' ) then                                                             ! lam81
-         write(6,'(a)') 'INFO: core subset was specified for the extended core region'                   ! lam81
-         write(6,'(a)') 'INFO: loading core subset atoms'                                                ! lam81
-
-         call atommask( natom, nres, 0, ih(m04), ih(m06), &                                              ! lam81
-          ix(i02), ih(m02), x(lcrd), ext_coremask_subset, isqm )                                         ! lam81
-
-         qmmm_struct%core_nsubset = sum(isqm(1:natom))                                                   ! lam81
-         write(6,'(a,a,a,i5,a)') '     Mask ', ext_coremask_subset(1:len_trim(ext_coremask_subset)), &   ! lam81
-         ' matches ',qmmm_struct%core_nsubset,' atoms'                                                   ! lam81
-         if(qmmm_struct%core_nsubset == 0) then                                                          ! lam81
-          write(6,'(a)') 'INFO: core subset is an empty set => all atoms can be in extended core region' ! lam81
-         end if                                                                                          ! lam81
-
-         j = 0                               ! lam81
-         do i=1,natom                        ! lam81
-            if( isqm(i)>0 ) then             ! lam81
-               j = j+1                       ! lam81
-               core_subsetatoms(j) = i       ! lam81
-            end if                           ! lam81
-         end do                              ! lam81
-
-        else                                                                                  ! lam81
-         write(6,'(a)') 'INFO: core subset was not specified for the extended core region'    ! lam81
-
-         qmmm_struct%core_nsubset = 0                                                         ! lam81
-        end if                                                                                ! lam81
-
-        write(6,'(a)') ''                                               ! lam81
-        write(6,'(a)') 'BUFFER atoms:'                                  ! lam81
-        write(6,'(a)') '-------------'                                  ! lam81
-        write(6,'(a)') ''                                               ! lam81
-        if( buffermask /= '' ) then                                     ! lam81
-          write(6,'(a)') 'INFO: loading the buffer atoms for adaptive QM/MM'  ! lam81
-
-         call atommask( natom, nres, 0, ih(m04), ih(m06), &               ! lam81
-          ix(i02), ih(m02), x(lcrd), buffermask, isqm )                   ! lam81
-
-         qmmm_struct%buffer_nquant = sum(isqm(1:natom))                     ! lam81
-         write(6,'(a,a,a,i5,a)') '     Mask ', buffermask(1:len_trim(buffermask)), &   ! lam81
-         ' matches ',qmmm_struct%buffer_nquant,' atoms'                                ! lam81
-
-         j = 0                           ! lam81
-         do i=1,natom                    ! lam81
-            if( isqm(i)>0 ) then         ! lam81
-               j = j+1                   ! lam81
-               buffer_iqmatoms(j) = i    ! lam81
-            end if                       ! lam81
-         end do                          ! lam81
-
-        else                                                                 ! lam81
-         write(6,'(a)') 'INFO: buffer atoms for adaptive QM/MM are not defined'    ! lam81
-         if(qmmm_struct%r_buffer_out == 0) then                              ! lam81
-          write(6,'(a)') 'WARNING: buffer radius was set to zero and no buffer atoms were given'  ! lam81
-          write(6,'(a)') '         this may lead to unconverged QM forces'                        ! lam81
-         end if                                                                                   ! lam81
-
-         qmmm_struct%buffer_nquant = 0                             ! lam81
-
-        end if
-        write(6,'(a,i2)') '     buffer-charge: ', buffercharge     ! lam81
-        qmmm_nml%buffercharge = buffercharge                       ! lam81
-
-        if( ext_buffermask_subset /= '' ) then                                                             ! lam81
-         write(6,'(a)') 'INFO: buffer subset was specified for the extended buffer region'                 ! lam81
-         write(6,'(a)') 'INFO: loading buffer subset atoms'                                                ! lam81
-
-         call atommask( natom, nres, 0, ih(m04), ih(m06), &                                                ! lam81
-          ix(i02), ih(m02), x(lcrd), ext_buffermask_subset, isqm )                                         ! lam81
-
-         qmmm_struct%buffer_nsubset = sum(isqm(1:natom))                                                   ! lam81
-         write(6,'(a,a,a,i5,a)') '     Mask ', ext_buffermask_subset(1:len_trim(ext_coremask_subset)), &   ! lam81
-         ' matches ',qmmm_struct%buffer_nsubset,' atoms'                                                   ! lam81
-         if(qmmm_struct%buffer_nsubset == 0) then                                                            ! lam81
-          write(6,'(a)') 'INFO: buffer subset is an empty set => all atoms can be in extended buffer region' ! lam81
-         end if                                                                                              ! lam81
-
-         j = 0                               ! lam81
-         do i=1,natom                        ! lam81
-            if( isqm(i)>0 ) then             ! lam81
-               j = j+1                       ! lam81
-               buffer_subsetatoms(j) = i     ! lam81
-            end if                           ! lam81
-         end do                              ! lam81
-
-        else                                                                                        ! lam81
-         write(6,'(a)') 'INFO: buffer subset was not specified for the extended buffer region'      ! lam81
-
-         qmmm_struct%buffer_nsubset = 0                                                             ! lam81
-        end if                                                                                      ! lam81
-
-        write(6,'(a)') ''                                               ! lam81
-        write(6,'(a)') 'CENTER atoms:'                                  ! lam81
-        write(6,'(a)') '-------------'                                  ! lam81
-        write(6,'(a)') ''                                               ! lam81
-        if(centermask /= '') then                                       ! lam81
-          write(6,'(a)') 'INFO: center atom list was specified'         ! lam81
-          write(6,'(a)') 'INFO: loading the center atoms for adaptive QM/MM'  ! lam81
-
-         call atommask( natom, nres, 0, ih(m04), ih(m06), &               ! lam81
-         ix(i02), ih(m02), x(lcrd), centermask, isqm )                    ! lam81
-
-         qmmm_struct%center_nsubset = sum(isqm(1:natom))                   ! lam81
-         write(6,'(a,a,a,i5,a)') '     Mask ', centermask(1:len_trim(centermask)), &   ! lam81
-         ' matches ',qmmm_struct%center_nsubset,' atoms'                               ! lam81
-         if(qmmm_struct%center_nsubset == 0) then                                      ! lam81
-          if(qmmm_struct%core_nquant > 0) then                                         ! lam81
-           write(6,'(a)') 'INFO: center atom list is an empty set => center atom list = user defined core list' ! lam81
-          else                                                                         ! lam81
-           write(6,'(a)') 'INFO: center atom list is an empty set => center atom list = user defined qm list' ! lam81
-          end if                                                                       ! lam81
-         end if                                                                        ! lam81
-
-         j = 0                               ! lam81
-         do i=1,natom                        ! lam81
-            if( isqm(i)>0 ) then             ! lam81
-               j = j+1                       ! lam81
-               center_subsetatoms(j) = i     ! lam81
-            end if                           ! lam81
+         j = 0
+         do i=1,natom
+            if( isqm(i)>0 ) then
+               j = j+1
+               iqmatoms(j) = i
+            end if
          end do
 
-        else
-         if(qmmm_struct%core_nquant > 0) then                                         ! lam81
-          write(6,'(a)') 'INFO: center atom list is not defined => center atom list = user defined core list' ! lam81
-         else                                                                         ! lam81
-          write(6,'(a)') 'INFO: center atom list is not defined => center atom list = user defined qm list' ! lam81
-         end if                                                                       ! lam81
-         qmmm_struct%center_nsubset = 0                                               ! lam81
-        end if                                                                        ! lam81
+         if(abfqmmm == 1 .and. qmmm_struct%abfqmmm /= 1) then
 
-       end if                                                      ! lam81
+         if( ext_qmmask_subset /= '' ) then
+            if (.not. do_not_print) then
+               write(6,'(a)') 'INFO: qm subset was specified for the extended qm region'
+               write(6,'(a)') 'INFO: loading qm subset atoms'
+            end if
+            
+            call atommask(natom, nres, 0, ih(m04), ih(m06), &
+                          ix(i02), ih(m02), x(lcrd), ext_qmmask_subset, isqm )
 
-       if(abfqmmm == 1) qmmm_struct%abfqmmm = 1       ! lam81
-       if(abfqmmm == 1 .and. hot_spot == 1) then      ! lam81
-         qmmm_struct%hot_spot = 1                     ! lam81
-       end if                                         ! lam81
+            qmmm_struct%qm_nsubset = sum(isqm(1:natom))
+            if (.not. do_not_print) &
+               write(6,'(a,a,a,i5,a)') '     Mask ', trim(ext_qmmask_subset), &
+                                       ' matches ',qmmm_struct%qm_nsubset,' atoms'
+            if(qmmm_struct%qm_nsubset == 0 .and. .not. do_not_print) then
+               write(6,'(a)') 'INFO: qm subset is an empty set => &
+                              &all atoms can be in extended qm region'
+            end if
 
-       deallocate(isqm, stat=ier)
-       REQUIRE(ier==0)
+            j = 0
+            do i=1,natom
+               if( isqm(i)>0 ) then
+                  j = j+1
+                  qm_subsetatoms(j) = i
+               end if
+            end do
 
-    else  !  get the count from the input iqmatoms array
+         else
+            if (.not. do_not_print) &
+               write(6,'(a)') 'INFO: qm subset was not specified for the &
+                              &extended qm region'
 
-       do i = 1,max_quantum_atoms
-          if( iqmatoms(i) == 0 ) exit
-       end do
-       qmmm_struct%nquant = i-1
+            qmmm_struct%qm_nsubset = 0
+         end if
 
-    end if
+         if (.not. do_not_print) then
+            write(6,'(a)') ''
+            write(6,'(a)') 'CORE atoms:'
+            write(6,'(a)') '-----------'
+            write(6,'(a)') ''
+         end if
+         if( coremask /= '' ) then
+            if (.not. do_not_print) &
+               write(6,'(a)') 'INFO: loading the core atoms for adaptive QM/MM'
 
+            call atommask(natom, nres, 0, ih(m04), ih(m06), &
+                          ix(i02), ih(m02), x(lcrd), coremask, isqm )
+
+            qmmm_struct%core_nquant = sum(isqm(1:natom))
+            if (.not. do_not_print) &
+               write(6,'(3a,i5,a)') '     Mask ', trim(coremask), ' matches ',&
+                                    qmmm_struct%core_nquant,' atoms'
+
+            j = 0
+            do i=1,natom
+               if( isqm(i)>0 ) then
+                  j = j+1
+                  core_iqmatoms(j) = i
+               end if
+            end do
+
+         else
+            if (.not. do_not_print) then
+               write(6,'(a)') 'INFO: core atoms for adaptive QM/MM are not defined'
+               write(6,'(a)') 'INFO: reduced calculation will be full MM calculation'
+               write(6,'(a)') 'INFO: using FF parameters from topology file'
+            end if
+            
+            qmmm_struct%core_nquant = 0
+
+         end if
+         write(6,'(a,i2)') '     core-charge: ', corecharge
+         qmmm_nml%corecharge = corecharge
+
+         if( ext_coremask_subset /= '' ) then
+            if (.not. do_not_print) then
+               write(6,'(a)') 'INFO: core subset was specified for the extended core region'
+               write(6,'(a)') 'INFO: loading core subset atoms'
+            end if
+
+            call atommask(natom, nres, 0, ih(m04), ih(m06), &
+                          ix(i02), ih(m02), x(lcrd), ext_coremask_subset, isqm )
+
+            qmmm_struct%core_nsubset = sum(isqm(1:natom))
+            if (.not. do_not_print) &
+               write(6,'(3a,i5,a)') '     Mask ', trim(ext_coremask_subset), &
+                        ' matches ',qmmm_struct%core_nsubset,' atoms'
+            if(qmmm_struct%core_nsubset == 0 .and. .not. do_not_print) then
+               write(6,'(a)') 'INFO: core subset is an empty set => &
+                              &all atoms can be in extended core region'
+            end if
+
+            j = 0
+            do i=1,natom
+               if( isqm(i)>0 ) then
+                  j = j+1
+                  core_subsetatoms(j) = i
+               end if
+            end do
+
+         else
+            if (.not. do_not_print) &
+               write(6,'(a)') 'INFO: core subset was not specified for the &
+                              &extended core region'
+
+            qmmm_struct%core_nsubset = 0
+         end if
+
+         if (.not. do_not_print) then
+            write(6,'(a)') ''
+            write(6,'(a)') 'BUFFER atoms:'
+            write(6,'(a)') '-------------'
+            write(6,'(a)') ''
+         end if
+         if( buffermask /= '' ) then
+            if (.not. do_not_print) &
+               write(6,'(a)')'INFO: loading the buffer atoms for adaptive QM/MM'
+
+            call atommask(natom, nres, 0, ih(m04), ih(m06), &
+                          ix(i02), ih(m02), x(lcrd), buffermask, isqm )
+
+            qmmm_struct%buffer_nquant = sum(isqm(1:natom))
+            if (.not. do_not_print) &
+               write(6,'(3a,i5,a)') '     Mask ', trim(buffermask), &
+                           ' matches ',qmmm_struct%buffer_nquant,' atoms'
+
+            j = 0
+            do i=1,natom
+               if( isqm(i)>0 ) then
+                  j = j+1
+                  buffer_iqmatoms(j) = i
+               end if
+            end do
+
+         else
+            if (.not. do_not_print) &
+               write(6,'(a)') 'INFO: buffer atoms for adaptive QM/MM are not defined'
+            if(qmmm_struct%r_buffer_out == 0 .and. .not. do_not_print) then
+               write(6,'(a)') 'WARNING: buffer radius was set to zero and no buffer atoms were given'
+               write(6,'(a)') '         this may lead to unconverged QM forces'
+            end if
+
+            qmmm_struct%buffer_nquant = 0
+
+         end if
+         if (.not. do_not_print) &
+            write(6,'(a,i2)') '     buffer-charge: ', buffercharge
+         qmmm_nml%buffercharge = buffercharge
+
+         if( ext_buffermask_subset /= '' ) then
+            if (.not. do_not_print) then
+               write(6,'(a)') 'INFO: buffer subset was specified for the &
+                              &extended buffer region'
+               write(6,'(a)') 'INFO: loading buffer subset atoms'
+            end if
+
+            call atommask(natom, nres, 0, ih(m04), ih(m06), &
+                          ix(i02), ih(m02), x(lcrd), ext_buffermask_subset, isqm )
+
+            qmmm_struct%buffer_nsubset = sum(isqm(1:natom))
+            if (.not. do_not_print) &
+               write(6,'(3a,i5,a)') '     Mask ', trim(ext_buffermask_subset), &
+                        ' matches ',qmmm_struct%buffer_nsubset,' atoms'
+            if(qmmm_struct%buffer_nsubset == 0 .and. .not. do_not_print) then
+               write(6,'(a)') 'INFO: buffer subset is an empty set => all atoms can be in extended buffer region'
+            end if
+
+            j = 0
+            do i=1,natom
+               if( isqm(i)>0 ) then
+                  j = j+1
+                  buffer_subsetatoms(j) = i
+               end if
+            end do
+
+         else
+            if (.not. do_not_print) &
+               write(6,'(a)') 'INFO: buffer subset was not specified for &
+                              &the extended buffer region'
+
+            qmmm_struct%buffer_nsubset = 0
+         end if
+
+         if (.not. do_not_print) then
+            write(6,'(a)') ''
+            write(6,'(a)') 'CENTER atoms:'
+            write(6,'(a)') '-------------'
+            write(6,'(a)') ''
+         end if
+         if(centermask /= '') then
+            if (.not. do_not_print) then
+               write(6,'(a)') 'INFO: center atom list was specified'
+               write(6,'(a)') 'INFO: loading the center atoms for adaptive QM/MM'
+            end if
+
+            call atommask(natom, nres, 0, ih(m04), ih(m06), &
+                          ix(i02), ih(m02), x(lcrd), centermask, isqm )
+
+            qmmm_struct%center_nsubset = sum(isqm(1:natom))
+            if (.not. do_not_print) &
+               write(6,'(3a,i5,a)') '     Mask ', trim(centermask), &
+                        ' matches ',qmmm_struct%center_nsubset,' atoms'
+            if(qmmm_struct%center_nsubset == 0 .and. .not. do_not_print) then
+               if(qmmm_struct%core_nquant > 0) then
+                  write(6,'(a)') 'INFO: center atom list is an empty set => &
+                                 &center atom list = user defined core list'
+               else
+                  write(6,'(a)') 'INFO: center atom list is an empty set => &
+                                 &center atom list = user defined qm list'
+               end if
+            end if
+
+            j = 0
+            do i=1,natom
+               if( isqm(i)>0 ) then
+                  j = j+1
+                  center_subsetatoms(j) = i
+               end if
+            end do
+
+         else
+            if(qmmm_struct%core_nquant > 0 .and. .not. do_not_print) then
+               write(6,'(a)') 'INFO: center atom list is not defined => &
+                              &center atom list = user defined core list'
+            else if (.not. do_not_print) then
+               write(6,'(a)') 'INFO: center atom list is not defined => &
+                              &center atom list = user defined qm list'
+            end if
+            qmmm_struct%center_nsubset = 0
+         end if
+
+      end if ! (qmmask /= '' .or. (coremask /= '')
+
+      if(abfqmmm == 1) qmmm_struct%abfqmmm = 1
+         if(abfqmmm == 1 .and. hot_spot == 1) then
+            qmmm_struct%hot_spot = 1
+         end if
+
+         deallocate(isqm, stat=ier)
+         REQUIRE(ier==0)
+
+      else  !  get the count from the input iqmatoms array
+
+         do i = 1,MAX_QUANTUM_ATOMS
+            if( iqmatoms(i) == 0 ) exit
+         end do
+         qmmm_struct%nquant = i-1
+
+      end if
+
+   end if ! (qmmm_nml%qmtheory%SEBOMD)
+
+   if(abfqmmm == 1) then
+      if(qmstep == 0) then
+         if(qmmm_struct%nquant > 0) then
+            call validate_qm_atoms(iqmatoms,qmmm_struct%nquant,natom)
+            call int_legal_range('QMMM: (number of qm atoms) ', &
+                                 qmmm_struct%nquant, 1, MAX_QUANTUM_ATOMS )
+            call qmsort(iqmatoms)
+            allocate(qmmm_struct%iqmatoms(qmmm_struct%nquant))
+            do i = 1, qmmm_struct%nquant
+               qmmm_struct%iqmatoms(i)=iqmatoms(i)
+            end do
+         end if
+         if(qmmm_struct%qm_nsubset > 0) then
+            call validate_qm_atoms(qm_subsetatoms,qmmm_struct%qm_nsubset,natom)
+            call int_legal_range('QMMM: (number of qm subset atoms) ', &
+                                 qmmm_struct%qm_nsubset, 1, natom )
+            call qmsort(qm_subsetatoms)
+            allocate(qmmm_struct%qm_subsetatoms(qmmm_struct%qm_nsubset))
+            do i = 1, qmmm_struct%qm_nsubset
+               qmmm_struct%qm_subsetatoms(i)=qm_subsetatoms(i)
+            end do
+         end if
+         if(qmmm_struct%core_nquant > 0) then
+            call validate_qm_atoms(core_iqmatoms,qmmm_struct%core_nquant,natom)
+            call int_legal_range('QMMM: (number of core atoms) ', &
+                                 qmmm_struct%core_nquant, 1, max_quantum_atoms )
+            allocate(qmmm_struct%core_iqmatoms(qmmm_struct%core_nquant))
+            do i = 1, qmmm_struct%core_nquant
+               qmmm_struct%core_iqmatoms(i)=core_iqmatoms(i)
+            end do
+         end if
+         if(qmmm_struct%core_nsubset > 0) then
+            call validate_qm_atoms(core_subsetatoms,qmmm_struct%core_nsubset,natom)
+            call int_legal_range('QMMM: (number of core subset atoms) ', &
+                                 qmmm_struct%core_nsubset, 1, natom )
+            call qmsort(core_subsetatoms)
+            allocate(qmmm_struct%core_subsetatoms(qmmm_struct%core_nsubset))
+            do i = 1, qmmm_struct%core_nsubset
+               qmmm_struct%core_subsetatoms(i)=core_subsetatoms(i)
+            end do
+         end if
+         if( (qmmm_struct%nquant == 0) .and. (qmmm_struct%core_nquant == 0) ) then
+            write(6,*)
+            write(6,*) 'ERROR: qmmask and coremask are empty sets!'
+            stop 1
+         end if
+         if(qmmm_struct%buffer_nquant > 0) then
+            call validate_qm_atoms(buffer_iqmatoms,qmmm_struct%buffer_nquant,natom)
+            call int_legal_range('QMMM: (number of buffer atoms) ', &
+                                 qmmm_struct%buffer_nquant, 1, max_quantum_atoms )
+            allocate(qmmm_struct%buffer_iqmatoms(qmmm_struct%buffer_nquant))
+            do i = 1, qmmm_struct%buffer_nquant
+               qmmm_struct%buffer_iqmatoms(i)=buffer_iqmatoms(i)
+            end do
+         end if
+         if(qmmm_struct%buffer_nsubset > 0) then
+            call validate_qm_atoms(buffer_subsetatoms,qmmm_struct%buffer_nsubset,natom)
+            call int_legal_range('QMMM: (number of buffer subset atoms) ', &
+                                 qmmm_struct%buffer_nsubset, 1, natom )
+            call qmsort(buffer_subsetatoms)
+            allocate(qmmm_struct%buffer_subsetatoms(qmmm_struct%buffer_nsubset))
+            do i = 1, qmmm_struct%buffer_nsubset
+               qmmm_struct%buffer_subsetatoms(i)=buffer_subsetatoms(i)
+            end do
+         end if
+         if(qmmm_struct%center_nsubset > 0) then
+            call validate_qm_atoms(center_subsetatoms,qmmm_struct%center_nsubset,natom)
+            call int_legal_range('QMMM: (number of center subset atoms) ', &
+                                 qmmm_struct%center_nsubset, 1, natom )
+            call qmsort(center_subsetatoms)
+            allocate(qmmm_struct%center_subsetatoms(qmmm_struct%center_nsubset))
+            do i = 1, qmmm_struct%center_nsubset
+               qmmm_struct%center_subsetatoms(i)=center_subsetatoms(i)
+            end do
+         end if
+            ! the regions must be disjoint sets
+         do i = 1, qmmm_struct%nquant
+            do j = 1, qmmm_struct%core_nquant
+               if(qmmm_struct%iqmatoms(i) == qmmm_struct%core_iqmatoms(j)) then
+                  write(6,*)
+                  write(6,*) 'ERROR: qmmask and coremask must be disjoint sets!'
+                  write(6,*) 'ERROR: atom number', qmmm_struct%iqmatoms(i),' is common!'
+                  stop 1
+               end if
+            end do
+            do j = 1, qmmm_struct%buffer_nquant
+               if(qmmm_struct%iqmatoms(i) == qmmm_struct%buffer_iqmatoms(j)) then
+                  write(6,*)
+                  write(6,*) 'ERROR: qmmask and buffermask must be disjoint sets!'
+                  write(6,*) 'ERROR: atom number', qmmm_struct%iqmatoms(i),' is common!'
+                  stop 1
+               end if
+            end do
+         end do
+         do i = 1, qmmm_struct%core_nquant
+            do j = 1, qmmm_struct%buffer_nquant
+               if(qmmm_struct%core_iqmatoms(i) == qmmm_struct%buffer_iqmatoms(j)) then
+                  write(6,*)
+                  write(6,*) 'ERROR: coremask and buffermask must be disjoint sets!'
+                  write(6,*) 'ERROR: atom number', qmmm_struct%core_iqmatoms(i),' is common!'
+                  stop 1
+               end if
+            end do
+         end do
+         return
+      else
+         if(associated(qmmm_struct%iqmatoms)) &
+            deallocate(qmmm_struct%iqmatoms)
+         if(associated(qmmm_struct%core_iqmatoms)) &
+            deallocate(qmmm_struct%core_iqmatoms)
+         if(associated(qmmm_struct%buffer_iqmatoms)) &
+            deallocate(qmmm_struct%buffer_iqmatoms)
+      end if
    end if
-
-   if(abfqmmm == 1) then                                                          ! lam81
-    if(qmstep == 0) then                                                          ! lam81
-     if(qmmm_struct%nquant > 0) then                                              ! lam81
-      call validate_qm_atoms(iqmatoms,qmmm_struct%nquant,natom)                   ! lam81
-      call int_legal_range('QMMM: (number of qm atoms) ', &                       ! lam81
-        qmmm_struct%nquant, 1, max_quantum_atoms )                                ! lam81
-      call qmsort(iqmatoms)                                                       ! lam81
-      allocate(qmmm_struct%iqmatoms(qmmm_struct%nquant))                          ! lam81
-      do i = 1, qmmm_struct%nquant                                                ! lam81
-       qmmm_struct%iqmatoms(i)=iqmatoms(i)                                        ! lam81
-      end do                                                                      ! lam81
-     end if                                                                       ! lam81
-     if(qmmm_struct%qm_nsubset > 0) then                                          ! lam81
-      call validate_qm_atoms(qm_subsetatoms,qmmm_struct%qm_nsubset,natom)         ! lam81
-      call int_legal_range('QMMM: (number of qm subset atoms) ', &                ! lam81
-        qmmm_struct%qm_nsubset, 1, natom )                                        ! lam81
-      call qmsort(qm_subsetatoms)                                                 ! lam81
-      allocate(qmmm_struct%qm_subsetatoms(qmmm_struct%qm_nsubset))                ! lam81
-      do i = 1, qmmm_struct%qm_nsubset                                            ! lam81
-       qmmm_struct%qm_subsetatoms(i)=qm_subsetatoms(i)                            ! lam81
-      end do                                                                      ! lam81
-     end if                                                                       ! lam81
-     if(qmmm_struct%core_nquant > 0) then                                         ! lam81
-      call validate_qm_atoms(core_iqmatoms,qmmm_struct%core_nquant,natom)         ! lam81
-      call int_legal_range('QMMM: (number of core atoms) ', &                     ! lam81
-        qmmm_struct%core_nquant, 1, max_quantum_atoms )                           ! lam81
-      allocate(qmmm_struct%core_iqmatoms(qmmm_struct%core_nquant))                ! lam81
-      do i = 1, qmmm_struct%core_nquant                                           ! lam81
-       qmmm_struct%core_iqmatoms(i)=core_iqmatoms(i)                              ! lam81
-      end do                                                                      ! lam81
-     end if                                                                       ! lam81
-     if(qmmm_struct%core_nsubset > 0) then                                        ! lam81
-      call validate_qm_atoms(core_subsetatoms,qmmm_struct%core_nsubset,natom)     ! lam81
-      call int_legal_range('QMMM: (number of core subset atoms) ', &              ! lam81
-        qmmm_struct%core_nsubset, 1, natom )                                      ! lam81
-      call qmsort(core_subsetatoms)                                               ! lam81
-      allocate(qmmm_struct%core_subsetatoms(qmmm_struct%core_nsubset))            ! lam81
-      do i = 1, qmmm_struct%core_nsubset                                          ! lam81
-       qmmm_struct%core_subsetatoms(i)=core_subsetatoms(i)                        ! lam81
-      end do                                                                      ! lam81
-     end if                                                                       ! lam81
-     if( (qmmm_struct%nquant == 0) .and. (qmmm_struct%core_nquant == 0) ) then    ! lam81
-      write(6,*)                                                                  ! lam81
-      write(6,*) 'ERROR: qmmask and coremask are empty sets!'                     ! lam81
-      stop                                                                        ! lam81
-     end if                                                                       ! lam81
-     if(qmmm_struct%buffer_nquant > 0) then                                       ! lam81
-      call validate_qm_atoms(buffer_iqmatoms,qmmm_struct%buffer_nquant,natom)     ! lam81
-      call int_legal_range('QMMM: (number of buffer atoms) ', &                   ! lam81
-        qmmm_struct%buffer_nquant, 1, max_quantum_atoms )                         ! lam81
-      allocate(qmmm_struct%buffer_iqmatoms(qmmm_struct%buffer_nquant))            ! lam81
-      do i = 1, qmmm_struct%buffer_nquant                                         ! lam81
-       qmmm_struct%buffer_iqmatoms(i)=buffer_iqmatoms(i)                          ! lam81
-      end do                                                                      ! lam81
-     end if                                                                       ! lam81
-     if(qmmm_struct%buffer_nsubset > 0) then                                      ! lam81
-      call validate_qm_atoms(buffer_subsetatoms,qmmm_struct%buffer_nsubset,natom) ! lam81
-      call int_legal_range('QMMM: (number of buffer subset atoms) ', &            ! lam81
-        qmmm_struct%buffer_nsubset, 1, natom )                                    ! lam81
-      call qmsort(buffer_subsetatoms)                                             ! lam81
-      allocate(qmmm_struct%buffer_subsetatoms(qmmm_struct%buffer_nsubset))        ! lam81
-      do i = 1, qmmm_struct%buffer_nsubset                                        ! lam81
-       qmmm_struct%buffer_subsetatoms(i)=buffer_subsetatoms(i)                    ! lam81
-      end do                                                                      ! lam81
-     end if                                                                       ! lam81
-     if(qmmm_struct%center_nsubset > 0) then                                      ! lam81
-      call validate_qm_atoms(center_subsetatoms,qmmm_struct%center_nsubset,natom) ! lam81
-      call int_legal_range('QMMM: (number of center subset atoms) ', &            ! lam81
-        qmmm_struct%center_nsubset, 1, natom )                                    ! lam81
-      call qmsort(center_subsetatoms)                                             ! lam81
-      allocate(qmmm_struct%center_subsetatoms(qmmm_struct%center_nsubset))        ! lam81
-      do i = 1, qmmm_struct%center_nsubset                                        ! lam81
-       qmmm_struct%center_subsetatoms(i)=center_subsetatoms(i)                    ! lam81
-      end do                                                                      ! lam81
-     end if                                                                       ! lam81
-        ! the regions must be disjoint sets                                       ! lam81
-     do i = 1, qmmm_struct%nquant                                                 ! lam81
-      do j = 1, qmmm_struct%core_nquant                                           ! lam81
-       if(qmmm_struct%iqmatoms(i) == qmmm_struct%core_iqmatoms(j)) then           ! lam81
-        write(6,*)                                                                ! lam81
-        write(6,*) 'ERROR: qmmask and coremask must be disjoint sets!'            ! lam81
-        write(6,*) 'ERROR: atom number', qmmm_struct%iqmatoms(i),' is common!'    ! lam81
-        stop                                                                      ! lam81
-       end if                                                                     ! lam81
-      end do                                                                      ! lam81
-      do j = 1, qmmm_struct%buffer_nquant                                         ! lam81
-       if(qmmm_struct%iqmatoms(i) == qmmm_struct%buffer_iqmatoms(j)) then         ! lam81
-        write(6,*)                                                                ! lam81
-        write(6,*) 'ERROR: qmmask and buffermask must be disjoint sets!'          ! lam81
-        write(6,*) 'ERROR: atom number', qmmm_struct%iqmatoms(i),' is common!'    ! lam81
-        stop                                                                      ! lam81
-       end if                                                                     ! lam81
-      end do                                                                      ! lam81
-     end do                                                                       ! lam81
-     do i = 1, qmmm_struct%core_nquant                                            ! lam81
-      do j = 1, qmmm_struct%buffer_nquant                                         ! lam81
-       if(qmmm_struct%core_iqmatoms(i) == qmmm_struct%buffer_iqmatoms(j)) then    ! lam81
-        write(6,*)                                                                ! lam81
-        write(6,*) 'ERROR: coremask and buffermask must be disjoint sets!'        ! lam81
-        write(6,*) 'ERROR: atom number', qmmm_struct%core_iqmatoms(i),' is common!' ! lam81
-        stop                                                                      ! lam81
-       end if                                                                     ! lam81
-      end do                                                                      ! lam81
-     end do                                                                       ! lam81
-     return                                                                       ! lam81
-    else                                                                          ! lam81
-     if(associated(qmmm_struct%iqmatoms)) deallocate(qmmm_struct%iqmatoms)        ! lam81
-     if(associated(qmmm_struct%core_iqmatoms)) deallocate(qmmm_struct%core_iqmatoms)     !lam81
-     if(associated(qmmm_struct%buffer_iqmatoms)) deallocate(qmmm_struct%buffer_iqmatoms) !lam81
-    end if                                                                        ! lam81
-   end if                                                                         ! lam81
 
 !Initialize nlink to 0
    qmmm_struct%nlink = 0
@@ -962,7 +1098,7 @@ parameter ( max_quantum_atoms = 10000 )
       !We need to work out how many atoms nearest_qm_solvent * natoms_per_solvent_residue equals.
       !We then need to find the nearest atoms and update nquant and iqmatoms respectively.
       call qmmm_vsolv_setup(qmmm_struct%nquant, max_quantum_atoms, iqmatoms, &
-                            nres, ih(m02), ix(i02),ix(i70), natom)
+                            nres, ih(m02), ix(i02))
       ! check again that we don't bust our statically allocated max_quantum_atoms
       call int_legal_range('QMMM: (number of quantum atoms) ', &
            qmmm_struct%nquant, 1, max_quantum_atoms )
@@ -1035,7 +1171,7 @@ parameter ( max_quantum_atoms = 10000 )
    call float_legal_range('QMMM: (QM-MM dftb_telec)'     , dftb_telec     , 0.0D0 , 1.0D4  )
 
    if (dftb_3rd_order /= 'NONE') then
-      call check_dftb_3rd_order(dftb_3rd_order)
+      call check_dftb_3rd_order
       qmmm_nml%dftb_3rd_order = dftb_3rd_order
    endif
 
@@ -1090,7 +1226,7 @@ parameter ( max_quantum_atoms = 10000 )
       qmgb = 0
    end if
    !Print warning about qmgb being for debugging only.
-   if (qmgb==3) then
+   if (qmgb==3 .and. .not. do_not_print) then
      write(6,*) "QMMM: ------------------------------ WARNING --------------------------------"
      write(6,*) "QMMM: qmgb = 3 is designed for debugging purposes only. It gives GB"
      write(6,*) "QMMM:          energies based on gas phase QM Mulliken charges. These charges"
@@ -1121,9 +1257,9 @@ parameter ( max_quantum_atoms = 10000 )
    end if
    qmmm_nml%qmcharge = qmcharge
 #ifndef SQM
-   if(abfqmmm == 1) then                   ! lam81
-    qmmm_nml%qmcharge = abfqmcharge        ! lam81
-   end if                                  ! lam81
+   if(abfqmmm == 1) then
+      qmmm_nml%qmcharge = abfqmcharge
+   end if
 #endif
    qmmm_nml%spin = spin
    qmmm_nml%verbosity = verbosity
@@ -1157,7 +1293,7 @@ parameter ( max_quantum_atoms = 10000 )
    if ( scfconv < 1.0D-12 ) then
      write(6,'(" QMMM: WARNING - SCF Conv = ",G8.2)') scfconv
      write(6,*) "QMMM:           There is a risk of convergence problems when the"
-     write(6,*) "QMMM:           requested convergence is less that 1.0D-12 kcal/mol."
+     write(6,*) "QMMM:           requested convergence is less than 1.0D-12 kcal/mol."
    end if
    qmmm_nml%scfconv = scfconv
 
@@ -1242,15 +1378,20 @@ parameter ( max_quantum_atoms = 10000 )
    if (qmmm_nml%qmmm_int == 5) then
       ! Mechanical embedding
       ! Do not use QM and QM/MM Ewald or PME
-      write(6,'(a)') 'QMMM: Mechanical embedding in use'
-      if ( qmmm_nml%qm_pme ) then
-         write(6,'(a)') 'QMMM: WARNING'
-         write(6,'(a)') 'QMMM: Switching off QM PME'
+      if (.not. do_not_print) &
+         write(6,'(a)') 'QMMM: Mechanical embedding in use'
+      if ( qmmm_nml%qm_pme) then
+         if (.not. do_not_print) then
+            write(6,'(a)') 'QMMM: WARNING'
+            write(6,'(a)') 'QMMM: Switching off QM PME'
+         end if
          qmmm_nml%qm_pme = .false.
       end if
       if ( qmmm_nml%qm_ewald > 0) then
-         write(6,'(a)') 'QMMM: WARNING'
-         write(6,'(a)') 'QMMM: Switching off QM Ewald'
+         if (.not. do_not_print) then
+            write(6,'(a)') 'QMMM: WARNING'
+            write(6,'(a)') 'QMMM: Switching off QM Ewald'
+         end if
          qmmm_nml%qm_ewald = 0
       end if
       ! Prevent adjust_q, there is nothing to adjust
@@ -1336,19 +1477,37 @@ parameter ( max_quantum_atoms = 10000 )
       allocate(qmmm_div%all_atom_numbers(natom+100), stat=ier)
       REQUIRE(ier == 0)
 
-      do i=1,natom
-         call get_atomic_number(ih(m04+i-1),x(lmass+i-1),qmmm_div%all_atom_numbers(i))
-      enddo
+      ! ix(i100) is a flag that tells if the ATOMIC_NUMBERS section is in the
+      ! prmtop. If it's set, get the atomic numbers from those read
+      ! directly from the prmtop; otherwise use the name/mass to guess
+      if (ix(i100).eq.0) then
+         do i=1,natom
+            call get_atomic_number(ih(m04+i-1),x(lmass+i-1),qmmm_div%all_atom_numbers(i))
+         enddo
+      else
+         do i=1,natom
+            qmmm_div%all_atom_numbers(i) = ix(i100+i)
+         enddo
+      endif
    endif
    !END DIVCON SPECIFIC STUFF
 #   endif
 
-   do i = 1, qmmm_struct%nquant
-      qmmm_nml%iqmatoms(i) = iqmatoms(i)
-      !Get the atomic numbers (used to be done in rdparm2...)
-      j = iqmatoms(i)
-      call get_atomic_number( ih(m04+j-1),x(lmass+j-1),qmmm_struct%iqm_atomic_numbers(i) )
-   end do
+   if (ix(i100).eq.0) then
+      do i = 1, qmmm_struct%nquant
+         qmmm_nml%iqmatoms(i) = iqmatoms(i)
+         !Get the atomic numbers (used to be done in rdparm2...)
+         j = iqmatoms(i)
+         call get_atomic_number( ih(m04+j-1),x(lmass+j-1),qmmm_struct%iqm_atomic_numbers(i) )
+      end do
+   else
+      do i = 1, qmmm_struct%nquant
+         qmmm_nml%iqmatoms(i) = iqmatoms(i)
+         !Get the atomic numbers (used to be done in rdparm2...)
+         j = iqmatoms(i)
+         qmmm_struct%iqm_atomic_numbers(i) = ix(i100+j)
+      end do
+   endif
 
 #endif
 
@@ -1494,3 +1653,8 @@ parameter ( max_quantum_atoms = 10000 )
 end subroutine read_qmmm_nm_and_alloc
 !+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+#ifdef SQM
+end module sqm_qmmm_read_and_alloc
+#else
+end module qmmm_read_and_alloc
+#endif

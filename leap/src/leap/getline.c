@@ -59,7 +59,8 @@ int 		(*gl_tab_hook)(char *, int, int *) = gl_tab;
 
 /******************** internal interface *********************************/
 
-#define BUF_SIZE 1024
+/* This is magic; read the commit log.  srb  11-23-2014 */
+#define BUF_SIZE 8096
 
 static int      gl_init_done = -1;	/* terminal mode flag  */
 static int      gl_termw = 80;		/* actual terminal width */
@@ -663,7 +664,7 @@ gl_kill(int pos)
 
 static void
 gl_word(int direction)
-/* move forward or backword one word */
+/* move forward or backward one word */
 {
     int pos = gl_pos;
 
@@ -672,7 +673,7 @@ gl_word(int direction)
 	    pos++;
 	while (isspace(gl_buf[pos]) && pos < gl_cnt)
 	    pos++;
-    } else {				/* backword */
+    } else {				/* backward */
 	if (pos > 0)
 	    pos--;
 	while (isspace(gl_buf[pos]) && pos > 0)

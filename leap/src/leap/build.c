@@ -1130,9 +1130,9 @@ STRING		sTemp;
  *
  *	When external coordinates are imposed on a structure
  *	that has internal coordinates defined, there will be
- *	inconsistancies in the torsions between the internals 
+ *	inconsistencies in the torsions between the internals 
  *	and externals. This routine attempts to resolve these
- *	inconsistancies by changing the internal torsions to
+ *	inconsistencies by changing the internal torsions to
  *	match the externals.
  *
  *      Loop through all bonds, looking for bonds that lie
@@ -2146,7 +2146,7 @@ LOOP		lSpan;
 
 		/* Now create a spanning tree that is only 4 ATOMs */
 		/* deep to create INTERNALs across the junction */
-		/* Using 4 atoms will garentee that INTERNALs will */
+		/* Using 4 atoms will guarantee that INTERNALs will */
 		/* be built for ATOMs up to 3 ATOMs away from (aLast) */
 
 	lSpan = lLoop( (OBJEKT)aFirst, SPANNINGTREE );

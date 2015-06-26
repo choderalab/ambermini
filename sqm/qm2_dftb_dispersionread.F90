@@ -5,9 +5,9 @@
 subroutine dispersionread(nn,ntype,izp,disp_file) 
 ! This is in the dispfile structure: ,read_DISP_DOT_INP,h1,h2,Ni0,scale)
 
-   use qmmm_module, only : qmmm_nml, qmmm_struct
+   use qmmm_module, only : qmmm_struct
    use ElementOrbitalIndex, only : elementSymbol
-   use qm2_dftb_module, only: mol, dispertmp,dispfile
+   use qm2_dftb_module, only: mol, dispfile
    implicit none
    integer:: i, j
 
@@ -24,9 +24,6 @@ subroutine dispersionread(nn,ntype,izp,disp_file)
 
 !! Pointers
    character(len=2), dimension(:), pointer :: atyp
-
-!! Temporary:
-   logical :: ex
 
 !! Set pointers
    atyp => mol%atyp

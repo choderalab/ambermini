@@ -524,7 +524,7 @@ int main(int argc, char *argv[])
 		if (strncmp(argv[1], "-h", 2) == 0
 			|| strncmp(argv[1], "-H", 2) == 0) {
 			usage();
-			exit(0);
+			exit(1);
 		}
 		if (strncmp(argv[1], "-l",    2) == 0 || 
                     strncmp(argv[1], "-L",    2) == 0 ||  
@@ -532,7 +532,7 @@ int main(int argc, char *argv[])
                     strncmp(argv[1], "-List", 4) == 0 ||  
                     strncmp(argv[1], "-LIST", 4) == 0) {
 			list();
-			exit(0);
+			exit(1);
 		}
 	}
 	if (argc == 1) {
@@ -1330,235 +1330,9 @@ int main(int argc, char *argv[])
 /*   End of big block over input file formats    */
 /*****************************************************************************/
 
-
-/*	if charge type is bcc, the prediction_index must be '4' (since we need to assign am1-bcc bond types and atom types)*/	
-        if ((strcmp("bcc", cinfo.chargetype) == 0
-                || strcmp("2", cinfo.chargetype) == 0) && cinfo.prediction_index < 4) {
-		if(cinfo.prediction_index <= 2) { 
-			fprintf(stdout, "Warning: the antechamber program automatically changes the prediction type from '%d' to '4' for bcc calculations !\n",cinfo.prediction_index);		
-			cinfo.prediction_index = 4;
-		}
-		else if(cinfo.prediction_index == 3) {
-			fprintf(stdout, "Warning: the antechamber program automatically changes the prediction type from '3' to '4' for bcc calculations !\n");		
-			cinfo.prediction_index = 5;
-		}
-	}
-
-/*****************************************************************************/
-/*	assign atomtype_flag, bondtype_flag and charge_flag according to -j flag */
-/*****************************************************************************/
-
-	if (cinfo.prediction_index == 0) {
-		atomtype_flag = 0;
-		bondtype_flag = 0;
-	}
-	if (cinfo.prediction_index == 1) {
-		atomtype_flag = 1;
-		bondtype_flag = 0;
-	}
-	if (cinfo.prediction_index == 2) {
-		atomtype_flag = 0;
-		bondtype_flag = 2;
-	}
-	if (cinfo.prediction_index == 3) {
-		atomtype_flag = 0;
-		bondtype_flag = 1;
-	}
-	if (cinfo.prediction_index == 4) {
-		atomtype_flag = 1;
-		bondtype_flag = 2;
-	}
-	if (cinfo.prediction_index == 5) {
-		atomtype_flag = 1;
-		bondtype_flag = 1;
-	}
-
-
-/*	reassign the connect_flag according to the output types 	*/
-	if (strcmp("mopcrd", cinfo.outtype) == 0
-		|| strcmp("mopout", cinfo.outtype) == 0 
-		|| strcmp("gcrt", cinfo.outtype) == 0 
-		|| strcmp("gout", cinfo.outtype) == 0 
-		|| strcmp("jcrt", cinfo.outtype) == 0 
-		|| strcmp("jout", cinfo.outtype) == 0 
-		|| strcmp("pdb", cinfo.outtype) == 0 
-		|| strcmp("rst", cinfo.outtype) == 0 
-		|| strcmp("3", cinfo.outtype) == 0
-		|| strcmp("8", cinfo.outtype) == 0
-		|| strcmp("10", cinfo.outtype) == 0
-		|| strcmp("11", cinfo.outtype) == 0
-		|| strcmp("12", cinfo.outtype) == 0
-		|| strcmp("17", cinfo.outtype) == 0
-		|| strcmp("18", cinfo.outtype) == 0
-		|| strcmp("20", cinfo.outtype) == 0) {
-		connect_flag = 0;
-		bondtype_flag = 0;
-		atomtype_flag = 0;
-	}
-
-	if (strcmp("mopout", cinfo.outtype) == 0
-		|| strcmp("gout", cinfo.outtype) == 0
-		|| strcmp("jout", cinfo.outtype) == 0
-		|| strcmp("rst", cinfo.outtype) == 0
-		|| strcmp("11", cinfo.outtype) == 0
-		|| strcmp("12", cinfo.outtype) == 0
-		|| strcmp("17", cinfo.outtype) == 0
-		|| strcmp("20", cinfo.outtype) == 0) {
-		duplicatedname_flag = 0;
-	}
-
-	if (strcmp("mopint", cinfo.outtype) == 0
-		|| strcmp("gzmat", cinfo.outtype) == 0 
-		|| strcmp("jzmat", cinfo.outtype) == 0 
-		|| strcmp("7", cinfo.outtype) == 0 
-		|| strcmp("9", cinfo.outtype) == 0 
-		|| strcmp("19", cinfo.outtype) == 0 ) {
-		bondtype_flag = 0;
-		atomtype_flag = 0;
-	}
-/*     	the following code judge or assign atom name, atom type, bond type etc according to flags */
-	if (adjustatomname_flag) {
-		if(strcmp(cinfo.intype, "mol2")==0 || strcmp(cinfo.intype, "2")==0 ||
-		   strcmp(cinfo.intype, "ac")==0 || strcmp(cinfo.intype, "1")==0)
-			adjustatomname(atomnum, atom, 1);
-		else
-			adjustatomname(atomnum, atom, 0);
-	}
-	if (atomicnum_flag) 
-		atomicnum(atomnum, atom);
-	if (atomname_flag) 
-		atomname(atomnum, atom);
-	if (default_flag)
-		default_inf(atomnum, atom, default_flag);
-	if (cartcoord_flag)
-		cartcoord(atomnum, atom);
-	if (connect_flag) {
-		overflow_flag =
-			connect(minfo.connect_file, atomnum, atom, &bondnum, bond,
-					cinfo.maxbond);
-		if (overflow_flag) {
-			cinfo.maxbond = bondnum + 10;
-			memory(2, cinfo.maxatom, cinfo.maxbond, cinfo.maxring);
-			overflow_flag =
-				connect(minfo.connect_file, atomnum, atom, &bondnum, bond,
-						cinfo.maxbond);
-		}
-	}
-	if (bondtype_flag && bondnum > 0) {
-		judgebondtype(atomnum, atom, bondnum, bond, cinfo, minfo,
-					  bondtype_flag);
-		if(cinfo.prediction_index ==2||cinfo.prediction_index ==3) {
-			cinfo.prediction_index = 0;
-			atomtype_flag = 0;
-			bondtype_flag = 0;
-		}
-		if(cinfo.prediction_index ==4||cinfo.prediction_index ==5) {
-			cinfo.prediction_index = 1;
-			atomtype_flag = 1;
-			bondtype_flag = 0;
-		}
-	}
-
-	if (duplicatedname_flag)
-		duplicatedname(atomnum, atom);
-	if (atomtype_flag) {
-		wac("ANTECHAMBER_AC.AC0", atomnum, atom, bondnum, bond, cinfo,
-			minfo);
-		atomtype_args = " -i ANTECHAMBER_AC.AC0 -o ANTECHAMBER_AC.AC -p ";
-                copied_size = build_exe_path(tmpchar, "atomtype",
-			sizeof tmpchar, 1 );
-                strncat(tmpchar, atomtype_args, MAXCHAR - copied_size );
-                strncat(tmpchar, minfo.atom_type_def,
-			MAXCHAR - copied_size - strlen(atomtype_args));
-
-		if (cinfo.intstatus == 2)
-			fprintf(stdout, "\nRunning: %s\n", tmpchar);
-		status = system(tmpchar);
-	        if(status != 0) {
-                	fprintf(stdout, "Error: cannot run \"%s\" in main() of antechamber.c properly, exit\n", tmpchar);
-                	exit(1);
-       		}
-		minfo2 = minfo;
-		rac("ANTECHAMBER_AC.AC", &atomnum, atom, &bondnum, bond, &cinfo,
-			&minfo2);
-	}
-
-/*     the following code readin or calculate charges */
-/* 	usercharge info*/
-	if (minfo.usercharge > -9999) {	/*charge read in with -nc flag, it is unlikely users input a charge smaller than -9999 */
-		minfo.icharge = minfo.usercharge;
-		minfo.dcharge = minfo.usercharge;
-	}
-	else {
-		if(minfo.dcharge < -9990) {
-			minfo.dcharge = 0.0;
-        		for (i = 0; i < atomnum; i++)
-                		minfo.dcharge += atom[i].charge;
-        		fraction = modf(minfo.dcharge, &tmpf);
-        		minfo.icharge = (int) tmpf;
-        		if (fabs(fraction) >= 0.50) {
-               			if (minfo.dcharge < 0)
-                       			minfo.icharge--;
-               			if (minfo.dcharge > 0)
-                       			minfo.icharge++;
-        		}
-		}
-	}	
-	if(minfo.multiplicity < -9990)
-		minfo.multiplicity = 1;
-/*zero weird charges */
-	if(minfo.usercharge < -9990 && (minfo.icharge <= -10 || minfo.icharge >= 10)) {
-		fprintf(stdout, "Warning: Weird total charge: %d!"
-            "The net charge is assumed to be 0.\n"
-		      "         If the weird charge was correct, "
-            "specify it via the -nc net charge flag.\n", minfo.icharge);
-		minfo.icharge = 0;	
-	} 
-	if (strcmp("resp", cinfo.chargetype) == 0
-		|| strcmp("1", cinfo.chargetype) == 0)
-		resp(ifilename, atomnum, atom, bondnum, bond, cinfo, minfo);
-	else if (strcmp("bcc", cinfo.chargetype) == 0
-		|| strcmp("2", cinfo.chargetype) == 0)
-		bcc(ifilename, atomnum, atom, bondnum, bond, arom, &cinfo, &minfo);
-	else if (strcmp("cm1", cinfo.chargetype) == 0
-		|| strcmp("3", cinfo.chargetype) == 0)
-		cm1(atomnum, atom, &cinfo, &minfo);
-	else if (strcmp("cm2", cinfo.chargetype) == 0
-		|| strcmp("4", cinfo.chargetype) == 0)
-		cm2(atomnum, atom, &cinfo, &minfo);
-	else if (strcmp("esp", cinfo.chargetype) == 0
-		|| strcmp("5", cinfo.chargetype) == 0)
-		esp(ifilename, atomnum, atom, cinfo, minfo);
-	else if (strcmp("mul", cinfo.chargetype) == 0
-		|| strcmp("6", cinfo.chargetype) == 0)
-		mul(ifilename, atomnum, atom, &cinfo, &minfo);
-	else if (strcmp("gas", cinfo.chargetype) == 0
-		|| strcmp("7", cinfo.chargetype) == 0)
-		gascharge(atomnum, atom, bondnum, bond, cinfo, &minfo);
-	else if (strcmp("rc", cinfo.chargetype) == 0
-		|| strcmp("8", cinfo.chargetype) == 0)
-		rcharge(cfilename, atomnum, atom, cinfo, &minfo);
-	else if (strcmp("wc", cinfo.chargetype) == 0
-		|| strcmp("9", cinfo.chargetype) == 0)
-		wcharge(cfilename, atomnum, atom, cinfo, minfo);
-	else if (strcmp("dc", cinfo.chargetype) == 0
-		|| strcmp("10", cinfo.chargetype) == 0) {
-		for(i=0;i<atomnum;i++)
-			atom[i].charge = 0.0;
-	} else if (chargemethod_flag == 1){
-		fprintf( stderr, "Unknown charge method: %s\n", cinfo.chargetype );
-		exit(1);
-	}
-
-/*	read the radii*/
-	if (strcmp("mpdb", cinfo.intype) != 0 && strcmp("4", cinfo.intype) != 0 &&
-		(strcmp("mpdb", cinfo.outtype) == 0 || strcmp("4", cinfo.outtype) == 0))
-		read_radius(minfo.radius_file, atomnum, atom);
-
-/*    	read in additional files*/
-/*	expand the array size a little bit; 
-  	expand the array size a little bit 
-  	since atom file type such as prepi may have additional atom records  
+/*  read in additional files*/
+/*	expand the array size a little bit, since atom file type such as 
+    prepi may have additional atom records  
 */
 	if (strlen(afilename) > 1 && strlen(cinfo.atype) > 1) {
 		cinfo.maxatom = atomnum + 10;
@@ -1888,28 +1662,234 @@ int main(int argc, char *argv[])
 		free(bond_tmp);
 	}
 
-/*	This part may not necessary! commented by Junmei Wang
-	if(atomtype_flag == 0 && (strcmp("charmm", cinfo.outtype) == 0|| strcmp("23", cinfo.outtype) == 0  ||
-	                         strcmp("ac", cinfo.outtype) == 0 || strcmp("1", cinfo.outtype) == 0 ||
-	                         strcmp("mol2", cinfo.outtype) == 0 || strcmp("2", cinfo.outtype) == 0 ||
-	                         strcmp("csd", cinfo.outtype) == 0 || strcmp("14", cinfo.outtype) == 0 ||
-	                         strcmp("mdl", cinfo.outtype) == 0 || strcmp("15", cinfo.outtype) == 0 ||
-	                         strcmp("sdf", cinfo.outtype) == 0 || strcmp("sd", cinfo.outtype) == 0 ||
-	                         strcmp("alc", cinfo.outtype) == 0 || strcmp("13", cinfo.outtype) == 0 ||
-	                         strcmp("hin", cinfo.outtype) == 0 || strcmp("16", cinfo.outtype) == 0)) {
-        	memory(8, cinfo.maxatom, cinfo.maxbond, cinfo.maxring);
-        	overflow_flag =
-			ringdetect(atomnum, atom, bondnum, bond, &ringnum, ring, arom,
-			  	 cinfo.maxatom, cinfo.maxring, minfo.inf_filename, 0);
-        	if (overflow_flag) {
-			cinfo.maxring = ringnum + 10;
-                	memory(8, cinfo.maxatom, cinfo.maxbond, cinfo.maxring);
-        		overflow_flag =
-				ringdetect(atomnum, atom, bondnum, bond, &ringnum, ring, arom,
-			   		cinfo.maxatom, cinfo.maxring, minfo.inf_filename, 0);
+/*****************************************************************************/
+/*   End of block over additional input file formats    */
+/*****************************************************************************/
+
+
+/*	if charge type is bcc, the prediction_index must be '4' (since we need to assign am1-bcc bond types and atom types)*/	
+        if ((strcmp("bcc", cinfo.chargetype) == 0
+                || strcmp("2", cinfo.chargetype) == 0) && cinfo.prediction_index < 4) {
+		if(cinfo.prediction_index <= 2) { 
+			fprintf(stdout, "Warning: the antechamber program automatically changes the prediction type from '%d' to '4' for bcc calculations !\n",cinfo.prediction_index);		
+			cinfo.prediction_index = 4;
+		}
+		else if(cinfo.prediction_index == 3) {
+			fprintf(stdout, "Warning: the antechamber program automatically changes the prediction type from '3' to '4' for bcc calculations !\n");		
+			cinfo.prediction_index = 5;
 		}
 	}
-*/
+
+/*****************************************************************************/
+/*	assign atomtype_flag, bondtype_flag and charge_flag according to -j flag */
+/*****************************************************************************/
+
+	if (cinfo.prediction_index == 0) {
+		atomtype_flag = 0;
+		bondtype_flag = 0;
+	}
+	if (cinfo.prediction_index == 1) {
+		atomtype_flag = 1;
+		bondtype_flag = 0;
+	}
+	if (cinfo.prediction_index == 2) {
+		atomtype_flag = 0;
+		bondtype_flag = 2;
+	}
+	if (cinfo.prediction_index == 3) {
+		atomtype_flag = 0;
+		bondtype_flag = 1;
+	}
+	if (cinfo.prediction_index == 4) {
+		atomtype_flag = 1;
+		bondtype_flag = 2;
+	}
+	if (cinfo.prediction_index == 5) {
+		atomtype_flag = 1;
+		bondtype_flag = 1;
+	}
+
+
+/*	reassign the connect_flag according to the output types 	*/
+	if (strcmp("mopcrd", cinfo.outtype) == 0
+		|| strcmp("mopout", cinfo.outtype) == 0 
+		|| strcmp("gcrt", cinfo.outtype) == 0 
+		|| strcmp("gout", cinfo.outtype) == 0 
+		|| strcmp("jcrt", cinfo.outtype) == 0 
+		|| strcmp("jout", cinfo.outtype) == 0 
+		|| strcmp("pdb", cinfo.outtype) == 0 
+		|| strcmp("rst", cinfo.outtype) == 0 
+		|| strcmp("3", cinfo.outtype) == 0
+		|| strcmp("8", cinfo.outtype) == 0
+		|| strcmp("10", cinfo.outtype) == 0
+		|| strcmp("11", cinfo.outtype) == 0
+		|| strcmp("12", cinfo.outtype) == 0
+		|| strcmp("17", cinfo.outtype) == 0
+		|| strcmp("18", cinfo.outtype) == 0
+		|| strcmp("20", cinfo.outtype) == 0) {
+		connect_flag = 0;
+		bondtype_flag = 0;
+		atomtype_flag = 0;
+	}
+
+	if (strcmp("mopout", cinfo.outtype) == 0
+		|| strcmp("gout", cinfo.outtype) == 0
+		|| strcmp("jout", cinfo.outtype) == 0
+		|| strcmp("rst", cinfo.outtype) == 0
+		|| strcmp("11", cinfo.outtype) == 0
+		|| strcmp("12", cinfo.outtype) == 0
+		|| strcmp("17", cinfo.outtype) == 0
+		|| strcmp("20", cinfo.outtype) == 0) {
+		duplicatedname_flag = 0;
+	}
+
+	if (strcmp("mopint", cinfo.outtype) == 0
+		|| strcmp("gzmat", cinfo.outtype) == 0 
+		|| strcmp("jzmat", cinfo.outtype) == 0 
+		|| strcmp("7", cinfo.outtype) == 0 
+		|| strcmp("9", cinfo.outtype) == 0 
+		|| strcmp("19", cinfo.outtype) == 0 ) {
+		bondtype_flag = 0;
+		atomtype_flag = 0;
+	}
+/*     	the following code judge or assign atom name, atom type, bond type etc according to flags */
+	if (adjustatomname_flag) {
+		if(strcmp(cinfo.intype, "mol2")==0 || strcmp(cinfo.intype, "2")==0 ||
+		   strcmp(cinfo.intype, "ac")==0 || strcmp(cinfo.intype, "1")==0)
+			adjustatomname(atomnum, atom, 1);
+		else
+			adjustatomname(atomnum, atom, 0);
+	}
+	if (atomicnum_flag) 
+		atomicnum(atomnum, atom);
+	if (atomname_flag) 
+		atomname(atomnum, atom);
+	if (default_flag)
+		default_inf(atomnum, atom, default_flag);
+	if (cartcoord_flag)
+		cartcoord(atomnum, atom);
+	if (connect_flag) {
+		overflow_flag =
+			connect(minfo.connect_file, atomnum, atom, &bondnum, bond,
+					cinfo.maxbond);
+		if (overflow_flag) {
+			cinfo.maxbond = bondnum + 10;
+			memory(2, cinfo.maxatom, cinfo.maxbond, cinfo.maxring);
+			overflow_flag =
+				connect(minfo.connect_file, atomnum, atom, &bondnum, bond,
+						cinfo.maxbond);
+		}
+	}
+	if (bondtype_flag && bondnum > 0) {
+		judgebondtype(atomnum, atom, bondnum, bond, cinfo, minfo,
+					  bondtype_flag);
+		if(cinfo.prediction_index ==2||cinfo.prediction_index ==3) {
+			cinfo.prediction_index = 0;
+			atomtype_flag = 0;
+			bondtype_flag = 0;
+		}
+		if(cinfo.prediction_index ==4||cinfo.prediction_index ==5) {
+			cinfo.prediction_index = 1;
+			atomtype_flag = 1;
+			bondtype_flag = 0;
+		}
+	}
+
+	if (duplicatedname_flag)
+		duplicatedname(atomnum, atom);
+	if (atomtype_flag) {
+		wac("ANTECHAMBER_AC.AC0", atomnum, atom, bondnum, bond, cinfo,
+			minfo);
+		atomtype_args = " -i ANTECHAMBER_AC.AC0 -o ANTECHAMBER_AC.AC -p ";
+                copied_size = build_exe_path(tmpchar, "atomtype",
+			sizeof tmpchar, 1 );
+                strncat(tmpchar, atomtype_args, MAXCHAR - copied_size );
+                strncat(tmpchar, minfo.atom_type_def,
+			MAXCHAR - copied_size - strlen(atomtype_args));
+
+		if (cinfo.intstatus == 2)
+			fprintf(stdout, "\nRunning: %s\n", tmpchar);
+		status = system(tmpchar);
+	        if(status != 0) {
+                	fprintf(stdout, "Error: cannot run \"%s\" in main() of antechamber.c properly, exit\n", tmpchar);
+                	exit(1);
+       		}
+		minfo2 = minfo;
+		rac("ANTECHAMBER_AC.AC", &atomnum, atom, &bondnum, bond, &cinfo,
+			&minfo2);
+	}
+
+/*     the following code readin or calculate charges */
+/* 	usercharge info*/
+	if (minfo.usercharge > -9999) {	/*charge read in with -nc flag, it is unlikely users input a charge smaller than -9999 */
+		minfo.icharge = minfo.usercharge;
+		minfo.dcharge = minfo.usercharge;
+	}
+	else {
+		if(minfo.dcharge < -9990) {
+			minfo.dcharge = 0.0;
+        		for (i = 0; i < atomnum; i++)
+                		minfo.dcharge += atom[i].charge;
+        		fraction = modf(minfo.dcharge, &tmpf);
+        		minfo.icharge = (int) tmpf;
+        		if (fabs(fraction) >= 0.50) {
+               			if (minfo.dcharge < 0)
+                       			minfo.icharge--;
+               			if (minfo.dcharge > 0)
+                       			minfo.icharge++;
+        		}
+		}
+	}	
+	if(minfo.multiplicity < -9990)
+		minfo.multiplicity = 1;
+/*zero weird charges */
+	if(minfo.usercharge < -9990 && (minfo.icharge <= -10 || minfo.icharge >= 10)) {
+		fprintf(stdout, "Warning: Weird total charge: %d!"
+            "The net charge is assumed to be 0.\n"
+		      "         If the weird charge was correct, "
+            "specify it via the -nc net charge flag.\n", minfo.icharge);
+		minfo.icharge = 0;	
+	} 
+	if (strcmp("resp", cinfo.chargetype) == 0
+		|| strcmp("1", cinfo.chargetype) == 0)
+		resp(ifilename, atomnum, atom, bondnum, bond, cinfo, minfo);
+	else if (strcmp("bcc", cinfo.chargetype) == 0
+		|| strcmp("2", cinfo.chargetype) == 0)
+		bcc(ifilename, atomnum, atom, bondnum, bond, arom, &cinfo, &minfo);
+	else if (strcmp("cm1", cinfo.chargetype) == 0
+		|| strcmp("3", cinfo.chargetype) == 0)
+		cm1(atomnum, atom, &cinfo, &minfo);
+	else if (strcmp("cm2", cinfo.chargetype) == 0
+		|| strcmp("4", cinfo.chargetype) == 0)
+		cm2(atomnum, atom, &cinfo, &minfo);
+	else if (strcmp("esp", cinfo.chargetype) == 0
+		|| strcmp("5", cinfo.chargetype) == 0)
+		esp(ifilename, atomnum, atom, cinfo, minfo);
+	else if (strcmp("mul", cinfo.chargetype) == 0
+		|| strcmp("6", cinfo.chargetype) == 0)
+		mul(ifilename, atomnum, atom, &cinfo, &minfo);
+	else if (strcmp("gas", cinfo.chargetype) == 0
+		|| strcmp("7", cinfo.chargetype) == 0)
+		gascharge(atomnum, atom, bondnum, bond, cinfo, &minfo);
+	else if (strcmp("rc", cinfo.chargetype) == 0
+		|| strcmp("8", cinfo.chargetype) == 0)
+		rcharge(cfilename, atomnum, atom, cinfo, &minfo);
+	else if (strcmp("wc", cinfo.chargetype) == 0
+		|| strcmp("9", cinfo.chargetype) == 0)
+		wcharge(cfilename, atomnum, atom, cinfo, minfo);
+	else if (strcmp("dc", cinfo.chargetype) == 0
+		|| strcmp("10", cinfo.chargetype) == 0) {
+		for(i=0;i<atomnum;i++)
+			atom[i].charge = 0.0;
+	} else if (chargemethod_flag == 1){
+		fprintf( stderr, "Unknown charge method: %s\n", cinfo.chargetype );
+		exit(1);
+	}
+
+/*	read the radii*/
+	if (strcmp("mpdb", cinfo.intype) != 0 && strcmp("4", cinfo.intype) != 0 &&
+		(strcmp("mpdb", cinfo.outtype) == 0 || strcmp("4", cinfo.outtype) == 0))
+		read_radius(minfo.radius_file, atomnum, atom);
 
 	if(ra_flag==1)	
 		read_at(at_filename);

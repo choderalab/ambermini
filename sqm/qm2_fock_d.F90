@@ -32,7 +32,8 @@ subroutine qm2_fock2_d(F, PTOT, W)
 !                                                                               
 !  ON OUTPUT F   = PARTIAL FOCK MATRIX                                          
 !***********************************************************************        
-    use qmmm_module, only : qmmm_struct, qm2_struct, qm2_params, qmmm_mpi
+    use qmmm_module, only : qmmm_struct, qm2_struct, qm2_params
+    use qmmm_module, only : qmmm_struct, qm2_struct, qm2_params
     implicit none
 
     _REAL_, intent(inout) :: F(:)
@@ -41,11 +42,9 @@ subroutine qm2_fock2_d(F, PTOT, W)
 
 !Local
 
-    integer:: m,i,j, ij, ji, k, l, kl, lk, kk, ii, ia, ib, jk, kj, jj, ja, jb
+    integer:: m,i,j, k, l, ii, ia, ib, jk, kj, jj
     integer:: starting, size
 
-    logical, save::initialized=.false.
-   
     if (.not.w_position_initialized) call InitializeWPosition
  
     do ii=1,qmmm_struct%nquant_nlink
@@ -93,7 +92,11 @@ subroutine qm2_fock1_d(F, PTOT, first)  ! lam81
                                     Index1_2Electron, IntRep,  &
                                     IntRf1, IntRf2, IntIJ, IntKL
     use MNDOChargeSeparation, only: GetOneCenter2Electron
+#ifdef MPI
     use qmmm_module         , only : qmmm_mpi, qmmm_struct, qm2_params
+#else
+    use qmmm_module         , only : qmmm_struct, qm2_params
+#endif
     implicit none
 
     _REAL_, intent(inout) :: F(:)
@@ -217,7 +220,6 @@ subroutine W2Fock_atompair(W, F, D, norbs_a, norbs_b,  &
     !local
     integer, parameter::orbital_length(3)=(/ 1, 4, 9 /)
     integer, parameter::pair_length(3)=(/1, 10, 45 /)
-    integer::starting(9)
     
     !the w_index needs "lots" of memory but significantly improves
     !the size and readability of the code
@@ -226,11 +228,11 @@ subroutine W2Fock_atompair(W, F, D, norbs_a, norbs_b,  &
     logical, save::initialized=.false. 
 
     integer::i,j,k,l,a1,a2,b1,b2, ii,jj
-    integer::na, nb, nn, counter_F, counter_ij, counter_kl, location
+    integer::na, nb, counter_ij, counter_kl, location
     integer::index_Fa(norbs_a,norbs_a), index_Fb(norbs_b,norbs_b)
     integer::index_Fab(norbs_a,norbs_b)
     
-    _REAL_::temp1, temp2, tt1(81), tt2(81), wlocal(9,9,9,9)
+    _REAL_::temp1, tt1(81)
     logical::toCalc(81)
    
 
@@ -311,8 +313,8 @@ subroutine W2Fock_atompair(W, F, D, norbs_a, norbs_b,  &
  
 ! real stuff
 
-    na=sqrt(norbs_a+1.0D-5)
-    nb=sqrt(norbs_b+1.0D-5)  
+    na=int(sqrt(dble(norbs_a)+1.0D-5))
+    nb=int(sqrt(dble(norbs_b)+1.0D-5))
           
     ! for the coloumbic part, calculate all na/nb pairs but be carful about the index for W
     ii=1
@@ -395,7 +397,7 @@ subroutine InitializeWPosition
 
     use qmmm_module, only : qmmm_struct, qm2_params
     
-    integer::i,j,k,ii,jj,kk,n
+    integer::i,j,ii,jj,kk,n
     
     if (w_position_initialized) return
     

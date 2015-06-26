@@ -20,11 +20,10 @@ subroutine dispersion_energy(nquant_nlink,qm_coords)
    _REAL_ , intent(in ) :: qm_coords(3,nquant_nlink)
 
 !! Locals
-   _REAL_  :: xm,rr
-   _REAL_  :: C1,dgr,r,r2,dif(3)
-   _REAL_  :: conv
-   _REAL_  :: h1,h2,h3,fdamp,g612
-   integer :: i,j,n,m
+   _REAL_  :: rr
+   _REAL_  :: C1,r,r2,dif(3)
+   _REAL_  :: h3
+   integer :: i,j,n
 
 !! Pointers
    _REAL_,pointer  :: A, B, C, r0, rv, Rvdw(:,:), C6(:,:)
@@ -67,7 +66,7 @@ end subroutine dispersion_energy
 subroutine dispersion_grad(nquant_nlink,gr)
 
    use qmmm_module, only : qmmm_struct
-   use qm2_dftb_module, only: disper, dispertmp
+   use qm2_dftb_module, only: dispertmp
    use constants, only: BOHRS_TO_A, AU_TO_EV
 
    implicit none
@@ -79,8 +78,7 @@ subroutine dispersion_grad(nquant_nlink,gr)
 !! Locals
    _REAL_  :: xm,rr
    _REAL_  :: C1,dgr,r,r2,dif(3)
-   _REAL_  :: conv
-   _REAL_  :: h1,h2,h3,fdamp,g612
+   _REAL_  :: h3
    integer :: i,j,n,m
 
 !! Pointers
@@ -118,7 +116,7 @@ subroutine dispersion_grad(nquant_nlink,gr)
          ! Dispersion gradients
          do m=1,3
             xm = dif(m)
-            call dis_gr(r,rr,xm,h3,C1,dgr)
+            call dis_gr(r,rr,xm,h3,dgr)
             gr(m,i) = gr(m,i) + dgr * C6(i,j)
             gr(m,j) = gr(m,j) - dgr * C6(i,j)
          enddo
@@ -146,7 +144,7 @@ subroutine dis_e(r,rr,h3,C1)
 
 !! Locals
    _REAL_ :: h1,h2,fdamp,g612
-   _REAL_ :: Catan,dgr
+   _REAL_ :: Catan
 
 !! Pointers
    _REAL_,pointer :: A, B, C, r0, rv
@@ -179,7 +177,7 @@ end subroutine dis_e
 ! Calculate a pairwise contribution to the gradient
 ! due to dispersion forces
 !==================================================
-subroutine dis_gr(r,rr,xm,h3,C1,dgr)
+subroutine dis_gr(r,rr,xm,h3,dgr)
 
    use qm2_dftb_module, only: dispertmp
    use constants, only: BOHRS_TO_A, AU_TO_EV, INVPI
@@ -190,7 +188,6 @@ subroutine dis_gr(r,rr,xm,h3,C1,dgr)
    _REAL_ , intent(in ) :: rr
    _REAL_ , intent(in ) :: xm
    _REAL_ , intent(in ) :: h3
-   _REAL_ , intent(in ) :: C1
    _REAL_ , intent(out) :: dgr
 
 !! Locals

@@ -16,7 +16,7 @@
 # include "common.h"
 # include "define.h"
 # include "atom.h"
-# define MAXESP 10000
+# define MAXESP 99999
 # define MAX_ATOM_CENTER 1000
 
 int i, j, k;

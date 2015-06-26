@@ -28,7 +28,10 @@ subroutine qm2_dftb_ewald_shift(scf_mchg)
 
 
 !! Modules
-   use qmmm_module, only: qmmm_struct, qmmm_nml, qmewald, qmmm_mpi, qmmm_scratch
+#ifdef MPI
+   use qmmm_module, only : qmmm_scratch
+#endif
+   use qmmm_module, only: qmmm_struct, qmmm_nml, qmewald, qmmm_mpi
    use qm2_dftb_module, only: ks_struct
    use constants, only: BOHRS_TO_A
 
@@ -39,10 +42,11 @@ subroutine qm2_dftb_ewald_shift(scf_mchg)
 
 #ifdef MPI
    include 'mpif.h'
+   integer :: ier
 #endif
 
 !! Locals
-   integer :: i, ier
+   integer :: i
 
 !!--
    ! Calculates the Ewald potential at the position of the atoms
@@ -95,8 +99,7 @@ subroutine qm2_dftb_ewald_corr(nquant_nlink, corr, mmpot, scf_mchg) !qmat)
    !and half from the QM atoms. The QM atoms should contribute only half but the
    !MM atoms should contribute full. This routine corrects EE for this.
 
-   use constants, only : AU_TO_EV, BOHRS_TO_A, zero, half
-   use qmmm_module, only : qm2_params
+   use constants, only : BOHRS_TO_A, zero, half
 
    implicit none
 
@@ -104,12 +107,11 @@ subroutine qm2_dftb_ewald_corr(nquant_nlink, corr, mmpot, scf_mchg) !qmat)
    integer, intent(in)  :: nquant_nlink
    _REAL_ , intent(out) :: corr   ! Correction in Hartree / Bohrs (a.u.)
    _REAL_ , intent(in)  :: mmpot(nquant_nlink)
-   _REAL_ , intent(in)  :: scf_mchg(nquant_nlink) 
-!   _REAL_ , intent(in)  :: qmat(*) 
+   _REAL_ , intent(in)  :: scf_mchg(nquant_nlink)
 
    !Local
    _REAL_ :: etemp
-   integer :: i, i1, ia, ib, i2
+   integer :: i
 
    corr = zero
 

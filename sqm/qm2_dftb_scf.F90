@@ -182,7 +182,10 @@ subroutine eglcao(qm_coords,total_e,elec_eng,ethird,enuclr_qmqm, &
 
    use qm2_dftb_module, only: MDIM,LDIM,NDIM,disper, lmax, dacc, mcharge, &
          izp_str, ks_struct, fermi_str, dftb_3rd_order_str
-   use qmmm_module, only: qmmm_nml, qmmm_struct, qm2_struct, qm_gb, qmewald, qmmm_mpi,qm2_params
+   use qmmm_module, only: qmmm_nml, qmmm_struct, qm2_struct, qmmm_mpi
+#ifndef SQM
+   use qmmm_module, only: qm_gb, qmewald
+#endif
    use ElementOrbitalIndex, only : elementSymbol
    use constants, only : BOHRS_TO_A, AU_TO_KCAL, AU_TO_EV
 
@@ -204,21 +207,20 @@ subroutine eglcao(qm_coords,total_e,elec_eng,ethird,enuclr_qmqm, &
 
    ! Locals
    ! ======
-   integer :: indj1,indk1,lumo
-   integer :: cai, liend, ljend
-   integer :: j, izpj, k, li, lj, i
+   integer :: lumo
+   integer :: liend, ljend
+   integer :: j, k, li, lj, i
    integer :: n, m
    integer :: nstart, nend, mstart, mend
-   integer :: indkn, indjm, indi, indj,indk, indili, indjlj
+   integer :: indkn, indjm, indi, indj, indili, indjlj
    _REAL_  :: shifti, shiftj
 
-   !Ewald stuff
+#ifndef SQM
    _REAL_  :: ew_corr ! Ewald correction to energy in ev. Needed only if qm_ewald > 0.
-   _REAL_  :: temp_pot
    _REAL_  :: gb_escf_corr !GB correction for escf.
-   _REAL_  :: elec_eng_old, qtot, eext, egb
-   _REAL_  :: ecoul, efermi, spro, dipabs
-   integer :: IA, IB, i1, i2
+#endif
+   _REAL_  :: elec_eng_old, eext
+   _REAL_  :: ecoul, efermi
 
    ! SCC Charge convergency
    _REAL_  :: ediff
@@ -289,7 +291,7 @@ subroutine eglcao(qm_coords,total_e,elec_eng,ethird,enuclr_qmqm, &
      ! because the charges don't move.
      !
      if ( qmmm_nml%qmmm_int > 0 .and. (qmmm_nml%qmmm_int /= 5) ) then
-        call externalshift(qm_coords,izp_str%izp,ks_struct%shiftE)
+        call externalshift(qm_coords,ks_struct%shiftE)
      else
         ks_struct%shiftE(1:qmmm_struct%nquant_nlink)=0.0d0
      endif
@@ -821,7 +823,7 @@ end subroutine eglcao
 ! sander_bomb.
 subroutine dftb_conv_failure(string1,string2,string3)
 
-   use qmmm_module, only:  qmmm_nml, qmmm_struct, qm2_struct, qmmm_mpi
+   use qmmm_module, only:  qmmm_struct, qm2_struct, qmmm_mpi
    use ElementOrbitalIndex, only : elementSymbol
    implicit none
    integer :: i, j
