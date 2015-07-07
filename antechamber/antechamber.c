@@ -524,7 +524,7 @@ int main(int argc, char *argv[])
 		if (strncmp(argv[1], "-h", 2) == 0
 			|| strncmp(argv[1], "-H", 2) == 0) {
 			usage();
-			exit(1);
+			exit(0);
 		}
 		if (strncmp(argv[1], "-l",    2) == 0 || 
                     strncmp(argv[1], "-L",    2) == 0 ||  
@@ -532,7 +532,7 @@ int main(int argc, char *argv[])
                     strncmp(argv[1], "-List", 4) == 0 ||  
                     strncmp(argv[1], "-LIST", 4) == 0) {
 			list();
-			exit(1);
+			exit(0);
 		}
 	}
 	if (argc == 1) {
