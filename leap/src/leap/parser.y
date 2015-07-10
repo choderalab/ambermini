@@ -1058,7 +1058,7 @@ extern	char	*optarg;
 		printf( " -s         Ignore %s startup file.\n", LEAPRC );
 		printf( " -I {dir}   Add {dir} to search path.\n" );
 		printf( " -f {file}  Source {file}.\n" );
-		exit(1);
+		exit(0);
 	    case 's':
 		printf( "-s: Ignoring startup file: %s\n", LEAPRC );
 		SbUseStartup = FALSE;
