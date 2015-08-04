@@ -1,8 +1,16 @@
 include config.h
 
-PROGS=antechamber acdoctor am1bcc antechamber_pvt atomtype bondtype charmmgen \
-		database espgen parmcal parmchk parmchk2 prepgen residuegen sqm teLeap \
-		tleap translate parmchk_pvt parmchk2_pvt
+ifeq ($(OS),Windows_NT)
+WRAPPER_SFX=.bat
+else
+WRAPPER_SFX=
+endif
+
+PROGS=antechamber$(WRAPPER_SFX) acdoctor$(SFX) am1bcc$(SFX) antechamber_pvt$(SFX) \
+		atomtype$(SFX) bondtype$(SFX) charmmgen$(SFX) database$(SFX) espgen$(SFX) \
+		parmcal$(SFX) parmchk$(WRAPPER_SFX) parmchk2$(WRAPPER_SFX) prepgen$(SFX) \
+		residuegen$(SFX) sqm$(SFX) teLeap$(SFX) tleap$(WRAPPER_SFX) translate$(SFX) \
+		parmchk_pvt$(SFX) parmchk2_pvt$(SFX)
 
 all: prep libs
 	$(MAKE) antechamber
@@ -10,12 +18,12 @@ all: prep libs
 	$(MAKE) sqm
 
 install: all
-	mkdir -p $(PREFIX)/bin $(PREFIX)/share
-	cd bin && /bin/mv $(PROGS) $(PREFIX)/bin
+	$(MKDIR) -p $(PREFIX)/bin $(PREFIX)/share
+	cd bin && mv $(PROGS) $(PREFIX)/bin
 	cp -r share/amber/dat $(PREFIX)
 
 prep:
-	mkdir -p bin
+	$(MKDIR) -p bin
 
 antechamber::
 	cd antechamber && $(MAKE) install
@@ -33,12 +41,12 @@ libs::
 	cd arpack && $(MAKE) install
 
 clean:
-	-cd antechamber && $(MAKE) clean
-	-cd leap && $(MAKE) clean
-	-cd sqm && $(MAKE) clean
-	-cd lib && $(MAKE) clean
-	-cd cifparse && $(MAKE) clean
+	cd antechamber && $(MAKE) clean
+	cd leap && $(MAKE) clean
+	cd sqm && $(MAKE) clean
+	cd lib && $(MAKE) clean
+	cd cifparse && $(MAKE) clean
 
 uninstall:
 	cd $(PREFIX)/bin && rm -f $(PROGS)
-	rm -fr $(PREFIX)/dat
+	$(RM) -fr $(PREFIX)/dat

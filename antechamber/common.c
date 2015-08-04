@@ -21,8 +21,8 @@ size_t build_path(char *path, const char *subdir, const char *fname,
 	char *quote = NULL;
     size_t c = 1;
     path[0] = '\0';
-	if (for_system && index(amberhome, ' ') != NULL) {
-		if (index(amberhome, '"') == NULL)
+	if (for_system && strchr(amberhome, ' ') != NULL) {
+		if (strchr(amberhome, '"') == NULL)
 			quote = "\"";
 		else
 			quote = "'";

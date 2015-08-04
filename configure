@@ -2,7 +2,9 @@
 from __future__ import with_statement
 
 import os, sys
+from distutils.spawn import find_executable
 from optparse import OptionParser
+on_win = bool(sys.platform == 'win32')
 
 CONFIG_H = """\
 #  Amber configuration file, created with: %(command)s
@@ -32,8 +34,7 @@ FLIBSF= -L../lib -larpack -llapack -lblas
 #  (3)  Modify any of the following if you need to change, e.g. to use gcc
 #        rather than cc, etc.
 
-SHELL=/bin/sh
-
+SHELL=%(shell)s
 #  Set the C compiler, etc. 
 
 #  The configure script should be fine, but if you need to hand-edit,
@@ -73,6 +74,8 @@ YACC=  %(yacc)s
 AR=    ar rv
 M4=    m4
 RANLIB=ranlib
+MKDIR = %(mkdir)s
+RM    = %(rm)s
 
 #  Set the C-preprocessor.  Code for a small preprocessor is in
 #    ucpp-1.3;  it gets installed as $(BINDIR)/ucpp;
@@ -96,7 +99,7 @@ C9XCOMPLEX=skip
 #  For Windows/cygwin, set SFX to ".exe"; for Unix/Linux leave it empty:
 #  Set OBJSFX to ".obj" instead of ".o" on Windows:
 
-SFX=
+SFX=%(sfx)s
 OSFX=.o
 MV=mv
 RM=rm
@@ -112,7 +115,7 @@ AMBERFFLAGS=$(AMBERBUILDFLAGS)
 FREEFORMAT_FLAG= -ffree-form
 LM=-lm
 FPP=cpp -traditional -P
-FPPFLAGS= -DBINTRAJ -DEMIL  $(CUSTOMBUILDFLAGS) $(AMBERBUILDFLAGS)
+FPPFLAGS= -cpp -DBINTRAJ -DEMIL  $(CUSTOMBUILDFLAGS) $(AMBERBUILDFLAGS)
 AMBERFPPFLAGS=$(AMBERBUILDFLAGS)
 FCREAL8=-fdefault-real-8
 NOFORTRANMAIN=-lgfortran -w
@@ -140,8 +143,7 @@ def which(prog):
 
 # Get the working directory
 cwd = os.path.abspath(os.path.dirname(sys.argv[0]))
-options = dict(basedir=cwd, cc='gcc', cxx='g++', copt='-O3', cxxopt='-O3',
-               fc='gfortran', fcopt='-O3', mathlib='')
+options = dict(basedir=cwd,  copt='-O3', cxxopt='-O3', fcopt='-O3', mathlib='')
 
 parser = OptionParser()
 parser.add_option('--prefix', dest='prefix', default='/usr/local',
@@ -149,6 +151,13 @@ parser.add_option('--prefix', dest='prefix', default='/usr/local',
 parser.add_option('--yacc', dest='yacc', default=None,
                   help='Which YACC implementation to use. Looks for byacc '
                   'first then looks for bison or yacc if not given')
+parser.add_option('--cc', dest='cc', default='gcc',
+                   help='Path to C compiler (default=gcc)')
+parser.add_option('--cxx', dest='cxx', default='g++',
+                   help='Path to C++ compiler (default=g++)')
+parser.add_option('--fc', dest='fc', default='gfortran',
+                   help='Path to fortran compiler (default=gfortran)')
+
 
 opt, arg = parser.parse_args()
 
@@ -165,9 +174,19 @@ else:
 if myyacc is None:
     sys.exit('Could not find a YACC-compatible parser generator!')
 
+options['cc'] = opt.cc
+options['cxx'] = opt.cxx
+options['fc'] = opt.fc
 options['prefix'] = os.path.abspath(opt.prefix)
 options['yacc'] = myyacc
 options['command'] = ' '.join(sys.argv)
+options['mkdir'] = find_executable('mkdir')
+options['rm'] = find_executable('rm')
+options['sfx'] = '.exe' if on_win else ''
+if on_win:
+    options['shell'] = 'C:/Windows/System32/cmd.exe'
+else:
+    options['shell'] = '/bin/sh'
 
 if myyacc.endswith('bison'):
     options['yacc'] += ' -y'

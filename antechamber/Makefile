@@ -239,8 +239,13 @@ $(BINDIR)/antechamber_pvt$(SFX): antechamber.o
 	$(CC) $(CFLAGS) $(AMBERCFLAGS) $(LDFLAGS) $(AMBERLDFLAGS) antechamber.o \
     -L$(LIBDIR) -lcifparse $(LM) -o $(BINDIR)/antechamber_pvt$(SFX)
 
+ifeq ($(OS),Windows_NT)
 $(BINDIR)/antechamber$(SFX):
-	/bin/cp -L antechamber $(BINDIR)
+	cp -L antechamber.bat $(BINDIR)
+else
+$(BINDIR)/antechamber$(SFX):
+	cp -L antechamber $(BINDIR)
+endif
 
 $(BINDIR)/atomtype$(SFX): atomtype.o
 	$(CC) $(CFLAGS) $(AMBERCFLAGS) $(LDFLAGS) $(AMBERLDFLAGS) atomtype.o $(LM) -o $(BINDIR)/atomtype$(SFX)
@@ -272,14 +277,24 @@ $(BINDIR)/espgen$(SFX): espgen.o
 $(BINDIR)/parmcal$(SFX): parmcal.o
 	$(CC) $(CFLAGS) $(AMBERCFLAGS) $(LDFLAGS) $(AMBERLDFLAGS) parmcal.o $(LM) -o $(BINDIR)/parmcal$(SFX)
 
+ifeq ($(OS),Windows_NT)
 $(BINDIR)/parmchk$(SFX):
-	/bin/cp -L parmchk $(BINDIR)
+	cp -L parmchk.bat $(BINDIR)
+else
+$(BINDIR)/parmchk$(SFX):
+	cp -L parmchk $(BINDIR)
+endif
 
 $(BINDIR)/parmchk_pvt$(SFX): parmchk.o
 	$(CC) $(CFLAGS) $(AMBERCFLAGS) $(LDFLAGS) $(AMBERLDFLAGS) parmchk.o $(LM) -o $(BINDIR)/parmchk_pvt$(SFX)
 
+ifeq ($(OS),Windows_NT)
 $(BINDIR)/parmchk2$(SFX):
-	/bin/cp -L parmchk2 $(BINDIR)
+	cp -L parmchk2.bat $(BINDIR)
+else
+$(BINDIR)/parmchk2$(SFX):
+	cp -L parmchk2 $(BINDIR)
+endif
 
 $(BINDIR)/parmchk2_pvt$(SFX): parmchk2.o
 	$(CC) $(CFLAGS) $(AMBERCFLAGS) $(LDFLAGS) $(AMBERLDFLAGS) parmchk2.o $(LM) -o $(BINDIR)/parmchk2_pvt$(SFX)

@@ -115,6 +115,10 @@ static void     search_forw(int new_search);		/* look forw for current string */
 extern int      write();
 extern void     exit();
 
+#if (defined WIN32)
+#undef unix
+#endif
+
 #ifdef _IBMR2
 #define unix
 #endif

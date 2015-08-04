@@ -48,7 +48,11 @@
 #include	<sys/types.h>
 #include	<sys/param.h>
 
-#if (defined SYSV || defined __i386__)
+
+#if (defined WIN32)
+#include <dirent.h>
+#include <strings.h>
+#elif (defined SYSV || defined __i386__)
 #include        <dirent.h>
 #include        <string.h>
 #else
@@ -131,7 +135,7 @@ myPrintf (char *fmt,...)
  *      Get a list of names in the directory pointed to
  *      by cPPath.  Return an array of STRINGs that were MALLOCd
  */
-#if (defined SYSV || defined __i386__)
+#if (defined SYSV || defined __i386__ || (defined WIN32))
 
 void 
 SysdependDirectoryList( char *cPPath, STRING *saPNames[], int *iPNumber)
