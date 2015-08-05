@@ -24,7 +24,11 @@ script:
   - #cd devtools/c-tests/; make valgrind; cd -
 
 env:
-
+  matrix:
+    - python=2.7  CONDA_PY=27  CONDA_NPY=16
+    #- python=3.3  CONDA_PY=33  CONDA_NPY=17
+    #- python=3.4  CONDA_PY=34  CONDA_NPY=18
+    #- python=3.4  CONDA_PY=34  CONDA_NPY=19
   global:
     # encrypted BINSTAR_TOKEN for push of dev package to binstar
 
