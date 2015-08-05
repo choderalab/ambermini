@@ -1,0 +1,33 @@
+language: c
+sudo: false
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+      - g++
+      - gfortran
+      - valgrind
+      - csh
+      - g++-multilib
+      - gcc-multilib
+
+install:
+  - source devtools/travis-ci/install.sh
+  - export PYTHONUNBUFFERED=true
+  - export CC=gcc
+  - export CXX=g++
+
+script:
+  - conda config --add channels https://conda.binstar.org/omnia
+  - conda build devtools/conda-recipe
+  - #cd devtools/c-tests/; make valgrind; cd -
+
+env:
+
+  global:
+    # encrypted BINSTAR_TOKEN for push of dev package to binstar
+
+after_success:
+  - echo "after_success"
+  - source devtools/travis-ci/after_success.sh
