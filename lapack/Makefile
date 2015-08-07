@@ -58,10 +58,10 @@ skip:
 	@echo "skipping compilation of LAPACK"
 
 uninstall:
-	rm -f $(LIBDIR)/liblapack.a
+	$(RM) -f $(LIBDIR)/liblapack.a
 
 clean:
-	-/bin/rm -f *.o
+	$(RM) -f *.o
 
 dlamch.o:  dlamch.f
 	$(FC) -c $(FNOOPTFLAGS) $(FFLAGS) -o $@ $<

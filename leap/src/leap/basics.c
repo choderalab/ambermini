@@ -44,11 +44,13 @@
 #include        "cmap.h"
 defaultstruct GDefaults;
 
-#include	<pwd.h>
 #include	<signal.h>
 #include	<stdarg.h>
 #include	<stdlib.h>
 
+#if (!defined WIN32)
+#include <pwd.h>
+#endif
 
 
            /* Globals for doing quick integer powers */
@@ -773,6 +775,10 @@ static int		SiCurDirectory = 0;
 static int	
 iExpandDir( char *sExpanded, char *sOriginal )
 {
+#if (defined WIN32)
+    strcpy( sExpanded, sOriginal );
+    return(0);
+#else
 char		user[100];
 int		i;
 struct passwd 	*pw, *getpwnam();
@@ -836,6 +842,7 @@ TODO: add string size protection
 	strcat( sExpanded, &sOriginal[i] );
 	
     return(0);
+#endif
 }
 
 /*
@@ -901,6 +908,7 @@ FILE		*fFile;
 int		i, iExistErr;
 FILESTATUSt	fsStatus;
 STRING		sExpanded;
+int absolutePath;
 
     if ( strlen(sFilename) == 0 ) 
 	return(NULL);
@@ -919,7 +927,13 @@ STRING		sExpanded;
 	return(NULL);
     }
 
-    if ( sExpanded[0] == '/' || sExpanded[0] == '.' ) {
+    #if (defined WIN32)
+    absolutePath = sExpanded[0] == 'C' && sExpanded[1] == ':' && sExpanded[2] == '\\';
+    #else
+    absolutePath = sExpanded[0] == '/' || sExpanded[0] == '.';
+    #endif
+
+    if (absolutePath) {
 	/* (this is where an sExpanded ~ dir would fall) */
         strcpy ( GsBasicsFullName, sExpanded );
         fFile = fopen( sExpanded, sAttributes );

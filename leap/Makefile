@@ -1,18 +1,25 @@
 include ../config.h
 
+ifeq ($(OS),Windows_NT)
+TLEAP_WRAPPER=tleap.bat
+else
+TLEAP_WRAPPER=tleap
+endif
+
+
 install:
 	@echo "Compiling basic programs"
 	cd src/leap && $(MAKE) installteLeap
 	@echo "Copying shell script" 
-	cp tleap $(BINDIR)/tleap
-	chmod +x $(BINDIR)/tleap
+	cp $(TLEAP_WRAPPER) $(BINDIR)/$(TLEAP_WRAPPER)
+	chmod +x $(BINDIR)/$(TLEAP_WRAPPER)
 	$(MAKE) $(MAKE_XLEAP)
 
 uninstall:
 	cd src/leap && $(MAKE) uninstallteLeap
-	-rm -f $(BINDIR)/tleap
+	$(RM) -f $(BINDIR)/tleap
 	-cd src/leap && $(MAKE) uninstall
-	-rm -f $(BINDIR)/xleap
+	$(RM) -f $(BINDIR)/xleap
 
 install_xleap:
 	cd src/Wc && $(MAKE)

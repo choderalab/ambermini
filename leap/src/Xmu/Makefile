@@ -126,4 +126,4 @@ libXmu.a:  $(OBJS)
 	$(RANLIB) $@
 
 clean:
-	/bin/rm -f *.o *.a
+	$(RM) -f *.o *.a

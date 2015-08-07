@@ -24,7 +24,6 @@ include ../config.h
 # Sqm Fortran source files are free format
 LOCALFLAGS = $(FREEFORMAT_FLAG)
 
-SHELL=/bin/sh
 VPATH=
 
 #SQMOBJ = Objects specific to the standalone SQM
@@ -99,14 +98,14 @@ $(LIBDIR)/libsqm.a: $(QMOBJ) $(LIBQMOBJ)
 	mv libsqm.a $(LIBDIR)
 
 sys:
-	cd ../lib; $(MAKE) sys.a
+	cd ../lib && $(MAKE) sys.a
 
 clean:
-	/bin/rm -f *.o  *.mod *.d sqm$(SFX)
+	$(RM) -f *.o  *.mod *.d sqm$(SFX)
 
 uninstall:
-	-rm -f $(BINDIR)/sqm$(SFX)
-	-rm -f $(LIBDIR)/libsqm.a
+	$(RM) -f $(BINDIR)/sqm$(SFX)
+	$(RM) -f $(LIBDIR)/libsqm.a
 
 depend::
 	./makedepend > depend
