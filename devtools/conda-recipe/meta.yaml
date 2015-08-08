@@ -1,0 +1,26 @@
+package:
+  name: ambermini-dev
+  version: dev
+
+source:
+  path: ../..
+
+build:
+  number: 0
+
+requirements:
+  build:
+    - zlib
+  run:
+    - zlib
+
+test:
+  commands:
+    - antechamber -h
+    - sqm -h
+    - tleap -h
+
+about:
+  home: https://github.com/choderalab/ambermini/
+  license: LGPL
+  summary: A stripped-down version of AmberTools 14 containing antechamber, sqm, tleap, and parmchk2
