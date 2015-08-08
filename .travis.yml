@@ -1,0 +1,20 @@
+language: c
+sudo: false
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+      - g++
+      - gfortran
+      - bison
+
+install:
+  - ./configure --prefix=$HOME/appveyor
+  - make install
+
+script:
+  - $HOME/appveyor/bin/sqm -h
+  - $HOME/appveyor/bin/antechamber -h
+  - $HOME/appveyor/bin/tleap -h
+
