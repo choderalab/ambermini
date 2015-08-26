@@ -10,7 +10,7 @@ PROGS=antechamber$(WRAPPER_SFX) acdoctor$(SFX) am1bcc$(SFX) antechamber_pvt$(SFX
 		atomtype$(SFX) bondtype$(SFX) charmmgen$(SFX) database$(SFX) espgen$(SFX) \
 		parmcal$(SFX) parmchk$(WRAPPER_SFX) parmchk2$(WRAPPER_SFX) prepgen$(SFX) \
 		residuegen$(SFX) sqm$(SFX) teLeap$(SFX) tleap$(WRAPPER_SFX) translate$(SFX) \
-		parmchk_pvt$(SFX) parmchk2_pvt$(SFX) pdb4amber$(SFX)
+		parmchk_pvt$(SFX) parmchk2_pvt$(SFX) pdb4amber$(WRAPPER_SFX)
 
 all: prep libs
 	$(MAKE) antechamber
