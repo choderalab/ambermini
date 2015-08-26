@@ -125,6 +125,7 @@ XLIBS= -L/usr/lib64 -L/usr/lib
 MAKE_XLEAP=skip_xleap
 
 PREFIX=%(prefix)s
+PYTHON=%(python)s
 """
 
 def which(prog):
@@ -183,6 +184,7 @@ options['command'] = ' '.join(sys.argv)
 options['mkdir'] = find_executable('mkdir')
 options['rm'] = find_executable('rm')
 options['sfx'] = '.exe' if on_win else ''
+options['python'] = sys.executable
 if on_win:
     options['shell'] = 'C:/Windows/System32/cmd.exe'
 else:
