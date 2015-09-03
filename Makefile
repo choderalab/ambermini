@@ -42,7 +42,7 @@ libs::
 	cd arpack && $(MAKE) install
 
 pdb4amber::
-	cd pdb4amber05 && $(PYTHON) setup.py install --prefix=$(BASEDIR)
+	cd pdb4amber05 && $(PYTHON) setup.py install --install-scripts=$(BINDIR)
 
 clean:
 	cd antechamber && $(MAKE) clean
