@@ -8,6 +8,7 @@ addons:
       - g++
       - gfortran
       - bison
+      - python-setuptools
 
 install:
   - ./configure --prefix=$HOME/appveyor
