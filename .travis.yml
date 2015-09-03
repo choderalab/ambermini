@@ -12,6 +12,7 @@ addons:
 
 install:
   - ./configure --prefix=$HOME/appveyor
+  - export PYTHONPATH=$HOME/ambermini/lib/python2.7/site-packages
   - make install
 
 script:
