@@ -42,7 +42,8 @@ libs::
 	cd arpack && $(MAKE) install
 
 pdb4amber::
-	cd pdb4amber05 && $(PYTHON) setup.py install --install-scripts=$(BINDIR)
+	cd pdb4amber05 && export PYTHONPATH=$(LIBDIR)/python$(PYVER)/site-packages && \
+		$(PYTHON) setup.py install --prefix=$(BASEDIR)
 
 clean:
 	cd antechamber && $(MAKE) clean
