@@ -1,4 +1,3 @@
-import setuptools
 from distutils.core import setup
 import os
 import sys
@@ -11,7 +10,7 @@ if __name__ == '__main__':
     except ImportError:
         from distutils.command.build_scripts import build_scripts
 
-    scripts = ['pdb4amber']
+    scripts = ['pdb4amber.py']
 
     setup(name='pdb4amber',
           version='15.0',

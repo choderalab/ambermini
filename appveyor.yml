@@ -30,6 +30,7 @@ test_script:
   - ambermini\bin\sqm -h
   - ambermini\bin\antechamber -h
   - ambermini\bin\tleap -h
+  - ambermini\bin\pdb4amber.py -h
 
 after_test:
   - 7z a ambermini.zip ambermini\ > null

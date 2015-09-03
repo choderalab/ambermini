@@ -10,7 +10,7 @@ PROGS=antechamber$(WRAPPER_SFX) acdoctor$(SFX) am1bcc$(SFX) antechamber_pvt$(SFX
 		atomtype$(SFX) bondtype$(SFX) charmmgen$(SFX) database$(SFX) espgen$(SFX) \
 		parmcal$(SFX) parmchk$(WRAPPER_SFX) parmchk2$(WRAPPER_SFX) prepgen$(SFX) \
 		residuegen$(SFX) sqm$(SFX) teLeap$(SFX) tleap$(WRAPPER_SFX) translate$(SFX) \
-		parmchk_pvt$(SFX) parmchk2_pvt$(SFX) pdb4amber$(WRAPPER_SFX)
+		parmchk_pvt$(SFX) parmchk2_pvt$(SFX) pdb4amber.py
 
 all: prep libs
 	$(MAKE) antechamber
@@ -42,9 +42,7 @@ libs::
 	cd arpack && $(MAKE) install
 
 pdb4amber::
-	cd pdb4amber05 && mkdir -p $(LIBDIR)/python$(PYVER)/site-packages && \
-		export PYTHONPATH=$(LIBDIR)/python$(PYVER)/site-packages && \
-		$(PYTHON) setup.py install --prefix=$(BASEDIR)
+	cd pdb4amber05 && $(PYTHON) setup.py install --prefix=$(BASEDIR)
 
 clean:
 	cd antechamber && $(MAKE) clean
