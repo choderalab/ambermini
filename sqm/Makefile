@@ -82,8 +82,8 @@ install: sqm$(SFX)
 	mv sqm$(SFX) $(BINDIR)
 
 sqm$(SFX): $(SQMOBJ) $(QMOBJ) sys
-	$(FC) $(FPPFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o sqm$(SFX) $(SQMOBJ) $(QMOBJ) \
-		$(FLIBSF) ../lib/sys.a $(LDFLAGS) $(AMBERLDFLAGS)
+	$(CC) $(FPPFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o sqm$(SFX) $(SQMOBJ) $(QMOBJ) \
+		$(FLIBS) ../lib/sys.a $(LDFLAGS) $(AMBERLDFLAGS)
 
 #-----------LIBS
 
