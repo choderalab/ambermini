@@ -17,4 +17,4 @@ script:
   - $HOME/appveyor/bin/sqm -h
   - $HOME/appveyor/bin/antechamber -h
   - $HOME/appveyor/bin/tleap -h
-
+  - $HOME/appveyor/bin/pdb4amber.py -h
