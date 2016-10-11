@@ -346,13 +346,15 @@ subroutine adj_mm_link_pair_crd(unimaged_coords)
    if (qmmm_struct%adj_mm_link_pair_crd_first_call) then
      qmmm_struct%adj_mm_link_pair_crd_first_call = .false.
      qmmm_struct%mmcoords_contains_lnk_coords = .false.
-     allocate(qmmm_struct%mm_link_pair_saved_coords(3,qmmm_struct%nlink), stat=ier)
-     REQUIRE(ier == 0)
+     if (qmmm_struct%nlink > 0) then
+        allocate(qmmm_struct%mm_link_pair_saved_coords(3,qmmm_struct%nlink), stat=ier)
+        REQUIRE(ier == 0)
+    end if
    end if
 
-   if(qmmm_struct%abfqmmm == 1) then                      ! lam81
-    qmmm_struct%adj_mm_link_pair_crd_first_call = .true.  ! lam81
-   end if                                                 ! lam81
+   if(qmmm_struct%abfqmmm == 1) then
+    qmmm_struct%adj_mm_link_pair_crd_first_call = .true.
+   end if
 
    if (qmmm_struct%mmcoords_contains_lnk_coords) then
      call sander_bomb('adj_mm_link_pair_crd','Call to set the mm link pair atom coordinates to be link atom coords', &

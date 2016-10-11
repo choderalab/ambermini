@@ -17,14 +17,6 @@ assert.o: \
 assert.o:   assert.F90
 	$(FC) $(FWARNFLAGS) $(FPPFLAGS) -c $(FNOOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ assert.F90
 
-constants.o: \
-                    copyright.h\
-                    ../include/dprec.fh
-
-
-constants.o:   constants.F90
-	$(FC) $(FWARNFLAGS) $(FPPFLAGS) -c $(FOPTFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o $@ constants.F90
-
 dh_correction_module.o: \
                     ../include/dprec.fh\
                     qmmm_qmtheorymodule.o\

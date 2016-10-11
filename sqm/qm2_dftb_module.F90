@@ -21,7 +21,7 @@ use qmmm_module, only: qmmm_struct
    ! These parameters define the format of the integral table files, and
    ! should not change.
    integer, parameter :: MAXINT = 250       ! Maximum number of intervals in spline files
-   integer, parameter :: MAXTAB = 700       ! Maximum number of integrals in SK files
+   integer, parameter :: MAXTAB = 1500      ! Maximum number of integrals in SK files
    integer, parameter :: LDIM   = 9         ! Maximum number of orbitals per atom (1s + 3p + 5d)
 
    ! Parameters needed by the Broyden mixing, to be set in qm2_dftb_load_params. 

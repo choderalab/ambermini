@@ -801,6 +801,7 @@ contains
     if (qmmm_nml%allow_pseudo_diag) then
        allocate (qmmm_scratch%mat_diag_workspace(qm2_struct%norbs,1),stat=ier)
        REQUIRE(ier==0)
+       qmmm_scratch%mat_diag_workspace(:,:) = 0.d0
 
        call qm2_smallest_number(small,smallsum)
       smallsum = max(10.0D0 * sqrt(smallsum),1.4000D-7)

@@ -24,7 +24,7 @@ subroutine mulliken(nquant_nlink,NDIM,izp,lmax,dacc,qmat,qzero,scf_mchg)
 
 !!Locals
    integer :: i, adim
-   logical :: calc_dens
+   logical :: calc_dens = .false.
 
    ! Not used yet!
 !  integer :: j
