@@ -5,11 +5,18 @@
 /*  Note: there are two "public" routines here:
  *  xminC():  a fairly low-level interface (currently used by sqm), which
  *            requires its own driver that understands the reverse
- *            communication needed
+ *            communication needed; this name may get mangled for Fortran use.
  *  xmin():   a higher-level, NAB-like interface, which takes the function
  *            to be minimized as an argument, and handles the reverse
- *            communication internally
+ *            communication internally.
  */
+
+/*
+    Top XMIN calling function for reverse communication:
+ */
+#ifdef SQM
+#  define xminC xminc_
+#endif
 
 
 #include <ctype.h>
@@ -117,13 +124,6 @@ int get_mytaskid(){
 #else
 /* Defined elsewhere: (prm.c) */
 extern int get_mytaskid();      /* for MPI */
-#endif
-
-/*
- Top XMIN calling function:
- */
-#ifdef SQM
-#  define xminC xminc_
 #endif
 
 
@@ -3035,7 +3035,7 @@ REAL_T xmin( REAL_T ( *func )( REAL_T*, REAL_T*, INT_T* ),
 	//                  general optimization of a function pointed to by func.
 	//  method      Minimization method: 1= PRCG, 2= LBFGS,
 	//                                   3= LBFGS-preconditioned TNCG,
-        //                                   4= debug mode for testing gradients
+	//                                   4= debug mode for testing gradients
 	//  ls_method   Line search method:  1= modified Armijo,
 	//                                   2= Wolfe (J. J. More', D. J. Thuente).
 	//  numdiff     Method used in finite difference Hv matrix-vector products:

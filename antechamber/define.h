@@ -37,4 +37,4 @@ it is unlikely that the ring num is larger than 1000
 # define MAX_CES_BOND 100
 # define MAXAPUNIT 20 
 # define MAXAPCONS 20
-
+# define MAXBLFPARM 1024

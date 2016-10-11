@@ -21,6 +21,7 @@ typedef struct {
 	int id;
         int ter;
 	int resno;
+	int resseqno;
 	int hdonor;
 	int haccept;
 	int atomtype;
@@ -225,3 +226,25 @@ typedef struct {
 typedef struct {
         int aps[10];
 } AV;
+
+/*parameters for calculationg bond stretching force constant*/
+typedef struct {
+	double bfkai;
+	double refbondlength;	
+	int    id1;
+	int    id2;
+	char   elem1[10];
+	char   elem2[10];
+} BLF_PARM;
+
+/*parameters for calculationg bond bending force constant*/
+typedef struct {
+	double anglec;
+	double anglez;	
+	int    id;
+	char   elem[10];
+} BAF_PARM;
+BLF_PARM blf_parm[MAXBLFPARM];
+BAF_PARM baf_parm[120];
+double blf_exp_const = 4.5; /*exponential parameter for calculating blf*/
+

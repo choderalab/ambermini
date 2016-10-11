@@ -3,24 +3,19 @@
 #include "../include/dprec.fh"
 
 !+++++++++++++++++++++++++++++++++++++++
-!This module contains various parameters
-!and constants used by the different 
-!routines that make up sander.
+!This module contains common parameters and numerical constants used by
+!sander, sqm, etc.
 !
-!If you want to use one of the constants
-!in your routine you should include the
-!line:
+!To use some of the constants in a routine include the statement:
 !
 !use constants, only : xxx, yyy, zzz
 !
-!where xxx,yyy,zzz are the constants you plan
-!to use in your routine.
-!This line needs to go before the
-!implicit none declaration.
+!where xxx, yyy, zzz are the constants used in the routine.
+!This statement must be before the implicit none declaration.
 !
 ! Based on constants.h, a pre Fortran 90 version, by Scott Brozell
-!   and Dave Case (TSRI, 2002)
-! Converted into a Fortran 90 module by: Ross Walker (TSRI, 2005)
+!   and Dave Case (TSRI, 2002).
+! Converted into a Fortran 90 module by: Ross Walker (TSRI, 2005).
 ! Expanded by others including: Matthew Clark, Andreas Goetz,
 !
 !++++++++++++++++++++++++++++++++++++++++
@@ -60,6 +55,7 @@ module constants
   _REAL_, parameter :: twelve    = 12.0d0
   _REAL_, parameter :: sixteen   = 16.0d0
   _REAL_, parameter :: twenty    = 20.0d0
+  _REAL_, parameter :: thirty    = 30.0d0
   _REAL_, parameter :: thirtytwo = 32.0d0
   _REAL_, parameter :: sixtyfour = 64.0d0
 
@@ -75,11 +71,10 @@ module constants
   _REAL_, parameter :: eleventh     = one/eleven
   _REAL_, parameter :: twelfth      = one/twelve
   _REAL_, parameter :: sixteenth    = one/sixteen
+  _REAL_, parameter :: thirtieth    = one/thirty
   _REAL_, parameter :: thirtysecond = one/thirtytwo
   _REAL_, parameter :: sixtyfourth  = one/sixtyfour
   
-  _REAL_, parameter :: thirtieth    = one/30.0d0
-
   !------------------------------------------------------------
   !     THE ARRAY FC(I) CONTAINS THE FACTORIALS OF (I-1).
 
@@ -213,7 +208,7 @@ module constants
   !the following line and comment out the definition above...
   !_REAL_, parameter :: PI = 3.0d0
 
-  _REAL_, parameter :: PI2     = PI*PI
+  _REAL_, parameter :: PI2    = PI * PI
   _REAL_, parameter :: HALFPI = PI * 0.5d0
   _REAL_, parameter :: TWOPI  = 2.0d0 * PI
   _REAL_, parameter :: FOURPI = 4.0d0 * PI

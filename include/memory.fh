@@ -1,0 +1,51 @@
+
+! Memory definitions and global common blocks.
+!
+! Memory will be initialized with hard_fail, so we do not need
+! to check for successful allocations within the program.
+!
+! All memory arrays will be equivalenced to start at a single
+! unified address defined by global_membase. I use integer*8
+! type in case this improves memory alignment for 8-byte data
+! types.
+!
+! If all data is accessed via the memory database, then this
+! is actually the only common block that requires global scope.
+      integer*8 GLOBAL_MEMBASE(2)
+      common /memory_public/ GLOBAL_MEMBASE
+      save /memory_public/
+
+! #ifdef MA_LIB
+! Uses Global Arrays MA, modified to support a unified heap base.
+!     include 'mafdecls_cpp.fh'
+!     equivalence (byte_mb, GLOBAL_MEMBASE)
+! #endif
+
+!--------------------------------------------------------------------
+! Attach MA base array names to our base array names.
+! XXX: this will need tweaking if one wants to use different
+! sized data, like short integers or single precision reals.
+      character  CH(16);    equivalence (GLOBAL_MEMBASE,CH) ! DB_CHAR
+      character(len=16) SH; equivalence (GLOBAL_MEMBASE,SH) ! DB_STRING
+      integer*4   IH(4);    equivalence (GLOBAL_MEMBASE,IH) ! DB_INT
+      real*8      RH(2);    equivalence (GLOBAL_MEMBASE,RH) ! DB_REAL
+!--------------------------------------------------------------------
+
+! Function 'prototypes'
+    ! C functions in mem_alloc.c
+    integer mem_size_of
+    integer mem_address_of
+    integer mem_size_of_pointer
+    integer mem_index_of
+
+    integer Mem_Alloc_RHeap
+    integer Mem_Alloc_IHeap
+    integer Mem_Alloc_CHeap
+    integer Mem_CAlloc_RHeap
+    integer Mem_CAlloc_IHeap
+    integer Mem_CAlloc_CHeap
+    integer Mem_Realloc_RHeap
+    integer Mem_Realloc_IHeap
+    integer Mem_Realloc_CHeap
+
+

@@ -1,5 +1,5 @@
 clearVariables
-logFile solvents_modified.log
+logFile solvents.log
 #
 #	load water models
 #
@@ -106,6 +106,39 @@ zMatrix SPC  {
 	{  H2  O  H1 1.0000 109.47 }
 }
 
+#
+#	TIP3P-FB water
+#       Wang, Martinez, Pande. 
+#       J. Phys. Chem. Lett., 2014, 5 (11), pp 1885–1891
+#
+
+h1 = createAtom  H1   HW   0.424224
+h2 = createAtom  H2   HW   0.424224
+o  = createAtom  O    OW  -0.848448 
+
+set h1   element   H
+set h2   element   H
+set o   element   O
+
+r = createResidue  WAT
+add r o
+add r h1
+add r h2
+
+bond h1  o
+bond h2  o
+bond h1  h2
+
+FB3 = createUnit  FB3
+
+add FB3  r
+set FB3.1   restype   solvent
+set FB3.1   imagingAtom  FB3.1.O
+
+zMatrix FB3  {
+	{  H1  O 1.011811 }
+	{  H2  O  H1 1.011811 108.14844252 }
+}
 
 #
 #	SPC/Fw water, JCP 124:024503 (2006)
@@ -279,6 +312,44 @@ zMatrix T4E  {
 	{  EPW O  H1  H2  0.125  52.26  0.0  }
 }
 
+#
+#	TIP4P-FB water
+#       Wang, Martinez, Pande. 
+#       J. Phys. Chem. Lett., 2014, 5 (11), pp 1885–1891
+#
+
+h1 = createAtom  H1   HW  0.52587
+h2 = createAtom  H2   HW  0.52587
+o  = createAtom  O    OW  0.0
+ep = createAtom  EPW  EP  -1.05174
+
+set h1   element   H
+set h2   element   H
+set o   element   O
+set ep  element   Lp
+
+r = createResidue  WAT
+add r o
+add r h1
+add r h2
+add r ep
+
+bond h1  o
+bond h2  o
+bond h1  h2
+bond ep  o
+
+FB4 = createUnit  FB4
+
+add FB4  r
+set FB4.1   restype   solvent
+set FB4.1   imagingAtom  FB4.1.O
+
+zMatrix FB4  {
+	{  H1  O 0.9572 }
+	{  H2  O  H1 0.9572 104.52 }
+	{  EPW O  H1  H2  0.10527  52.26  0.0  }
+}
 
 #
 #  OPC water (JPCL, 2014, 5 (21), pp 3863–3871)
@@ -411,8 +482,10 @@ loadOff ./qspcfwbox.off
 loadOff ./chcl3box.off
 loadOff ./meohbox.off
 loadOff ./nmabox.off
+loadOff ./fb3box.off
+loadOff ./fb4box.off
 
-a = { TP3 TPF SPC TP4 T4E OPC DC4 TP5 PL3 SPF SPG TIP3PBOX TIP3PFBOX TIP4PBOX TIP4PEWBOX OPCBOX TIP5PBOX SPCBOX QSPCFWBOX SPCFWBOX POL3BOX CHCL3BOX MEOHBOX NMABOX }
+a = { TP3 TPF SPC FB3 TP4 T4E FB4 OPC DC4 TP5 PL3 SPF SPG TIP3PBOX TIP3PFBOX TIP4PBOX TIP4PEWBOX OPCBOX TIP5PBOX SPCBOX QSPCFWBOX SPCFWBOX POL3BOX CHCL3BOX MEOHBOX NMABOX FB3BOX FB4BOX }
 saveOff a  ./solvents.lib
 
 quit

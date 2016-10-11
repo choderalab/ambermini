@@ -6104,24 +6104,24 @@ if (bPolar && GDefaults.iIPOL <= 0) // NOT allowed to save IPOL=0 for polarizabl
 
                         aAtomA = aAtomBondedNeighbor(saPAtom->aAtom, 0);
                         if( GDefaults.iGBparm == 1 || GDefaults.iGBparm == 2 ) {
-                            if( sAtomType(aAtomA)[0] == 'C' ||
-                                    sAtomType(aAtomA)[0] == 'c' ) dGBrad = 1.3;
-                            if( sAtomType(aAtomA)[0] == 'O' ||
-                                    sAtomType(aAtomA)[0] == 'o' ) dGBrad = 0.8;
-                            if( sAtomType(aAtomA)[0] == 'S' ||
-                                    sAtomType(aAtomA)[0] == 's' ) dGBrad = 0.8;
-                            if( (sAtomType(aAtomA)[0] == 'N' ||
-                                    sAtomType(aAtomA)[0] == 'n')  &&
-                                    GDefaults.iGBparm == 2) dGBrad = 1.3;
-                            if( (sAtomType(aAtomA)[0] == 'H' ||
-                                    sAtomType(aAtomA)[0] == 'h')  &&
-                                (sAtomType(aAtomA)[1] == 'W' ||
-                                    sAtomType(aAtomA)[1] == 'w')) dGBrad = 0.8; 
+                            switch ( aAtomA[0].iAtomicNumber ) {
+                              case  6 : dGBrad = 1.3; break; // Carbon
+                              case  8 : dGBrad = 0.8; break; // Oxygen
+                              case 16 : dGBrad = 0.8; break; // Sulfur
+                              case  7 :
+                                  if (GDefaults.iGBparm == 2)
+                                    dGBrad = 1.3; break; // Nitrogen, mbondi
+                              case  1 : // Special case: water hydrogen
+                                  if( (sAtomType(aAtomA)[0] == 'H' ||
+                                       sAtomType(aAtomA)[0] == 'h')  &&
+                                      (sAtomType(aAtomA)[1] == 'W' ||
+                                       sAtomType(aAtomA)[1] == 'w') )
+                                    dGBrad = 0.8; break;
+                            }
                         }
                         else if( GDefaults.iGBparm == 6 || GDefaults.iGBparm == 8 ) { 
                             /* try Alexey's scheme */
-                            if( sAtomType(aAtomA)[0] == 'N' ||
-                                     sAtomType(aAtomA)[0] == 'n' ) {
+                            if ( aAtomA[0].iAtomicNumber == 7 ) {
                                 dGBrad = 1.3;
                                 if ( GDefaults.iGBparm == 8 ) {
                                     // update residue as appropriate
@@ -6237,6 +6237,9 @@ if (bPolar && GDefaults.iIPOL <= 0) // NOT allowed to save IPOL=0 for polarizabl
     /* write out the GB screening parameters */
 
     MESSAGE(("Writing the GB screening parameters\n"));
+    if (GDefaults.iGBparm == 7)
+      VP0(("WARNING: No GB screening parameters for PARSE radii (all set to 0.0).\n"));
+    dGBscreen = 0.0;
     FortranFormat(1, "%-80s");
     FortranWriteString("%FLAG SCREEN");
     FortranWriteString("%FORMAT(5E16.8)");

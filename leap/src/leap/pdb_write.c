@@ -1,23 +1,5 @@
 /*
- *      Copyright (c) 1989 The Regents of the University of California.
- *      All rights reserved.
- *
- *      Redistribution and use in source and binary forms are permitted
- *      provided that the above copyright notice and this paragraph are
- *      duplicated in all such forms and that any documentation,
- *      advertising materials, and other materials related to such
- *      distribution and use acknowledge that the software was developed
- *      by the University of California, San Francisco.  The name of the
- *      University may not be used to endorse or promote products derived
- *      from this software without specific prior written permission.
- *      THIS SOFTWARE IS PROVIDED `AS IS' AND WITHOUT ANY EXPRESS OR
- *      IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
- *      WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
- *
- *      $Id: pdb_write.c,v 10.1 2009/12/28 16:58:42 case Exp $
- *
  *      subroutine for writing PDB format files
- *
  */
 
 /*      Modifications induced by the implementation of the savemol2 command
@@ -34,6 +16,7 @@
 # include       <stdio.h>
 # include       <ctype.h>
 # include       "pdb_int.h"
+# include       "unit.h"
 
 /*
  *      for each pdb record type there is a format reading in the
@@ -142,7 +125,7 @@ ATOM  51150  H1  WAT  10581      21.703 -29.969  47.175  1.00  0.00
                 pdb_sprintf(buffer, fmt, r->pdb.cryst1.a, r->pdb.cryst1.b,
                         r->pdb.cryst1.c, r->pdb.cryst1.alpha,
                         r->pdb.cryst1.beta, r->pdb.cryst1.gamma,
-                        r->pdb.cryst1.space_grp, r->pdb.cryst1.z);
+                        &(r->pdb.cryst1.space_grp), r->pdb.cryst1.z);
                 break;
 
         case PDB_END:
@@ -409,13 +392,4 @@ TER   150016      WAT  35296
                 }
         }
 }
-
-
-# ifdef vms
-pdb_write_dummy()
-{
-        pdb_fmt_dummy();
-}
-# endif
-
 

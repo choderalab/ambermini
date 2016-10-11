@@ -159,17 +159,6 @@ struct termio   new_termio, old_termio;
 #   endif /* POSIX */
 #endif	/* unix */
 
-#ifdef vms
-#include <descrip.h>
-#include <ttdef.h>
-#include <iodef.h>
-#include unixio
-
-static int   setbuff[2];             /* buffer to set terminal attributes */
-static short chan = -1;              /* channel to terminal */
-struct dsc$descriptor_s descrip;     /* VMS descriptor */
-#endif
-
 static void
 gl_char_init()			/* turn off input echo */
 {
@@ -219,16 +208,6 @@ gl_char_init()			/* turn off input echo */
 #endif /* POSIX */
 #endif /* unix */
 
-#ifdef vms
-    descrip.dsc$w_length  = strlen("tt:");
-    descrip.dsc$b_dtype   = DSC$K_DTYPE_T;
-    descrip.dsc$b_class   = DSC$K_CLASS_S;
-    descrip.dsc$a_pointer = "tt:";
-    (void)sys$assign(&descrip,&chan,0,0);
-    (void)sys$qiow(0,chan,IO$_SENSEMODE,0,0,0,setbuff,8,0,0,0,0);
-    setbuff[1] |= TT$M_NOECHO;
-    (void)sys$qiow(0,chan,IO$_SETMODE,0,0,0,setbuff,8,0,0,0,0);
-#endif /* vms */
 }
 
 static void
@@ -246,12 +225,6 @@ gl_char_cleanup()		/* undo effects of gl_char_init */
 #endif /* POSIX */
 #endif /* unix */
 
-#ifdef vms
-    setbuff[1] &= ~TT$M_NOECHO;
-    (void)sys$qiow(0,chan,IO$_SETMODE,0,0,0,setbuff,8,0,0,0,0);
-    sys$dassgn(chan);
-    chan = -1;
-#endif 
 }
 
 #if MSDOS || __EMX__
@@ -304,13 +277,6 @@ gl_getc()
     } else {
         c &= 0377;
     }
-#endif
-#ifdef vms
-    if(chan < 0) {
-       c='\0';
-    }
-    (void)sys$qiow(0,chan,IO$_TTYREADALL,0,0,0,&c,1,0,0,0,0);
-    c &= 0177;                        /* get a char */
 #endif
     return c;
 }

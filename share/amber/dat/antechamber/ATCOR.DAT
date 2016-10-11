@@ -68,6 +68,7 @@ CORR c3 0 c3
 CORR c2 1 c2 
 CORR c1 0 c1 
 CORR c  1 c2
+CORR cs 1 c  c2
 CORR ca 1 c2
 CORR cc 1 c2 ce 
 CORR cd 1 c2 ce 
@@ -82,10 +83,19 @@ CORR cv 0 c2
 CORR cx 0 c3
 CORR cy 0 c3
 CORR cz 1 c2
+CORR ns 1 n 
+CORR nt 1 n 
 CORR n  1 n 
 CORR n1 0 n1   
 CORR n2 1 n2
 CORR n3 0 n3
+CORR n7 0 n3
+CORR n8 0 n3
+CORR n9 0 n3
+CORR nx 0 n4
+CORR ny 0 n4
+CORR nz 0 n4
+CORR n+ 0 n4
 CORR n4 0 n4
 CORR na 1 n3
 CORR nb 0 n2 nc 
@@ -93,6 +103,8 @@ CORR nc 0 n2 ne
 CORR nd 0 n2 ne
 CORR ne 0 n2 
 CORR nf 0 n2 
+CORR nu 1 nh 
+CORR nv 1 nh 
 CORR nh 1 n3 
 CORR no 0 n3
 CORR o  0 o 

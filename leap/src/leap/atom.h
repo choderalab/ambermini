@@ -44,6 +44,7 @@
  *              Atoms can contain anything.
  */
  
+#include        "container.h"
 #include        "vector.h"
 
 #define ATOM_DEFAULT_RADIUS     1.5

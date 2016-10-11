@@ -1,4 +1,4 @@
-Revised van der Waals parameters for phosphorylated aar.
+Bonded parameters and revised vdW parameters for phosphorylated amino acids.
 
 MASS
 OP      16.00   0.434   Monoanionic Phosphate oxygen (analog to O2)

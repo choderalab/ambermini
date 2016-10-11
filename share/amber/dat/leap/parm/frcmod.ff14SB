@@ -71,7 +71,6 @@ C8-CX-N3    80.0      111.20
 H1-CX-2C    50.0      109.50
 H1-CX-3C    50.0      109.50
 HP-CX-C8    50.0      109.50    changed based on NMA nmodes (was CT-CT-HP)
-HP-CX-CG    50.0      109.50    changed based on NMA nmodes (was CT-CT-HP)
 HP-CX-2C    50.0      109.50    changed based on NMA nmodes (was CT-CT-HP)
 HP-CX-3C    50.0      109.50    changed based on NMA nmodes (was CT-CT-HP)
 N -CX-2C    80.0      109.70
@@ -225,6 +224,7 @@ CX-C8-C8-C8   1    0.180         0.0            -3.
 CX-C8-C8-C8   1    0.250       180.0            -2.
 CX-C8-C8-C8   1    0.200       180.0             1.
 C8-C8-C8-N2   9    1.400         0.0             3.
+C8-C8-N2-CA   1    0.000         0.0            -3.
 C8-C8-N2-CA   1    0.000         0.0             1.
 C8-C8-C8-C8   1    0.180         0.0            -3.
 C8-C8-C8-C8   1    0.250       180.0            -2.

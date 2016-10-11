@@ -20,6 +20,41 @@ ATOM    145  N   VAL A  25      32.433  16.336  57.540  1.00 11.92           N
 ATOM    146  CA  VAL A  25      31.132  16.439  58.160  1.00 11.85           C  
 */
 
+// Stores the trimmed input string into the given output buffer, which must be
+// large enough to store the result.  If it is too small, the output is
+// truncated.
+size_t trimwhitespace(char *out, size_t len, const char *str)
+{
+  if(len == 0)
+    return 0;
+
+  const char *end;
+  size_t out_size;
+
+  // Trim leading space
+  while(isspace(*str)) str++;
+
+  if(*str == 0)  // All spaces?
+  {
+    *out = 0;
+    return 1;
+  }
+
+  // Trim trailing space
+  end = str + strlen(str) - 1;
+  while(end > str && isspace(*end)) end--;
+  end++;
+
+  // Set output size to minimum of trimmed string length and buffer size minus 1
+  out_size = (end - str) < len-1 ? (end - str) : len-1;
+
+  // Copy trimmed string and add null terminator
+  memcpy(out, str, out_size);
+  out[out_size] = 0;
+
+  return out_size;
+}
+
 int rpdb(char *filename, int *atomnum, ATOM * atom, CONTROLINFO cinfo,
 		 MOLINFO minfo, int pqr)
 {
@@ -33,6 +68,9 @@ int rpdb(char *filename, int *atomnum, ATOM * atom, CONTROLINFO cinfo,
 	char tmpchar[MAXCHAR];
 	char line[MAXCHAR];
 	char elem[MAXCHAR];
+	char atomname[MAXCHAR];
+        char atomname2[MAXCHAR];
+	char resname[MAXCHAR];
 	double tmpfloat1, tmpfloat2;
 	double x, y, z;
 	int id;
@@ -96,55 +134,27 @@ int rpdb(char *filename, int *atomnum, ATOM * atom, CONTROLINFO cinfo,
 				}
 
 /*          --- columns 13-16 have the Brookhaven-formatted name:    */
-				atom[numatom].name[0] = line[12];
-				atom[numatom].name[1] = line[13];
-				atom[numatom].name[2] = line[14];
-				atom[numatom].name[3] = line[15];
+                                atomname[0] = line[12];
+                                atomname[1] = line[13];
+                                atomname[2] = line[14];
+                                atomname[3] = line[15];
+                                atomname[4] = '\0';
 /*          --- now unwrap this to a more understandable convention:    */
+                                sscanf(atomname, "%s", atomname2);
+                                if(atomname2[0] >= '0' && atomname2[0] <= '9') {
+                                        for(i=1;i<strlen(atomname2);i++)
+                                                atom[numatom].name[i-1] = atomname2[i];
+                                        atom[numatom].name[i-1] = atomname2[0];
+                                        atom[numatom].name[i] = '\0';
+                                }
+                                else
+                                        strcpy(atom[numatom].name, atomname2);
 
-				if (atom[numatom].name[0] == ' ' ||
-					(atom[numatom].name[0] >= '0' &&
-					atom[numatom].name[0] <= '9')) {
-
-					atom[numatom].name[0] = line[13];
-					atom[numatom].name[1] = line[14];
-					atom[numatom].name[2] = line[15];
-					if (atom[numatom].name[1] == ' ')
-						atom[numatom].name[1] = line[12];
-					else if (atom[numatom].name[2] == ' ')
-						atom[numatom].name[2] = line[12];
-					else
-						atom[numatom].name[3] = line[12];
-				}
-				if (atom[numatom].name[1] == ' ')
-					atom[numatom].name[1] = '\0';
-				else if (atom[numatom].name[2] == ' ')
-					atom[numatom].name[2] = '\0';
-				else if (atom[numatom].name[3] == ' ')
-					atom[numatom].name[3] = '\0';
-				else
-					atom[numatom].name[4] = '\0';
 				if (cinfo.rnindex == 0) {
-					atom[numatom].aa[0] = line[17];
-					atom[numatom].aa[1] = line[18];
-					atom[numatom].aa[2] = line[19];
-					/* strip leading blanks:  */
-					if (atom[numatom].aa[0] == ' '){   /* first char is blank */
-						atom[numatom].aa[0] = atom[numatom].aa[1];
-						atom[numatom].aa[1] = atom[numatom].aa[2];
-						atom[numatom].aa[2] = '\0';
-					}
-					if (atom[numatom].aa[0] == ' '){ /* 2nd char is blank */
-						atom[numatom].aa[0] = atom[numatom].aa[1];
-						atom[numatom].aa[1] = '\0';
-					}
-					/* strip trailing blanks */
-					if (atom[numatom].aa[1] == ' ')
-						atom[numatom].aa[1] = '\0';
-					else if (atom[numatom].aa[2] == ' ')
-						atom[numatom].aa[2] = '\0';
-					else
-						atom[numatom].aa[3] = '\0';
+					resname[0] = line[17];
+					resname[1] = line[18];
+					resname[2] = line[19];
+                                	sscanf(resname, "%s", atom[numatom].aa);
 				}
 				if (line[21] != ' ')
 					atom[numatom].chain[0] = line[21];
@@ -205,7 +215,7 @@ int rpdb(char *filename, int *atomnum, ATOM * atom, CONTROLINFO cinfo,
 			numatom++;
 			if (numatom >= cinfo.maxatom && overflow_flag == 0) {
 				printf
-					("\nThe atom number exceeds the MAXATOM, reallocate memory");
+					("\nThe atom number exceeds the MAXATOM, reallocate memory\n");
 				overflow_flag = 1;
 			}
 		}
@@ -370,21 +380,31 @@ void wpdb(char *filename, int atomnum, ATOM atom[])
 {
 	FILE *fpout;
 	int i, j;
+	char atmp[5],atmp2[5];
 	if ((fpout = fopen(filename, "w")) == NULL) {
 		fprintf(stdout, "Cannot open a file %s to write in wpdb(), exit\n",
 				filename);
 		exit(1);
 	}
-	for (i = 0; i < atomnum; i++)
-        if( atom[i].name[3] == ' ' ){
-		   fprintf(fpout, "ATOM%7d  %-4s%-4s%5d%12.3f%8.3f%8.3f\n",
-				i + 1, atom[i].name, atom[i].aa, atom[i].resno, atom[i].x,
-				atom[i].y, atom[i].z);
-        } else {
-		   fprintf(fpout, "ATOM%7d %4s %-4s%5d%12.3f%8.3f%8.3f\n",
-				i + 1, atom[i].name, atom[i].aa, atom[i].resno, atom[i].x,
-				atom[i].y, atom[i].z);
-       }
+	for (i = 0; i < atomnum; i++) {
+		if(atom[i].ter == 1)
+			fprintf(fpout, "TER\n");
+		/* use PDB v3 rules to pack atom name into 4 spaces:  */
+		trimwhitespace( atmp, 5, atom[i].name );
+		if( strlen( atmp ) < 4 && strlen(atom[i].element) < 2 ){
+			atmp2[0] = ' ';
+			atmp2[1] = atmp[0];
+			atmp2[2] = atmp[1];
+			atmp2[3] = atmp[2];
+			atmp2[4] = '\0';
+		} else {
+			strncpy( atmp2, atmp, 4 );
+		}
+		fprintf(fpout, "ATOM%7d %-4s %3s  %4d    %8.3f%8.3f%8.3f%6.2lf%6.2lf%12s\n",
+			i + 1, atmp2, atom[i].aa, atom[i].resno, atom[i].x,
+			atom[i].y, atom[i].z, 1.0, 0.0, atom[i].element);
+	}
+
 	for (i = 0; i < atomnum; i++) {
 		if (atom[i].connum > 0)
 			fprintf(fpout, "CONECT%5d", i + 1);
@@ -411,12 +431,16 @@ void wmpdb(char *filename, int atomnum, ATOM atom[])
 				filename);
 		exit(1);
 	}
-	for (i = 0; i < atomnum; i++)
+	for (i = 0; i < atomnum; i++) {
+		if(atom[i].ter == 1)
+                	fprintf(fpout, "TER\n");
 		fprintf(fpout,
 				"ATOM%7d  %-4s%-4s%5d%12.3f%8.3f%8.3f%10.6lf%8.2lf%8s\n",
 				i + 1, atom[i].name, atom[i].aa, atom[i].resno, atom[i].x,
 				atom[i].y, atom[i].z, atom[i].charge, atom[i].radius,
 				atom[i].ambername);
+	}
+
 	for (i = 0; i < atomnum; i++) {
 		if (atom[i].connum > 0)
 			fprintf(fpout, "CONECT%5d", i + 1);

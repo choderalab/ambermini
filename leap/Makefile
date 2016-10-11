@@ -17,9 +17,9 @@ install:
 
 uninstall:
 	cd src/leap && $(MAKE) uninstallteLeap
-	$(RM) -f $(BINDIR)/tleap
+	-rm -f $(BINDIR)/tleap
 	-cd src/leap && $(MAKE) uninstall
-	$(RM) -f $(BINDIR)/xleap
+	-rm -f $(BINDIR)/xleap
 
 install_xleap:
 	cd src/Wc && $(MAKE)

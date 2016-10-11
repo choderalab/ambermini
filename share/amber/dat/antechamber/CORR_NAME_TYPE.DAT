@@ -75,10 +75,19 @@ cv C	3
 cx C	4
 cy C	4
 cz C	3
+ns N	3
+nt N	3
 n  N	3
 n1 N	-1 (1 or 2)	
 n2 N	2
+n7 N	3
+n8 N	3
+n9 N	3
 n3 N	3
+nx N	4
+ny N	4
+nz N	4
+n+ N	4
 n4 N	4
 na N	3
 nb N	2
@@ -86,6 +95,8 @@ nc N	2
 nd N	2
 ne N	2
 nf N	2
+nu N	3
+nv N	3
 nh N	3
 no N	3
 o  O	1

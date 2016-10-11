@@ -12,6 +12,8 @@ PROGS = \
 	$(BINDIR)/charmmgen$(SFX) \
 	$(BINDIR)/database$(SFX) \
 	$(BINDIR)/espgen$(SFX) \
+	$(BINDIR)/match$(SFX) \
+	$(BINDIR)/match_atomname$(SFX) \
 	$(BINDIR)/parmcal$(SFX) \
 	$(BINDIR)/parmchk$(SFX) \
 	$(BINDIR)/parmchk_pvt$(SFX) \
@@ -163,6 +165,27 @@ ncsu-penalties.o: ncsu-penalties.h
 parmcal.o: common.h
 parmcal.o: define.h
 parmcal.o: utility.c
+match.o: common.h
+match.o: define.h
+match.o: atom.h
+match.o: utility.c
+match.o: common.c
+match.o: ring.c
+match.o: ac.c
+match.o: pdb.c
+match.o: mol2.c
+match.o: mdl.c
+match.o: rst.c
+match_atomname.o: common.h
+match_atomname.o: define.h
+match_atomname.o: atom.h
+match_atomname.o: utility.c
+match_atomname.o: common.c
+match_atomname.o: equatom2.c
+match_atomname.o: ac.c
+match_atomname.o: pdb.c
+match_atomname.o: mol2.c
+match_atomname.o: prep.c
 parmchk.o: common.h
 parmchk.o: define.h
 parmchk.o: atom.h
@@ -273,6 +296,12 @@ $(BINDIR)/delphigen$(SFX): delphigen.o
 
 $(BINDIR)/espgen$(SFX): espgen.o
 	$(CC) $(CFLAGS) $(AMBERCFLAGS) $(LDFLAGS) $(AMBERLDFLAGS) espgen.o $(LM) -o $(BINDIR)/espgen$(SFX)
+
+$(BINDIR)/match$(SFX): match.o
+	$(CC) $(CFLAGS) $(AMBERCFLAGS) $(LDFLAGS) $(AMBERLDFLAGS) match.o $(LM) -o $(BINDIR)/match$(SFX)
+
+$(BINDIR)/match_atomname$(SFX): match_atomname.o
+	$(CC) $(CFLAGS) $(AMBERCFLAGS) $(LDFLAGS) $(AMBERLDFLAGS) match_atomname.o $(LM) -o $(BINDIR)/match_atomname$(SFX)
 
 $(BINDIR)/parmcal$(SFX): parmcal.o
 	$(CC) $(CFLAGS) $(AMBERCFLAGS) $(LDFLAGS) $(AMBERLDFLAGS) parmcal.o $(LM) -o $(BINDIR)/parmcal$(SFX)

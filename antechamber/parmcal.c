@@ -13,27 +13,30 @@
 *  Octomber, 2001                                                      *
 ************************************************************************
 */
-
+char *amberhome;
 #include <math.h>
 #include "common.h"
 #include "define.h"
+#include "atom.h"
 #include "utility.c"
+#include "common.c"
+#define MAXELEM 120
 
-char *amberhome;
-char filename[MAXCHAR];
+char ff_filename[MAXCHAR];
+char blba_parmfile[MAXCHAR];
 char line[MAXCHAR];
 int i, j, k, l;
+int nblf_parm = 0;
 
 int id1, id2, id3;
 char name1[5], name2[5], name3[5];
 
-/*H-1, C-2, N-3, O-4, F-5, Cl-6, Br-7, I-8, S-9, P-10*/
-double radius[11];
-double elecneg[11];
-double refbondlength[11][11];
-double bfkai[11][11];
-double anglec[11];
-double anglez[11];
+double radius[MAXELEM];
+double elecneg[MAXELEM];
+double refbondlength[MAXELEM][MAXELEM];
+double bfkai[MAXELEM][MAXELEM];
+double anglec[MAXELEM];
+double anglez[MAXELEM];
 
 double bondlength;
 double blforce;
@@ -42,6 +45,9 @@ double bondangle;
 double baforce;
 long angleparmnum = 0;
 
+char ffset[20]="gaff";
+char blbaparm[MAXCHAR];
+int  ireadparm=1;
 
 FILE *fp, *fpout;
 
@@ -257,7 +263,7 @@ void bondlengthcal(void)
 }
 void bondlengthfc(void)
 {
-	blforce = exp(bfkai[id1][id2] - 4.5 * log(bondlength));
+	blforce = exp(bfkai[id1][id2] - blf_exp_const * log(bondlength));
 }
 
 int bondanglecal(void)
@@ -280,33 +286,33 @@ int bondanglecal(void)
 		strcpy(typename2, "h");
 	if (id3 == 1)
 		strcpy(typename3, "h");
-	if (id1 == 5)
+	if (id1 == 9)
 		strcpy(typename1, "f");
-	if (id2 == 5)
+	if (id2 == 9)
 		strcpy(typename2, "f");
-	if (id3 == 5)
+	if (id3 == 9)
 		strcpy(typename3, "f");
-	if (id1 == 6)
+	if (id1 == 17)
 		strcpy(typename1, "cl");
-	if (id2 == 6)
+	if (id2 == 17)
 		strcpy(typename2, "cl");
-	if (id3 == 6)
+	if (id3 == 17)
 		strcpy(typename3, "cl");
-	if (id1 == 7)
+	if (id1 == 35)
 		strcpy(typename1, "br");
-	if (id2 == 7)
+	if (id2 == 35)
 		strcpy(typename2, "br");
-	if (id3 == 7)
+	if (id3 == 35)
 		strcpy(typename3, "br");
-	if (id1 == 8)
+	if (id1 == 53)
 		strcpy(typename1, "i");
-	if (id2 == 8)
+	if (id2 == 53)
 		strcpy(typename2, "i");
-	if (id3 == 8)
+	if (id3 == 53)
 		strcpy(typename3, "i");
 
 	printf("For Atom A, which is the best type to describe it?\n");
-	if (id1 == 2) {
+	if (id1 == 6) {
 		id = 0;
 		do {
 			printf(" 1. sp3 carbon \n");
@@ -328,7 +334,7 @@ int bondanglecal(void)
 		if (id == 5)
 			strcpy(typename1, "c1");
 	}
-	if (id1 == 3) {
+	if (id1 == 7) {
 		id = 0;
 		do {
 			printf(" 1. sp3 nitrogen in amine (X3)\n");
@@ -360,7 +366,7 @@ int bondanglecal(void)
 			strcpy(typename1, "nh");
 	}
 
-	if (id1 == 4) {
+	if (id1 == 8) {
 		id = 0;
 		do {
 			printf(" 1. OH oxygen in hydroxyl group\n");
@@ -377,7 +383,7 @@ int bondanglecal(void)
 			strcpy(typename1, "o ");
 	}
 
-	if (id1 == 9) {
+	if (id1 == 16) {
 		id = 0;
 		do {
 			printf(" 1. SH sulfur in S-H\n");
@@ -399,7 +405,7 @@ int bondanglecal(void)
 		if (id == 5)
 			strcpy(typename1, "s2");
 	}
-	if (id1 == 10) {
+	if (id1 == 15) {
 		id = 0;
 		do {
 			printf(" 1. P3 phosphate with three connected atoms\n");
@@ -415,7 +421,7 @@ int bondanglecal(void)
 
 
 	printf("For Atom B, which is the best type to describe it?\n");
-	if (id2 == 2) {
+	if (id2 == 6) {
 		id = 0;
 		do {
 			printf(" 1. sp3 carbon \n");
@@ -437,7 +443,7 @@ int bondanglecal(void)
 		if (id == 5)
 			strcpy(typename2, "c1");
 	}
-	if (id2 == 3) {
+	if (id2 == 7) {
 		id = 0;
 		do {
 			printf(" 1. sp3 nitrogen in amine (X3)\n");
@@ -469,7 +475,7 @@ int bondanglecal(void)
 			strcpy(typename2, "nh");
 	}
 
-	if (id2 == 4) {
+	if (id2 == 8) {
 		id = 0;
 		do {
 			printf(" 1. OH oxygen in hydroxyl group\n");
@@ -486,7 +492,7 @@ int bondanglecal(void)
 			strcpy(typename2, "o ");
 	}
 
-	if (id2 == 9) {
+	if (id2 == 16) {
 		id = 0;
 		do {
 			printf(" 1. SH sulfur in S-H\n");
@@ -508,7 +514,7 @@ int bondanglecal(void)
 		if (id == 5)
 			strcpy(typename2, "s2");
 	}
-	if (id2 == 10) {
+	if (id2 == 15) {
 		id = 0;
 		do {
 			printf(" 1. P3 phosphate with three connected atoms\n");
@@ -525,7 +531,7 @@ int bondanglecal(void)
 
 
 	printf("For Atom C, which is the best type to describe it?\n");
-	if (id3 == 2) {
+	if (id3 == 6) {
 		id = 0;
 		do {
 			printf(" 1. sp3 carbon \n");
@@ -547,7 +553,7 @@ int bondanglecal(void)
 		if (id == 5)
 			strcpy(typename3, "c1");
 	}
-	if (id3 == 3) {
+	if (id3 == 7) {
 		id = 0;
 		do {
 			printf(" 1. sp3 nitrogen in amine (X3)\n");
@@ -579,7 +585,7 @@ int bondanglecal(void)
 			strcpy(typename3, "nh");
 	}
 
-	if (id3 == 4) {
+	if (id3 == 8) {
 		id = 0;
 		do {
 			printf(" 1. OH oxygen in hydroxyl group\n");
@@ -596,7 +602,7 @@ int bondanglecal(void)
 			strcpy(typename3, "o ");
 	}
 
-	if (id3 == 9) {
+	if (id3 == 16) {
 		id = 0;
 		do {
 			printf(" 1. SH sulfur in S-H\n");
@@ -618,7 +624,7 @@ int bondanglecal(void)
 		if (id == 5)
 			strcpy(typename3, "s2");
 	}
-	if (id3 == 10) {
+	if (id3 == 15) {
 		id = 0;
 		do {
 			printf(" 1. P3 phosphate with three connected atoms\n");
@@ -738,186 +744,63 @@ void bondanglefc(void)
 void assignparm(void)
 {
 	int i, j;
-	/* H<->1, C<->2, N<->3, O<->4, F<->5,P<->6, S<->7, 
-	   Cl<->8, Br<->9, I<->10 */
-	for (i = 0; i < 11; i++)
-		for (j = 0; j < 11; j++) {
+	int atid, atid1, atid2;
+	for (i = 1; i < MAXELEM; i++)
+		for (j = 1; j < MAXELEM; j++) {
 			refbondlength[i][j] = 0.0;
 			bfkai[i][j] = 0.0;
 		}
-	refbondlength[1][1] = 0.7383;
-	bfkai[1][1] = 4.661;
-	refbondlength[1][2] = 1.090;
-	bfkai[1][2] = 6.217;
-	refbondlength[1][3] = 1.010;
-	bfkai[1][3] = 6.057;
-	refbondlength[1][4] = 0.960;
-	bfkai[1][4] = 5.794;
-	refbondlength[1][5] = 0.920;
-	bfkai[1][5] = 5.600;
-	refbondlength[1][6] = 1.280;
-	bfkai[1][6] = 6.937;
-	refbondlength[1][7] = 1.410;
-	bfkai[1][7] = 7.301;
-	refbondlength[1][8] = 1.600;
-	bfkai[1][8] = 7.802;
-	refbondlength[1][9] = 1.41;
-	bfkai[1][9] = 7.257;
-	refbondlength[1][10] = 1.34;
-	bfkai[1][10] = 7.018;
+	for(i=1; i< MAXELEM; i++) {
+		anglec[i] = 0.0;
+		anglez[i] = 0.0;
+		radius[i] = 0.0;
+		elecneg[i] = 0.0;
+	}
+	for(i=0; i< nblf_parm; i++) {
+		atid1 = blf_parm[i].id1;
+		atid2 = blf_parm[i].id2;
 
-	refbondlength[2][2] = 1.526;
-	bfkai[2][2] = 7.6425;
-	refbondlength[2][3] = 1.470;
-	bfkai[2][3] = 7.5039;
-	refbondlength[2][4] = 1.440;
-	bfkai[2][4] = 7.3465;
-	refbondlength[2][5] = 1.370;
-	bfkai[2][5] = 7.227;
-	refbondlength[2][6] = 1.800;
-	bfkai[2][6] = 8.241;
-	refbondlength[2][7] = 1.940;
-	bfkai[2][7] = 8.478;
-	refbondlength[2][8] = 2.160;
-	bfkai[2][8] = 8.859;
-	refbondlength[2][9] = 1.83;
-	bfkai[2][9] = 8.237;
-	refbondlength[2][10] = 1.82;
-	bfkai[2][10] = 8.117;
+		refbondlength[atid1][atid2] = blf_parm[i].refbondlength;
+		bfkai[atid1][atid2] = blf_parm[i].bfkai;
 
-	refbondlength[3][3] = 1.4406;
-	bfkai[3][3] = 7.634;
-	refbondlength[3][4] = 1.42;
-	bfkai[3][4] = 7.526;
-	refbondlength[3][5] = 1.420;
-	bfkai[3][5] = 7.475;
-	refbondlength[3][6] = 1.750;
-	bfkai[3][6] = 8.266;
-	refbondlength[3][7] = 1.930;
-	bfkai[3][7] = 8.593;
-	refbondlength[3][8] = 2.120;
-	bfkai[3][8] = 8.963;
-	refbondlength[3][9] = 1.72;
-	bfkai[3][9] = 8.212;
-	refbondlength[3][10] = 1.69;
-	bfkai[3][10] = 8.073;
-
-	refbondlength[4][4] = 1.46;
-	bfkai[4][4] = 7.561;
-	refbondlength[4][5] = 1.410;
-	bfkai[4][5] = 7.375;
-	refbondlength[4][6] = 1.700;
-	bfkai[4][6] = 8.097;
-	refbondlength[4][7] = 1.790;
-	bfkai[4][7] = 8.276;
-	refbondlength[4][8] = 2.110;
-	bfkai[4][8] = 8.854;
-	refbondlength[4][9] = 1.64;
-	bfkai[4][9] = 7.957;
-	refbondlength[4][10] = 1.65;
-	bfkai[4][10] = 7.922;
-
-	refbondlength[5][5] = 1.4057;
-	bfkai[5][5] = 7.358;
-	refbondlength[5][9] = 1.500;
-	bfkai[5][9] = 7.592;
-	refbondlength[5][10] = 1.580;
-	bfkai[5][10] = 7.733;
-
-	refbondlength[6][6] = 2.0308;
-	bfkai[6][6] = 8.648;
-	refbondlength[6][9] = 2.040;
-	bfkai[6][9] = 8.656;
-	refbondlength[6][10] = 2.030;
-	bfkai[6][10] = 8.619;
-
-	refbondlength[7][7] = 2.3365;
-	bfkai[7][7] = 9.012;
-	refbondlength[7][9] = 2.24;
-	bfkai[7][9] = 8.729;
-	refbondlength[7][10] = 2.21;
-	bfkai[7][10] = 8.728;
-
-	refbondlength[8][8] = 2.8357;
-	bfkai[8][8] = 9.511;
-	refbondlength[8][9] = 2.49;
-	bfkai[8][9] = 9.058;
-	refbondlength[8][10] = 2.56;
-	bfkai[8][10] = 9.161;
-
-	refbondlength[9][9] = 2.3239;
-	bfkai[9][9] = 8.805;
-	refbondlength[9][10] = 2.12;
-	bfkai[9][10] = 8.465;
-
-	refbondlength[10][10] = 2.038;
-	bfkai[10][10] = 8.316;
-
-        for(i=0;i<=10;i++)
-                for(j=0;j<=10;j++) {
-                        if(bfkai[i][j] == 0.0) bfkai[i][j] = bfkai[j][i];
-                        if(refbondlength[i][j] == 0.0) refbondlength[i][j] = refbondlength[j][i];
-                }
+		refbondlength[atid2][atid1] = blf_parm[i].refbondlength;
+		bfkai[atid2][atid1] = blf_parm[i].bfkai;
+	}
+	for(i=1; i< MAXELEM; i++) {
+		atid = baf_parm[i].id;
+		anglec[atid] = baf_parm[i].anglec;
+		anglez[atid] = baf_parm[i].anglez;
+	}
 
 	radius[1] = 0.32;
 	elecneg[1] = 2.1;
 
-	radius[2] = 0.77;
-	elecneg[2] = 2.5;
+	radius[6] = 0.77;
+	elecneg[6] = 2.5;
 
-	radius[3] = 0.75;
-	elecneg[3] = 3.0;
+	radius[7] = 0.75;
+	elecneg[7] = 3.0;
 
-	radius[4] = 0.73;
-	elecneg[4] = 3.5;
+	radius[8] = 0.73;
+	elecneg[8] = 3.5;
 
-	radius[5] = 0.72;
-	elecneg[5] = 4.0;
+	radius[9] = 0.72;
+	elecneg[9] = 4.0;
 
-	radius[6] = 0.99;
-	elecneg[6] = 3.0;
+	radius[17] = 0.99;
+	elecneg[17] = 3.0;
 
-	radius[7] = 1.14;
-	elecneg[7] = 2.8;
+	radius[35] = 1.14;
+	elecneg[35] = 2.8;
 
-	radius[8] = 1.40;
-	elecneg[8] = 2.5;
+	radius[53] = 1.40;
+	elecneg[53] = 2.5;
 
-	radius[9] = 1.02;
-	elecneg[9] = 2.5;
+	radius[15] = 1.02;
+	elecneg[15] = 2.5;
 
-	radius[10] = 1.06;
-	elecneg[10] = 2.1;
-
-	anglec[1] = 0.0;
-	anglez[1] = 0.784;
-
-	anglec[2] = 1.339;
-	anglez[2] = 1.183;
-
-	anglec[3] = 1.3;
-	anglez[3] = 1.212;
-
-	anglec[4] = 1.249;
-	anglez[4] = 1.219;
-
-	anglec[5] = 0.0;
-	anglez[5] = 1.166;
-
-	anglec[6] = 0.0;
-	anglez[6] = 1.272;
-
-	anglec[7] = 0.0;
-	anglez[7] = 1.378;
-
-	anglec[8] = 0.0;
-	anglez[8] = 1.398;
-
-	anglec[9] = 0.906;
-	anglez[9] = 1.620;
-
-	anglec[10] = 1.448;
-	anglez[10] = 1.280;
+	radius[16] = 1.06;
+	elecneg[16] = 2.1;
 }
 
 void assignbl(char *name1, char *name2)
@@ -925,43 +808,47 @@ void assignbl(char *name1, char *name2)
 	if (tolower(name1[0]) == 'h')
 		id1 = 1;
 	if (tolower(name1[0]) == 'c' && tolower(name1[1]) == 'l')
-		id1 = 6;
+		id1 = 17;
 	if (tolower(name1[0]) == 'c' && tolower(name1[1]) != 'l')
-		id1 = 2;
+		id1 = 6;
 	if (tolower(name1[0]) == 'n')
-		id1 = 3;
-	if (tolower(name1[0]) == 'o')
-		id1 = 4;
-	if (tolower(name1[0]) == 'f')
-		id1 = 5;
-	if (tolower(name1[0]) == 'b')
 		id1 = 7;
-	if (tolower(name1[0]) == 'i')
+	if (tolower(name1[0]) == 'o')
 		id1 = 8;
-	if (tolower(name1[0]) == 'p')
+	if (tolower(name1[0]) == 'f')
 		id1 = 9;
+	if (tolower(name1[0]) == 'b' && tolower(name1[1]) == 'r')
+		id1 = 35;
+	if (tolower(name1[0]) == 'i')
+		id1 = 53;
+	if (tolower(name1[0]) == 'p')
+		id1 = 15;
 	if (tolower(name1[0]) == 's')
-		id1 = 10;
+		id1 = 16;
+	if (tolower(name1[0]) == 'z' && tolower(name1[1]) == 'n')
+		id1 = 30;
 	if (tolower(name2[0]) == 'h')
 		id2 = 1;
 	if (tolower(name2[0]) == 'c' && tolower(name2[1]) == 'l')
-		id2 = 6;
+		id2 = 17;
 	if (tolower(name2[0]) == 'c' && tolower(name2[1]) != 'l')
-		id2 = 2;
+		id2 = 6;
 	if (tolower(name2[0]) == 'n')
-		id2 = 3;
-	if (tolower(name2[0]) == 'o')
-		id2 = 4;
-	if (tolower(name2[0]) == 'f')
-		id2 = 5;
-	if (tolower(name2[0]) == 'b')
 		id2 = 7;
-	if (tolower(name2[0]) == 'i')
+	if (tolower(name2[0]) == 'o')
 		id2 = 8;
-	if (tolower(name2[0]) == 'p')
+	if (tolower(name2[0]) == 'f')
 		id2 = 9;
+	if (tolower(name2[0]) == 'b' && tolower(name2[1]) == 'r')
+		id2 = 35;
+	if (tolower(name2[0]) == 'i')
+		id2 = 53;
+	if (tolower(name2[0]) == 'p')
+		id2 = 15;
 	if (tolower(name2[0]) == 's')
-		id2 = 10;
+		id2 = 16;
+	if (tolower(name2[0]) == 'z' && tolower(name2[1]) == 'n')
+		id2 = 30;
 }
 
 void assignba(char *name1, char *name2, char *name3)
@@ -969,66 +856,70 @@ void assignba(char *name1, char *name2, char *name3)
 	if (tolower(name1[0]) == 'h')
 		id1 = 1;
 	if (tolower(name1[0]) == 'c' && tolower(name1[1]) == 'l')
-		id1 = 6;
+		id1 = 17;
 	if (tolower(name1[0]) == 'c' && tolower(name1[1]) != 'l')
-		id1 = 2;
+		id1 = 6;
 	if (tolower(name1[0]) == 'n')
-		id1 = 3;
-	if (tolower(name1[0]) == 'o')
-		id1 = 4;
-	if (tolower(name1[0]) == 'f')
-		id1 = 5;
-	if (tolower(name1[0]) == 'b')
 		id1 = 7;
-	if (tolower(name1[0]) == 'i')
+	if (tolower(name1[0]) == 'o')
 		id1 = 8;
-	if (tolower(name1[0]) == 'p')
+	if (tolower(name1[0]) == 'f')
 		id1 = 9;
+	if (tolower(name1[0]) == 'b' && tolower(name1[1]) == 'r')
+		id1 = 35;
+	if (tolower(name1[0]) == 'i')
+		id1 = 53;
+	if (tolower(name1[0]) == 'p')
+		id1 = 15;
 	if (tolower(name1[0]) == 's')
-		id1 = 10;
+		id1 = 16;
+	if (tolower(name1[0]) == 'z' && tolower(name1[1]) == 'n')
+		id1 = 30;
 	if (tolower(name2[0]) == 'h')
 		id2 = 1;
 	if (tolower(name2[0]) == 'c' && tolower(name2[1]) == 'l')
-		id2 = 6;
+		id2 = 17;
 	if (tolower(name2[0]) == 'c' && tolower(name2[1]) != 'l')
-		id2 = 2;
+		id2 = 6;
 	if (tolower(name2[0]) == 'n')
-		id2 = 3;
-	if (tolower(name2[0]) == 'o')
-		id2 = 4;
-	if (tolower(name2[0]) == 'f')
-		id2 = 5;
-	if (tolower(name2[0]) == 'b')
 		id2 = 7;
-	if (tolower(name2[0]) == 'i')
+	if (tolower(name2[0]) == 'o')
 		id2 = 8;
-	if (tolower(name2[0]) == 'p')
+	if (tolower(name2[0]) == 'f')
 		id2 = 9;
+	if (tolower(name2[0]) == 'b' && tolower(name2[1]) == 'r')
+		id2 = 35;
+	if (tolower(name2[0]) == 'i')
+		id2 = 53;
+	if (tolower(name2[0]) == 'p')
+		id2 = 15;
 	if (tolower(name2[0]) == 's')
-		id2 = 10;
+		id2 = 16;
+	if (tolower(name2[0]) == 'z' && tolower(name2[1]) == 'n')
+		id2 = 30;
 	if (tolower(name3[0]) == 'h')
 		id3 = 1;
 	if (tolower(name3[0]) == 'c' && tolower(name3[1]) == 'l')
-		id3 = 6;
+		id3 = 17;
 	if (tolower(name3[0]) == 'c' && tolower(name3[1]) != 'l')
-		id3 = 2;
+		id3 = 6;
 	if (tolower(name3[0]) == 'n')
-		id3 = 3;
-	if (tolower(name3[0]) == 'o')
-		id3 = 4;
-	if (tolower(name3[0]) == 'f')
-		id3 = 5;
-	if (tolower(name3[0]) == 'b')
 		id3 = 7;
-	if (tolower(name3[0]) == 'i')
+	if (tolower(name3[0]) == 'o')
 		id3 = 8;
-	if (tolower(name3[0]) == 'p')
+	if (tolower(name3[0]) == 'f')
 		id3 = 9;
+	if (tolower(name3[0]) == 'b' && tolower(name3[1]) == 'r')
+		id3 = 35;
+	if (tolower(name3[0]) == 'i')
+		id3 = 53;
+	if (tolower(name3[0]) == 'p')
+		id3 = 15;
 	if (tolower(name3[0]) == 's')
-		id3 = 10;
+		id3 = 16;
+	if (tolower(name3[0]) == 'z' && tolower(name3[1]) == 'n')
+		id3 = 30;
 }
-
-
 
 int main()
 {
@@ -1039,12 +930,8 @@ int main()
        fprintf( stdout, "AMBERHOME is not set!\n" );
        exit(1);
     }
-	strcpy(filename, amberhome);
-	strcat(filename, "/dat/leap/parm/gaff.dat");
-	assignparm();
-	readangleparm(filename);	/*principle parameter file */
 	cmdid = 1;
-	while (cmdid == 1 || cmdid == 2) {
+	while (cmdid == 0 || cmdid == 1 || cmdid == 2) {
 		blforce = 0.0;
 		bondlength = 0.0;
 		bondlength1 = 0.0;
@@ -1052,12 +939,41 @@ int main()
 		bondangle = 0.0;
 		baforce = 0.0;
 		printf("Please select:\n");
+		printf("0. set parameter set (%s)\n", ffset);
 		printf("1. calculate the bond length parameter: A-B\n");
 		printf("2. calculate the bond angle parameter: A-B-C\n");
 		printf("3. exit\n");
 		scanf("%d", &cmdid);
 		if (cmdid == 3)
 			exit(1);
+		if (cmdid == 0) {
+			printf("Please select which parameter set to use: 1-gaff (the default) or 2-gaff2\n");
+			scanf("%s", ffset);
+			if(strcmp(ffset, "1") == 0 || strcmp(ffset, "Gaff") == 0 || strcmp(ffset, "GAFF") == 0) 
+				strcpy(ffset, "gaff");
+			if(strcmp(ffset, "2") == 0 || strcmp(ffset, "Gaff2") == 0 || strcmp(ffset, "GAFF2") == 0) 
+				strcpy(ffset, "gaff2");
+			if(strcmp(ffset, "gaff") != 0 && strcmp(ffset, "gaff2") != 0) 
+				strcpy(ffset, "gaff");
+			printf("\nForce field parameter set has been set to %s\n\n", ffset);
+			ireadparm = 1;
+		}
+		if(ireadparm == 1) {
+			strcpy(ff_filename, amberhome);
+			strcat(ff_filename, "/dat/leap/parm/");
+			strcat(ff_filename, ffset);
+			strcat(ff_filename, ".dat");
+			strcpy(blba_parmfile, amberhome);
+			if(strcmp(ffset, "gaff") == 0) 
+				strcat(blba_parmfile, "/dat/antechamber/PARM_BLBA_GAFF.DAT");
+			if(strcmp(ffset, "gaff2") == 0) 
+				strcat(blba_parmfile, "/dat/antechamber/PARM_BLBA_GAFF2.DAT");
+			nblf_parm = 0;
+                	read_blba_parm (blba_parmfile, blf_parm, &nblf_parm, baf_parm);
+			assignparm();
+			readangleparm(ff_filename);	/*principle parameter file */
+			ireadparm = 0;
+		}
 		if (cmdid == 1) {
 			printf("Please input the element name of atom A in A-B\n");
 			scanf("%s", name1);

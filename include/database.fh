@@ -1,0 +1,75 @@
+!//#ifndef _MEMORY_FH
+!//#error You must include memory.fh before database.fh
+!//#endif
+
+#include "memory.fh"
+
+! This root node pointer is not used by MemDB. It is here for the
+! conveneience of the application using the MemDB library.
+      integer p_DBRoot
+      common /database_public/ p_DBRoot
+
+      integer DB_NONE;    parameter(DB_NONE=  Z'DB000000')
+      integer DB_BOOL;    parameter(DB_BOOL=  Z'DB000041')
+      integer DB_LOGICAL; parameter(DB_LOGICAL=Z'DB000041') !alias
+      integer DB_CHAR;    parameter(DB_CHAR=  Z'DB000042')
+      integer DB_STRING;  parameter(DB_STRING=Z'DB000043')
+      integer DB_NAME;    parameter(DB_NAME=  Z'DB000044') !4-char strings
+      integer DB_TEXT;    parameter(DB_TEXT=  Z'DB000045') !80-char strings
+      integer DB_INT;     parameter(DB_INT=   Z'DB000046')
+      integer DB_REAL;    parameter(DB_REAL=  Z'DB000047')
+      integer DB_ILOL;    parameter(DB_ILOL=  Z'DB000048')
+      integer DB_RLOL;    parameter(DB_RLOL=  Z'DB000049')
+      integer DB_NODE;    parameter(DB_NODE=  Z'DB00008A') !pointer to node
+
+! These contain valid memory pointer data, but should be
+! (mostly) hidden from the user.
+      integer DB_HEADER;  parameter(DB_HEADER=Z'DB00008B') !Head of node data
+      integer DB_TAIL;    parameter(DB_TAIL=  Z'DB00008C') !Tail of node data
+
+!------------------------------------------------------------
+
+      integer DB_LOOKUP;  parameter(DB_LOOKUP=-1)
+      integer DB_IGNORE;  parameter(DB_IGNORE=-2)
+
+!------------------------------------------------------------
+! Heap array names, all aligned via the address of GLOBAL_MEMBASE.
+! These 'heap' arrays hold no actual data. All data elements
+! exist intentionally out-of-bounds to a malloc-ed memory block.
+      integer*4 DB(8,2); equivalence (DB,GLOBAL_MEMBASE)
+      character(len=8) db_Format(4,2)
+          equivalence (db_Format(1,1)(1:4),DB(7,1))
+
+      logical*4 Log_Heap(16)
+          equivalence (Log_Heap,GLOBAL_MEMBASE)
+      character(len=4) Name_Heap(16)
+          equivalence (Name_Heap,GLOBAL_MEMBASE)
+      character(len=80) Text_Heap(2)
+          equivalence (Text_Heap(1)(1:64),GLOBAL_MEMBASE)
+
+#ifndef MEMDB_NO_ABBREV
+      logical*4 LH(16)
+          equivalence (LH,GLOBAL_MEMBASE)
+      character(len=4) NH(16)
+          equivalence (NH,GLOBAL_MEMBASE)
+      character(len=80) TH(2)
+          equivalence (TH(1)(1:64),GLOBAL_MEMBASE)
+#endif
+
+! function 'prototypes':
+      integer DB_Init
+      logical DB_Read !, DB_Write
+      integer DB_Alloc
+      integer DB_ReAlloc
+      integer DB_Alloc_String
+      integer DB_Get_Unused_Key
+      integer DB_Get_Pointer
+      double precision DB_Get_Real
+      integer DB_Get_Int
+      logical DB_Get_Bool
+      integer DB_Get_String
+      integer DB_Get_Node
+      logical DB_Query_Key
+      integer DB_Parent_Of
+      integer DB_Header_Of
+

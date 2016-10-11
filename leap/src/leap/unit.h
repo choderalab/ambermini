@@ -65,6 +65,7 @@
  */
 
 
+#include        "atom.h"
 #include        "bag.h"
 #include        "restraint.h"
 #include        "dictionary.h"

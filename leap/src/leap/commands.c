@@ -82,6 +82,7 @@
 #include        <stdio.h>
 #include        <stdlib.h>
 #include        <float.h>
+#include        <string.h>
   
 #include        "basics.h"
 #include        "vector.h"
@@ -107,6 +108,7 @@
 #include        "mol2File.h"
 #include        "mol3File.h"
 #include        "minimizer.h"
+#include        "model.h"
 
 int     iMemDebug = 0;
 
@@ -1605,17 +1607,43 @@ FILE            *fIn;
 char            *sUsage = 
                   "usage:  <variable> = loadAmberParams <filename> \n";
 
+/*
+ *   nasty, special kludge to prevent loading parm10 more than once;
+ *      This is not generalizable....
+ */
+static          int parm10_loaded = 0;
+static          int parm99_loaded = 0;
+static          int parm15_loaded = 0;
+static          char parm10[] = "parm10.dat";
+static          char parm99[] = "parm99.dat";
+static          char parm15[] = "parm15";
+
     if ( !bCmdGoodArguments( "loadAmberParams", iArgCount, aaArgs, "s" ) ) {
         VP0(( sUsage ));
         return(NULL);
     }
     strcpy( sFile, sOString(oAssocObject(aaArgs[0])) );
 
+    if( strstr( sFile, parm10 ) ) {
+        parm10_loaded += 1;
+        if( parm10_loaded > 1 ){
+            VP0(("Skipping %s: already loaded\n", sFile ));
+            parm10_loaded -= 1;
+            return(NULL);
+        }
+    }
+    if( strstr( sFile, parm99 ) ) parm99_loaded += 1;
+    if( strstr( sFile, parm15 ) ) parm15_loaded += 1;
+
     fIn = FOPENCOMPLAIN( sFile, "r" );
     if ( fIn == NULL ) 
         return(NULL);
 
     VP0(("Loading parameters: %s\n", GsBasicsFullName ));
+    if( parm99_loaded + parm15_loaded + parm10_loaded > 1 ){
+        VP0(("Error: Cannot load more than one of parm99/10/15.dat\n"));
+        exit(1);
+    }
 
     psParms = psAmberReadParmSet( fIn, sFile );
 

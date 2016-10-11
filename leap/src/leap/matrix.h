@@ -41,6 +41,7 @@
 #define	MATRIX_H
 
 #include    <math.h>
+#include    "vector.h"
 
 #define  ROWS     4
 #define  COLUMNS  4

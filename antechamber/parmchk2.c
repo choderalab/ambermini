@@ -73,6 +73,7 @@ typedef struct {
 	int  improper;
 	int  ncorr;
 	int  nequa;
+	int  atomicnum;
 	double mass;
 	CORR corr[MAXCORR];
 	EQUA equa[MAXEQUA];
@@ -168,6 +169,8 @@ char ofilename[MAXCHAR];
 char pfilename[MAXCHAR];
 char cfilename[MAXCHAR];
 char line[MAXCHAR];
+int  ffset = 1;
+int  ipfilename = 0;
 int  cindex = 0;
 int impropernum = 0;
 int output_improper_flag = 1;
@@ -224,6 +227,11 @@ int 	bestbaid = -1;
 int 	besttorid= -1;
 int 	bestimproperid=-1;
 double bestscore;
+
+/* reading parameters for calculating bl and ba parameters*/
+int iread_blbaparm = 0;
+int nblf_parm = 0;
+char blba_parmfile[MAXCHAR];
 
 /* set up improper atoms for prepi/prepc file */
 void improper_id1(char *filename) {
@@ -325,6 +333,7 @@ void improper_id2() {
 }
 
 void readfrcmod(char *filename) {
+FILE *fp;
 int mindex = 0;
 int bindex = 0;
 int aindex = 0;
@@ -681,6 +690,7 @@ char tmpc4[MAXCHAR];
                 }
 
 }
+fclose(fp);
 if(debug == 1) {
         printf("\nMASS\n");
         for(i=0;i<atomtypenum;i++)
@@ -1196,6 +1206,7 @@ void read_parmchk_parm(char *filename)
 	int  ncorr;
 	int  nequa;
 	int  equtype;
+	int  atomicnum;
 	double bl,blf,ba,baf, cba, cbaf, tor, ctor, itor, ps;
 	double mass;
 	if ((fp = fopen(filename, "r")) == NULL) {
@@ -1210,12 +1221,13 @@ void read_parmchk_parm(char *filename)
 			break;
 		if (strncmp("PARM", &line[0], 4) == 0) {
 			equtype = 0;
-			sscanf(&line[4], "%s%d%d%lf%d", atomtype, &improper, &group, &mass, &equtype) ;
+			sscanf(&line[4], "%s%d%d%lf%d%d", atomtype, &improper, &group, &mass, &equtype, &atomicnum) ;
 			strcpy(parm[parmnum].atomtype, atomtype);
 			parm[parmnum].improper = improper;
 			parm[parmnum].group    = group;
 			parm[parmnum].mass     = mass;
 			parm[parmnum].equtype  = equtype;
+			parm[parmnum].atomicnum  = atomicnum;
 /*	Initalization */
 /*	for the sake of simplicity in the coding, an atom type equals to and corresponds to itself*/
 /*      Equal atom types must alos be corresponding atom types */
@@ -1287,8 +1299,8 @@ void read_parmchk_parm(char *filename)
 			ctor= 0;
 			itor= 0;
 			ps=0;
-			sscanf(&line[4], "%s%lf%lf%lf%lf%lf%lf%lf%lf%lf",  
-				corrname, &bl, &blf, &cba, &cbaf, &ba, &baf, &ctor, &tor, &ps); 
+			sscanf(&line[4], "%s%lf%lf%lf%lf%lf%lf%lf%lf%lf%lf",  
+                                         corrname, &bl, &blf, &cba, &cbaf, &ba, &baf, &ctor, &tor, &ps); 
 			strcpy(parm[parmnum-1].corr[ncorr].atomtype, corrname);
 			parm[parmnum-1].corr[ncorr].bl  =bl;
 			parm[parmnum-1].corr[ncorr].blf =blf;
@@ -1413,11 +1425,15 @@ void assign_parmid(void)
 					atom[i].improper = 1;
 				break;
 			}
+                if(parmid[i] < 0) {
+                        fprintf(stderr, "Atom type of %s does not shown up in PARMCHK.DAT\n", atom[i].ambername);
+                        exit(1);
+                }
 	}
 }
 
 int empangle(char *tmpc1, char *tmpc2, char *tmpc3, char *name1,
-			 char *name2, char *name3, int id1, int id2, int id3, int flag)
+	     char *name2, char *name3, int id1, int id2, int id3, int flag)
 {
 	int num1 = -1, num2 = -1;
 	double bondlength1 = 0.0;
@@ -1425,6 +1441,27 @@ int empangle(char *tmpc1, char *tmpc2, char *tmpc3, char *name1,
 	double cparm, dparm, zparm1, zparm2;
 	double angle;
 	double force;
+
+	if(iread_blbaparm == 0) {
+		iread_blbaparm = 1;
+		if(ffset == 1) 
+    			build_dat_path(blba_parmfile, "PARM_BLBA_GAFF.DAT",
+    				sizeof blba_parmfile, 0);
+		if(ffset == 2) 
+    			build_dat_path(blba_parmfile, "PARM_BLBA_GAFF2.DAT",
+    				sizeof blba_parmfile, 0);
+		read_blba_parm (blba_parmfile, blf_parm, &nblf_parm, baf_parm); 
+		if(debug == 1) {
+			for(i=0;i<nblf_parm;i++)
+				printf("BL %5d %5s %5d %5s %5d %9.4lf %9.4lf\n", i+1, blf_parm[i].elem1, 
+					blf_parm[i].id1, blf_parm[i].elem2, blf_parm[i].id2,
+					blf_parm[i].refbondlength, blf_parm[i].bfkai);
+			for(i=0;i<120;i++)
+				printf("BA %5d %5s %5d %9.4lf %9.4lf\n", i+1, baf_parm[i].elem, 
+					baf_parm[i].id, baf_parm[i].anglec, baf_parm[i].anglez); 
+			printf("PC %9.4lf\n", blf_exp_const);
+		}
+	}
 
 	for (i = 0; i < angleparmnum; i++)
 		if (strcmp(angleparm[i].name1, tmpc1) == 0 && 
@@ -1469,78 +1506,14 @@ int empangle(char *tmpc1, char *tmpc2, char *tmpc3, char *name1,
 		return 0;
 
 	/* calculate the bond angle force  */
-	zparm1 = 0.0;
-	if (id1 == 1)
-		zparm1 = 0.784;
-	if (id1 == 6)
-		zparm1 = 1.183;
-	if (id1 == 7)
-		zparm1 = 1.212;
-	if (id1 == 8)
-		zparm1 = 1.219;
-	if (id1 == 9)
-		zparm1 = 1.166;
-	if (id1 == 17)
-		zparm1 = 1.272;
-	if (id1 == 35)
-		zparm1 = 1.378;
-	if (id1 == 53)
-		zparm1 = 1.398;
-	if (id1 == 15)
-		zparm1 = 1.620;
-	if (id1 == 16)
-		zparm1 = 1.280;
-
-	zparm2 = 0.0;
-	if (id3 == 1)
-		zparm2 = 0.784;
-	if (id3 == 6)
-		zparm2 = 1.183;
-	if (id3 == 7)
-		zparm2 = 1.212;
-	if (id3 == 8)
-		zparm2 = 1.219;
-	if (id3 == 9)
-		zparm2 = 1.166;
-	if (id3 == 17)
-		zparm2 = 1.272;
-	if (id3 == 35)
-		zparm2 = 1.378;
-	if (id3 == 53)
-		zparm2 = 1.398;
-	if (id3 == 15)
-		zparm2 = 1.620;
-	if (id3 == 16)
-		zparm2 = 1.280;
-
-	cparm = 0.0;
-	if (id2 == 1)
-		cparm = 0.0;
-	if (id2 == 6)
-		cparm = 1.339;
-	if (id2 == 7)
-		cparm = 1.300;
-	if (id2 == 8)
-		cparm = 1.249;
-	if (id2 == 9)
-		cparm = 0.0;
-	if (id2 == 17)
-		cparm = 0.0;
-	if (id2 == 35)
-		cparm = 0.0;
-	if (id2 == 53)
-		cparm = 0.0;
-	if (id2 == 15)
-		cparm = 1.448;
-	if (id2 == 16)
-		cparm = 0.906;
-
+	zparm1 = baf_parm[id1].anglez;
+	zparm2 = baf_parm[id3].anglez;
+	cparm  = baf_parm[id2].anglec;
 	dparm = (bondlength1 - bondlength2) * (bondlength1 - bondlength2);
 	dparm =
 		dparm / ((bondlength1 + bondlength2) * (bondlength1 + bondlength2));
 	force =
-		143.9 * zparm1 * cparm * zparm2 * exp(-2 * dparm) / (bondlength1 +
-															 bondlength2);
+		143.9 * zparm1 * cparm * zparm2 * exp(-2 * dparm) / (bondlength1 + bondlength2);
 	force /= sqrt(angle * 3.1415926 / 180.0);
 	if(flag == 0) {
 		fprintf(fpout, "%-2s-%-2s-%-2s%9.3lf%12.3lf", name1, name2, name3, force, angle);
@@ -1575,18 +1548,27 @@ int empangle(char *tmpc1, char *tmpc2, char *tmpc3, char *name1,
 double equtype_penalty(int id1, int id2, int id3, int id4){
 int tn1; 
 int tn2;
-	if(parm[id1].equtype == 0 && parm[id2].equtype == 0) 
-		return 0.0;
+int n1, n2, n3, n4;
+	n1 = parm[id1].equtype;
+	n2 = parm[id2].equtype;
+	n3 = parm[id3].equtype;
+	n4 = parm[id4].equtype;
+	if(n1 == 0 && n2 == 0) return 0.0;
 
-	tn1 = parm[id1].equtype + parm[id2].equtype;
-	tn2 = parm[id3].equtype + parm[id4].equtype;
-	if(tn2 == 3) {
-		if(tn1 == 3) 
-			return 0;
-		else
-			return wt.EQUTYPE;
-	}	
+	tn1 = fabs(n1) + fabs(n2);
+	tn2 = fabs(n3) + fabs(n4);
+	if(tn2 == 3 && tn1 != 3) return wt.EQUTYPE;
 	if(tn1 == 3 && tn2 != 3) return wt.EQUTYPE;
+/*	e.g. for X-cd-cf-X, both X-cd-cd-X and X-cf-cf are possible replacement.  
+ 	To avoid ambiguity, the replacement of X-cf-cf-X now has a penalty score of 0.5 *wt.EQUTYPE 	
+	Equtype: cc -1
+                 cd -2
+                 ce  1
+                 cf  2
+		 ...
+*/ 
+	if((n1 + n2) == 0) 
+		if(n3 < 0 && n4 < 0) return 0.5*wt.EQUTYPE; 
 	return 0.0;
 }
 
@@ -1929,7 +1911,7 @@ void chk_bond(void)
 						}
 					}
 				}
-			}
+		}
 }
 
 int angle(char *at_name1, char *at_name2, char *at_name3, char *corr_name1,
@@ -1969,6 +1951,7 @@ void chk_angle(void)
 	int suc, suc2;
 	int pid1, pid2, pid3;
 	int pid4, pid5, pid6;
+	int atomicnum1, atomicnum2, atomicnum3;
 	char tmpc[5];
 	char tmpc1[5], tmpc2[5], tmpc3[5];
 	char tmpc4[5], tmpc5[5], tmpc6[5];
@@ -2099,10 +2082,11 @@ void chk_angle(void)
                                         		}
 /* from here estimate the bond angle parameters with empirical method for corresponding names */
 							if (suc == 0) {
+								atomicnum1 = parm[pid1].atomicnum;
+								atomicnum2 = parm[pid2].atomicnum;
+								atomicnum3 = parm[pid3].atomicnum;
 								suc = empangle(name1, name2, name3, name1, name2, name3,
-											 atom[i].atomicnum,
-											 atom[j].atomicnum,
-											 atom[k].atomicnum, 0);
+											atomicnum1, atomicnum2, atomicnum3, 0);
 								if(suc == 1) continue;
 							}
 
@@ -2125,10 +2109,11 @@ void chk_angle(void)
                                                                                         if(m==0 && n== 0 && o==0) continue;
                                                                                         pid6 = parm[pid3].equa[o].pid;
                                                                                         strcpy(tmpc6, parm[pid6].atomtype);
+											atomicnum1 = parm[pid4].atomicnum;
+											atomicnum2 = parm[pid5].atomicnum;
+											atomicnum3 = parm[pid6].atomicnum;
                                                                                         suc2= empangle(tmpc5, tmpc4, tmpc6, name1, name2, name3,
-                                                                                                                atom[i].atomicnum,
-                                                                                                                atom[j].atomicnum,
-                                                                                                                atom[k].atomicnum, 1);
+													atomicnum2, atomicnum1, atomicnum3, 1);
 											if(suc2== 1) {
 												bestscore = 0;
 												suc = 1;
@@ -2169,10 +2154,11 @@ void chk_angle(void)
                                                                                            parm[pid4].group == parm[pid6].group)
                                                                                         	score -= wt.GROUP;
                                                                                         if(score < bestscore) {
+												atomicnum1 = parm[pid4].atomicnum;
+												atomicnum2 = parm[pid5].atomicnum;
+												atomicnum3 = parm[pid6].atomicnum;
 												suc2= empangle(tmpc4, tmpc5, tmpc6, name1, name2, name3,
-											 			atom[i].atomicnum,
-											 			atom[j].atomicnum,
-											 			atom[k].atomicnum, 1);
+													atomicnum1, atomicnum2, atomicnum3, 1);
                                                                                                 if(suc2== 1) {
 													bestscore = score;
 													suc = 1;
@@ -2907,8 +2893,8 @@ void chk_improper(void)
                                    			   parm[pid5].group == parm[pid7].group &&
                                    			   parm[pid5].group == parm[pid8].group)
 			   	       			   score -= wt.GROUP;
-                                                        if(score < bestscore) { 
-								for (k = 0; k < improperparmnum2; k++)
+                                                        if(score < bestscore)  
+								for (k = 0; k < improperparmnum2; k++) {
 									if (improperparm[k].numX > 0) continue; 
 									if(strcmp(improperparm[k].name1, tmpc1) == 0 && 
 			   						   strcmp(improperparm[k].name2, tmpc2) == 0 && 
@@ -2918,8 +2904,8 @@ void chk_improper(void)
                                                                 		bestscore = score;
 										suc = 1;
 										break;
+									}
 								}
-							}
                                                 }
                                         }
                                 }
@@ -3314,71 +3300,88 @@ int main(int argc, char *argv[])
     minfo.connect_file[0] = '\0';
     build_dat_path(minfo.connect_file, "CONNECT.TPL",
     	sizeof minfo.connect_file, 0);
-	build_path(pfilename, "/dat/leap/parm/", "gaff.dat",
-		sizeof pfilename, 0);
 
 	if (strcmp(COLORTEXT, "YES") == 0 || strcmp(COLORTEXT, "yes") == 0) {
 		if (argc == 2
 			&& (strcmp(argv[1], "-h") == 0
 				|| strcmp(argv[1], "-H") == 0)) {
-			printf("[31mUsage: parmchk -i [0m input file name\n"
-				   "[31m               -o [0m frcmod file name\n"
-				   "[31m               -f [0m input file format (prepi, prepc, ac, mol2) \n"
-				   "[31m               -p [0m ff parmfile\n"
-				   "[31m               -pf[0m parmfile format, 1 for amber FF data file (the default) and 2 for additional force field parameter file\n"
-				   "[31m               -c [0m atom type corresponding score file, default is PARMCHK.DAT\n" 
-				   "[31m               -a [0m print out all force field parameters including those in the parmfile\n"
-				   "[31m                  [0m can be 'Y' (yes) or 'N' (no) default is 'N' \n"
-				   "[31m               -w [0m print out parameters that matching improper dihedral parameters\n"
-				   "[31m                  [0m that contain 'X' in the force field parameter file, can be 'Y' (yes)\n"
-				   "[31m                  [0m or 'N' (no), default is 'Y'\n");
+			printf("[31mUsage: parmchk2 -i [0m input file name\n"
+		               "[31m                -o [0m frcmod file name\n"
+			       "[31m                -f [0m input file format (prepi, prepc, ac, mol2) \n"
+			       "[31m                -s [0m ff parm set, it is suppressed by \"-p\" option\n"
+			       "[34m                    1:[0m gaff (the default)\n"
+			       "[34m                    2:[0m gaff2 \n"
+			       "[31m                -p [0m parmfile\n"
+			       "[31m                -pf[0m parmfile format \n"
+			       "[34m                    1:[0m for amber FF data file (the default)\n"
+			       "[34m                    2:[0m for additional force field parameter file\n"
+			       "[31m                -c [0m atom type corresponding score file, default is PARMCHK.DAT\n" 
+			       "[31m                -a [0m print out all force field parameters including those in the parmfile\n"
+			       "[31m                   [0m can be 'Y' (yes) or 'N' (no) default is 'N' \n"
+			       "[31m                -w [0m print out parameters that matching improper dihedral parameters\n"
+			       "[31m                   [0m that contain 'X' in the force field parameter file, can be 'Y' (yes)\n"
+			       "[31m                   [0m or 'N' (no), default is 'Y'\n");
 			exit(1);
 		}
-		if (argc != 7 && argc != 9 && argc != 11 && argc != 13 && argc != 15 && argc != 17) {
-			printf("[31mUsage: parmchk -i[0m input file name\n"
-				   "[31m               -o[0m frcmod file name\n"
-				   "[31m               -f[0m input file format (prepi, prepc, ac, mol2) \n"
-				   "[31m               -p[0m ff parmfile\n"
-				   "[31m               -pf[0m parmfile format, 1 for amber FF data file (the default) and 2 for additional force field parameter file\n"
-				   "[31m               -c [0m atom type corresponding score file, default is PARMCHK.DAT\n" 
-				   "[31m               -a[0m print out all force field parameters including those in the parmfile\n"
-				   "[31m                 [0m can be 'Y' (yes) or 'N' (no) default is 'N' \n"
-				   "[31m               -w[0m print out parameters that matching improper dihedral parameters\n"
-				   "[31m                 [0m that contain 'X' in the force field parameter file, can be 'Y' (yes)\n"
-				   "[31m                 [0m or 'N' (no), default is 'Y'\n");
+		if (argc != 7 && argc != 9 && argc != 11 && argc != 13 && argc != 15 && argc != 17 && argc !=19) {
+			printf("[31mUsage: parmchk2 -i [0m input file name\n"
+		               "[31m                -o [0m frcmod file name\n"
+			       "[31m                -f [0m input file format (prepi, prepc, ac, mol2) \n"
+			       "[31m                -s [0m ff parm set, it is suppressed by \"-p\" option\n"
+			       "[34m                    1:[0m gaff (the default)\n"
+			       "[34m                    2:[0m gaff2 \n"
+			       "[31m                -p [0m parmfile\n"
+			       "[31m                -pf[0m parmfile format \n"
+			       "[34m                    1:[0m for amber FF data file (the default)\n"
+			       "[34m                    2:[0m for additional force field parameter file\n"
+			       "[31m                -c [0m atom type corresponding score file, default is PARMCHK.DAT\n" 
+			       "[31m                -a [0m print out all force field parameters including those in the parmfile\n"
+			       "[31m                   [0m can be 'Y' (yes) or 'N' (no) default is 'N' \n"
+			       "[31m                -w [0m print out parameters that matching improper dihedral parameters\n"
+			       "[31m                   [0m that contain 'X' in the force field parameter file, can be 'Y' (yes)\n"
+			       "[31m                   [0m or 'N' (no), default is 'Y'\n");
 			exit(1);
 		}
 	} else {
 		if (argc == 2
 			&& (strcmp(argv[1], "-h") == 0
 				|| strcmp(argv[1], "-H") == 0)) {
-			printf("Usage: parmchk -i   input file name\n");
-			printf("               -o   frcmod file name\n");
-			printf("               -f   input file format (prepi, prepc, ac, mol2) \n");
-			printf("               -p   ff parmfile\n");
-		        printf("	       -pf  parmfile format, 1 for amber FF data file (the default) and 2 for additional force field parameter file\n");
-			printf("               -c   atom type corresponding score file \n");
-			printf("                    (default is PARMCHK.DAT)\n");
-		        printf("               -a   print out all force field parameters including those in the parmfile \n");
-		        printf("                    can be 'Y' (yes) or 'N' (no) default is 'N' \n");
-		        printf("               -w   print out parameters that matching improper dihedral parameters\n");
-		        printf("		    that contain 'X' in the force field parameter file, can be 'Y' (yes)\n");
-		        printf("		    or 'N' (no), default is 'Y'\n");
+			printf("Usage: parmchk2 -i  input file name\n"
+		               "                -o  frcmod file name\n"
+			       "                -f  input file format (prepi, prepc, ac, mol2) \n"
+			       "                -s  ff parm set, it is suppressed by \"-p\" option\n"
+			       "                    1: gaff (the default)\n"
+			       "                    2: gaff2 \n"
+			       "                -p  parmfile\n"
+			       "                -pf parmfile format \n"
+			       "                    1: for amber FF data file (the default)\n"
+			       "                    2: for additional force field parameter file\n"
+			       "                -c  atom type corresponding score file, default is PARMCHK.DAT\n" 
+			       "                -a  print out all force field parameters including those in the parmfile\n"
+			       "                    can be 'Y' (yes) or 'N' (no) default is 'N' \n"
+			       "                -w  print out parameters that matching improper dihedral parameters\n"
+			       "                    that contain 'X' in the force field parameter file, can be 'Y' (yes)\n"
+			       "                    or 'N' (no), default is 'Y'\n");
 			exit(1);
 		}
-		if (argc != 7 && argc != 9 && argc != 11 && argc != 13) {
-			printf("Usage: parmchk -i   input file name\n");
-			printf("               -o   frcmod file name\n");
-			printf("               -f   input file format (prepi, prepc, ac, mol2) \n");
-			printf("               -p   ff parmfile\n");
-		        printf("	       -pf  parmfile format, 1 for amber FF data file (the default) and 2 for additional force field parameter file\n");
-			printf("               -c   atom type corresponding score file \n");
-			printf("                    (default is PARMCHK.DAT)\n");
-		        printf("               -a   print out all force field parameters including those in the parmfile \n");
-		        printf("                    can be 'Y' (yes) or 'N' (no) default is 'N' \n");
-		        printf("               -w   print out parameters that matching improper dihedral parameters\n");
-		        printf("		    that contain 'X' in the force field parameter file, can be 'Y' (yes)\n");
-		        printf("		    or 'N' (no), default is 'Y'\n");
+		if (argc != 7 && argc != 9 && argc != 11 && argc != 13 && argc != 15 && argc != 17 && argc !=19) {
+			printf("Usage: parmchk2 -i  input file name\n"
+		               "                -o  frcmod file name\n"
+			       "                -f  input file format (prepi, prepc, ac, mol2) \n"
+			       "                -s  ff parm set, it is suppressed by \"-p\" option\n"
+			       "                    1: gaff (the default)\n"
+			       "                    2: gaff2 \n"
+			       "                -p  parmfile\n"
+			       "                -pf parmfile format \n"
+			       "                    1: for amber FF data file (the default)\n"
+			       "                    2: for additional force field parameter file\n"
+			       "                -c  atom type corresponding score file, default is PARMCHK.DAT\n" 
+			       "                -a  print out all force field parameters including those in the parmfile\n"
+			       "                    can be 'Y' (yes) or 'N' (no) default is 'N' \n"
+			       "                -w  print out parameters that matching improper dihedral parameters\n"
+			       "                    that contain 'X' in the force field parameter file, can be 'Y' (yes)\n"
+			       "                    or 'N' (no), default is 'Y'\n");
+			exit(1);
 			exit(1);
 		}
 	}
@@ -3387,8 +3390,10 @@ int main(int argc, char *argv[])
 	for (i = 1; i < argc; i += 2) {
 		if (strcmp(argv[i], "-i") == 0)
 			strcpy(ifilename, argv[i + 1]);
-		if (strcmp(argv[i], "-p") == 0)
+		if (strcmp(argv[i], "-p") == 0) {
 			strcpy(pfilename, argv[i + 1]);
+			ipfilename = 1;
+		}
 		if (strcmp(argv[i], "-pf") == 0)
 			pformat = atoi(argv[i+1]);
 		if (strcmp(argv[i], "-o") == 0)
@@ -3419,6 +3424,29 @@ int main(int argc, char *argv[])
 			if(argv[i + 1][0] == 'N' ||argv[i + 1][0] == 'n') 
 				output_improper_flag = 0;
 		}
+		if (strcmp(argv[i], "-s") == 0) {
+			if (strcmp(argv[i + 1], "gaff") == 0)
+				ffset = 1;
+			if (strcmp(argv[i + 1], "GAFF") == 0)
+				ffset = 1;
+			if (strcmp(argv[i + 1], "1") == 0)
+				ffset = 1;
+			if (strcmp(argv[i + 1], "gaff2") == 0)
+				ffset = 2;
+			if (strcmp(argv[i + 1], "GAFF2") == 0)
+				ffset = 2;
+			if (strcmp(argv[i + 1], "2") == 0)
+				ffset = 2;
+		}
+	}
+	if(ipfilename == 0) {
+		if(ffset == 2) 
+			build_path(pfilename, "/dat/leap/parm/", "gaff2.dat",
+				sizeof pfilename, 0);
+		else if(ffset == 1) 
+			build_path(pfilename, "/dat/leap/parm/", "gaff.dat",
+				sizeof pfilename, 0);
+		pformat = 1;
 	}
 
 	if(pformat != 1 && pformat !=2) pformat = 1;
@@ -3426,12 +3454,13 @@ int main(int argc, char *argv[])
 		build_dat_path(cfilename, "PARMCHK.DAT", sizeof cfilename, 0);
 		cindex = 1;
 	}
-	if (cindex == 0){
+	if (cindex == 0) {
 		if ((fptmp = fopen("PARMCHK.DAT", "r")) != NULL) {
 			strcpy(cfilename, "PARMCHK.DAT");
 			cindex = 1;
 			fclose(fptmp);
-		} else {
+		}
+		else {
 			fprintf(stderr, "No parmchk corresponding score file exists, exit\n");
 			exit(1);
 		}

@@ -495,11 +495,13 @@ int main(int argc, char *argv[])
                                 break;
                         }
         }
-
+/*	Now we allow a residue only has one cap (either the N or C-terminal) */
+/*
         if(num_terminal_atom != 0 && num_terminal_atom != 2) {
                 fprintf(stdout, "Error, the total number of terminal atoms must be zero or 2 (HEAD_ATOM / PSEUDO_HEAD_ATOM + TAIL_ATOM / PSEUDO_TAIL_ATOM)\n");
                 exit(0);
         }
+*/
 /*	find cap atoms and residue atoms*/
 	if(sepbondnum > 0) {
 		for(i=0;i<sepbondnum;i++) {

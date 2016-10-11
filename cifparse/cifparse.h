@@ -2,7 +2,7 @@
  *   MxNameLen applies to block, category, item and keyword names...
  *   
  */
-#define MxNameLen    		 80 
+#define MxNameLen    		 256 
 /*
  *   This is the size of the buffer length allocated to individual
  *   values.

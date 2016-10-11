@@ -30,8 +30,8 @@ $(LIBDIR)/libarpack.a: $(ARPACKLIB)
 	mv libarpack.a $(LIBDIR)
 
 clean:
-	$(RM) -f *.o _*.f
+	-/bin/rm -f *.o _*.f
 
 uninstall:
-	$(RM) -f $(LIBDIR)/libarpack.a
+	-rm -f $(LIBDIR)/libarpack.a
 

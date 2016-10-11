@@ -1206,7 +1206,7 @@ CT-CT-C -N    1     0.20000    0.0  1.0
 CT-CX-C -N    1    -0.24607    0.0 -4.0  Fit by mdgx
 CT-CX-C -N    1    -0.08018    0.0 -3.0  Fit by mdgx
 CT-CX-C -N    1     0.04765    0.0 -2.0  Fit by mdgx
-N -C -CX-CT   1     0.62430    0.0  1.0  Fit by mdgx
+CT-CX-C -N    1     0.62430    0.0  1.0  Fit by mdgx
 CX-CT-C -N    1     0.00000    0.0 -4.0  four amplitudes and 
 CX-CT-C -N    1     0.40000    0.0 -3.0  phases for psi' 
 CX-CT-C -N    1     0.20000    0.0 -2.0  
@@ -1741,15 +1741,6 @@ C -ND-CX-C    1     0.00000    0.0 -4.0  Branched from C -N -CX-C
 C -ND-CX-C    1     0.42000    0.0 -3.0  Branched from C -N -CX-C 
 C -ND-CX-C    1     0.27000    0.0 -2.0  Branched from C -N -CX-C 
 C -ND-CX-C    1     0.00000    0.0  1.0  Branched from C -N -CX-C 
-N -CX-C -ND   1     0.00000    0.0 -4.0  Branched from N -CX-C -N 
-ND-CX-C -N    1     0.00000    0.0 -4.0  Branched from N -CX-C -N 
-ND-CX-C -ND   1     0.00000    0.0 -4.0  Branched from N -CX-C -N 
-N -CX-C -ND   1     0.55000  180.0 -3.0  Branched from N -CX-C -N 
-ND-CX-C -N    1     0.55000  180.0 -3.0  Branched from N -CX-C -N 
-ND-CX-C -ND   1     0.55000  180.0 -3.0  Branched from N -CX-C -N 
-N -CX-C -ND   1     1.58000  180.0 -2.0  Branched from N -CX-C -N 
-ND-CX-C -N    1     1.58000  180.0 -2.0  Branched from N -CX-C -N 
-ND-CX-C -ND   1     1.58000  180.0 -2.0  Branched from N -CX-C -N 
 N -CX-C -ND   1     0.45000  180.0  1.0  Branched from N -CX-C -N 
 ND-CX-C -N    1     0.45000  180.0  1.0  Branched from N -CX-C -N 
 ND-CX-C -ND   1     0.45000  180.0  1.0  Branched from N -CX-C -N 
@@ -2046,14 +2037,8 @@ C -TN-CX-C    1     0.01287    0.0 -3.0  Branched from C -N -CX-C , Fit by mdgx 
 C -TN-CX-C    1    -2.85159    0.0 -2.0  Branched from C -N -CX-C , Fit by mdgx , Fit by mdgx , Fit by mdgx
 C -TN-CX-C    1     8.36295    0.0  1.0  Branched from C -N -CX-C , Fit by mdgx , Fit by mdgx , Fit by mdgx
 N -CX-C -TN   1     0.14302    0.0 -4.0  Branched from N -CX-C -N , Fit by mdgx , Fit by mdgx , Fit by mdgx
-TN-CX-C -N    1    -0.26376    0.0 -4.0  Branched from N -CX-C -N , Fit by mdgx 
-TN-CX-C -TN   1     0.04031    0.0 -4.0  Branched from N -CX-C -N 
 N -CX-C -TN   1     0.12378  180.0 -3.0  Branched from N -CX-C -N , Fit by mdgx , Fit by mdgx , Fit by mdgx
-TN-CX-C -N    1    -0.47232  180.0 -3.0  Branched from N -CX-C -N , Fit by mdgx 
-TN-CX-C -TN   1     0.06853  180.0 -3.0  Branched from N -CX-C -N 
 N -CX-C -TN   1     0.98860  180.0 -2.0  Branched from N -CX-C -N , Fit by mdgx , Fit by mdgx , Fit by mdgx
-TN-CX-C -N    1     1.46718  180.0 -2.0  Branched from N -CX-C -N , Fit by mdgx 
-TN-CX-C -TN   1     0.19829  180.0 -2.0  Branched from N -CX-C -N 
 N -CX-C -TN   1    -0.17826  180.0  1.0  Branched from N -CX-C -N , Fit by mdgx , Fit by mdgx , Fit by mdgx
 TN-CX-C -N    1     0.06215  180.0  1.0  Branched from N -CX-C -N , Fit by mdgx , Fit by mdgx , Fit by mdgx
 TN-CX-C -TN   1     1.46258  180.0  1.0  Branched from N -CX-C -N 
@@ -2177,12 +2162,6 @@ TN-CX-2C-2C   1    -0.04739  180.0  1.0  Branched from N -CX-2C-2C
 H -TN-C -OD   1     6.36548  180.0 -2.0  Branched from H -N -C -OD 
 H -TN-C -OD   1     1.58064    0.0  1.0  Branched from H -N -C -OD 
 OD-C -TN-EP   1     0.00000  180.0  2.0  Branched from OD-C -N -EP 
-TN-CX-C -ND   1     0.00000    0.0 -4.0  Branched from N -CX-C -ND 
-ND-CX-C -TN   1     0.00000    0.0 -4.0  Branched from ND-CX-C -N 
-TN-CX-C -ND   1     0.55000  180.0 -3.0  Branched from N -CX-C -ND 
-ND-CX-C -TN   1     0.55000  180.0 -3.0  Branched from ND-CX-C -N 
-TN-CX-C -ND   1     1.58000  180.0 -2.0  Branched from N -CX-C -ND 
-ND-CX-C -TN   1     1.58000  180.0 -2.0  Branched from ND-CX-C -N 
 TN-CX-C -ND   1     0.45000  180.0  1.0  Branched from N -CX-C -ND 
 ND-CX-C -TN   1     0.45000  180.0  1.0  Branched from ND-CX-C -N 
 TN-CT-CT-OA   1     0.00000    0.0 -1.0  Branched from N -CT-CT-OA 
@@ -2743,14 +2722,8 @@ C -TN-TG-C    1     0.56288    0.0 -3.0  Branched from C -TN-CX-C
 C -TN-TG-C    1    -0.60678    0.0 -2.0  Branched from C -TN-CX-C 
 C -TN-TG-C    1     1.00464    0.0  1.0  Branched from C -TN-CX-C 
 N -TG-C -TN   1     0.04182    0.0 -4.0  Branched from N -CX-C -TN, Fit by mdgx , Fit by mdgx , Fit by mdgx
-TN-TG-C -N    1     0.04031    0.0 -4.0  Branched from TN-CX-C -N 
-TN-TG-C -TN   1     0.04031    0.0 -4.0  Branched from TN-CX-C -TN 
 N -TG-C -TN   1     0.21582  180.0 -3.0  Branched from N -CX-C -TN, Fit by mdgx , Fit by mdgx , Fit by mdgx
-TN-TG-C -N    1     0.06853  180.0 -3.0  Branched from TN-CX-C -N 
-TN-TG-C -TN   1     0.06853  180.0 -3.0  Branched from TN-CX-C -TN 
 N -TG-C -TN   1     1.11459  180.0 -2.0  Branched from N -CX-C -TN, Fit by mdgx , Fit by mdgx , Fit by mdgx
-TN-TG-C -N    1     0.19829  180.0 -2.0  Branched from TN-CX-C -N 
-TN-TG-C -TN   1     0.19829  180.0 -2.0  Branched from TN-CX-C -TN 
 N -TG-C -TN   1     0.24131  180.0  1.0  Branched from N -CX-C -TN, Fit by mdgx , Fit by mdgx , Fit by mdgx
 TN-TG-C -N    1     1.46258  180.0  1.0  Branched from TN-CX-C -N 
 TN-TG-C -TN   1     1.46258  180.0  1.0  Branched from TN-CX-C -TN 
