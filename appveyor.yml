@@ -7,7 +7,7 @@ install:
   # Download Carl Kleffner's mingw-w64 static toolchain (gcc, fortran, etc)
   - ps: $dwntool=New-Object System.Net.WebClient
   - ps: $dwntool.DownloadFile("https://bitbucket.org/carlkl/mingw-w64-for-python/downloads/mingwpy_amd64_vc100.7z", "C:\\mingw64py34.7z")
-  - 7z x C:\\mmingw64py34.7z -oC:\ > null
+  - 7z x C:\\mingw64py34.7z -oC:\ > null
   - "SET PATH=C:\\mingwpy\\bin;%PATH%"
 
   # run the configure script
