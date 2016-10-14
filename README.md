@@ -1,3 +1,5 @@
+[![Travis Build Status](https://travis-ci.org/choderalab/ambermini.png)](https://travis-ci.org/choderalab/ambermini)
+
 `ambermini` is an internal dependency for [omnia](http://omnia.md), and contains a stripped-down set of just antechamber, sqm, and tleap.
 
 **NOTE: This is not an officially-supported AmberTools distribution.**

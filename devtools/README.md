@@ -15,15 +15,16 @@ Keep in mind, the structure of AmberTools may change with subsequent versions,
 so use your judgement on these files. Not every file is needed is the problem, 
 compare the versions, see if new dependencies are needed. 
 
-| -------------------------|-------------------------------------------------|
-| The Most Critical Thing! |There are several files (*mostly* `Makefile`s)\  |
-|                          |that have custom functions to make AmberMini\    |
-|                          |work on Windows and as a standalone! These\      |
-|                          |create private compiled binaries needed for the\ |
-|                          |standalone functionality.                        |
-|--------------------------|--------------------------------------------------|
-|                          | DO NOT DELETE THESE FUNCTIONS!\                  |
-|                          | Incorperate them!                                |
+## The Most Critical Thing!
+
+There are several files (*mostly* `Makefile`s) that have custom 
+functions to make AmberMini work on Windows and as a standalone! These 
+create private compiled binaries needed for the standalone 
+functionality.
+
+**DO NOT OVERWRITE THESE FUNCTIONS!**
+
+Incorporate them!
                           
                           
 
