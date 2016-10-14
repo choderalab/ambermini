@@ -6,12 +6,12 @@ install:
 
   # Download Carl Kleffner's mingw-w64 static toolchain (gcc, fortran, etc)
   - ps: $dwntool=New-Object System.Net.WebClient
-  - ps: $dwntool.DownloadFile("https://bitbucket.org/carlkl/mingw-w64-for-python/downloads/mingw64static-2014-07.7z", "C:\\mingw64static-2014-07.7z")
-  - 7z x C:\\mingw64static-2014-07.7z -oC:\ > null
-  - "SET PATH=C:\\mingw64static\\bin;%PATH%"
+  - ps: $dwntool.DownloadFile("https://bitbucket.org/carlkl/mingw-w64-for-python/downloads/mingwpy_amd64_vc100.7z", "C:\\mingw64py34.7z")
+  - 7z x C:\\mmingw64py34.7z -oC:\ > null
+  - "SET PATH=C:\\mingwpy\\bin;%PATH%"
 
   # run the configure script
-  - python configure --yacc=bison --cc C:\mingw64static\bin\gcc.exe --cxx C:\mingw64static\bin\g++.exe --fc C:\mingw64static\bin\gfortran.exe --prefix %APPVEYOR_BUILD_FOLDER%\ambermini
+  - python configure --yacc=bison --cc C:\mingwpy\bin\gcc.exe --cxx C:\mingwpy\bin\g++.exe --fc C:\mingwpy\bin\gfortran.exe --prefix %APPVEYOR_BUILD_FOLDER%\ambermini
 
   # required gnu tools. make sure we've got them
   - where flex
