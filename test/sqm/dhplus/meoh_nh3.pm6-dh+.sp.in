@@ -1,0 +1,25 @@
+Run PM6-DH+ single point on MeOH-NH3 dimer
+ &qmmm
+    qm_theory    = 'pm6-dh+',
+    qmcharge     = 0,
+    ! SCF settings
+    scfconv      = 1.0d-10, ! kcal/mol
+    ! errconv      = 1.d-06,  ! au
+    tight_p_conv = 1,
+    itrmax       = 100,
+    ! Geometry optimization settings -> Do single point
+    maxcyc       = 0,
+    ! Output
+    verbosity    = 0,
+ /
+ 6 C     -1.5826   -0.2223    0.1098
+ 8 O     -0.8242    0.9371   -0.2454
+ 7 N      2.0213    0.0023    0.2125
+ 1 H      0.1446    0.7478   -0.1070
+ 1 H     -2.6147    0.0385   -0.1537
+ 1 H     -1.4959   -0.4104    1.1849
+ 1 H     -1.2457   -1.0898   -0.4662
+ 1 H      2.3708    0.1906    1.1384
+ 1 H      2.0080   -0.9976    0.0894
+ 1 H      2.6780    0.3838   -0.4491
+

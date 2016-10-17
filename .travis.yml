@@ -17,4 +17,9 @@ script:
   - $HOME/appveyor/bin/sqm -h
   - $HOME/appveyor/bin/antechamber -h
   - $HOME/appveyor/bin/tleap -h
+  # Run tests
+  - cd test && make test.antechamber && cd ..
+  - cd test && make test.sqm && cd ..
+  - cd test && make test.leap && cd ..
+  - cd test && make clean & cd ..
 

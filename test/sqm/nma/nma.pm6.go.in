@@ -1,0 +1,29 @@
+Run PM6 geometry optimization for NMA
+ &qmmm
+    qm_theory    = 'PM6',
+    qmcharge     = 0,
+    ! SCF settings
+    scfconv      = 1.0d-10, ! kcal/mol
+    errconv      = 1.d-06,  ! au
+    tight_p_conv = 0,
+    itrmax       = 100,
+    ! Geometry optimization settings
+    maxcyc       = 100,
+    grms_tol     = 0.02,   ! kcal/(mol*A)
+    ! Output
+    ntpr         = 101,
+    verbosity    = 0,
+ /
+ 6 C    -0.767000     3.380000     4.245000
+ 6 C    -1.809707     2.570219     4.710852
+ 7 N    -2.661673     2.646098     3.869189
+ 6 C    -3.662846     1.855199     3.619926
+ 8 O    -1.634379     2.116691     5.584678
+ 1 H     0.218271     3.164467     4.684075
+ 1 H    -0.578839     3.210298     3.174581
+ 1 H    -1.024346     4.421330     4.488732
+ 1 H    -2.569216     3.204198     3.074324
+ 1 H    -3.347225     0.824359     3.812610
+ 1 H    -4.529359     1.998602     4.311686
+ 1 H    -4.036138     1.906340     2.552627
+

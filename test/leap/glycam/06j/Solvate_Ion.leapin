@@ -1,0 +1,9 @@
+source leaprc.GLYCAM_06j-1
+
+m = sequence { OME 0ZB }
+addions m NA 0
+solvatebox m TIP3PBOX 8.0 iso
+
+saveamberparm m Solvate_Ion.parm7 Solvate_Ion.rst7
+
+quit

@@ -1,0 +1,561 @@
+ ******************************************************************************
+ *                                                                            *
+ *                                DIVCON 2005                                 *
+ *                                                                            *
+ *                                             Expires: None                  *
+ ******************************************************************************
+
+                                           (*) COMPILED WITH DIRECTIVES:
+                                               PLATFORM                 UNKNOWN
+                                               HAS_LAPACK           NOT DEFINED
+                                               MPI_IS_ON            NOT DEFINED
+                                               MPI_NOMC             NOT DEFINED
+                                               CUTREPUL_IS_ON       NOT DEFINED
+                                               LARGE_MEMORY_MC      NOT DEFINED
+                                               MEMORY_OVERLAP       NOT DEFINED
+                                               SCRF_IS_ON           NOW ALWAYS DEFINED
+                                               PARAM_IS_ON          NOT DEFINED
+
+ ------------------------------------------------------------------------------
+ ----------------          USER SUPPLIED KEYWORDS          --------------------
+ ------------------------------------------------------------------------------
+ CARTESIAN      - CARTESIAN COORDINATE FORMAT SELECTED
+ AM1            - AM1 HAMILTONIAN TO BE USED
+ STANDARD       - STANDARD CLOSED-SHELL CALCULATION (NO D&C)
+ DIRECT         - DO NOT STORE 2-ELECTRON INTEGRALS IN SCF CALCULATIONS
+ OPT=BFGS       - CARRY OUT A BFGS GEOMETRY OPTIMIZATION
+ XTEST=0.0001   - GEOMETRY OPTIMIZATION COORDINATE CHANGE CRITERION = 0.00010
+ CHARGE=-2      - A NET CHARGE OF    -2.00 TO BE PLACED ON SYSTEM
+
+ ------------------------------------------------------------------------------
+ ----------------        ADDITIONAL(DEFAULT) KEYWORDS        ------------------
+ ------------------------------------------------------------------------------
+ ECRIT=4.0E-06  - CONVERGENCE CRITERION FOR ENERGY
+ DCRIT=5.0E-04  - CONVERGENCE CRITERION FOR DMX (DENSITY MATRIX)
+ MAXIT=100      - MAXIMUM NUMBER OF SCF ITERATIONS ALLOWED
+ TEMPK=1000.0   - A D&C TEMPERATURE REQUESTED
+ ADDMM          - ADD MM CORRECTION TO PEPTIDE TORSIONAL BARRIER
+ RMIN=0.5       - MIMIMUM DISTANCE ALLOWED BETWEEN ATOMS
+ INTGLS=TALMAN  - TALMAN INTEGRALS TO BE USED
+ NOXML          - DO NOT GENERATE AN XML FILE
+ MAXOPT=0       - MAXIMUM NUMBER OF GEOMETRY OPTIMIZATION CYCLES; IT IS
+                  TEN TIMES THE NUMBER OF SOME GEOMETRICAL PARAMETERS
+ ETEST=2.0E-03  - GEOMETRY OPTIMIZATION ENERGY CHANGE CRITERION
+ GTEST=5.0E-01  - GEOMETRY OPTIMIZATION GRADIENT COMPONENT CRITERION
+ DIIS           - USE DIIS METHOD IN BFGS GEOMETRY OPTIMIZATION
+ ------------------------------------------------------------------------------
+ NPAIRS =      595
+
+
+ NUMBER OF ATOMS                 =    35
+ TOTAL NUMBER OF BASIS FUNCTIONS =   110
+ TOTAL NUMBER OF ELECTRONS       =   122
+
+
+ DEFAULT SETTINGS FOR CALCULATION
+ --------------------------------
+
+ - D&C TEMPERATURE OF 1000.00 K WILL BE USED
+ - NO TIME LIMIT ON CALCULATION
+ 
+
+ ETEST  =  0.002000
+ XTEST  =  0.000100
+ GNTEST =  1.280869
+ GTEST  =  0.500000
+
+ NUMBER OF VARIABLES=   105
+
+ UPDATING PAIRLIST
+ NPAIRS =      595
+
+  CYCLE =     0         TIME =      0.122  ENERGY =     -97.884214
+  GNORM =    227.888  GRDMAX =   77.5462   GRDAVR =   13.5367
+ DELTAE =    0.000000 DELTAX = 0.000000
+
+  CYCLE =     1         TIME =      0.169  ENERGY =    -104.417647
+  GNORM =    127.546  GRDMAX =   40.4040   GRDAVR =    8.6230
+ DELTAE =   -6.533433 DELTAX = 0.004346
+
+  CYCLE =     2         TIME =      0.124  ENERGY =    -104.584117
+  GNORM =    123.044  GRDMAX =   40.1483   GRDAVR =    8.3383
+ DELTAE =   -0.166470 DELTAX = 0.001456
+
+  CYCLE =     3         TIME =      0.061  ENERGY =    -107.522162
+  GNORM =     62.133  GRDMAX =   26.6440   GRDAVR =    4.1369
+ DELTAE =   -2.938045 DELTAX = 0.005419
+
+  CYCLE =     4         TIME =      0.061  ENERGY =    -107.953868
+  GNORM =     54.672  GRDMAX =   24.0776   GRDAVR =    3.4379
+ DELTAE =   -0.431706 DELTAX = 0.008128
+
+  CYCLE =     5         TIME =      0.069  ENERGY =    -108.151070
+  GNORM =     66.496  GRDMAX =   20.5996   GRDAVR =    4.6065
+ DELTAE =   -0.197203 DELTAX = 0.007606
+
+  CYCLE =     6         TIME =      0.115  ENERGY =    -108.636506
+  GNORM =     58.338  GRDMAX =   19.4602   GRDAVR =    3.9327
+ DELTAE =   -0.485436 DELTAX = 0.003503
+
+  CYCLE =     7         TIME =      0.055  ENERGY =    -109.300656
+  GNORM =     44.606  GRDMAX =   19.0752   GRDAVR =    3.0068
+ DELTAE =   -0.664150 DELTAX = 0.003709
+
+  CYCLE =     8         TIME =      0.056  ENERGY =    -109.796322
+  GNORM =     29.240  GRDMAX =   11.4764   GRDAVR =    2.0670
+ DELTAE =   -0.495666 DELTAX = 0.005563
+
+  CYCLE =     9         TIME =      0.055  ENERGY =    -110.017889
+  GNORM =     21.572  GRDMAX =    7.2568   GRDAVR =    1.5705
+ DELTAE =   -0.221568 DELTAX = 0.004032
+
+  CYCLE =    10         TIME =      0.049  ENERGY =    -110.074998
+  GNORM =     20.805  GRDMAX =    6.9344   GRDAVR =    1.5099
+ DELTAE =   -0.057109 DELTAX = 0.002317
+
+  CYCLE =    11         TIME =      0.041  ENERGY =    -110.100916
+  GNORM =     21.667  GRDMAX =    7.1499   GRDAVR =    1.5467
+ DELTAE =   -0.025918 DELTAX = 0.001627
+
+  CYCLE =    12         TIME =      0.043  ENERGY =    -110.109018
+  GNORM =     22.766  GRDMAX =    7.6644   GRDAVR =    1.5988
+ DELTAE =   -0.008102 DELTAX = 0.000841
+
+ RESETTING SEARCH DIRECTION
+
+  CYCLE =    13         TIME =      0.096  ENERGY =    -110.163361
+  GNORM =     24.715  GRDMAX =   10.9759   GRDAVR =    1.6194
+ DELTAE =   -0.054343 DELTAX = 0.000544
+
+  CYCLE =    14         TIME =      0.041  ENERGY =    -110.168340
+  GNORM =     25.611  GRDMAX =   10.6169   GRDAVR =    1.6058
+ DELTAE =   -0.004979 DELTAX = 0.000816
+
+  CYCLE =    15         TIME =      0.047  ENERGY =    -110.209299
+  GNORM =     19.053  GRDMAX =    8.9445   GRDAVR =    1.1922
+ DELTAE =   -0.040959 DELTAX = 0.001225
+
+  CYCLE =    16         TIME =      0.047  ENERGY =    -110.255267
+  GNORM =     13.132  GRDMAX =    5.3138   GRDAVR =    0.8046
+ DELTAE =   -0.045968 DELTAX = 0.001837
+
+  CYCLE =    17         TIME =      0.055  ENERGY =    -110.263759
+  GNORM =     12.231  GRDMAX =    3.6561   GRDAVR =    0.7990
+ DELTAE =   -0.008492 DELTAX = 0.002756
+
+  CYCLE =    18         TIME =      0.098  ENERGY =    -110.289222
+  GNORM =     11.111  GRDMAX =    4.1698   GRDAVR =    0.7465
+ DELTAE =   -0.025462 DELTAX = 0.001807
+
+  CYCLE =    19         TIME =      0.106  ENERGY =    -110.298428
+  GNORM =     10.841  GRDMAX =    4.2563   GRDAVR =    0.7248
+ DELTAE =   -0.009207 DELTAX = 0.001244
+
+  CYCLE =    20         TIME =      0.097  ENERGY =    -110.318102
+  GNORM =      9.712  GRDMAX =    3.5884   GRDAVR =    0.6566
+ DELTAE =   -0.019674 DELTAX = 0.001467
+
+  CYCLE =    21         TIME =      0.119  ENERGY =    -110.333695
+  GNORM =      8.572  GRDMAX =    2.8734   GRDAVR =    0.5660
+ DELTAE =   -0.015593 DELTAX = 0.000922
+
+  CYCLE =    22         TIME =      0.096  ENERGY =    -110.339735
+  GNORM =      8.228  GRDMAX =    2.8365   GRDAVR =    0.5399
+ DELTAE =   -0.006041 DELTAX = 0.000978
+
+  CYCLE =    23         TIME =      0.048  ENERGY =    -110.346676
+  GNORM =     11.455  GRDMAX =    6.7846   GRDAVR =    0.6858
+ DELTAE =   -0.006940 DELTAX = 0.002312
+
+  CYCLE =    24         TIME =      0.049  ENERGY =    -110.374400
+  GNORM =     11.914  GRDMAX =    5.2041   GRDAVR =    0.7856
+ DELTAE =   -0.027725 DELTAX = 0.001238
+
+  CYCLE =    25         TIME =      0.095  ENERGY =    -110.388549
+  GNORM =     10.327  GRDMAX =    3.9440   GRDAVR =    0.7106
+ DELTAE =   -0.014148 DELTAX = 0.000604
+
+  CYCLE =    26         TIME =      0.043  ENERGY =    -110.413506
+  GNORM =      8.108  GRDMAX =    3.2580   GRDAVR =    0.5630
+ DELTAE =   -0.024957 DELTAX = 0.000726
+
+  CYCLE =    27         TIME =      0.041  ENERGY =    -110.438007
+  GNORM =      6.515  GRDMAX =    2.5976   GRDAVR =    0.4509
+ DELTAE =   -0.024501 DELTAX = 0.001088
+
+  CYCLE =    28         TIME =      0.048  ENERGY =    -110.465498
+  GNORM =      5.080  GRDMAX =    1.6808   GRDAVR =    0.3517
+ DELTAE =   -0.027491 DELTAX = 0.001633
+
+  CYCLE =    29         TIME =      0.042  ENERGY =    -110.481391
+  GNORM =      4.849  GRDMAX =    1.5069   GRDAVR =    0.3313
+ DELTAE =   -0.015893 DELTAX = 0.001289
+
+  CYCLE =    30         TIME =      0.042  ENERGY =    -110.491827
+  GNORM =      4.847  GRDMAX =    1.7548   GRDAVR =    0.3294
+ DELTAE =   -0.010437 DELTAX = 0.000899
+
+  CYCLE =    31         TIME =      0.043  ENERGY =    -110.505211
+  GNORM =      4.397  GRDMAX =    1.5150   GRDAVR =    0.3093
+ DELTAE =   -0.013383 DELTAX = 0.001348
+
+  CYCLE =    32         TIME =      0.042  ENERGY =    -110.512983
+  GNORM =      4.710  GRDMAX =    1.6272   GRDAVR =    0.3301
+ DELTAE =   -0.007773 DELTAX = 0.000718
+
+  CYCLE =    33         TIME =      0.042  ENERGY =    -110.519751
+  GNORM =      5.939  GRDMAX =    2.0130   GRDAVR =    0.3951
+ DELTAE =   -0.006768 DELTAX = 0.000917
+
+  CYCLE =    34         TIME =      0.035  ENERGY =    -110.520521
+  GNORM =      6.682  GRDMAX =    2.3851   GRDAVR =    0.4474
+ DELTAE =   -0.000770 DELTAX = 0.000261
+ ENERGY TEST PASSED
+
+ RESETTING SEARCH DIRECTION
+
+  CYCLE =    35         TIME =      0.111  ENERGY =    -110.522761
+  GNORM =      6.737  GRDMAX =    2.3553   GRDAVR =    0.4565
+ DELTAE =   -0.002240 DELTAX = 0.000210
+
+  CYCLE =    36         TIME =      0.035  ENERGY =    -110.525326
+  GNORM =      6.492  GRDMAX =    2.2432   GRDAVR =    0.4456
+ DELTAE =   -0.002565 DELTAX = 0.000315
+
+  CYCLE =    37         TIME =      0.035  ENERGY =    -110.527565
+  GNORM =      6.397  GRDMAX =    2.3272   GRDAVR =    0.4271
+ DELTAE =   -0.002239 DELTAX = 0.000473
+
+  CYCLE =    38         TIME =      0.061  ENERGY =    -110.528562
+  GNORM =      6.442  GRDMAX =    2.2400   GRDAVR =    0.4345
+ DELTAE =   -0.000998 DELTAX = 0.000340
+ ENERGY TEST PASSED
+
+  CYCLE =    39         TIME =      0.042  ENERGY =    -110.534881
+  GNORM =      5.813  GRDMAX =    1.9559   GRDAVR =    0.3960
+ DELTAE =   -0.006318 DELTAX = 0.001063
+
+  CYCLE =    40         TIME =      0.042  ENERGY =    -110.536861
+  GNORM =      6.105  GRDMAX =    2.7660   GRDAVR =    0.4031
+ DELTAE =   -0.001980 DELTAX = 0.001595
+ ENERGY TEST PASSED
+
+  CYCLE =    41         TIME =      0.074  ENERGY =    -110.539289
+  GNORM =      5.880  GRDMAX =    2.8564   GRDAVR =    0.3722
+ DELTAE =   -0.002429 DELTAX = 0.000595
+
+  CYCLE =    42         TIME =      0.082  ENERGY =    -110.542089
+  GNORM =      5.703  GRDMAX =    2.7238   GRDAVR =    0.3607
+ DELTAE =   -0.002799 DELTAX = 0.000765
+
+  CYCLE =    43         TIME =      0.095  ENERGY =    -110.544252
+  GNORM =      5.476  GRDMAX =    2.4025   GRDAVR =    0.3362
+ DELTAE =   -0.002164 DELTAX = 0.000800
+
+  CYCLE =    44         TIME =      0.083  ENERGY =    -110.546575
+  GNORM =      4.541  GRDMAX =    1.5372   GRDAVR =    0.2985
+ DELTAE =   -0.002323 DELTAX = 0.000436
+
+  CYCLE =    45         TIME =      0.084  ENERGY =    -110.549350
+  GNORM =      3.553  GRDMAX =    1.3003   GRDAVR =    0.2417
+ DELTAE =   -0.002775 DELTAX = 0.000372
+
+  CYCLE =    46         TIME =      0.090  ENERGY =    -110.551968
+  GNORM =      3.373  GRDMAX =    1.3812   GRDAVR =    0.2147
+ DELTAE =   -0.002618 DELTAX = 0.000702
+
+  CYCLE =    47         TIME =      0.070  ENERGY =    -110.553014
+  GNORM =      3.636  GRDMAX =    1.6143   GRDAVR =    0.2328
+ DELTAE =   -0.001046 DELTAX = 0.000266
+ ENERGY TEST PASSED
+
+  CYCLE =    48         TIME =      0.076  ENERGY =    -110.554650
+  GNORM =      3.136  GRDMAX =    0.9770   GRDAVR =    0.1979
+ DELTAE =   -0.001636 DELTAX = 0.000468
+ ENERGY TEST PASSED
+
+  CYCLE =    49         TIME =      0.043  ENERGY =    -110.555246
+  GNORM =      4.706  GRDMAX =    1.6164   GRDAVR =    0.3154
+ DELTAE =   -0.000597 DELTAX = 0.000824
+ ENERGY TEST PASSED
+
+  CYCLE =    50         TIME =      0.062  ENERGY =    -110.556867
+  GNORM =      4.029  GRDMAX =    1.4397   GRDAVR =    0.2676
+ DELTAE =   -0.001620 DELTAX = 0.000406
+ ENERGY TEST PASSED
+
+  CYCLE =    51         TIME =      0.070  ENERGY =    -110.558325
+  GNORM =      3.397  GRDMAX =    1.2114   GRDAVR =    0.2250
+ DELTAE =   -0.001459 DELTAX = 0.000440
+ ENERGY TEST PASSED
+
+  CYCLE =    52         TIME =      0.069  ENERGY =    -110.560245
+  GNORM =      2.808  GRDMAX =    1.1318   GRDAVR =    0.1829
+ DELTAE =   -0.001920 DELTAX = 0.000439
+ ENERGY TEST PASSED
+
+  CYCLE =    53         TIME =      0.063  ENERGY =    -110.561619
+  GNORM =      2.491  GRDMAX =    0.9214   GRDAVR =    0.1733
+ DELTAE =   -0.001373 DELTAX = 0.000497
+ ENERGY TEST PASSED
+
+  CYCLE =    54         TIME =      0.075  ENERGY =    -110.562292
+  GNORM =      2.833  GRDMAX =    0.8960   GRDAVR =    0.1842
+ DELTAE =   -0.000673 DELTAX = 0.000375
+ ENERGY TEST PASSED
+
+  CYCLE =    55         TIME =      0.061  ENERGY =    -110.563361
+  GNORM =      2.900  GRDMAX =    0.9223   GRDAVR =    0.1929
+ DELTAE =   -0.001069 DELTAX = 0.000524
+ ENERGY TEST PASSED
+
+  CYCLE =    56         TIME =      0.067  ENERGY =    -110.564264
+  GNORM =      2.926  GRDMAX =    0.9487   GRDAVR =    0.1929
+ DELTAE =   -0.000903 DELTAX = 0.000523
+ ENERGY TEST PASSED
+
+  CYCLE =    57         TIME =      0.063  ENERGY =    -110.565599
+  GNORM =      2.998  GRDMAX =    1.2754   GRDAVR =    0.1887
+ DELTAE =   -0.001335 DELTAX = 0.000513
+ ENERGY TEST PASSED
+
+  CYCLE =    58         TIME =      0.068  ENERGY =    -110.566955
+  GNORM =      2.484  GRDMAX =    0.7798   GRDAVR =    0.1754
+ DELTAE =   -0.001357 DELTAX = 0.000570
+ ENERGY TEST PASSED
+
+  CYCLE =    59         TIME =      0.036  ENERGY =    -110.568218
+  GNORM =      2.907  GRDMAX =    1.2462   GRDAVR =    0.1989
+ DELTAE =   -0.001263 DELTAX = 0.000760
+ ENERGY TEST PASSED
+
+  CYCLE =    60         TIME =      0.061  ENERGY =    -110.569429
+  GNORM =      2.112  GRDMAX =    0.7034   GRDAVR =    0.1515
+ DELTAE =   -0.001210 DELTAX = 0.000219
+ ENERGY TEST PASSED
+
+  CYCLE =    61         TIME =      0.036  ENERGY =    -110.570565
+  GNORM =      2.367  GRDMAX =    0.8505   GRDAVR =    0.1512
+ DELTAE =   -0.001137 DELTAX = 0.000543
+ ENERGY TEST PASSED
+
+  CYCLE =    62         TIME =      0.035  ENERGY =    -110.571714
+  GNORM =      1.679  GRDMAX =    0.7035   GRDAVR =    0.1155
+ DELTAE =   -0.001149 DELTAX = 0.000343
+ ENERGY TEST PASSED
+
+  CYCLE =    63         TIME =      0.056  ENERGY =    -110.572273
+  GNORM =      1.325  GRDMAX =    0.5031   GRDAVR =    0.0925
+ DELTAE =   -0.000559 DELTAX = 0.000189
+ ENERGY TEST PASSED
+
+  CYCLE =    64         TIME =      0.035  ENERGY =    -110.572390
+  GNORM =      1.923  GRDMAX =    0.8753   GRDAVR =    0.1231
+ DELTAE =   -0.000117 DELTAX = 0.000443
+ ENERGY TEST PASSED
+
+  CYCLE =    65         TIME =      0.036  ENERGY =    -110.573170
+  GNORM =      1.088  GRDMAX =    0.2855   GRDAVR =    0.0766
+ DELTAE =   -0.000780 DELTAX = 0.000163
+ ENERGY TEST PASSED
+ GRADIENT NORM TEST PASSED
+ GRADIENT COMPONENT TEST PASSED
+
+  CYCLE =    66         TIME =      0.035  ENERGY =    -110.573521
+  GNORM =      1.187  GRDMAX =    0.4873   GRDAVR =    0.0739
+ DELTAE =   -0.000351 DELTAX = 0.000225
+ ENERGY TEST PASSED
+ GRADIENT NORM TEST PASSED
+ GRADIENT COMPONENT TEST PASSED
+
+  CYCLE =    67         TIME =      0.035  ENERGY =    -110.573607
+  GNORM =      1.741  GRDMAX =    0.7006   GRDAVR =    0.1000
+ DELTAE =   -0.000086 DELTAX = 0.000283
+ ENERGY TEST PASSED
+
+  CYCLE =    68         TIME =      0.036  ENERGY =    -110.574118
+  GNORM =      1.049  GRDMAX =    0.4471   GRDAVR =    0.0647
+ DELTAE =   -0.000511 DELTAX = 0.000122
+ ENERGY TEST PASSED
+ GRADIENT NORM TEST PASSED
+ GRADIENT COMPONENT TEST PASSED
+
+  CYCLE =    69         TIME =      0.056  ENERGY =    -110.574298
+  GNORM =      0.827  GRDMAX =    0.3151   GRDAVR =    0.0541
+ DELTAE =   -0.000180 DELTAX = 0.000132
+ ENERGY TEST PASSED
+ GRADIENT NORM TEST PASSED
+ GRADIENT COMPONENT TEST PASSED
+
+  CYCLE =    70         TIME =      0.035  ENERGY =    -110.574415
+  GNORM =      1.101  GRDMAX =    0.3616   GRDAVR =    0.0767
+ DELTAE =   -0.000118 DELTAX = 0.000254
+ ENERGY TEST PASSED
+ GRADIENT NORM TEST PASSED
+ GRADIENT COMPONENT TEST PASSED
+
+  CYCLE =    71         TIME =      0.035  ENERGY =    -110.574742
+  GNORM =      0.928  GRDMAX =    0.3160   GRDAVR =    0.0597
+ DELTAE =   -0.000326 DELTAX = 0.000254
+ ENERGY TEST PASSED
+ GRADIENT NORM TEST PASSED
+ GRADIENT COMPONENT TEST PASSED
+
+  CYCLE =    72         TIME =      0.055  ENERGY =    -110.574890
+  GNORM =      0.634  GRDMAX =    0.2199   GRDAVR =    0.0457
+ DELTAE =   -0.000149 DELTAX = 0.000127
+ ENERGY TEST PASSED
+ GRADIENT NORM TEST PASSED
+ GRADIENT COMPONENT TEST PASSED
+
+  CYCLE =    73         TIME =      0.035  ENERGY =    -110.575064
+  GNORM =      0.697  GRDMAX =    0.2258   GRDAVR =    0.0481
+ DELTAE =   -0.000174 DELTAX = 0.000214
+ ENERGY TEST PASSED
+ GRADIENT NORM TEST PASSED
+ GRADIENT COMPONENT TEST PASSED
+
+  CYCLE =    74         TIME =      0.036  ENERGY =    -110.575188
+  GNORM =      0.861  GRDMAX =    0.3385   GRDAVR =    0.0530
+ DELTAE =   -0.000124 DELTAX = 0.000214
+ ENERGY TEST PASSED
+ GRADIENT NORM TEST PASSED
+ GRADIENT COMPONENT TEST PASSED
+
+  CYCLE =    75         TIME =      0.056  ENERGY =    -110.575327
+  GNORM =      0.407  GRDMAX =    0.1467   GRDAVR =    0.0274
+ DELTAE =   -0.000139 DELTAX = 0.000107
+ ENERGY TEST PASSED
+ GRADIENT NORM TEST PASSED
+ GRADIENT COMPONENT TEST PASSED
+
+  CYCLE =    76         TIME =      0.035  ENERGY =    -110.575387
+  GNORM =      0.776  GRDMAX =    0.3235   GRDAVR =    0.0527
+ DELTAE =   -0.000060 DELTAX = 0.000307
+ ENERGY TEST PASSED
+ GRADIENT NORM TEST PASSED
+ GRADIENT COMPONENT TEST PASSED
+
+  CYCLE =    77         TIME =      0.075  ENERGY =    -110.575517
+  GNORM =      0.311  GRDMAX =    0.0780   GRDAVR =    0.0229
+ DELTAE =   -0.000130 DELTAX = 0.000077
+ ENERGY TEST PASSED
+ COORDINATE TEST PASSED
+ GRADIENT NORM TEST PASSED
+ GRADIENT COMPONENT TEST PASSED
+
+ -- GEOMETRY OPTIMIZED --
+
+
+ FINAL QUANTITIES:
+ -----------------
+
+ NUMBER OF FULLY DIAGONALIZED SUBSYSTEMS:      1
+ NUMBER OF FROZEN SUBSYSTEMS:                  0
+ NUMBER OF SCF CALCULATIONS =    115
+
+ ELECTRONIC ENERGY     =           -29248.60168413 EV
+ CORE-CORE REPULSIONS  =            24949.31560763 EV
+ TOTAL ENERGY          =            -4299.28607650 EV
+ HEAT OF FORMATION     =             -110.57551740 KCAL/MOL
+ FERMI ENERGY          =                0.00000000 EV
+
+ TIMINGS:
+ -------
+ * NUMBER OF DIAGONALIZATIONS:     2
+ * SCF CYCLE: TOTAL     0.0200, AV.     0.0100 SEC.
+    OF WHICH: FOCK BUILD  50.00%. (TOTAL     0.0100, AV.     0.0033 SEC.)
+
+
+     ATOM     ELEMENTAL            CARTESIAN COORDINATES
+    NUMBER     SYMBOL            X           Y           Z
+
+       1         C             2.61093     2.53108     0.15151
+       2         C             1.89458     3.78600     0.12366
+       3         C             0.44035     3.69089     0.05747
+       4         C            -0.20406     2.49576     0.05087
+       5         C             0.49833     1.25307     0.12185
+       6         C             1.92841     1.33661     0.13904
+       7         C            -0.13114    -0.00051     0.16560
+       8         C             0.66614    -1.15354     0.22942
+       9         C             2.09389    -1.03598     0.24662
+      10         O             2.72228     0.19952     0.18430
+      11         C             0.14334    -2.48310     0.27240
+      12         C             0.94710    -3.57181     0.38361
+      13         C             2.39990    -3.45768     0.45315
+      14         C             2.93519    -2.11815     0.36385
+      15         O             2.48331     4.89794     0.16178
+      16         O             3.13663    -4.46900     0.59042
+      17         C            -2.25191    -0.25584    -2.16314
+      18         O            -3.25462    -0.36117    -2.93359
+      19         O            -1.06489    -0.19263    -2.56971
+      20         C            -2.01399    -0.06037     1.70235
+      21         C            -1.59156    -0.09338     0.35638
+      22         C            -2.54620    -0.20639    -0.66274
+      23         C            -3.90446    -0.28282    -0.30195
+      24         C            -4.31389    -0.24953     1.02386
+      25         C            -3.35901    -0.13732     2.03654
+      26         H             3.70555     2.55512     0.17445
+      27         H            -0.11344     4.63662    -0.00178
+      28         H            -1.30355     2.44598    -0.01858
+      29         H            -0.95176    -2.59273     0.20262
+      30         H             0.53048    -4.58690     0.41093
+      31         H             4.02240    -1.98799     0.38334
+      32         H            -1.25795     0.02836     2.49703
+      33         H            -4.63956    -0.37112    -1.12072
+      34         H            -5.38052    -0.31068     1.27817
+      35         H            -3.66790    -0.10987     3.08985
+
+
+   ATOMIC CHARGES:
+
+   ATOM   ELEMENTAL  PARTIAL    PARTIAL    PARTIAL
+    NO.    SYMBOL    MULLIKEN   CM1        CM2
+                     CHARGE     CHARGE     CHARGE
+
+     1       C     -0.37238    -0.36889    -0.35193
+     2       C      0.30789     0.35519     0.40621
+     3       C     -0.31021    -0.30841    -0.29083
+     4       C      0.00043     0.00102     0.01895
+     5       C     -0.25076    -0.24956    -0.25006
+     6       C      0.18423     0.21427     0.22900
+     7       C      0.23610     0.23725     0.23676
+     8       C     -0.25050    -0.24931    -0.24980
+     9       C      0.18423     0.21426     0.22899
+    10       O     -0.15666    -0.22119    -0.24875
+    11       C      0.00060     0.00119     0.01913
+    12       C     -0.31024    -0.30844    -0.29086
+    13       C      0.30791     0.35521     0.40625
+    14       C     -0.37240    -0.36891    -0.35195
+    15       O     -0.46707    -0.52082    -0.56931
+    16       O     -0.46696    -0.52072    -0.56922
+    17       C      0.35220     0.43776     0.51950
+    18       O     -0.59089    -0.63540    -0.67243
+    19       O     -0.51834    -0.56520    -0.60759
+    20       C     -0.13873    -0.13871    -0.12059
+    21       C     -0.03887    -0.03830    -0.03853
+    22       C     -0.07671    -0.07261    -0.07412
+    23       C     -0.11786    -0.11790    -0.09991
+    24       C     -0.16766    -0.16766    -0.14938
+    25       C     -0.16637    -0.16623    -0.14805
+    26       H      0.12854     0.12898     0.11051
+    27       H      0.11114     0.11131     0.09297
+    28       H      0.12346     0.12395     0.10551
+    29       H      0.12358     0.12407     0.10563
+    30       H      0.11117     0.11134     0.09300
+    31       H      0.12854     0.12898     0.11051
+    32       H      0.12190     0.12197     0.10380
+    33       H      0.15596     0.15669     0.13832
+    34       H      0.09636     0.09642     0.07811
+    35       H      0.09836     0.09837     0.08013
+
+ TOTAL MULLIKEN CHARGE =  -2.0000
+ TOTAL CM1 CHARGE      =  -2.0000
+ TOTAL CM2 CHARGE      =  -2.0000
+
+ ----------------------------------------------------------
+ TOTAL TIME:             4.837000 SECONDS
+         0 DAYS  0 HOURS  0 MIN  4.84 SEC 
+
+ EE=          -29248.60168413 EC=            24949.31560763
+ ET=           -4299.28607650 HF=             -110.57551740

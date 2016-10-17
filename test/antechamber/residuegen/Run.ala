@@ -1,0 +1,36 @@
+#!/bin/csh -f
+
+# Step 1 - Generate an ac file from a gaussian output file
+
+../../../bin/antechamber -fi gout -fo ac -i ala_conf1.gout -o ala.ac  \
+   >& antechamber.out || goto error
+
+# Step 2 - Extract ESP for both conformations and merge them to a file called
+# ala.esp 
+
+../../../bin/espgen -i ala_conf1.gout -o ala_conf1.esp >& espgen.out
+../../../bin/espgen -i ala_conf2.gout -o ala_conf2.esp >& espgen.out
+
+/bin/rm -f ala.esp 
+cat ala_conf1.esp ala_conf2.esp > ala.esp 
+
+# Step 3 - Manually prepare the input file for residuegen, please see
+# residuegen.input 
+
+# Step 4 - Run residuegen to get the amino-acid-like residue topology 
+
+../../../bin/residuegen residuegen.input >& residuegen.out
+
+# By the way, the program itself does not know this molecule is an amino acid
+# residue, you can use this program to generate residue topologies for nucleic
+# acids and other polymers as well
+
+../../dacdif -t 1 ala.ac.save ala.ac
+../../dacdif -t 1 ala.esp.save ala.esp
+../../dacdif -s -t 1 ala.prep.save ala.prep
+
+exit(0)
+
+error:
+echo "  ${0}:  Program error"
+exit(1)

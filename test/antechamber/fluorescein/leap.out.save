@@ -1,0 +1,55 @@
+-I: Adding /home3/obiwan/jwang/research/amber/amber8/dat/leap/prep to search path.
+-I: Adding /home3/obiwan/jwang/research/amber/amber8/dat/leap/lib to search path.
+-I: Adding /home3/obiwan/jwang/research/amber/amber8/dat/leap/parm to search path.
+-I: Adding /home3/obiwan/jwang/research/amber/amber8/dat/leap/cmd to search path.
+-s: Ignoring startup file: leaprc
+-f: Source leap.in.
+
+Welcome to LEaP!
+Sourcing: ./leap.in
+----- Source: /home3/obiwan/jwang/research/amber/amber8/dat/leap/cmd/leaprc.gaff
+----- Source of /home3/obiwan/jwang/research/amber/amber8/dat/leap/cmd/leaprc.gaff done
+Log file: ./leap.log
+Loading parameters: /home3/obiwan/jwang/research/amber/amber8/dat/leap/parm/gaff.dat
+Loading parameters: ./frcmod
+Reading force field mod type file (frcmod)
+Loading Prep file: ./fluorescein.prepin
+Checking Unit.
+WARNING: The unperturbed charge of the unit: -2.000100 is not zero.
+
+ -- ignoring the warning.
+
+Building topology.
+Building atom parameters.
+Building bond parameters.
+Building angle parameters.
+Building proper torsion parameters.
+Building improper torsion parameters.
+old PREP-specified impropers:
+ <FLR 1>:  C6   C2   C1   H26 
+ <FLR 1>:  C1   C3   C2   O15 
+ <FLR 1>:  C2   C4   C3   H27 
+ <FLR 1>:  C5   C3   C4   H28 
+ <FLR 1>:  C6   C4   C5   C7  
+ <FLR 1>:  C5   C1   C6   O10 
+ <FLR 1>:  C14  C8   C9   O10 
+ <FLR 1>:  C13  C9   C14  H31 
+ <FLR 1>:  C14  C12  C13  O16 
+ <FLR 1>:  C13  C11  C12  H30 
+ <FLR 1>:  C12  C8   C11  H29 
+ <FLR 1>:  C7   C9   C8   C11 
+ <FLR 1>:  C5   C21  C7   C8  
+ <FLR 1>:  C20  C22  C21  C7  
+ <FLR 1>:  C21  C25  C20  H32 
+ <FLR 1>:  C20  C24  C25  H35 
+ <FLR 1>:  C25  C23  C24  H34 
+ <FLR 1>:  C24  C22  C23  H33 
+ <FLR 1>:  C17  C21  C22  C23 
+ <FLR 1>:  C22  O19  C17  O18 
+ total 2 improper torsions applied
+ 20 improper torsions in old prep form
+Building H-Bond parameters.
+Not Marking per-residue atom chain types.
+Marking per-residue atom chain types.
+ (no restraints)
+	Quit

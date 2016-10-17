@@ -1,0 +1,20 @@
+#!/bin/csh -f
+
+../../../bin/antechamber -i tp.pdb -fi pdb -o tp.com -fo gcrt 
+
+# following line done "off-line" for now:
+# g09 < tp.com > tp.log
+cp -f tp.log.save tp.log
+
+../../../bin/antechamber -i tp.log -fi gout -o tp.resp.mol2 -fo mol2 -c resp -s 2 -rn "TP "
+
+../../dacdif tp.resp.mol2.save tp.resp.mol2
+
+/bin/rm -f ANTE* ATOMTYPE.INF BCCTYPE.INF FOR* NEWPDB.PDB PREP.INF \
+      prmcrd qout QOUT punch esout tp.log
+
+exit(0)
+
+error:
+echo "  ${0}:  Program error"
+exit(1)

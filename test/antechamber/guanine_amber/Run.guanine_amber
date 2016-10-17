@@ -1,0 +1,14 @@
+#!/bin/csh -f
+
+../../../bin/antechamber -i DGN.pdb -fi pdb -o DGN.mol2 -fo mol2 \
+   -at amber -c bcc >& antechamber.out || goto error
+
+../../dacdif -a 2.e-3 DGN.mol2.save DGN.mol2
+
+/bin/rm -f ANTE* ATOMTYPE.INF BCCTYPE.INF FOR* NEWPDB.PDB PREP.INF \
+    divcon.in divcon.dmx divcon.rst
+exit(0)
+
+error:
+echo "  ${0}:  Program error"
+exit(1)

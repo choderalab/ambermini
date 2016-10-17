@@ -1,0 +1,80 @@
+source oldff/leaprc.ff10
+source oldff/leaprc.GLYCAM_06j_10  # for use with ff10 and ff13
+
+## Testing residues made for linking to proteins.
+##
+##   Testing RES-ALA-RES-ALA-RES to ensure that we have tried a decent
+##       set of linkage environments.
+##   See definitions in the script that created this file for details.
+##
+# set 0 -- zwitterioninc OLT
+  m0 = sequence { ZOLT 0GB }
+
+# set 1 -- zwitterioninc OLS
+  m1 = sequence { ZOLS 0GB }
+
+# set 2 -- HYP (not for linking -- prerequisite for OLP)
+  m2 = sequence { NHYP ALA HYP ALA CHYP  }
+  impose m2 { 1 2 3 4 5 } { { "N" "CA" "C" "N" 90.0 } }
+
+#m2 = sequence { NALA ALA HYP ALA CHYP  }
+#m2 = sequence { ROH 0GA }
+
+# set 3 -- OLT
+  m3 = sequence { NOLT ALA OLT ALA COLT  }
+  set m3 tail m3.1.OG1
+  m3 = sequence { m3 0GB }
+  set m3 tail m3.3.OG1
+  m3 = sequence { m3 0GB }
+  set m3 tail m3.5.OG1
+  m3 = sequence { m3 0GB }
+  impose m3 { 1 2 3 4 5 } { { "N" "CA" "C" "N" 90.0 } }
+
+# set 4 -- OLS
+  m4 = sequence { NOLS ALA OLS ALA COLS  }
+  set m4 tail m4.1.OG
+  m4 = sequence { m4 0GB }
+  set m4 tail m4.3.OG
+  m4 = sequence { m4 0GB }
+  set m4 tail m4.5.OG
+  m4 = sequence { m4 0GB }
+  impose m4 { 1 2 3 4 5 } { { "N" "CA" "C" "N" 90.0 } }
+
+# set 5 -- OLP
+  m5 = sequence { NOLP ALA OLP ALA COLP  }
+  set m5 tail m5.1.OD1
+  m5 = sequence { m5 0GB }
+  set m5 tail m5.3.OD1
+  m5 = sequence { m5 0GB }
+  set m5 tail m5.5.OD1
+  m5 = sequence { m5 0GB }
+  impose m5 { 1 2 3 4 5 } { { "N" "CA" "C" "N" 90.0 } }
+
+# set 6 -- NLN
+  m6 = sequence { NNLN ALA NLN ALA CNLN  }
+  set m6 tail m6.1.ND2
+  m6 = sequence { m6 0GB }
+  set m6 tail m6.3.ND2
+  m6 = sequence { m6 0GB }
+  set m6 tail m6.5.ND2
+  m6 = sequence { m6 0GB }
+  impose m6 { 1 2 3 4 5 } { { "N" "CA" "C" "N" 90.0 } }
+
+
+##
+## Built 7 molecules
+##	Now, translate them away from each other
+##
+  translate m1  {  0.0  30.0   0.0 }
+  translate m2  {  0.0  60.0   0.0 } 
+    translate m3  { 30.0   0.0   0.0 }
+    translate m4  { 30.0  30.0   0.0 }
+    translate m5  { 30.0  60.0   0.0 } 
+      translate m6  { 60.0   0.0   0.0 }
+ 
+Glycoprotein = combine { m0 m1 m2 m3 m4 m5 m6 }
+
+saveamberparm Glycoprotein Glycoprotein.parm7 Glycoprotein.rst7
+
+quit
+

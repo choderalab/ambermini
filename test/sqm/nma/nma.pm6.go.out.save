@@ -1,0 +1,86 @@
+            --------------------------------------------------------
+                             AMBER SQM VERSION 14
+ 
+                                     By
+              Ross C. Walker, Michael F. Crowley, Scott Brozell,
+                         Tim Giese, Andreas W. Goetz,
+                        Tai-Sung Lee and David A. Case
+ 
+            --------------------------------------------------------
+ 
+
+--------------------------------------------------------------------------------
+  QM CALCULATION INFO
+--------------------------------------------------------------------------------
+
+| QMMM: Citation for AMBER QMMM Run:
+| QMMM: R.C. Walker, M.F. Crowley and D.A. Case, J. COMP. CHEM. 29:1019, 2008
+
+QMMM: SINGLET STATE CALCULATION
+QMMM: RHF CALCULATION, NO. OF DOUBLY OCCUPIED LEVELS = 15
+
+| QMMM: *** Selected Hamiltonian *** 
+| QMMM: PM6         
+| QMMM: J.J.P. Stewart, J. Mol. Mod., 13, 1173, (2007)
+| QMMM: and unpublished corrections
+
+| QMMM: *** Parameter sets in use ***
+| QMMM: C : J.J.P. Stewart, J. Mol. Mod., 13, 1173, (2007)
+| QMMM: N : J.J.P. Stewart, J. Mol. Mod., 13, 1173, (2007)
+| QMMM: O : J.J.P. Stewart, J. Mol. Mod., 13, 1173, (2007)
+| QMMM: H : J.J.P. Stewart, J. Mol. Mod., 13, 1173, (2007)
+
+| QMMM: *** SCF convergence criteria ***
+| QMMM: Energy change                :  0.1D-09 kcal/mol
+| QMMM: Error matrix |FP-PF|         :  0.1D-05 au
+| QMMM: Density matrix change        :  0.5D-06
+| QMMM: Maximum number of SCF cycles :      100
+
+| QMMM: *** Diagonalization Routine Information ***
+| QMMM: Pseudo diagonalizations are allowed.
+| QMMM: Auto diagonalization routine selection is disabled.
+| QMMM: Using internal diagonalization routine (diag_routine=1).
+
+
+--------------------------------------------------------------------------------
+  RESULTS
+--------------------------------------------------------------------------------
+
+  ... geometry converged !
+ 
+ Final MO eigenvalues (eV):
+ -32.5032  -30.3737  -26.9048  -24.1022  -20.7375  -17.6401  -16.2269  -16.0477
+ -14.6818  -14.0554  -13.8862  -13.1849  -13.1531  -10.4888   -9.7772    1.3005
+   1.7695    3.4586    4.3702    4.8702    5.0913    5.2411    5.3234    5.4716
+   6.0270    6.1474    6.5405
+
+ PM6: Nitrogen pyramidalization correction in use for  1 atoms
+ Correction          =         -0.49994891 kcal/mol  (       -0.02167941 eV)
+
+ Heat of formation   =        -55.00505767 kcal/mol  (       -2.38519829 eV)
+
+ Total SCF energy    =     -21545.99774287 kcal/mol  (     -934.30457235 eV)
+ 
+    Atomic Charges for Step       1 :
+  Atom    Element       Mulliken Charge
+     1      C                 -0.617
+     2      C                  0.640
+     3      N                 -0.498
+     4      C                 -0.280
+     5      O                 -0.555
+     6      H                  0.204
+     7      H                  0.188
+     8      H                  0.187
+     9      H                  0.266
+    10      H                  0.182
+    11      H                  0.142
+    12      H                  0.142
+ Total Mulliken Charge =      -0.000
+ 
+                  X        Y        Z     TOTAL  
+ 
+ Final Structure
+
+
+           --------- Calculation Completed ----------
+

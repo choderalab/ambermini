@@ -1,0 +1,4 @@
+#  
+ &cntrl                                                     
+    imin=1, maxcyc=1, cut=99.0, ntb=0, 
+ /

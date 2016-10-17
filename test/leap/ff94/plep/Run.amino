@@ -1,0 +1,79 @@
+#!/bin/csh -f
+
+set _TOP_ = ../../../../..
+
+echo "All-atom amino acids, '94 - omits ASH/GLH since missing parms"
+echo "   link"
+$_TOP_/bin/link  -O \
+		-i link_aminoan.in \
+		-o link_aminoan.out \
+		-l link_aminoan.bin \
+		-p $_TOP_/dat/db94.dat			|| goto error
+
+echo "   edit"
+$_TOP_/bin/edit -O \
+		-i edit.in \
+               	-o edit_aminoan.out \
+               	-l link_aminoan.bin \
+               	-e edit_aminoan.bin \
+               	-pi ../all_aminoan.p			|| goto error
+
+echo "   parm"
+$_TOP_/bin/parm -O \
+		-i parm.in \
+               	-o parm_aminoan.out \
+               	-e edit_aminoan.bin \
+               	-f $_TOP_/dat/parm94.dat \
+               	-c parm_aminoan.crd \
+               	-p parm_aminoan.top			|| goto error
+
+echo "   sander"
+$_TOP_/bin/sander -O \
+		-i sander.in \
+		-o sander_aminoan94.out \
+		-p parm_aminoan.top \
+		-c parm_aminoan.crd 			|| goto error
+
+echo "   (cleaning up all but sander_aminoan94.out)"
+/bin/rm -f restrt mdinfo *.bin link_aminoan.out *.bin edit_aminoan.out parm_aminoan.*
+
+echo "All-atom amino acids, charge-terminal, '94"
+echo "   link"
+$_TOP_/bin/link  -O \
+		-i link_aminonc.in \
+		-o link_aminonc.out \
+		-l link_aminonc.bin \
+		-p $_TOP_/dat/db94.dat			|| goto error
+
+echo "   edit"
+$_TOP_/bin/edit -O \
+		-i edit.in \
+               	-o edit_aminonc.out \
+               	-l link_aminonc.bin \
+               	-e edit_aminonc.bin \
+               	-pi ../all_aminonc.p			|| goto error
+
+echo "   parm"
+$_TOP_/bin/parm -O \
+		-i parm.in \
+               	-o parm_aminonc.out \
+               	-e edit_aminonc.bin \
+               	-f $_TOP_/dat/parm94.dat \
+               	-c parm_aminonc.crd \
+               	-p parm_aminonc.top			|| goto error
+
+echo "   sander"
+$_TOP_/bin/sander -O \
+		-i sander.in \
+		-o sander_aminonc94.out \
+		-p parm_aminonc.top \
+		-c parm_aminonc.crd 				|| goto error
+
+echo "   (cleaning up all but sander_aminoan94.out and sander_aminonc94.out)"
+/bin/rm -f restrt mdinfo *.bin link_aminonc.out *.bin edit_aminonc.out parm_aminonc.*
+
+exit(0)
+
+error:
+echo "  ${0}:  Program error"
+exit(1)

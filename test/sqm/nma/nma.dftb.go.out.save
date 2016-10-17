@@ -1,0 +1,91 @@
+            --------------------------------------------------------
+                             AMBER SQM VERSION 14
+ 
+                                     By
+              Ross C. Walker, Michael F. Crowley, Scott Brozell,
+                         Tim Giese, Andreas W. Goetz,
+                        Tai-Sung Lee and David A. Case
+ 
+            --------------------------------------------------------
+ 
+
+--------------------------------------------------------------------------------
+  QM CALCULATION INFO
+--------------------------------------------------------------------------------
+
+| QMMM: Citation for AMBER QMMM Run:
+| QMMM: R.C. Walker, M.F. Crowley and D.A. Case, J. COMP. CHEM. 29:1019, 2008
+
+| QMMM: DFTB Calculation - Additional citation for AMBER DFTB QMMM Run:
+| QMMM:   Seabra, G.M., Walker, R.C. et al., J. PHYS. CHEM. A., 111, 5655, (2007)
+
+
+QMMM: SINGLET STATE CALCULATION
+QMMM: RHF CALCULATION, NO. OF DOUBLY OCCUPIED LEVELS = 15
+
+| QMMM: *** SCF convergence criteria ***
+| QMMM: Energy change                :  0.1D-09 kcal/mol
+| QMMM: Error matrix |FP-PF|         :  0.1D-05 au
+| QMMM: Density matrix change        :  0.5D-06
+| QMMM: Maximum number of SCF cycles :      100
+ DFTB: Number of atom types =    4
+
+ Parameter files:
+     TYP (AT)  TYP (AT)     SK integral FILE
+|  1  1  (C )   1  (C )     /Users/andi/sources/amber/dat/slko/C-C.skf
+|  2  1  (C )   2  (N )     /Users/andi/sources/amber/dat/slko/C-N.skf
+|  3  1  (C )   3  (O )     /Users/andi/sources/amber/dat/slko/C-O.skf
+|  4  1  (C )   4  (H )     /Users/andi/sources/amber/dat/slko/C-H.skf
+|  5  2  (N )   1  (C )     /Users/andi/sources/amber/dat/slko/N-C.skf
+|  6  2  (N )   2  (N )     /Users/andi/sources/amber/dat/slko/N-N.skf
+|  7  2  (N )   3  (O )     /Users/andi/sources/amber/dat/slko/N-O.skf
+|  8  2  (N )   4  (H )     /Users/andi/sources/amber/dat/slko/N-H.skf
+|  9  3  (O )   1  (C )     /Users/andi/sources/amber/dat/slko/O-C.skf
+| 10  3  (O )   2  (N )     /Users/andi/sources/amber/dat/slko/O-N.skf
+| 11  3  (O )   3  (O )     /Users/andi/sources/amber/dat/slko/O-O.skf
+| 12  3  (O )   4  (H )     /Users/andi/sources/amber/dat/slko/O-H.skf
+| 13  4  (H )   1  (C )     /Users/andi/sources/amber/dat/slko/H-C.skf
+| 14  4  (H )   2  (N )     /Users/andi/sources/amber/dat/slko/H-N.skf
+| 15  4  (H )   3  (O )     /Users/andi/sources/amber/dat/slko/H-O.skf
+| 16  4  (H )   4  (H )     /Users/andi/sources/amber/dat/slko/H-H.skf
+
+
+--------------------------------------------------------------------------------
+  RESULTS
+--------------------------------------------------------------------------------
+
+  ... geometry converged !
+ 
+ Final MO eigenvalues (au):
+  -0.8690   -0.7713   -0.6245   -0.5631   -0.4836   -0.4217   -0.3948   -0.3892
+  -0.3591   -0.3402   -0.3353   -0.3211   -0.3073   -0.2236   -0.2040   -0.0010
+   0.2910    0.3178    0.3235    0.3337    0.3649    0.4242    0.4753    0.5375
+   0.5699    0.6860    1.1353
+
+ Heat of formation   =      -1220.84132904 kcal/mol  (      -52.93965262 eV)
+
+ Total SCF energy    =      -8463.39103835 kcal/mol  (     -367.00017512 eV)
+ 
+    Atomic Charges for Step       1 :
+  Atom    Element       Mulliken Charge
+     1      C                 -0.279
+     2      C                  0.493
+     3      N                 -0.250
+     4      C                 -0.073
+     5      O                 -0.507
+     6      H                  0.096
+     7      H                  0.073
+     8      H                  0.073
+     9      H                  0.186
+    10      H                  0.097
+    11      H                  0.045
+    12      H                  0.045
+ Total Mulliken Charge =       0.000
+ 
+                  X        Y        Z     TOTAL  
+ 
+ Final Structure
+
+
+           --------- Calculation Completed ----------
+

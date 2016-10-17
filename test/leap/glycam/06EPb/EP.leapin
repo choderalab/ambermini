@@ -1,0 +1,146 @@
+source leaprc.GLYCAM_06EPb
+
+#PgB
+  m0 = sequence { OME PgB }
+    set m0 tail m0.2.O6
+    m0 = sequence { m0 0mB }
+    set m0 tail m0.2.O4
+    m0 = sequence { m0 0mB }
+    set m0 tail m0.2.O3
+    m0 = sequence { m0 0mB }
+    set m0 tail m0.2.O2
+    m0 = sequence { m0 0mB }
+
+#QCU
+  m1 = sequence { OME QCU }
+    set m1 tail m1.2.O6
+    m1 = sequence { m1 0mB }
+    set m1 tail m1.2.O4
+    m1 = sequence { m1 0mB }
+    set m1 tail m1.2.O3
+    m1 = sequence { m1 0mB }
+
+#RGA
+  m2 = sequence { OME RGA }
+    set m2 tail m2.2.O6
+    m2 = sequence { m2 0mB }
+    set m2 tail m2.2.O4
+    m2 = sequence { m2 0mB }
+    set m2 tail m2.2.O2
+    m2 = sequence { m2 0mB }
+
+#SlA
+  m3 = sequence { OME SlA }
+    set m3 tail m3.2.O6
+    m3 = sequence { m3 0mB }
+    set m3 tail m3.2.O3
+    m3 = sequence { m3 0mB }
+    set m3 tail m3.2.O2
+    m3 = sequence { m3 0mB }
+
+#TLB
+  m4 = sequence { OME TLB }
+    set m4 tail m4.2.O4
+    m4 = sequence { m4 0mB }
+    set m4 tail m4.2.O3
+    m4 = sequence { m4 0mB }
+    set m4 tail m4.2.O2
+    m4 = sequence { m4 0mB }
+
+#UcD
+  m5 = sequence { OME UcD }
+    set m5 tail m5.2.O6
+    m5 = sequence { m5 0mB }
+    set m5 tail m5.2.O4
+    m5 = sequence { m5 0mB }
+
+#VcU
+  m6 = sequence { OME VcU }
+    set m6 tail m6.2.O6
+    m6 = sequence { m6 0mB }
+    set m6 tail m6.2.O3
+    m6 = sequence { m6 0mB }
+
+#WCD
+  m7 = sequence { OME WCD }
+    set m7 tail m7.2.O4
+    m7 = sequence { m7 0mB }
+    set m7 tail m7.2.O3
+    m7 = sequence { m7 0mB }
+
+#XmB
+  m8 = sequence { OME XmB }
+    set m8 tail m8.2.O6
+    m8 = sequence { m8 0mB }
+    set m8 tail m8.2.O2
+    m8 = sequence { m8 0mB }
+
+#YMA
+  m9 = sequence { OME YMA }
+    set m9 tail m9.2.O4
+    m9 = sequence { m9 0mB }
+    set m9 tail m9.2.O2
+    m9 = sequence { m9 0mB }
+
+#ZGB
+  m10 = sequence { OME ZGB }
+    set m10 tail m10.2.O3
+    m10 = sequence { m10 0mB }
+    set m10 tail m10.2.O2
+    m10 = sequence { m10 0mB }
+
+## anomeric is C2
+
+#_CU
+    m11 = sequence { 2CU 1CU 3CU 4CU 6CU 0CU }
+#_cD
+    m12 = sequence { 2cD 1cD 3cD 4cD 6cD 0cD }
+
+## no anomeric-anomeric linking
+
+#_gA
+    m13 = sequence { OME 2gA 3gA 4gA 6gA 0gA }
+#_GB
+    m14 = sequence { OME 2GB 3GB 4GB 6GB 0GB }
+#_LA
+    m15 = sequence { OME 2LA 3LA 4LA 6LA 0LA }
+#_lB
+    m16 = sequence { OME 2lB 3lB 4lB 6lB 0lB }
+#_mA
+    m17 = sequence { OME 2mA 3mA 4mA 6mA 0mA }
+#_MB
+    m18 = sequence { OME 2MB 3MB 4MB 6MB 0MB }
+
+##
+## Built 19 molecules
+##	Now, translate them away from each other
+##
+  translate m1  {  0.0  30.0   0.0 }
+  translate m2  {  0.0  60.0   0.0 }
+    translate m3  { 30.0   0.0   0.0 }
+    translate m4  { 30.0  30.0   0.0 }
+    translate m5  { 30.0  60.0   0.0 }
+      translate m6  { 60.0   0.0   0.0 }
+      translate m7  { 60.0  30.0   0.0 }
+      translate m8  { 60.0  60.0   0.0 }
+  translate m9  {  0.0   0.0  30.0 }
+  translate m10 {  0.0  30.0  30.0 }
+  translate m11 {  0.0  60.0  30.0 }
+    translate m12 { 30.0   0.0  30.0 }
+    translate m13 { 30.0  30.0  30.0 }
+    translate m14 { 30.0  60.0  30.0 }
+      translate m15 { 60.0   0.0  30.0 }
+      translate m16 { 60.0  30.0  30.0 }
+      translate m17 { 60.0  60.0  30.0 }
+  translate m18 {  0.0   0.0  60.0 }
+
+xy1 = combine { m0  m1  m2  m3  m4  m5  m6  m7  m8 }
+xy2 = combine { m9 m10 m11 m12 m13 m14 m15 m16 m17 }
+#xy3 = combine { m18 ... }
+
+EP = combine { xy1 xy2 m18 }
+
+saveamberparm EP EP.parm7 EP.rst7
+
+quit
+

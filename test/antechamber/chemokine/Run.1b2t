@@ -1,0 +1,26 @@
+#!/bin/csh -f
+
+# First assign amber atom types for 1b2t. 
+
+# Do NOT use antechamber to assign atom types for your proteins!  This test
+# just demonstrates antechamber can handle pretty large molecules now
+
+
+echo "============ Step 1 ============" > antechamber.out
+${AMBERHOME}/bin/antechamber -fi pdb -fo ac -i 1b2t.pdb -o 1b2t.ac -at amber \
+   -s 2 -pf yes >>& antechamber.out || goto error
+
+# Now generate a mol2 file that can be read with many software packages 1b2t.
+echo "============ Step 2 ============" >> antechamber.out
+${AMBERHOME}/bin/antechamber -fi ac -fo mol2 -i 1b2t.ac -o 1b2t.mol2 -at sybyl \
+   -s 2 -pf yes -j 1 >>& antechamber.out || goto error
+
+
+../../dacdif -t 1 1b2t.mol2.save 1b2t.mol2
+../../dacdif -t 1 1b2t.ac.save 1b2t.ac
+/bin/rm -f antechamber.out
+exit(0)
+
+error:
+echo "  ${0}:  Program error"
+exit(1)

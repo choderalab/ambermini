@@ -1,0 +1,6 @@
+verbosity 1
+source leaprc.gaff
+mods = loadamberparams frcmod
+TP = loadmol2 tp.mol2
+saveamberparm TP prmtop prmcrd
+quit

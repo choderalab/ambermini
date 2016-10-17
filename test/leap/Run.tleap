@@ -1,0 +1,133 @@
+#!/bin/csh -f
+
+if ( ! ( $?AMBERHOME ) ) then
+    echo "Warning: the AMBERHOME environment variable is not defined !"
+    echo "    It usually should be set to the path of Amber's top level directory."
+    setenv AMBERHOME `pwd`/../../..
+    echo "Caution: Setting AMBERHOME to $AMBERHOME !"
+    echo " "
+else
+    echo "AMBERHOME is set to $AMBERHOME"
+endif
+
+set DIF    = ../dacdif
+set LIB    = $AMBERHOME/dat/leap/lib
+set SANDER = $AMBERHOME/bin/sander
+
+if ( ! -e ./tleap ) then
+	echo " Error: no ./tleap"
+	exit(1)
+endif
+
+set TLEAP = ` egrep -v '^#' tleap | grep teLeap | awk '{print $1}'`
+
+if ( -e $TLEAP ) then
+	echo ""
+	echo "Running leap tests on ./tleap -> $TLEAP"
+	echo ""
+else
+	echo " Error:   ./tleap -> $TLEAP does not exist"
+	exit(1)
+endif
+
+touch x.lib
+chmod 666 x.lib
+/bin/rm -f "*.lib *.log *.dif" || goto perm_error
+
+echo "leap.log just for loading standard leaprc's" > leap.log
+
+
+echo "    building force field libraries:"
+echo ""
+echo "        '94 ff.."
+echo ""
+./tleap -s -f lib94.cmd >& lib94.out		|| goto leap_error
+$DIF -t 4 $LIB/all_amino94.lib   all_amino94.lib
+$DIF -t 4 $LIB/all_aminoct94.lib all_aminoct94.lib
+$DIF -t 4 $LIB/all_aminont94.lib all_aminont94.lib
+$DIF      $LIB/all_nucleic94.lib all_nucleic94.lib
+$DIF      $LIB/ions94.lib        ions94.lib
+
+
+echo ""
+echo "    loadpdb and saveamberparm: 94 ff.."
+echo ""
+/bin/rm -f ff94_prm.log
+./tleap -s -f ff94_prm.cmd >& ff94_prm.out	|| goto leap_error
+
+foreach i ( aminoan94 aminonc94 dna94 rna94 )
+	echo "       - ${i} "
+
+	echo "       comparing topology to earlier leap version.."
+	$DIF ff94/all_${i}.top all_${i}.top
+
+	if ( -f all_${i}.top ) then
+
+		if ( ( ! -e $SANDER ) ) then
+			echo "        No $SANDER to use to compare energies"
+		else
+			echo "       comparing sander energies"
+			$SANDER -O \
+				-i ff94/sander_ff94.in \
+				-o ff94/sander_mdout.${i} \
+				-p all_${i}.top \
+				-c all_${i}.crd		|| goto sander_error
+				$DIF ff94/sander_mdout.${i}.save ff94/sander_mdout.${i}
+		endif
+	endif
+	/bin/rm -f restrt mdinfo all_${i}.crd
+end
+
+
+# echo ""
+# echo "    loadpdb/saveamberparm with permutations of addIons, solvateBox"
+# echo "                                                        w/ 94 ff.."
+# echo ""
+# ./tleap -s -f ff94_iowatprm.cmd >& ff94_iowatprm.out	|| goto leap_error
+
+# foreach i ( dnaio dnawat dnaiowat dnawatio )
+# 	echo "       - ${i} "
+# 	echo "         comparing topology, coords to earlier leap version.."
+# 	$DIF ff94/all_${i}94.top all_${i}94.top
+# 	if ( -f all_${i}94.top ) then
+# 
+# 		if ( ( ! -e $SANDER ) ) then
+# 			echo "        No $SANDER to use to compare energies"
+# 		else
+# 			echo "        comparing sander energies"
+# 			$SANDER -O \
+# 				-i ff94/sander_ff94.in \
+# 				-o sander_${i}.out \
+# 				-p all_${i}.top \
+# 				-c all_${i}.crd		|| goto sander_error
+# 			$DIF ff94/sander_${i}.out sander_${i}.out
+# 		endif
+# 	endif
+# 	$DIF ff94/all_${i}94.crd all_${i}94.crd
+# 	/bin/rm -f restrt mdinfo all_${i}94.crd
+# end
+
+echo ""
+echo "--------------------------------------------------------------"
+echo "  Notes: "
+echo "         - If all tests PASSED, you can 'rm *.log *.out *.lib *.top'"
+echo "         - For a discussion of energy differences (sander*.dif)"
+echo "           see 0README. "
+echo "         - It is common to see round-off differences in the"
+echo "           <bulding force field libraries> portion of these tests"
+echo "--------------------------------------------------------------"
+echo ""
+exit(0)
+
+leap_error:
+echo "${0}:  Program error in leap"
+exit(1)
+
+perm_error:
+echo "${0}:  File permission error"
+exit(1)
+
+sander_error:
+echo "${0}:  Program error in sander (could be leap input problem)"
+exit(1)
+

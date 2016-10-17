@@ -1,0 +1,50 @@
+#!/bin/csh -f
+
+#This directory contains test cases that using external charges in sqm calculations
+set SQM = ../../../bin/sqm
+set SPDIFF = "../../dacdif -r 1.e-7"
+set GODIFF = "../../dacdif -a 0.01"
+
+# check if slko files for DFTB are installed
+../../check_slko_files.x
+if( $status > 0) then
+  # no slko files - do not run DFTB tests
+  set SPTESTS = (qm_adenine.pm3.sp qm_thymine.pm3.sp)
+  set GOTESTS = ()
+else
+  # slko files present - run DFTB tests
+  set SPTESTS = (qm_adenine.pm3.sp qm_thymine.pm3.sp qm_adenine.dftb.sp qm_thymine.dftb.sp)
+  set GOTESTS = ()
+endif
+
+
+# single point tests
+foreach i ($SPTESTS)
+    set input = $i.in
+    set output = $i.out
+    $SQM -O -i $input -o $output || goto error
+    $SPDIFF $output.save $output
+end
+
+# geometry optimization tests
+# do not check the electronic energy and
+# core repulsion energy, they are too sensitive!
+# the same holds for the geometry. The optimizer
+# may for example rotate methyl groups!
+foreach i ($GOTESTS)
+    set input = $i.in
+    set output = $i.out
+    $SQM -O -i $input -o $output || goto error
+    grep -v 'Electronic energy' $output > tmp
+    grep -v '^  QMMM' tmp > tmp2
+    grep -v 'Core-core repulsion' tmp2 > tmp
+    grep -v 'DIPOLE' tmp > $output
+    rm tmp tmp2
+    $GODIFF $output.save $output
+end
+
+exit(0)
+
+error:
+echo "  ${0}:  Program error"
+exit(1)

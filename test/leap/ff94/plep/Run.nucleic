@@ -1,0 +1,50 @@
+#!/bin/csh -f
+
+set _TOP_ = ../../../../..
+
+echo ""
+echo "Nucleic acids - 1994 ff"
+echo ""
+echo "  get 'plep' energies, deleting intermediate files - dna, then rna"
+
+foreach i ( dna rna )
+
+	echo "     link"
+	$_TOP_/bin/link  -O \
+		-i link_${i}94.in \
+		-o link_nuc.out \
+		-l link_nuc.bin \
+		-p $_TOP_/dat/db94.dat			|| goto error
+
+	echo "     edit"
+	$_TOP_/bin/edit -O \
+		-i edit.in \
+               	-o edit_nuc.out \
+               	-l link_nuc.bin \
+               	-e edit_nuc.bin \
+               	-pi ../all_${i}94.p 			|| goto error
+
+	echo "     parm"
+	$_TOP_/bin/parm -O \
+		-i parm.in \
+               	-o parm_nuc.out \
+               	-e edit_nuc.bin \
+               	-f $_TOP_/dat/parm94.dat \
+               	-c parm_nuc.crd \
+               	-p parm_nuc.top				|| goto error
+
+	echo "     sander"
+	$_TOP_/bin/sander -O \
+		-i sander.in \
+		-o sander_${i}94.out \
+		-p parm_nuc.top \
+		-c parm_nuc.crd 			|| goto error
+
+	echo "     (cleaning up all but sander_${i}94.out)"
+	/bin/rm -f restrt mdinfo *.bin link_nuc.out edit_nuc.out parm_nuc.*
+end
+exit(0)
+
+error:
+echo "  ${0}:  Program error"
+exit(1)

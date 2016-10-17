@@ -1,0 +1,169 @@
+
+          -------------------------------------------------------
+          Amber 5  SANDER                   Scripps/UCSF 1997
+          -------------------------------------------------------
+
+|                                        Tue Jul  6 16:50:06 1999
+
+  [-O]verwriting output
+
+File Assignments:
+|MDIN : sander.in                                                             
+|MDOUT: sander_dna94.out                                                      
+|INPCR: parm_nuc.crd                                                          
+|PARM : parm_nuc.top                                                          
+|RESTR: restrt                                                                
+|REFC : refc                                                                  
+|MDVEL: mdvel                                                                 
+|MDEN : mden                                                                  
+|MDCRD: mdcrd                                                                 
+|MDINF: mdinfo                                                                
+
+
+ Here is the input file:
+
+#                                                                              
+ &cntrl                                                                        
+    imin=1, maxcyc=1, cut=99.0, idiel=1, scee=1.2,                             
+ /                                                                             
+-------------------------------------------------------------------------------
+
+#                                                                               
+
+| Reading &cntrl namelist w/ portable lib
+
+
+
+   1.  RESOURCE   USE: 
+
+ NATOM  =     126 NTYPES =      16 NBONH =      47 MBONA  =      88
+ NTHETH =     109 MTHETA =     134 NPHIH =     191 MPHIA  =     188
+ NHPARM =       0 NPARM  =       0 NNB   =     695 NRES   =       4
+ NBONA  =      88 NTHETA =     134 NPHIA =     188 NUMBND =      50
+ NUMANG =     117 NPTRA  =      70 NATYP =      25 NPHB   =       0
+ IFBOX  =       0 NMXRS  =      33 IFCAP =       0
+
+
+|     Memory type      Allocated 
+|     Real               10024
+|     Hollerith           1014
+|     Integer            85756 (static)
+
+|     Max Nonbonded Pairs:    7939 packed  2 to a machine word
+
+
+   2.  CONTROL  DATA  FOR  THE  RUN
+
+  dna                                                                           
+
+     TIMLIM=  999999.   IREST =    0       IBELLY=    0
+     KFORM =    1       ICHDNA=    0       IMIN  =    1
+     IPOL  =    0       IEWALD=    0
+
+     NTX   =    1       NTXO  =    1
+     IG    =    71277   TEMPI =     0.00   HEAT  =    0.000
+
+     NTB   =    0       IFTRES=    1       BOXX  =    0.000
+     BOXY  =    0.000   BOXZ  =    0.000
+
+     NRUN  =    1       NTT   =    0       TEMP0 =  300.000
+     DTEMP =    0.000   TAUTP =    0.200   TAUTS =    0.200
+     ISOLVP=    0       VLIMIT=    0.000
+
+     NTP   =    0       PRES0 =    1.000   COMP  =   44.600
+     TAUP  =    0.200   NPSCAL=    0
+
+     NTCM  =    0       NSCM  = 9999999
+
+     NSTLIM=    1       INIT  =    3       NTU   =    1
+     T     =    0.000   DT    =   0.00100
+
+     NTC   =    1       TOL   =   0.00050  JFASTW =    0
+
+     NTF   =    1       NTID  =    0       NTNB  =    1
+     NSNB  =   25       IDIEL =    1       IMGSLT=    0
+     IPRR  =    0       IPRW  =    0       ITRSLU=    1
+
+     CUT   =   99.000   SCNB  =    2.000
+     SCEE  =    1.200   DIELC =    1.000
+     CUT2ND=   0.00000
+
+     NTPR  =      50    NTWR  =      50    NTWX  =       0
+     NTWV  =       0    NTWE  =       0    NTWXM =  999999
+     NTWVM =  999999    NTWEM =  999999    IOUTFM=       0
+     NTWPRT=       0    NTWPR0=       0
+
+     NTR   =    0       NTRX  =    1
+     TAUR  =   0.00000     NMROPT=    0     ISFTRP=    0
+     RWELL =   1.00000     PENCUT=   0.10000
+
+     IVCAP =    0       MATCAP=    0       FCAP  =    1.500
+
+   OTHER DATA:
+
+     IFCAP =    0       NATCAP=    0       CUTCAP=    0.000
+     XCAP  =    0.000   YCAP  =    0.000   ZCAP  =    0.000
+
+     NATOM =     126  NRES =      4
+
+     MAXCYC=    1     NCYC  =   10     NTMIN =    1     DX0   =  0.010000
+     DXM   =  0.50000  DRMS  =   0.00010
+
+     Water definition for fast triangulated model:
+     Resname = WAT ; Oxygen_name = O   ; Hyd1_name = H1  ; Hyd2_name = H2  
+
+   3.  ATOMIC COORDINATES AND VELOCITIES
+
+  dna                                                                           
+ begin time read from input coords =     0.000 ps
+
+ Number of triangulated 3-point waters found:        0
+
+ Solute/solvent pointers:
+     IPTSOL=    4       NATRCM=  126
+     IPTRES=    0       IPTATM=    0
+     NSPSOL=    0       NSPSTR=    0
+     NSOLUT=  126       NATOM =  126
+
+ NB-update: NPAIRS =    7183  HBPAIR =       0
+
+
+   NSTEP       ENERGY          RMS            GMAX         NAME    NUMBER
+      1       1.3577E+02     6.1159E+01     3.9068E+02     C7        110
+
+ BOND    =      229.7367  ANGLE   =      105.7201  DIHED      =      121.4920
+ VDWAALS =      -10.2484  EEL     =       15.7836  HBOND      =        0.0000
+ 1-4 VDW =       81.0849  1-4 EEL =     -407.8020  CONSTRAINT =        0.0000
+  MAXIMUM NUMBER OF F EVALUATION EXCEEDED
+
+
+                    FINAL RESULTS
+
+
+
+   NSTEP       ENERGY          RMS            GMAX         NAME    NUMBER
+      1       1.3577E+02     6.1159E+01     3.9068E+02     C7        110
+
+ BOND    =      229.7367  ANGLE   =      105.7201  DIHED      =      121.4920
+ VDWAALS =      -10.2484  EEL     =       15.7836  HBOND      =        0.0000
+ 1-4 VDW =       81.0849  1-4 EEL =     -407.8020  CONSTRAINT =        0.0000
+|         ELAPSED TIME =      0.140     TOTAL TIME =      0.140
+
+      Routine         Sec       %
+      ----------------------------
+|     Pairlist       0.00    0.00
+|     Nonbond        0.01    7.14
+|     Bond           0.00    0.00
+|     Angle          0.00    0.00
+|     Dihedral       0.00    0.00
+|     Shake          0.00    0.00
+|     Quick3         0.00    0.00
+|     Force          0.00    0.00
+|     Other          0.13   92.86
+      ----------------------------
+|     Total          0.14    0.00 Hours
+
+|     Nonsetup       0.02   14.29%
+
+|     Setup wallclock           0 seconds
+|     Nonsetup wallclock        0 seconds

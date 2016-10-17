@@ -1,0 +1,35 @@
+#!/bin/sh
+
+. ../program_error.sh
+
+DACDIF=../dacdif
+tleap=./tleap
+leaprc=$AMBERHOME/dat/leap/cmd/oldff/leaprc.ff10
+prefix=alphabet.mbondi3
+
+cat > leap.in << EOF
+# Source the force field
+source $leaprc
+
+# Change the default PB radii
+set default pbradii mbondi3
+
+# Make a protein
+prot = sequence {ACE ALA ASP GLU PHE GLY HIS ILE LYS LEU MET ASN PRO GLN ARG SER THR VAL TRP CTYR}
+
+# Save a non-solvated topology
+saveamberparm prot $prefix.parm7 $prefix.rst7
+
+# quit
+quit
+EOF
+
+echo ""
+echo "         Creating a new-style (Amber 7) topology file with mbondi3 "
+echo ""
+
+$tleap -f leap.in > leap2.log
+
+$DACDIF $prefix.parm7.save $prefix.parm7
+
+/bin/rm -f leap.in leap.log leap2.log $prefix.rst7 $prefix.rst7

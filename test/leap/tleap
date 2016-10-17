@@ -1,0 +1,8 @@
+#! /bin/csh -f
+#
+#  This version of tleap is for switching between bin & src versions
+#
+set _INCS = " -I$AMBERHOME/dat/leap/prep -I$AMBERHOME/dat/leap/lib -I$AMBERHOME/dat/leap/cmd -I$AMBERHOME/dat/leap/parm"
+#
+#../src/leap/src/leap/teLeap $_INCS $*
+../../bin/teLeap $_INCS $*

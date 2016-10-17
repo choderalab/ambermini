@@ -1,0 +1,21 @@
+CH3F PM3 single point calculation
+ &qmmm
+    qm_theory    = 'PM3',
+    qmcharge     = 0,
+    ! SCF settings
+    scfconv      = 1.0d-10, ! kcal/mol
+    errconv      = 1.d-06,  ! au
+    tight_p_conv = 0,
+    itrmax       = 100,
+    ! Geometry optimization settings
+    maxcyc       = 0,
+    grms_tol     = 0.02,   ! kcal/(mol*A)
+    ! Output
+    ntpr         = 10,
+    verbosity    = 0,
+ /
+ 6 C     0.000000     0.000000     0.000000
+ 1 H     0.000000     0.000000     1.089000
+ 1 H     1.026720     0.000000    -0.362996
+ 1 H    -0.513360    -0.889165    -0.363000
+ 9 F    -0.513360     0.889165    -0.363000

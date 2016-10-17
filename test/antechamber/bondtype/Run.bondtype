@@ -1,0 +1,51 @@
+#!/bin/csh -f
+
+# In this tutorial, we show how antechamber handle metallic molecules and how
+# to change bond type assignments through froze some bonds. It is pointed out
+# that not all the metallic molecules can be handled properly by the
+# Antechamber package. Most difficult molecules involve metallic atoms having
+# more than six coordinated bonds, such as ferrocene. 
+
+# ABAKOE is metallic molecule containing one W. When bond types are assigned,
+# all the bonds involved by this atom are frozen.
+
+../../../bin/antechamber -fi mol2 -fo prepi -i ABAKOE.mol2 -o ABAKOE.prepi \
+    >& antechamber.out || goto error
+
+
+# PFPHHG02 is another metallic molecule containing one Hg. Again, all the
+# bonds involved by this atom are frozen.
+
+../../../bin/antechamber -fi mol2 -fo prepi -i PFPHHG02.mol2 -o PFPHHG02.prepi \
+   >& antechamber.out || goto error
+
+
+# For fluorescein, by default, antechamber assigns a single bond to BOND
+# C2-O15 and double bond to BOND C13-O16. This is according to the atomic
+# sequence order. If you want to get the other resonant structure, which has
+# BOND C2-O15 to be double and C13-O16 to be single, you may simply change the
+# bond type of BOND C2-O15 to 2 and appending 'F' or 'f' to it. Then
+# antechamber assigns bond types with this bond type frozen. 
+
+# For the default bond type assignment. By the way, I intentionally changed
+# bond type of BOND C2-O15 to 2, echo but without frozen it
+# \(fluorescein.mol2\).  After bond type assignment, a bond type of 1 was
+# assigned \(fluorescein2.mol2\) 
+
+../../../bin/antechamber -fi mol2 -fo mol2 -i fluorescein.mol2 -o fluorescein2.mol2 -j 4 -pf y -s 2 >& antechamber.out
+
+# For the resonant assignment with BOND C2-O15 frozen to '2'
+
+../../../bin/antechamber -fi mol2 -fo mol2 -i fluorescein_f.mol2 -o fluorescein_f2.mol2 -j 4 -pf y -s 2 >& antechamber.out
+
+
+../../dacdif -s -t 1 ABAKOE.prepi.save ABAKOE.prepi
+../../dacdif -s -t 1 PFPHHG02.prepi.save PFPHHG02.prepi
+../../dacdif -s -t 1 fluorescein2.mol2.save fluorescein2.mol2 
+../../dacdif -s -t 1 fluorescein_f2.mol2.save fluorescein_f2.mol2 
+
+exit(0)
+
+error:
+"  ${0}:  Program error"
+exit(1)
