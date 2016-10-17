@@ -23,6 +23,7 @@ install: all
 	cd bin && mv $(PROGS) $(PREFIX)/bin
 	cp -r share/amber/dat $(PREFIX)
 	cp -r test $(PREFIX)
+	cp config.h $(PREFIX)/test
 
 prep:
 	$(MKDIR) -p bin

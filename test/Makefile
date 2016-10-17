@@ -1,4 +1,4 @@
-include ../src/config.h
+include config.h
 
 test.antechamber:
 	-cd antechamber/bondtype && ./Run.bondtype
