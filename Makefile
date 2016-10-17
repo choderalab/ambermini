@@ -22,6 +22,7 @@ install: all
 	$(MKDIR) -p $(PREFIX)/bin $(PREFIX)/share
 	cd bin && mv $(PROGS) $(PREFIX)/bin
 	cp -r share/amber/dat $(PREFIX)
+	cp -r test $(PREFIX)
 
 prep:
 	$(MKDIR) -p bin

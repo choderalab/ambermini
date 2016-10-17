@@ -18,8 +18,8 @@ script:
   - $HOME/appveyor/bin/antechamber -h
   - $HOME/appveyor/bin/tleap -h
   # Run tests
-  - cd test && make test.antechamber && cd ..
-  - cd test && make test.sqm && cd ..
-  - cd test && make test.leap && cd ..
-  - cd test && make clean & cd ..
+  - cd $HOME/appveyor/test && make test.antechamber
+  - cd $HOME/appveyor/test && make test.sqm
+  - cd $HOME/appveyor/test && make test.leap
+  - cd $HOME/appveyor/test && make clean
 
