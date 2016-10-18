@@ -94,10 +94,78 @@ AmberMini <-> AmberTools).
    compile as needed. I have not figure out which files need the `_pvt` 
    invoke.
  * `Makefile`
-7. Folders I have yet to figure out ¯\\\_(ツ)\_/¯
+7. Folders I have yet to figure out ¯\\\_(ツ)\\\_/¯
  * `share/amber/dat/charmmff_in_amber`         <-> ???
  * `share/amber/dat/contrib`                   <-> ???
  * `share/amber/dat/leap/pol_solvent_database` <-> ???
  * `share/amber/dat/pixmap`                    <-> ???
  * `share/amber/dat/solvents`                  <-> ???
+
  
+# Creating an executable which needs `$AMBERHOME`
+
+Certain AmberTools programs need the `$AMBERHOME` environment variable 
+when compiled. In that case, you need to create a special version of that 
+program ending in `_pvt` along with shell scripts to trick the program 
+into pointing at the AmberMini's `$AMBERHOME`. The instructions here are 
+by no means a catch-all, and more meant as a guideline.
+
+These instructions use `newProg` as the program name that would normally 
+be added by AmberTools which we will make a custom version of.
+
+1. In the AmberMini head `Makefile`, add the following:
+ * Add to the `PROGS` list `newProg$(SFX)` and `newProg_pvt$(WRAPPER_SFX)`
+2. If this is a standalone program (like `antechamber`), add `newProg` 
+   as an entry.
+3. If this program is a dependency of another (like `parmchk`), you will 
+   want to work with that source program's `Makefile`
+4. Change to the `newProg` source code directory (this may be a dependant directory):
+5. In the `Makefile` which compiles `newProg`:
+ * Change the entry name of the compiling directive from `newProg` to `newProg_pvt`
+   preserving all other parts of the directive name. e.g.
+   ```Makefile
+   newProg_pvt$(SFX): 	$(OBJECTS)
+	  $(CC) $(CFLAGS) $(AMBERCFLAGS) -o newProg_pvt$(SFX) $(OBJECTS) \
+		  $(LDFLAGS) $(AMBERLDFLAGS) $(LM) 
+   ```
+ * Add the following `if...else` directives: 
+   ```Makefile
+   ifeq ($(OS),Windows_NT)
+   $(BINDIR)/newProg$(SFX):
+	  cp -L newProg.bat $(BINDIR)
+   else
+   $(BINDIR)/paramfit$(SFX):
+	  cp -L newProg $(BINDIR)
+   endif
+   ```
+ * Make sure there is a directive that when called compiles the `newProg_pvt`
+   directive and calls the `newProg` directive in the `if...else` set.
+6. Still in the `newProg` source code directory, create an executable 
+   file (`chmod +x`) called `newProg` with contents:
+   ```Shell
+   #!/bin/sh
+
+   # Shell script to wrap newProg so it knows where to find the necessary data
+   # files
+
+   amberhome=`dirname $0`
+
+   # Point AMBERHOME to the location that has dat/leap
+   export AMBERHOME="$amberhome/.."
+
+   `dirname $0`/newProg_pvt $@
+   ```
+ 7. Still in the `newProg` source code directory, create an executable 
+   file (`chmod +x`) called `newProg.bat` with contents:
+   ```Batchfile
+   :: Point AMBERHOME to the location that has dat/leap
+   set AMBERHOME=%~dp0\..
+   %~dp0\newProg_pvt %*
+   ```
+ 8. If correct, the top level Makefile will know to expect the `_pvt` 
+    program along with a wrapper program based on OS. Then the compiling 
+    `Makefile` will compile the program as normal under the `_pvt` name 
+    and the the correct wrapper script sets an `$AMBERHOME` variable for 
+    the program before calling the compiled program. When the program is 
+    called, it should point to the wrapper, which then points to the 
+    program.
