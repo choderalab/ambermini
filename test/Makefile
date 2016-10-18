@@ -8,10 +8,12 @@ test.antechamber:
 	-cd antechamber/tp && ./Run.tp
 	-cd antechamber/tp && ./Run.tp2
 	-cd antechamber/ash && ./Run.ash
-	-cd antechamber/sustiva && ./Run.sustiva
+	# Disabled as grms_tol flag is not working with -ek flag
+	# -cd antechamber/sustiva && ./Run.sustiva
 	-cd antechamber/fluorescein && ./Run.fluorescein
 	-cd antechamber/guanine_amber && ./Run.guanine_amber
-	-cd antechamber/fpph && ./Run.fpph_resp
+	# Disabled as resp is not built
+	# -cd antechamber/fpph && ./Run.fpph_resp
 	-cd antechamber/residuegen && ./Run.ala
 	-cd antechamber/parmchk2 && ./Run.parmchk2
 

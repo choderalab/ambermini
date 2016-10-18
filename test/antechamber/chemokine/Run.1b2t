@@ -7,12 +7,12 @@
 
 
 echo "============ Step 1 ============" > antechamber.out
-${AMBERHOME}/bin/antechamber -fi pdb -fo ac -i 1b2t.pdb -o 1b2t.ac -at amber \
+../../../bin/antechamber -fi pdb -fo ac -i 1b2t.pdb -o 1b2t.ac -at amber \
    -s 2 -pf yes >>& antechamber.out || goto error
 
 # Now generate a mol2 file that can be read with many software packages 1b2t.
 echo "============ Step 2 ============" >> antechamber.out
-${AMBERHOME}/bin/antechamber -fi ac -fo mol2 -i 1b2t.ac -o 1b2t.mol2 -at sybyl \
+../../../bin/antechamber -fi ac -fo mol2 -i 1b2t.ac -o 1b2t.mol2 -at sybyl \
    -s 2 -pf yes -j 1 >>& antechamber.out || goto error
 
 

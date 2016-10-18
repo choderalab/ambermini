@@ -11,15 +11,6 @@ if [ -z "$TESTtleap" ] ; then
   fi
 fi
 
-# Set sander for calculating single point energies
-if [ -z "$TESTsander" ] ; then
-  if [ -z "$AMBERHOME" ] ; then
-    TESTsander=../../../../bin/sander
-  else
-    TESTsander=$AMBERHOME/bin/sander
-  fi
-fi
-
 # Set location of dacdif relative to subdirs
 DACDIF=../../dacdif
 

@@ -35,7 +35,7 @@ There are a rules-of-thumb you can think of when choosing files in the
 |       |   X   |       | Possibly a new file to add, check the folders its in, and see if there are any calls to it from existing files in AmberMini
 |   X   |   X   |       | Nothing to do, probably. There is a chance changes to existing files may now require the file now, be aware if there are errors.
 
-## The Most Critical Thing!
+## Critical Notes!
 
 There are several files (*mostly* `Makefile`s) that have custom 
 functions to make AmberMini work on Windows and as a standalone! These 
@@ -45,6 +45,13 @@ functionality.
 **DO NOT OVERWRITE THESE FUNCTIONS!**
 
 Incorporate them!
+
+### Several library files are BINARIES somehow
+
+There are several files, especially in the `dat` folder which got flagged 
+as binaries somewhere in the life of AmberTools. If you are using a `diff` 
+program which filters out binaries, you **must turn this off** to see 
+the complete file list. Meld is one such tool, disable this filter.
                           
 # File list
 
@@ -61,6 +68,7 @@ AmberMini <-> AmberTools).
  * `include`  <-> `AmberTools/src/include`
  * `lapack`   <-> `AmberTools/src/lapack`
  * `lib`      <-> `AmberTools/src/lib`
+ * `paramfit` <-> `AmberTools/src/paramfit`
  * `sff`      <-> `AmberTools/src/sff`
  * `sqm`      <-> `AmberTools/src/sqm`
 3. Compare the following *folder* making absolutley sure you preserve 

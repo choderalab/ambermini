@@ -1,0 +1,15 @@
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! Sample header file for Gaussian quantum calculations !
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!                                                     
+!                                                      !
+! paramfit will put in the sections about the input    !
+! structure, including the title, charge, and          !
+! multiplicity. you need to input the basis set and    !
+! information about your system.                       !
+!                                                      !
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+%mem=2GB
+%nproc=2
+# HF/6-31G
+!

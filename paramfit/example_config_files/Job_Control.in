@@ -1,0 +1,92 @@
+# ## This is a job control template for the AMBER parameter optimiser ## #
+# ## *Please* read the documentation for a description of each option ## #
+# ## By Robin Betz and Ross Walker                                    ## #
+
+
+
+
+
+
+
+# IT IS HIGHLY RECOMMENDED THAT YOU USE THE PARAMFIT WIZARD TO GENERATE
+# A JOB CONTROL FILE FOR YOU
+
+
+
+
+
+
+
+#All lines preceded by a hash (#) are ignored
+
+# ## Choose one of the following for run type:                        ## #
+#RUNTYPE=CREATE_INPUT
+#RUNTYPE=SET_PARAMS
+#RUNTYPE=FIT
+
+# ## Specify how many input structures are in the coordinate file     ## #
+NSTRUCTURES=100
+
+# ## If runtype is SET_PARAMS, define the parameter file to save here ## #
+#PARAMETER_FILE_NAME=parameters.in
+
+# ## If runtype is not CREATE_INPUT, choose 1 of the following        ## #
+#PARAMETERS_TO_FIT=DEFAULT
+#PARAMETERS_TO_FIT=LOAD
+#PARAMETERS_TO_FIT=K_ONLY
+
+# ## If K is not being fit, specify an initial value                  ## #
+#K=FIT
+#K=0.0
+
+# ## Select a fitting function                                        ## #
+#FUNC_TO_FIT=SUM_SQUARES_AMBER_STANDARD
+#FUNC_TO_FIT=AMBER_FORCES
+#FUNC_TO_FIT=DIHEDRAL_LEAST_SQUARES
+
+
+# ## Also indicate which units the QM energies are in                 ## #
+#QM_ENERGY_UNITS=HARTREE
+#QM_ENERGY_UNITS=KCALMOL
+#QM_ENERGY_UNITS=KJMOL
+
+# ## Indicate units and location of quantum forces if fitting those   ## #
+#QM_FORCE_UNITS=HARTREE_BOHR
+#QM_FORCE_UNITS=KCALMOL_ANGSTROM
+
+# ## Specify naming convention for quantum input/output files         ## #
+#QMFILEOUTSTART=Job.
+#QMFILEOUTEND=.in
+
+# ## Specify a format to write the quantum input files to             ## #
+#QMFILEFORMAT=GAUSSIAN
+#QMFILEFORMAT=GAMESS
+#QMFILEFORMAT=ADF
+
+# ## If runtype is FIT, choose an algorithm to use                    ## #
+#ALGORITHM=SIMPLEX
+#ALGORITHM=GENETIC
+#ALGORITHM=BOTH
+
+# ## Options for the genetic algorithm                                ## #
+#OPTIMIZATIONS=250
+#SEARCH_SPACE=-1
+#MAX_GENERATIONS=50000
+#GENERATIONS_TO_CONV=500
+
+# ## Options for the simplex algorithm                                ## #
+#BONDFC_dx=5.0
+#BONDEQ_dx=0.02
+#ANGLEFC_dx=1.0
+#ANGLEEQ_dx=0.05
+#DIHEDRALBH_dx=0.2
+#DIHEDRALN_dx=0.01
+#DIHEDRALG_dx=0.05
+#K_START=0.0
+#K_dx=10.0
+#CONV_LIMIT=1.0E-8
+
+# ## Specify output filenames, if desired                             ## #
+#WRITE_ENERGY=energyfile.txt
+#WRITE_FRCMOD=frcmod
+
