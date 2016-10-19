@@ -36,7 +36,8 @@ ErrorCLEANUPSUFFIXES="${TEMPLOGSUFF}"
 ##
 
 # Pointing at custom $AMBERHOME dir
-AMBERHOME=../../../
+THISDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+AMBERHOME="$THISDIR/../../../"
 
 ##
 ## Check if we have a particular task to do 
@@ -71,7 +72,7 @@ if [ $CLEAN -eq  0 ] ; then  # Do some other setup for the tests
     exit 1
   fi
 #  DACDIF="$AMBERHOME/AmberTools/test/dacdif"
-  DACDIF="../../dacdif"
+  DACDIF="$AMBERHOME/test/dacdif"
   TLEAP="$AMBERHOME/bin/tleap"
   if [ ! -x $DACDIF ] ; then
     echo "$DACDIF not found." 
