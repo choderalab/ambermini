@@ -8,6 +8,7 @@ addons:
       - g++
       - gfortran
       - bison
+      - csh
 
 install:
   - git status
