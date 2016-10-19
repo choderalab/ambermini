@@ -47,10 +47,6 @@ is_amberhome_defined:
 
 clean:
 	-./test_at_clean.sh
-	-cd mmpbsa_py && $(MAKE) -k clean
-	-cd ../src/mm_pbsa/Examples && ./Run.mmpbsa.clean
-	-cd ../src/FEW/examples/test && ./Run.few.clean
-	-cd cpptraj && $(MAKE) -k clean
 	-cd leap && $(MAKE) -k clean
 	-cd leap/glycam/06j && ./Run.glycam clean
 	-cd leap/glycam/06EPb && ./Run.glycam clean
