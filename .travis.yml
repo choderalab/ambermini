@@ -11,13 +11,8 @@ addons:
       - csh
 
 install:
-  - git status
-  - git log > log.out
-  - cat log.out
-  - ls -lR test
   - ./configure --prefix=$HOME/appveyor
   - make install
-  - ls -lR $HOME/appveyor/test
 
 script:
   - $HOME/appveyor/bin/sqm -h
