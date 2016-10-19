@@ -18,7 +18,7 @@ compare the versions, see if new dependencies are needed.
 You may also 
 find it helpful to compare a 3-way diff between the version of 
 AmberTools(X), AmberTools(X+1), and AmberMini to see all the changes 
-and make sure you dont remove files AmberMini needs that AmberTools does 
+and make sure you don't remove files AmberMini needs that AmberTools does 
 not (X is current version AmberMini is built against and you are 
 upgrading from).
 
@@ -71,7 +71,7 @@ AmberMini <-> AmberTools).
  * `paramfit` <-> `AmberTools/src/paramfit`
  * `sff`      <-> `AmberTools/src/sff`
  * `sqm`      <-> `AmberTools/src/sqm`
-3. Compare the following *folder* making absolutley sure you preserve 
+3. Compare the following *folder* making absolutely sure you preserve 
    the private compile calls in the `Makefile`. If need be, you may 
    have to add new functions as AmberTools are developed
  * `antechamber` <-> `AmberTools/src/antechamber`
@@ -94,7 +94,11 @@ AmberMini <-> AmberTools).
    compile as needed. I have not figure out which files need the `_pvt` 
    invoke.
  * `Makefile`
-7. Folders I have yet to figure out ¯\\\_(ツ)\\\_/¯
+7. Update the `test` <-> `AmberTools/test` folder. There are many files 
+which had to be manually changed to get the executable paths correct 
+and should all have the original lines commented out. Make sure you 
+don't overwrite these pointers.
+7. Folders I have yet to figure out ¯\\\_(ツ)_/¯
  * `share/amber/dat/charmmff_in_amber`         <-> ???
  * `share/amber/dat/contrib`                   <-> ???
  * `share/amber/dat/leap/pol_solvent_database` <-> ???
