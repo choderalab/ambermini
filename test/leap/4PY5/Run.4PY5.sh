@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# Test parameters for Protein/DNA/RNA system 
+# Test parameters for Protein/DNA/RNA system
+# Point energy tests are disabled as AmberMini does not build sander
 . ../TestCommon.sh
 
 CleanFiles leap.in leap.out 4py5.parm7 new.4py5.parm7 4py5.rst7 pp.in \
@@ -18,14 +19,14 @@ else
 fi
 
 # Input for single point energy
-cat > pp.in <<EOF
-single minimization step
-&cntrl
-   imin = 1, ntx = 1, irest = 0, ntwx = 0,
-   ntc = 2, ntf = 2, ntb = 0, cut = 9999.0,
-   igb = 5, ioutfm = 0, ntxo = 1, ntwr = 500,
-&end
-EOF
+#cat > pp.in <<EOF
+#single minimization step
+#&cntrl
+#   imin = 1, ntx = 1, irest = 0, ntwx = 0,
+#   ntc = 2, ntf = 2, ntb = 0, cut = 9999.0,
+#   igb = 5, ioutfm = 0, ntxo = 1, ntwr = 500,
+#&end
+#EOF
 
 # Use the old ff14SB containing BSC0/OL3/14SB
 TestOldFF14SB() {
@@ -38,10 +39,10 @@ quit
 EOF
   RunTleap 4py5.parm7
 
-  $TESTsander -i pp.in -p 4py5.parm7 -c 4py5.rst7
+#  $TESTsander -i pp.in -p 4py5.parm7 -c 4py5.rst7
   $DACDIF 4py5.parm7.save 4py5.parm7
   $DACDIF 4py5.rst7.save 4py5.rst7
-  $DACDIF mdout.save mdout
+#  $DACDIF mdout.save mdout
 }
 
 # Use the new BSC0/OL3/14SB separate leaprc files
@@ -58,10 +59,10 @@ quit
 EOF
   RunTleap new.4py5.parm7
   CleanFiles mdinfo restrt
-  $TESTsander -i pp.in -p new.4py5.parm7 -c 4py5.rst7 -o new.mdout
+#  $TESTsander -i pp.in -p new.4py5.parm7 -c 4py5.rst7 -o new.mdout
   $DACDIF 4py5.parm7.save new.4py5.parm7
   $DACDIF 4py5.rst7.save 4py5.rst7
-  $DACDIF mdout.save new.mdout
+#  $DACDIF mdout.save new.mdout
 fi
 }
 
@@ -79,11 +80,12 @@ quit
 EOF
 RunTleap bsc1.4py5.parm7
 CleanFiles mdinfo restrt
-$TESTsander -i pp.in -p bsc1.4py5.parm7 -c 4py5.rst7 -o bsc1.mdout
+#$TESTsander -i pp.in -p bsc1.4py5.parm7 -c 4py5.rst7 -o bsc1.mdout
 $DACDIF bsc1.4py5.parm7.save bsc1.4py5.parm7
 $DACDIF 4py5.rst7.save 4py5.rst7
-$DACDIF bsc1.mdout.save bsc1.mdout
+#$DACDIF bsc1.mdout.save bsc1.mdout
 
-CleanFiles leap.in leap.out pp.in restrt mdinfo
+#CleanFiles leap.in leap.out pp.in restrt mdinfo
+CleanFiles leap.in leap.out
 
 exit 0

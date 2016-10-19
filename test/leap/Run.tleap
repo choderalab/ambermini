@@ -1,18 +1,21 @@
 #!/bin/csh -f
 
-if ( ! ( $?AMBERHOME ) ) then
-    echo "Warning: the AMBERHOME environment variable is not defined !"
-    echo "    It usually should be set to the path of Amber's top level directory."
-    setenv AMBERHOME `pwd`/../../..
-    echo "Caution: Setting AMBERHOME to $AMBERHOME !"
-    echo " "
-else
-    echo "AMBERHOME is set to $AMBERHOME"
-endif
+#if ( ! ( $?AMBERHOME ) ) then
+#    echo "Warning: the AMBERHOME environment variable is not defined !"
+#    echo "    It usually should be set to the path of Amber's top level directory."
+#    setenv AMBERHOME `pwd`/../../..
+#    echo "Caution: Setting AMBERHOME to $AMBERHOME !"
+#    echo " "
+#else
+#    echo "AMBERHOME is set to $AMBERHOME"
+#endif
+# Pointing at custom $AMBERHOME dir
+setenv AMBERHOME `pwd`/../..
 
+# Sander tests disabled
 set DIF    = ../dacdif
 set LIB    = $AMBERHOME/dat/leap/lib
-set SANDER = $AMBERHOME/bin/sander
+#set SANDER = $AMBERHOME/bin/sander
 
 if ( ! -e ./tleap ) then
 	echo " Error: no ./tleap"
@@ -61,20 +64,20 @@ foreach i ( aminoan94 aminonc94 dna94 rna94 )
 	echo "       comparing topology to earlier leap version.."
 	$DIF ff94/all_${i}.top all_${i}.top
 
-	if ( -f all_${i}.top ) then
-
-		if ( ( ! -e $SANDER ) ) then
-			echo "        No $SANDER to use to compare energies"
-		else
-			echo "       comparing sander energies"
-			$SANDER -O \
-				-i ff94/sander_ff94.in \
-				-o ff94/sander_mdout.${i} \
-				-p all_${i}.top \
-				-c all_${i}.crd		|| goto sander_error
-				$DIF ff94/sander_mdout.${i}.save ff94/sander_mdout.${i}
-		endif
-	endif
+	#if ( -f all_${i}.top ) then
+    #
+	#	if ( ( ! -e $SANDER ) ) then
+	#		echo "        No $SANDER to use to compare energies"
+	#	else
+	#		echo "       comparing sander energies"
+	#		$SANDER -O \
+	#			-i ff94/sander_ff94.in \
+	#			-o ff94/sander_mdout.${i} \
+	#			-p all_${i}.top \
+	#			-c all_${i}.crd		|| goto sander_error
+	#			$DIF ff94/sander_mdout.${i}.save ff94/sander_mdout.${i}
+	#	endif
+	#endif
 	/bin/rm -f restrt mdinfo all_${i}.crd
 end
 

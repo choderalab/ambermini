@@ -20,6 +20,9 @@ test.antechamber:
 test.leap:
 	cd leap && $(MAKE) -k test
 
+test.paramfit:
+	cd paramfit && $(MAKE) -k test
+
 test.sqm:
 	-cd ./sqm/c2h2 && ./Run
 	-cd ./sqm/ch3f && ./Run

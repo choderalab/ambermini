@@ -1,11 +1,13 @@
 #!/bin/bash
 
 # Test OL3 Chi parameters for RNA.
+# Point energy tests are disabled as AmberMini does not build sander
 
 . ../TestCommon.sh
 
-CleanFiles leap.in leap.out rGACC.tip3p.parm7 rGACC.nomin.rst7 pp.in mdout restrt mdinfo \
-           tp3.mdout
+#CleanFiles leap.in leap.out rGACC.tip3p.parm7 rGACC.nomin.rst7 pp.in mdout restrt mdinfo \
+#           tp3.mdout
+CleanFiles leap.in leap.out rGACC.tip3p.parm7 rGACC.nomin.rst7
 
 # Test loading leaprc.RNA.OL3 with solvent and ions
 # NOTE: The following logic is included so this test can be used with
@@ -34,18 +36,18 @@ quit
 EOF
 RunTleap rGACC.tip3p.parm7
 # Single point energy
-cat > pp.in <<EOF
-single minimization step
-&cntrl
-   imin = 1, ntx = 1, irest = 0, ntwx = 0,
-   ntc = 1, ntf = 1, ntb = 1, cut = 8.0,
-   ntxo = 1, ioutfm = 0, ntwr = 500,
-&end
-EOF
-$TESTsander -i pp.in -p rGACC.tip3p.parm7 -c rGACC.nomin.rst7 -o tp3.mdout
+#cat > pp.in <<EOF
+#single minimization step
+#&cntrl
+#   imin = 1, ntx = 1, irest = 0, ntwx = 0,
+#   ntc = 1, ntf = 1, ntb = 1, cut = 8.0,
+#   ntxo = 1, ioutfm = 0, ntwr = 500,
+#&end
+#EOF
+#$TESTsander -i pp.in -p rGACC.tip3p.parm7 -c rGACC.nomin.rst7 -o tp3.mdout
 $DACDIF rGACC.tip3p.parm7.save rGACC.tip3p.parm7
 $DACDIF rGACC.nomin.rst7.save rGACC.nomin.rst7
-$DACDIF tp3.mdout.save tp3.mdout
+#$DACDIF tp3.mdout.save tp3.mdout
 
 # Test that loading a protein leaprc does not affect RNA params
 cat > leap.in <<EOF
@@ -57,20 +59,21 @@ quit
 EOF
 RunTleap rGACC.OL3.parm7
 # Single point energy
-cat > pp.in <<EOF
-single minimization step
-&cntrl
-   imin = 1, ntx = 1, irest = 0, ntwx = 0,
-   ntc = 2, ntf = 2, ntb = 0, cut = 9999.0,
-   igb = 1, ntxo = 1, ioutfm = 0, ntwr = 500,
-&end
-EOF
-rm mdinfo restrt
-$TESTsander -i pp.in -p rGACC.OL3.parm7 -c rGACC.OL3.rst7
+#cat > pp.in <<EOF
+#single minimization step
+#&cntrl
+#   imin = 1, ntx = 1, irest = 0, ntwx = 0,
+#   ntc = 2, ntf = 2, ntb = 0, cut = 9999.0,
+#   igb = 1, ntxo = 1, ioutfm = 0, ntwr = 500,
+#&end
+#EOF
+#rm mdinfo restrt
+#$TESTsander -i pp.in -p rGACC.OL3.parm7 -c rGACC.OL3.rst7
 $DACDIF rGACC.OL3.parm7.save rGACC.OL3.parm7
 $DACDIF rGACC.OL3.rst7.save rGACC.OL3.rst7
-$DACDIF mdout.save mdout
+#$DACDIF mdout.save mdout
 
-CleanFiles pp.in restrt mdinfo leap.in leap.out
+#CleanFiles pp.in restrt mdinfo leap.in leap.out
+CleanFiles leap.in leap.out
 
 exit 0

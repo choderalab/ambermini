@@ -3,13 +3,26 @@
 CLEAN=0
 
 # Set test tleap
-if [ -z "$TESTtleap" ] ; then
-  if [ -z "$AMBERHOME" ] ; then
-    TESTtleap=../../../../bin/tleap
-  else
-    TESTtleap=$AMBERHOME/bin/tleap
-  fi
-fi
+#if [ -z "$TESTtleap" ] ; then
+#  if [ -z "$AMBERHOME" ] ; then
+#    TESTtleap=../../../../bin/tleap
+#  else
+#    TESTtleap=$AMBERHOME/bin/tleap
+#  fi
+#fi
+# Set tleap relative to the AmberMini Dir
+TESTtleap=../../../bin/tleap
+AMBERHOME=../../../
+
+# Set sander for calculating single point energies
+# Disabled as AmberMini doesn't build sander
+#if [ -z "$TESTsander" ] ; then
+#  if [ -z "$AMBERHOME" ] ; then
+#    TESTsander=../../../../bin/sander
+#  else
+#    TESTsander=$AMBERHOME/bin/sander
+#  fi
+#fi
 
 # Set location of dacdif relative to subdirs
 DACDIF=../../dacdif

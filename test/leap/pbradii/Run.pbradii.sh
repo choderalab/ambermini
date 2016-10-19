@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# Test different GB radii sets 
+# Test different GB radii sets
+# Point energy tests are disabled as AmberMini does not build sander
 
 . ../TestCommon.sh
 
@@ -27,20 +28,21 @@ saveamberparm m $PBRADII.parm7 1.rst7
 quit
 EOF
   RunTleap $PBRADII.parm7
-  # Single point energy
-  cat > pp.in <<EOF
-single minimization step
-&cntrl
-   imin = 1, ntx = 1, irest = 0, ntwx = 0,
-   ntc = 1, ntf = 1, ntb = 0, cut = 9999.0,
-   igb = 1, ntxo = 1, ioutfm = 0, ntwr = 500,
-&end
-EOF
-  CleanFiles mdinfo restrt
+#  # Single point energy
+#  cat > pp.in <<EOF
+#single minimization step
+#&cntrl
+#   imin = 1, ntx = 1, irest = 0, ntwx = 0,
+#   ntc = 1, ntf = 1, ntb = 0, cut = 9999.0,
+#   igb = 1, ntxo = 1, ioutfm = 0, ntwr = 500,
+#&end
+#EOF
+#  CleanFiles mdinfo restrt
   $TESTsander -i pp.in -p $PBRADII.parm7 -c 1.rst7 -o $PBRADII.out
   $DACDIF $PBRADII.parm7.save $PBRADII.parm7
-  $DACDIF $PBRADII.out.save $PBRADII.out
+#  $DACDIF $PBRADII.out.save $PBRADII.out
 done
-CleanFiles leap.in leap.out pp.in restrt mdinfo 1.rst7
+#CleanFiles leap.in leap.out pp.in restrt mdinfo 1.rst7
+CleanFiles leap.in leap.out 1.rst7
 
 exit 0

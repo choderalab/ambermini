@@ -7,6 +7,8 @@ if [ $# -ge 1 ]; then
     python="$1"
 fi
 
+# Pointing at custom $AMBERHOME dir
+AMBERHOME=../../
 DACDIF=../dacdif
 tleap=./tleap
 

@@ -35,6 +35,8 @@ CLEANUPSUFFIXES="${TESTSUFF} ${LEAPERRSUFF} ${LEAPOUTSUFF} ${DIFFOUTSUFF} ${TEMP
 ErrorCLEANUPSUFFIXES="${TEMPLOGSUFF}"
 ##
 
+# Pointing at custom $AMBERHOME dir
+AMBERHOME=../../../
 
 ##
 ## Check if we have a particular task to do 
@@ -68,7 +70,8 @@ if [ $CLEAN -eq  0 ] ; then  # Do some other setup for the tests
     echo "Error: The GLYCAM tleap tests require AMBERHOME to be defined."
     exit 1
   fi
-  DACDIF="$AMBERHOME/AmberTools/test/dacdif"
+#  DACDIF="$AMBERHOME/AmberTools/test/dacdif"
+  DACDIF=../../dacdif"
   TLEAP="$AMBERHOME/bin/tleap"
   if [ ! -x $DACDIF ] ; then
     echo "$DACDIF not found." 

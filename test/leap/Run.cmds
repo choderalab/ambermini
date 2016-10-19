@@ -2,6 +2,8 @@
 
 . ../program_error.sh
 
+# Pointing at custom $AMBERHOME dir
+AMBERHOME=../../
 DACDIF=../dacdif
 tleap=./tleap
 leaprc=$AMBERHOME/dat/leap/cmd/oldff/leaprc.ff10
