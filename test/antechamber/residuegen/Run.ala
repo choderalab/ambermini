@@ -27,7 +27,8 @@ cat ala_conf1.esp ala_conf2.esp > ala.esp
 
 ../../dacdif -t 1 ala.ac.save ala.ac
 ../../dacdif -t 1 ala.esp.save ala.esp
-../../dacdif -s -t 1 ala.prep.save ala.prep
+# Disable this since ala.prep does not exist in AmberTools source right now
+# ../../dacdif -s -t 1 ala.prep.save ala.prep
 
 exit(0)
 

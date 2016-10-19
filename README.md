@@ -6,7 +6,7 @@
 
 To obtain AmberTools, go to [the Amber webpage](http://ambermd.org).
 
-This version has been updated to match AmberTools 15 as of 23 Jun 2015.
+This version has been updated to match AmberTools 16 as of 19 Oct 2016.
 
 ### To install
 ```

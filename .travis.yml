@@ -21,5 +21,6 @@ script:
   - cd $HOME/appveyor/test && make test.antechamber
   - cd $HOME/appveyor/test && make test.sqm
   - cd $HOME/appveyor/test && make test.leap
+  - cd $HOME/appveyor/test && make test.paramfit
   - cd $HOME/appveyor/test && make clean
 

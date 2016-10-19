@@ -38,7 +38,7 @@ EOF
 #&end
 #EOF
 #  CleanFiles mdinfo restrt
-  $TESTsander -i pp.in -p $PBRADII.parm7 -c 1.rst7 -o $PBRADII.out
+#  $TESTsander -i pp.in -p $PBRADII.parm7 -c 1.rst7 -o $PBRADII.out
   $DACDIF $PBRADII.parm7.save $PBRADII.parm7
 #  $DACDIF $PBRADII.out.save $PBRADII.out
 done
