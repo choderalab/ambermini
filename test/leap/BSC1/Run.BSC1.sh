@@ -24,7 +24,7 @@ m = loadpdb ../BSC0/DDD.pdb
 saveamberparm m DDD.bsc1.parm7 DDD.bsc1.rst7
 quit
 EOF
-#RunTleap DDD.bsc1.parm7
+RunTleap DDD.bsc1.parm7
 ## Single point energy
 #cat > pp.in <<EOF
 #single minimization step
