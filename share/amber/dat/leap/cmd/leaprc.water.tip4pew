@@ -67,8 +67,8 @@ addAtomTypes {
 }
 loadOff atomic_ions.lib
 loadOff solvents.lib
-HOH = T4P
-WAT = T4P
+HOH = T4E
+WAT = T4E
 loadAmberParams frcmod.tip4pew
 loadAmberParams frcmod.ionsjc_tip4pew
 loadAmberParams frcmod.ions234lm_126_tip4pew

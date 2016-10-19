@@ -17,7 +17,8 @@ logFile leap.log
 #         Torsion phases restored to 0 and 180 degrees
 #         Backbone CNA, HNA, NAC, ACN, and ACO angles fit
 #         Additional assorted updates to bonded parameters and types
-#         SPC/Eb water model loaded
+#         The SPC/Eb water model was used to derive partial charges
+#           for this force field
 #
 #	load atom type hybridizations
 #

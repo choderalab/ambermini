@@ -4,8 +4,9 @@
 
 #include "../cifparse/cifparse.h"
 
-int rmmcif(char *filename, char *blockId, int *atomnum, ATOM atom[], 
-        int *bondnum, BOND bond[], CONTROLINFO *cinfo, MOLINFO *minfo, int flag)
+int rmmcif(char *filename, char *blockId, int *atomnum, 
+        ATOM atom[], int *bondnum, BOND bond[], CONTROLINFO *cinfo, 
+        MOLINFO *minfo, int flag)
 {
 /*if flag =1, read in atom type, if flag ==0, do not read in atom type */
 
@@ -38,6 +39,36 @@ int rmmcif(char *filename, char *blockId, int *atomnum, ATOM atom[],
         fprintf(stderr, "Target data block %s is not in file\n", blockId);
         exit(1);
     }
+
+    /* get chem_comp overall info: */
+    iCat = get_category_index(iblock, "chem_comp");
+    if (iCat == -1) {
+        fprintf(stderr, "Target category %s is not in data block %d\n",
+                "atom_site", iblock);
+        exit(1);
+    }
+
+    /* get the formal charge into the antechamber minfo struct: */
+    col2 = get_column_index(iblock, iCat, "pdbx_formal_charge");
+    assert( col2 >= 0 );
+    (*minfo).usercharge = atoi( 
+           cifFiles.datablocks[iblock].categories[iCat].rows[0].columns[col2] );
+
+    /* Exit (for now!?) if this is a "linking" -type residue */
+    col2 = get_column_index(iblock, iCat, "type");
+    assert( col2 >= 0 );
+    if( strstr(
+       cifFiles.datablocks[iblock].categories[iCat].rows[0].columns[col2],
+       "LINKING") ||
+        strstr(
+       cifFiles.datablocks[iblock].categories[iCat].rows[0].columns[col2],
+       "linking") ) {
+        fprintf( stderr, "Residue %s has a type of LINKING.  Quitting\n",
+            blockId );
+        exit(1);
+    }
+
+    /* get chem_comp_atom atomic info: */
     iCat = get_category_index(iblock, "chem_comp_atom");
     if (iCat == -1) {
         fprintf(stderr, "Target category %s is not in data block %d\n",

@@ -36,6 +36,7 @@ addAtomTypes {
 	{ "cg"  "C" "sp2" }
 	{ "ch"  "C" "sp2" }
 	{ "cp"  "C" "sp2" }
+	{ "cs"  "C" "sp2" }
 	{ "cq"  "C" "sp2" }
 	{ "cu"  "C" "sp2" }
 	{ "cv"  "C" "sp2" }
@@ -47,6 +48,9 @@ addAtomTypes {
 	{ "n2"  "N" "sp2" }
 	{ "n3"  "N" "sp3" }
 	{ "n4"  "N" "sp3" }
+	{ "n7"  "N" "sp3" }
+	{ "n8"  "N" "sp3" }
+	{ "n9"  "N" "sp3" }
 	{ "na"  "N" "sp2" }
 	{ "nb"  "N" "sp2" }
 	{ "nc"  "N" "sp2" }
@@ -55,6 +59,14 @@ addAtomTypes {
 	{ "nf"  "N" "sp2" }
 	{ "nh"  "N" "sp2" }
 	{ "no"  "N" "sp2" }
+	{ "ns"  "N" "sp2" }
+	{ "nt"  "N" "sp2" }
+	{ "nu"  "N" "sp2" }
+	{ "nv"  "N" "sp2" }
+	{ "nx"  "N" "sp3" }
+	{ "ny"  "N" "sp3" }
+	{ "nz"  "N" "sp3" }
+	{ "n+"  "N" "sp3" }
 	{ "s"   "S" "sp2" }
 	{ "s2"   "S" "sp2" }
 	{ "s3"   "S" "sp3" }
