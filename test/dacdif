@@ -235,7 +235,8 @@ shift
 
 # diff old with each new file storing diff's in file with extension dif_ext
 # modified for the custom ndiff.awk file
-DACDIFDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+#DACDIFDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+DACDIFDIR="$(cd $(dirname $0) && pwd)"
 for path in $@
 do
     file=`echo $path | sed 's@/@_@g'`  # convert pathname into unique filename
