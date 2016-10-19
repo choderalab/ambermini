@@ -10,6 +10,8 @@ addons:
       - bison
 
 install:
+  - git status
+  - ls -l test
   - ./configure --prefix=$HOME/appveyor
   - make install
 
