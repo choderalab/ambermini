@@ -3,12 +3,11 @@
           Amber 16 SANDER                              2016
           -------------------------------------------------------
 
-| Run on 04/14/2016 at 08:53:52
+| Run on 06/05/2016 at 06:35:15
 
-|   Executable path: /home/droe/Amber/GIT/amber/bin/sander
-| Working directory: /home/droe/Amber/GIT/amber/AmberTools/test/leap/4PY5
-|          Hostname: adenine
-
+|   Executable path: /home/case/amber16/bin/sander
+| Working directory: /Users/case/amber16/AmberTools/test/leap/4PY5
+|          Hostname: Unknown
 
 File Assignments:
 |  MDIN: pp.in                                                                 
@@ -43,12 +42,12 @@ single minimization step
 
 | Flags:                                                                        
 | New format PARM file being parsed.
-| Version =    1.000 Date = 04/14/16 Time = 08:53:52
+| Version =    1.000 Date = 06/05/16 Time = 06:35:15
  NATOM  =    5555 NTYPES =      17 NBONH =    2669 MBONA  =    3005
- NTHETH =    6152 MTHETA =    4207 NPHIH =   12018 MPHIA  =   11539
+ NTHETH =    6152 MTHETA =    4207 NPHIH =   12018 MPHIA  =   11558
  NHPARM =       0 NPARM  =       0 NNB   =   30944 NRES   =     305
- NBONA  =    3005 NTHETA =    4207 NPHIA =   11539 NUMBND =     118
- NUMANG =     271 NPTRA  =     257 NATYP =      47 NPHB   =       0
+ NBONA  =    3005 NTHETA =    4207 NPHIA =   11558 NUMBND =     118
+ NUMANG =     271 NPTRA  =     258 NATYP =      47 NPHB   =       0
  IFBOX  =       0 NMXRS  =      34 IFCAP =       0 NEXTRA =       0
  NCOPY  =       0
 
@@ -57,7 +56,7 @@ single minimization step
 |     Memory Use     Allocated
 |     Real              476228
 |     Hollerith          16972
-|     Integer           325933
+|     Integer           326028
 |     Max Pairs              1
 |     nblistReal             0
 |     nblist Int             0
@@ -124,9 +123,9 @@ default_name
 
 
    NSTEP       ENERGY          RMS            GMAX         NAME    NUMBER
-      1      -1.4048E+04     2.4059E+01     1.3132E+03     HD3      1903
+      1      -1.4039E+04     2.4056E+01     1.3132E+03     HD3      1903
 
- BOND    =      128.1173  ANGLE   =     1510.4159  DIHED      =     3781.7766
+ BOND    =      128.1173  ANGLE   =     1510.4159  DIHED      =     3790.6522
  VDWAALS =    -2183.9043  EEL     =   -16555.6955  EGB        =   -11583.1716
  1-4 VDW =     1700.5831  1-4 EEL =     9153.5036  RESTRAINT  =        0.0000
 
@@ -139,9 +138,9 @@ default_name
 
 
    NSTEP       ENERGY          RMS            GMAX         NAME    NUMBER
-      1      -1.4048E+04     2.4059E+01     1.3132E+03     HD3      1903
+      1      -1.4039E+04     2.4056E+01     1.3132E+03     HD3      1903
 
- BOND    =      128.1173  ANGLE   =     1510.4159  DIHED      =     3781.7766
+ BOND    =      128.1173  ANGLE   =     1510.4159  DIHED      =     3790.6522
  VDWAALS =    -2183.9043  EEL     =   -16555.6955  EGB        =   -11583.1716
  1-4 VDW =     1700.5831  1-4 EEL =     9153.5036  RESTRAINT  =        0.0000
 
@@ -149,23 +148,23 @@ default_name
    5.  TIMINGS
 --------------------------------------------------------------------------------
 
-|    Read coords time           0.01 ( 0.19% of Total)
-|                Calc gb radii              0.58 (14.55% of Gen B)
-|                Calc gb diag               1.07 (26.74% of Gen B)
-|                Calc gb off-diag           2.35 (58.71% of Gen B)
-|             Gen Born time              4.00 (100.0% of Nonbo)
-|          Nonbond force              4.00 (99.68% of Force)
+|    Read coords time           0.01 ( 0.21% of Total)
+|                Calc gb radii              0.45 (14.36% of Gen B)
+|                Calc gb diag               0.96 (30.66% of Gen B)
+|                Calc gb off-diag           1.73 (54.98% of Gen B)
+|             Gen Born time              3.15 (100.0% of Nonbo)
+|          Nonbond force              3.15 (99.68% of Force)
 |          Bond/Angle/Dihedral        0.01 ( 0.32% of Force)
-|       Force time                 4.01 (100.0% of Runmd)
-|    Runmd Time                 4.01 (96.59% of Total)
-|    Other                      0.13 ( 3.23% of Total)
-| Total time                 4.16 (100.0% of ALL  )
+|       Force time                 3.16 (100.0% of Runmd)
+|    Runmd Time                 3.16 (96.06% of Total)
+|    Other                      0.12 ( 3.73% of Total)
+| Total time                 3.29 (100.0% of ALL  )
 
 | Number of list builds   :          0
 
 | Highest rstack allocated:          0
 | Highest istack allocated:          0
-|           Job began  at 08:53:52.651  on 04/14/2016
-|           Setup done at 08:53:52.782  on 04/14/2016
-|           Run   done at 08:53:56.808  on 04/14/2016
+|           Job began  at 06:35:15.984  on 06/05/2016
+|           Setup done at 06:35:16.105  on 06/05/2016
+|           Run   done at 06:35:19.270  on 06/05/2016
 |     wallclock() was called      46 times
