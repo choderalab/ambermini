@@ -1,0 +1,186 @@
+
+          -------------------------------------------------------
+          Amber 11 SANDER                              2010
+          -------------------------------------------------------
+
+| Run on 11/15/2011 at 11:13:25
+  [-O]verwriting output
+
+File Assignments:
+|  MDIN: ff94/sander_ff94.in                                                   
+| MDOUT: ff94/sander_mdout.dna94                                               
+|INPCRD: all_dna94.crd                                                         
+|  PARM: all_dna94.top                                                         
+|RESTRT: restrt                                                                
+|  REFC: refc                                                                  
+| MDVEL: mdvel                                                                 
+|  MDEN: mden                                                                  
+| MDCRD: mdcrd                                                                 
+|MDINFO: mdinfo                                                                
+|  MTMD: mtmd                                                                  
+|INPDIP: inpdip                                                                
+|RSTDIP: rstdip                                                                
+
+|INPTRA: inptraj                                                               
+|
+
+ Here is the input file:
+
+#                                                                              
+ &cntrl                                                                        
+    imin=1, maxcyc=1, cut=99.0, ntb=0,                                         
+ /                                                                             
+
+--------------------------------------------------------------------------------
+   1.  RESOURCE   USE: 
+--------------------------------------------------------------------------------
+
+| Flags:                                                                        
+|    NONPERIODIC   ntb=0 and igb=0: Setting up nonperiodic simulation
+|  *** cutoff > system size, list only builds once
+|Largest sphere to fit in unit cell has radius =    34.650
+|  INFO: Old style PARM file read
+
+ NATOM  =     126 NTYPES =      15 NBONH =      47 MBONA  =      88
+ NTHETH =     109 MTHETA =     134 NPHIH =     191 MPHIA  =     218
+ NHPARM =       0 NPARM  =       0 NNB   =     695 NRES   =       4
+ NBONA  =      88 NTHETA =     134 NPHIA =     218 NUMBND =      37
+ NUMANG =      76 NPTRA  =      34 NATYP =      25 NPHB   =       0
+ IFBOX  =       0 NMXRS  =      33 IFCAP =       0 NEXTRA =       0
+ NCOPY  =       0
+
+
+|     Memory Use     Allocated
+|     Real                9460
+|     Hollerith            384
+|     Integer            43831
+|     Max Pairs           7875
+|     nblistReal          1512
+|     nblist Int       1318460
+|       Total             5439 kbytes
+
+| Note: 1-4 EEL scale factors were NOT found in the topology file.
+|       Using default value of 1.2.
+
+| Note: 1-4 VDW scale factors were NOT found in the topology file.
+|       Using default value of 2.0.
+| Duplicated    0 dihedrals
+| Duplicated    0 dihedrals
+
+--------------------------------------------------------------------------------
+   2.  CONTROL  DATA  FOR  THE  RUN
+--------------------------------------------------------------------------------
+
+default_name                                                                    
+
+General flags:
+     imin    =       1, nmropt  =       0
+
+Nature and format of input:
+     ntx     =       1, irest   =       0, ntrx    =       1
+
+Nature and format of output:
+     ntxo    =       1, ntpr    =      50, ntrx    =       1, ntwr    =     500
+     iwrap   =       0, ntwx    =       0, ntwv    =       0, ntwe    =       0
+     ioutfm  =       0, ntwprt  =       0, idecomp =       0, rbornstat=      0
+
+Potential function:
+     ntf     =       1, ntb     =       0, igb     =       0, nsnb    =      25
+     ipol    =       0, gbsa    =       0, iesp    =       0
+     dielc   =   1.00000, cut     =  99.00000, intdiel =   1.00000
+
+Frozen or restrained atoms:
+     ibelly  =       0, ntr     =       0
+
+Energy minimization:
+     maxcyc  =       1, ncyc    =      10, ntmin   =       1
+     dx0     =   0.01000, drms    =   0.00010
+|  INFO: Old style inpcrd file read
+
+
+--------------------------------------------------------------------------------
+   3.  ATOMIC COORDINATES AND VELOCITIES
+--------------------------------------------------------------------------------
+
+default_name                                                                    
+ begin time read from input coords =     0.000 ps
+
+ Number of triangulated 3-point waters found:        0
+
+     Sum of charges from parm topology file =  -2.99999998
+
+--------------------------------------------------------------------------------
+   4.  RESULTS
+--------------------------------------------------------------------------------
+
+ ---------------------------------------------------
+
+     eedmeth=4: Setting switch to one everywhere
+
+ ---------------------------------------------------
+| Local SIZE OF NONBOND LIST =       7183
+| TOTAL SIZE OF NONBOND LIST =       7183
+
+
+   NSTEP       ENERGY          RMS            GMAX         NAME    NUMBER
+      1       1.3590E+02     6.1158E+01     3.9068E+02     C7        110
+
+ BOND    =      229.7369  ANGLE   =      105.7202  DIHED      =      121.6216
+ VDWAALS =      -10.2484  EEL     =       15.7836  HBOND      =        0.0000
+ 1-4 VDW =       81.0849  1-4 EEL =     -407.8019  RESTRAINT  =        0.0000
+
+
+  Maximum number of minimization cycles reached.
+
+
+                    FINAL RESULTS
+
+
+
+   NSTEP       ENERGY          RMS            GMAX         NAME    NUMBER
+      1       1.3590E+02     6.1158E+01     3.9068E+02     C7        110
+
+ BOND    =      229.7369  ANGLE   =      105.7202  DIHED      =      121.6216
+ VDWAALS =      -10.2484  EEL     =       15.7836  HBOND      =        0.0000
+ 1-4 VDW =       81.0849  1-4 EEL =     -407.8019  RESTRAINT  =        0.0000
+
+--------------------------------------------------------------------------------
+   5.  TIMINGS
+--------------------------------------------------------------------------------
+
+|    Read coords time           0.00 ( 4.31% of Total)
+|    Fast Water setup           0.00 ( 0.16% of Total)
+|                Build the list             0.00 (95.29% of List )
+|                Other                      0.00 ( 4.71% of List )
+|             List time                  0.00 (53.54% of Nonbo)
+|                   Short_ene time             0.00 (99.20% of Direc)
+|                   Other                      0.00 ( 0.80% of Direc)
+|                Direct Ewald time          0.00 (94.45% of Ewald)
+|                Force Adjust               0.00 ( 0.13% of Ewald)
+|                Virial junk                0.00 ( 0.25% of Ewald)
+|                Start synchronizatio       0.00 ( 0.25% of Ewald)
+|                Other                      0.00 ( 4.93% of Ewald)
+|             Ewald time                 0.00 (46.40% of Nonbo)
+|             Other                      0.00 ( 0.06% of Nonbo)
+|          Nonbond force              0.00 (84.22% of Force)
+|          Bond/Angle/Dihedral        0.00 (14.46% of Force)
+|          Other                      0.00 ( 1.33% of Force)
+|       Force time                 0.00 (100.0% of Runmd)
+|    Runmd Time                 0.00 (28.90% of Total)
+|    Other                      0.00 (66.63% of Total)
+| Total time                 0.01 (99.22% of ALL  )
+
+| Highest rstack allocated:        600
+| Highest istack allocated:        120
+
+| Final Performance Info:
+| -----------------------------------------------------
+| Average timings for all steps:
+|     Elapsed(s) =       0.00 Per Step(ms) =       3.44
+|         ns/day =      25.11   seconds/ns =    3441.04
+| -----------------------------------------------------
+
+|           Job began  at 11:13:25.772  on 11/15/2011
+|           Setup done at 11:13:25.776  on 11/15/2011
+|           Run   done at 11:13:25.780  on 11/15/2011
+|     wallclock() was called      59 times

@@ -2040,40 +2040,53 @@ int main(int argc, char *argv[])
 			&& (strcmp(argv[1], "-h") == 0
 				|| strcmp(argv[1], "-H") == 0)) {
 			printf("[31mUsage: atomtype -i[0m input file name\n"
-				   "[31m                -o[0m output file name(ac)\n"
-				   "[31m                -f[0m input file format(ac (the default) or mol2)\n"
-				   "[31m                -p[0m amber or gaff or bcc or gas or sybyl, it is supressed by \"-d\" option\n"
-				   "[31m                -d[0m atom type defination file, optional\n"
-				   "[31m                -a[0m do post atom type adjustment (it is or sybyl applied with \"-d\" option)\n"
-				   "                   1: yes, 0: no (the default)\n");
+			       "[31m                -o[0m output file name(ac)\n"
+			       "[31m                -f[0m input file format(ac (the default) or mol2)\n"
+			       "[31m                -p[0m atom type set, supressed by \"-d\" option\n"
+			       "[34m                   gaff  :[0m the default\n"
+			       "[34m                   gaff2 :[0m for gaff2 (beta-version)\n"
+			       "[34m                   amber :[0m for PARM94/99/99SB\n"
+			       "[34m                   bcc   :[0m for AM1-BCC\n"
+			       "[34m                   gas   :[0m for Gasteiger charge\n"
+			       "[34m                   sybyl :[0m for atom types used in sybyl\n"
+			       "[31m                -d[0m atom type defination file, optional\n"
+			       "[31m                -a[0m do post atom type adjustment (it is or sybyl applied with \"-d\" option)\n"
+			       "                   1: yes, 0: no (the default)\n");
 			exit(1);
 		}
 		if (argc != 15 && argc != 13 && argc != 11 && argc != 9 && argc != 7 && argc != 5
 			&& argc != 3) {
 			printf("[31mUsage: atomtype -i[0m input file name\n"
-				   "[31m                -o[0m output file name (ac)\n"
-				   "[31m                -f[0m input file format(ac (the default) or mol2)\n"
-				   "[31m                -p[0m amber or gaff or bcc or gas or sybyl, it is supressed by \"-d\" option\n"
-				   "[31m                -d[0m atom type defination file, optional\n"
-				   "[31m                -a[0m do post atom type adjustment (it is applied with \"-d\" option)\n"
-				   "                   1: yes, 0: no (the default)\n");
+			       "[31m                -o[0m output file name (ac)\n"
+			       "[31m                -f[0m input file format(ac (the default) or mol2)\n"
+			       "[31m                -p[0m atom type set, supressed by \"-d\" option\n"
+			       "[34m                   gaff  :[0m the default\n"
+			       "[34m                   gaff2 :[0m for gaff2 (beta-version)\n"
+			       "[34m                   amber :[0m for PARM94/99/99SB\n"
+			       "[34m                   bcc   :[0m for AM1-BCC \n"
+			       "[34m                   gas   :[0m for Gasteiger charge\n"
+			       "[34m                   sybyl :[0m for atom types used in sybyl\n"
+			       "[31m                -d[0m atom type defination file, optional\n"
+			       "[31m                -a[0m do post atom type adjustment (it is applied with \"-d\" option)\n"
+			       "                   1: yes, 0: no (the default)\n");
 			exit(1);
 		}
 	} else {
 		if (argc == 2)
 			if (strcmp(argv[1], "-h") == 0 || strcmp(argv[1], "-H") == 0) {
-				printf("\n Usage atomtype -i input file name");
-				printf("\n                -o output file name (ac)");
-				printf
-					("\n                -f input file format (ac (default) or mol2)");
-				printf
-					("\n                -p amber or gaff or bcc or gas or sybyl, it is supressed by \"-d\" option");
-				printf
-					("\n                -d atom type defination file, optional\n ");
-				printf
-					("\n                -a do post atom type adjustment (it is applied with \"-d\" option\n"); 
-				printf
-					("\n                   1: yes, 0: no (the default)\n"); 
+			printf("Usage: atomtype -i input file name\n"
+			       "                -o output file name (ac)\n"
+			       "                -f input file format(ac (the default) or mol2)\n"
+			       "                -p atom type set, supressed by \"-d\" option\n"
+			       "                   gaff  : the default\n"
+			       "                   gaff2 : for gaff2 (beta-version)\n"
+			       "                   amber : for PARM94/99/99SB\n"
+			       "                   bcc   : for AM1-BCC\n"
+			       "                   gas   : for Gasteiger charge \n"
+			       "                   sybyl : for atom types used in sybyl\n"
+			       "                -d atom type defination file, optional\n"
+			       "                -a do post atom type adjustment (it is applied with \"-d\" option)\n"
+			       "                   1: yes, 0: no (the default)\n");
 				/*
 				   printf("\n Usage atomtype -i   inputfile ");   
 				   printf("\n              -bcc yes_or_no, optional "); 
@@ -2085,18 +2098,19 @@ int main(int argc, char *argv[])
 			}
 		if (argc != 15 && argc != 13 && argc != 11 && argc != 9 && argc != 7 && argc != 5
 			&& argc != 3) {
-			printf("\n Usage atomtype -i input file name(ac)");
-			printf("\n                -o output file name (ac)");
-			printf
-				("\n                -f input file format (ac (default) or mol2)");
-			printf
-				("\n                -p amber or gaff or bcc or gas or sybyl, it is supressed by \"-d\" option");
-			printf
-				("\n                -d atom type defination file, optional\n ");
-			printf
-				("\n                -a do post atom type adjustment (it is applied with \"-d\" option\n"); 
-			printf
-				("\n                   1: yes, 0: no (the default)\n"); 
+			printf("Usage: atomtype -i input file name\n"
+			       "                -o output file name (ac)\n"
+			       "                -f input file format(ac (the default) or mol2)\n"
+			       "                -p atom type set, supressed by \"-d\" option\n"
+			       "                   gaff  : the default\n"
+			       "                   gaff2 : for gaff2 (beta-version)\n"
+			       "                   amber : for PARM94/99/99SB\n"
+			       "                   bcc   : for AM1-BCC \n"
+			       "                   gas   : for Gasteiger charge \n"
+			       "                   sybyl : for atom types used in sybyl\n"
+			       "                -d atom type defination file, optional\n"
+			       "                -a do post atom type adjustment (it is applied with \"-d\" option)\n"
+			       "                   1: yes, 0: no (the default)\n");
 			exit(1);
 		}
 	}
@@ -2140,6 +2154,9 @@ int main(int argc, char *argv[])
 			if (strcmp("sybyl", argv[i + 1]) == 0
 				|| strcmp("SYBYL", argv[i + 1]) == 0)
 				pindex = 4;
+			if (strcmp("gaff2", argv[i + 1]) == 0
+				|| strcmp("GAFF2", argv[i + 1]) == 0)
+				pindex = 5;
 		}
 
 		if (strcmp(argv[i], "-an") == 0) {
@@ -2166,23 +2183,25 @@ int main(int argc, char *argv[])
 		}	
 	}
 	if (index1 != 2) {
-		printf("\n Usage atomtype -i inputfile (ac)");
-		printf("\n                -o outputfile (ac)");
-		printf("\n                -f file format (ac (default) or mol2)");
-		printf
-			("\n                -p amber or gaff, it is supressed by \"-d\" option");
-		printf
-			("\n                -d atom_type_defination_file, optional\n ");
-		printf
-			("\n                -a do post atom type adjustment (it is applied with \"-d\" option\n"); 
-		printf
-			("\n                   1: yes, 0: no (the default)\n"); 
+		printf("Usage: atomtype -i input file name\n"
+		       "                -o output file name (ac)\n"
+		       "                -f input file format(ac (the default) or mol2)\n"
+		       "                -p atom type set, supressed by \"-d\" option\n"
+		       "                   gaff  : the default\n"
+		       "                   gaff2 : for gaff2 (beta-version)\n"
+		       "                   amber : for PARM94/99/99SB\n"
+		       "                   bcc   : for AM1-BCC \n"
+		       "                   gas   : for Gasteiger charge \n"
+		       "                   sybyl : for atom types used in sybyl\n"
+		       "                -d atom type defination file, optional\n"
+		       "                -a do post atom type adjustment (it is applied with \"-d\" option)\n"
+		       "                   1: yes, 0: no (the default)\n");
 		exit(1);
 	}
 
 
 	if (index2 == 0) {
-		if(pindex == 0 ) 
+		if(pindex == 0 || pindex == 5) 
 			ipostadjustment = 1;
 		else
 			ipostadjustment = 0;
@@ -2196,6 +2215,8 @@ int main(int argc, char *argv[])
 			fname = "ATOMTYPE_GAS.DEF";
 		else if (pindex == 4)
 			fname = "ATOMTYPE_SYBYL.DEF";
+		else if (pindex == 5)
+			fname = "ATOMTYPE_GFF2.DEF";
 		else {
 			fprintf (stderr,
 		 	"Cannot find atom type defination file!, define with \"-def\" option\n");

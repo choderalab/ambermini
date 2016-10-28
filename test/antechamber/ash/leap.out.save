@@ -1,0 +1,41 @@
+-I: Adding /tmp/amber8/dat/leap/prep to search path.
+-I: Adding /tmp/amber8/dat/leap/lib to search path.
+-I: Adding /tmp/amber8/dat/leap/parm to search path.
+-I: Adding /tmp/amber8/dat/leap/cmd to search path.
+-s: Ignoring startup file: leaprc
+-f: Source leap.in.
+
+Welcome to LEaP!
+Sourcing: ./leap.in
+----- Source: /tmp/amber8/dat/leap/cmd/leaprc.gaff
+----- Source of /tmp/amber8/dat/leap/cmd/leaprc.gaff done
+Log file: ./leap.log
+Loading parameters: /tmp/amber8/dat/leap/parm/gaff.dat
+Loading parameters: ./frcmod
+Reading force field mod type file (frcmod)
+Loading Prep file: ./ash.prepin
+Loaded UNIT: ACE
+Checking Unit.
+Building topology.
+Building atom parameters.
+Building bond parameters.
+Building angle parameters.
+Building proper torsion parameters.
+Building improper torsion parameters.
+old PREP-specified impropers:
+ <ACE 1>:  CH3  N    C    O   
+ <ACE 1>:  CA   N1   C2   O1  
+ <ACE 1>:  CB   OD1  CG   OD2 
+--Impropers:
+  1	C2<ACE> - H4<ACE> - N1<ACE> - C1<ACE>
+  1	C<ACE> - H<ACE> - N<ACE> - CA<ACE>
+  1	CA<ACE> - O1<ACE> - C2<ACE> - N1<ACE>
+  1	CB<ACE> - OD2<ACE> - CG<ACE> - OD1<ACE>
+  1	CH3<ACE> - O<ACE> - C<ACE> - N<ACE>
+ total 5 improper torsions applied
+ 3 improper torsions in old prep form
+Building H-Bond parameters.
+Not Marking per-residue atom chain types.
+Marking per-residue atom chain types.
+ (no restraints)
+	Quit

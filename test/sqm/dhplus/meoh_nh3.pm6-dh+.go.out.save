@@ -1,0 +1,99 @@
+            --------------------------------------------------------
+                             AMBER SQM VERSION 14
+ 
+                                     By
+              Ross C. Walker, Michael F. Crowley, Scott Brozell,
+                         Tim Giese, Andreas W. Goetz,
+                        Tai-Sung Lee and David A. Case
+ 
+            --------------------------------------------------------
+ 
+
+--------------------------------------------------------------------------------
+  QM CALCULATION INFO
+--------------------------------------------------------------------------------
+
+| QMMM: Citation for AMBER QMMM Run:
+| QMMM: R.C. Walker, M.F. Crowley and D.A. Case, J. COMP. CHEM. 29:1019, 2008
+
+QMMM: SINGLET STATE CALCULATION
+QMMM: RHF CALCULATION, NO. OF DOUBLY OCCUPIED LEVELS = 11
+
+| QMMM: *** Selected Hamiltonian *** 
+| QMMM: PM6         
+| QMMM: J.J.P. Stewart, J. Mol. Mod., 13, 1173, (2007)
+| QMMM: and unpublished corrections
+
+| QMMM: *** Dispersion correction in use ***
+| QMMM: P. Jurecka et al, J. Comput. Chem., 28, 555 (2007)
+| QMMM: with parameters from
+| QMMM: M. Kort et al, J. Chem. Theory Comput., 6, 344 (2010)
+
+| QMMM: *** Hydrogen bond correction in use ***
+| QMMM: Kort, J. Chem. Theory Comput., 6, 3808 (2010)
+
+| QMMM: *** Parameter sets in use ***
+| QMMM: C : J.J.P. Stewart, J. Mol. Mod., 13, 1173, (2007)
+| QMMM: O : J.J.P. Stewart, J. Mol. Mod., 13, 1173, (2007)
+| QMMM: N : J.J.P. Stewart, J. Mol. Mod., 13, 1173, (2007)
+| QMMM: H : J.J.P. Stewart, J. Mol. Mod., 13, 1173, (2007)
+
+| QMMM: *** SCF convergence criteria ***
+| QMMM: Energy change                :  0.1D-09 kcal/mol
+| QMMM: Error matrix |FP-PF|         :  0.1D+00 au
+| QMMM: Density matrix change        :  0.1D-09
+| QMMM: Maximum number of SCF cycles :      100
+
+| QMMM: *** Diagonalization Routine Information ***
+| QMMM: Pseudo diagonalizations are allowed.
+| QMMM: Auto diagonalization routine selection is disabled.
+| QMMM: Using internal diagonalization routine (diag_routine=1).
+
+  QMMM: QM Region Cartesian Coordinates (*=link atom) 
+  QMMM: QM_NO.   MM_NO.  ATOM         X         Y         Z
+  QMMM:     1        1      C       -1.5826   -0.2223    0.1098
+  QMMM:     2        2      O       -0.8242    0.9371   -0.2454
+  QMMM:     3        3      N        2.0213    0.0023    0.2125
+  QMMM:     4        4      H        0.1446    0.7478   -0.1070
+  QMMM:     5        5      H       -2.6147    0.0385   -0.1537
+  QMMM:     6        6      H       -1.4959   -0.4104    1.1849
+  QMMM:     7        7      H       -1.2457   -1.0898   -0.4662
+  QMMM:     8        8      H        2.3708    0.1906    1.1384
+  QMMM:     9        9      H        2.0080   -0.9976    0.0894
+  QMMM:    10       10      H        2.6780    0.3838   -0.4491
+
+--------------------------------------------------------------------------------
+  RESULTS
+--------------------------------------------------------------------------------
+
+  ... geometry converged !
+ 
+ Final MO eigenvalues (eV):
+ -31.5473  -28.8335  -23.9681  -17.2260  -16.6695  -16.6319  -14.8514  -14.3829
+ -11.9258  -10.6505   -9.8285    3.3381    3.9492    5.7013    5.7979    6.2169
+   6.3316    6.3444    6.7871
+
+ Heat of formation   =        -57.87322276 kcal/mol  (       -2.50957126 eV)
+
+ Total SCF energy    =     -15891.20428515 kcal/mol  (     -689.09432744 eV)
+
+ Dispersion energy   =         -0.41199288 kcal/mol  (       -0.01786535 eV)
+ H-bond energy       =         -2.64230609 kcal/mol  (       -0.11457899 eV)
+ 
+    Atomic Charges for Step       1 :
+  Atom    Element       Mulliken Charge
+     1      C                 -0.163
+     2      O                 -0.564
+     3      N                 -0.603
+     4      H                  0.336
+     5      H                  0.145
+     6      H                  0.116
+     7      H                  0.115
+     8      H                  0.207
+     9      H                  0.205
+    10      H                  0.208
+ Total Mulliken Charge =      -0.000
+ 
+                  X        Y        Z     TOTAL  
+ 
+

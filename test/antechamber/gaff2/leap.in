@@ -1,0 +1,5 @@
+source leaprc.gaff
+mods = loadamberparams me3nh.frcmod
+mol = loadamberprep me3nh.prepi
+saveamberparm MOL me3nh.prmtop me3nh.prmcrd
+quit

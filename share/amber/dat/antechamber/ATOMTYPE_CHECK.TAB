@@ -1,3 +1,5 @@
+ 2C    C.3
+ 3C    C.3
   C    C.3
  CA    C.ar
  CB    C.2
@@ -6,15 +8,18 @@
  CK    C.2
  CM    C.2
  CN    C.2
+ CO    C.3
  CQ    C.2
  CR    C.2
  CT    C.3
  CV    C.2
  CW    C.2
+ CX    C.3
  C*    C.2
  CY    C.1
  CZ    C.1
- C0    Ca 
+ C0    Ca
+ C8    C.3
   H    H
  HC    H
  H1    H
@@ -95,10 +100,19 @@
  cl    Cl 
  br    Br 
   i    I  
+ ns    N.am
+ nt    N.am
   n    N.am
  n1    N.1
  n2    N.2
+ n7    N.3
+ n8    N.3
+ n9    N.3
  n3    N.3
+ nx    N.4
+ ny    N.4
+ nz    N.4
+ n+    N.4
  n4    N.4
  na    N.pl3
  nb    N.ar
@@ -106,6 +120,8 @@
  nd    N.2
  ne    N.2
  nf    N.2
+ nu    N.pl3
+ nv    N.pl3
  nh    N.pl3
  no    N.3
   o    O.3

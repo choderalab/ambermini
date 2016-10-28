@@ -1,0 +1,153 @@
+            --------------------------------------------------------
+                             AMBER SQM VERSION 14
+ 
+                                     By
+              Ross C. Walker, Michael F. Crowley, Scott Brozell,
+                         Tim Giese, Andreas W. Goetz,
+                        Tai-Sung Lee and David A. Case
+ 
+            --------------------------------------------------------
+ 
+
+--------------------------------------------------------------------------------
+  EXTERNAL CHARGES FOUND IN INPUT
+--------------------------------------------------------------------------------
+  QMMM: External Charge Info
+  QMMM: ATOMIC   NAME        X         Y         Z        CHARGE
+  QMMM:    7      N         1.0716   -0.0765    1.9391   -0.9621
+  QMMM:    1      H         0.0587   -0.0424    2.0039    0.4459
+  QMMM:    1      H         1.6444   -0.0347    2.7619    0.4543
+  QMMM:    6      C         1.6740   -0.0358    0.7424    0.7665
+  QMMM:    7      N         0.9350   -0.0280   -0.3789   -0.7981
+  QMMM:    6      C         1.5491    0.0013   -1.5808    0.6893
+  QMMM:    1      H         0.8794    0.0050   -2.4316    0.0520
+  QMMM:    7      N         2.8532    0.0258   -1.8410   -0.7367
+  QMMM:    6      C         3.5646    0.0195   -0.7060    0.4565
+  QMMM:    6      C         3.0748   -0.0094    0.5995   -0.2366
+  QMMM:    7      N         4.0886   -0.0054    1.5290   -0.5416
+  QMMM:    6      C         5.1830    0.0254    0.7872    0.3987
+  QMMM:    1      H         6.1883    0.0376    1.1739    0.0730
+  QMMM:    7      N         4.9295    0.0412   -0.5567   -0.3794
+  QMMM:    1      H         5.6035    0.0649   -1.3037    0.3185
+
+--------------------------------------------------------------------------------
+  QM CALCULATION INFO
+--------------------------------------------------------------------------------
+
+| QMMM: Citation for AMBER QMMM Run:
+| QMMM: R.C. Walker, M.F. Crowley and D.A. Case, J. COMP. CHEM. 29:1019, 2008
+
+| QMMM: DFTB Calculation - Additional citation for AMBER DFTB QMMM Run:
+| QMMM:   Seabra, G.M., Walker, R.C. et al., J. PHYS. CHEM. A., 111, 5655, (2007)
+
+
+QMMM: SINGLET STATE CALCULATION
+QMMM: RHF CALCULATION, NO. OF DOUBLY OCCUPIED LEVELS = 24
+
+| QMMM: *** SCF convergence criteria ***
+| QMMM: Energy change                :  0.1D-07 kcal/mol
+| QMMM: Error matrix |FP-PF|         :  0.1D+00 au
+| QMMM: Density matrix change        :  0.5D-05
+| QMMM: Maximum number of SCF cycles :     1000
+ DFTB: Number of atom types =    4
+
+ Parameter files:
+     TYP (AT)  TYP (AT)     SK integral FILE
+|  1  1  (C )   1  (C )     /Users/andi/sources/amber/dat/slko/C-C.skf
+|  2  1  (C )   2  (H )     /Users/andi/sources/amber/dat/slko/C-H.skf
+|  3  1  (C )   3  (N )     /Users/andi/sources/amber/dat/slko/C-N.skf
+|  4  1  (C )   4  (O )     /Users/andi/sources/amber/dat/slko/C-O.skf
+|  5  2  (H )   1  (C )     /Users/andi/sources/amber/dat/slko/H-C.skf
+|  6  2  (H )   2  (H )     /Users/andi/sources/amber/dat/slko/H-H.skf
+|  7  2  (H )   3  (N )     /Users/andi/sources/amber/dat/slko/H-N.skf
+|  8  2  (H )   4  (O )     /Users/andi/sources/amber/dat/slko/H-O.skf
+|  9  3  (N )   1  (C )     /Users/andi/sources/amber/dat/slko/N-C.skf
+| 10  3  (N )   2  (H )     /Users/andi/sources/amber/dat/slko/N-H.skf
+| 11  3  (N )   3  (N )     /Users/andi/sources/amber/dat/slko/N-N.skf
+| 12  3  (N )   4  (O )     /Users/andi/sources/amber/dat/slko/N-O.skf
+| 13  4  (O )   1  (C )     /Users/andi/sources/amber/dat/slko/O-C.skf
+| 14  4  (O )   2  (H )     /Users/andi/sources/amber/dat/slko/O-H.skf
+| 15  4  (O )   3  (N )     /Users/andi/sources/amber/dat/slko/O-N.skf
+| 16  4  (O )   4  (O )     /Users/andi/sources/amber/dat/slko/O-O.skf
+
+  QMMM: QM Region Cartesian Coordinates (*=link atom) 
+  QMMM: QM_NO.   MM_NO.  ATOM         X         Y         Z
+  QMMM:     1        1      C       -4.7106    0.0413    2.1739
+  QMMM:     2        2      H       -4.4267    0.9186    2.7530
+  QMMM:     3        3      H       -4.4439   -0.8303    2.7696
+  QMMM:     4        4      H       -5.7884    0.0506    2.0247
+  QMMM:     5        5      C       -3.9917    0.0219    0.8663
+  QMMM:     6        6      C       -4.6137    0.0169   -0.3337
+  QMMM:     7        7      H       -5.6909    0.0269   -0.4227
+  QMMM:     8        8      N       -3.9212   -0.0010   -1.5164
+  QMMM:     9        9      H       -4.4017   -0.0036   -2.4005
+  QMMM:    10       10      C       -2.5396   -0.0149   -1.5962
+  QMMM:    11       11      O       -1.9417   -0.0292   -2.6574
+  QMMM:    12       12      N       -1.9256   -0.0111   -0.3639
+  QMMM:    13       13      H       -0.8838   -0.0216   -0.3784
+  QMMM:    14       14      C       -2.5361    0.0075    0.8767
+  QMMM:    15       15      O       -1.8675    0.0112    1.9121
+
+--------------------------------------------------------------------------------
+  RESULTS
+--------------------------------------------------------------------------------
+
+ 
+ Final MO eigenvalues (au):
+  -0.9020   -0.8803   -0.8197   -0.7661   -0.6867   -0.5958   -0.5534   -0.5452
+  -0.4734   -0.4626   -0.4187   -0.4166   -0.3973   -0.3700   -0.3627   -0.3551
+  -0.3492   -0.3462   -0.3263   -0.3185   -0.2479   -0.2317   -0.2254   -0.2174
+  -0.0728   -0.0140    0.0691    0.2976    0.3399    0.3550    0.3804    0.4068
+   0.4680    0.5527    0.5567    0.6055    0.6585    0.7133    0.7461    0.8928
+   1.1238    1.1946
+
+ Heat of formation   =      -1769.60694055 kcal/mol  (      -76.73591521 eV)
+
+ Total SCF energy    =     -13986.20716837 kcal/mol  (     -606.48745364 eV)
+ Electronic energy   =     -14591.59171814 kcal/mol  (     -632.73889763 eV)
+ Core-core repulsion =        605.38454977 kcal/mol  (       26.25144399 eV)
+ 
+    Atomic Charges for Step       1 :
+  Atom    Element       Mulliken Charge
+     1      C                 -0.173
+     2      H                  0.085
+     3      H                  0.085
+     4      H                  0.058
+     5      C                 -0.147
+     6      C                 -0.001
+     7      H                  0.087
+     8      N                 -0.184
+     9      H                  0.216
+    10      C                  0.574
+    11      O                 -0.560
+    12      N                 -0.264
+    13      H                  0.279
+    14      C                  0.504
+    15      O                 -0.560
+ Total Mulliken Charge =       0.000
+ 
+                  X        Y        Z     TOTAL  
+  QM DIPOLE    -3.618    0.018   -1.235    3.823
+ 
+ Final Structure
+
+  QMMM: QM Region Cartesian Coordinates (*=link atom) 
+  QMMM: QM_NO.   MM_NO.  ATOM         X         Y         Z
+  QMMM:     1        1      C       -4.7106    0.0413    2.1739
+  QMMM:     2        2      H       -4.4267    0.9186    2.7530
+  QMMM:     3        3      H       -4.4439   -0.8303    2.7696
+  QMMM:     4        4      H       -5.7884    0.0506    2.0247
+  QMMM:     5        5      C       -3.9917    0.0219    0.8663
+  QMMM:     6        6      C       -4.6137    0.0169   -0.3337
+  QMMM:     7        7      H       -5.6909    0.0269   -0.4227
+  QMMM:     8        8      N       -3.9212   -0.0010   -1.5164
+  QMMM:     9        9      H       -4.4017   -0.0036   -2.4005
+  QMMM:    10       10      C       -2.5396   -0.0149   -1.5962
+  QMMM:    11       11      O       -1.9417   -0.0292   -2.6574
+  QMMM:    12       12      N       -1.9256   -0.0111   -0.3639
+  QMMM:    13       13      H       -0.8838   -0.0216   -0.3784
+  QMMM:    14       14      C       -2.5361    0.0075    0.8767
+  QMMM:    15       15      O       -1.8675    0.0112    1.9121
+
+           --------- Calculation Completed ----------
+

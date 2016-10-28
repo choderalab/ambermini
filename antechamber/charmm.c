@@ -58,7 +58,7 @@ for (;;) {
 	if(rflag == 1) {
 		sscanf(line, "%d", &numatom2);
 		if (numatom2 >= (*cinfo).maxatom && overflow_flag == 0) {
-			printf ("\nThe atom number exceeds the MAXATOM, reallocate memory");
+			printf ("\nThe atom number exceeds the MAXATOM, reallocate memory\n");
 			overflow_flag = 1;
 			return overflow_flag;
 		}

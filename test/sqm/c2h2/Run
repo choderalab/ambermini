@@ -1,0 +1,34 @@
+#!/bin/csh -f
+
+set SQM = ../../../bin/sqm
+set SPDIFF = ../../dacdif
+set GODIFF = "../../dacdif -a 0.01"
+set SPTESTS = (c2h2.pm3.sp c2h2.pm6.sp)
+set GOTESTS = (c2h2.pm3.go c2h2.pm6.go)
+
+# single point tests
+foreach i ($SPTESTS)
+    set input = $i.in
+    set output = $i.out
+    $SQM -O -i $input -o $output || goto error
+    $SPDIFF $output.save $output
+end
+
+# geometry optimization tests
+# do not check the electronic energy and
+# core repulsion energy, they are too sensitive!
+foreach i ($GOTESTS)
+    set input = $i.in
+    set output = $i.out
+    $SQM -O -i $input -o $output || goto error
+    grep -v 'Electronic energy' $output > tmp
+    grep -v 'Core-core repulsion' tmp > $output
+    rm tmp
+    $GODIFF $output.save $output
+end
+
+exit(0)
+
+error:
+echo "  ${0}:  Program error"
+exit(1)

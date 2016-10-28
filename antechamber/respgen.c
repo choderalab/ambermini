@@ -266,6 +266,14 @@ void respin(int method)
 		fprintf(fpout, "%s\n", " idqrtrnt = 0,");
 		fprintf(fpout, "%s\n", " dmscale = 1,");
 	}
+	if (method == 8) {
+		if(numcharge > 0) {
+			fprintf(fpout, "%s\n", " iqopt = 2,");
+			fprintf(fpout, " qwt =%8.5lf,\n", weight);
+		}
+		else 
+			fprintf(fpout, " qwt =%8.5lf,\n", weight);
+	}
 	fprintf(fpout, "\n%s\n", " &end");
 	while(times < nconf) {
 		fprintf(fpout, "%s\n", "    1.0");
@@ -402,6 +410,13 @@ void respin(int method)
                                 }
                         }
                 }
+		if (method == 8) 
+                        for (i = 0; i < atomnum; i++) {
+                                if(iaddinfo == 1 && icharge[i] == 1)
+                                        fprintf(fpout, "%5d%5d\n", atom[i].atomicnum, -99);
+				else
+                                        fprintf(fpout, "%5d%5d\n", atom[i].atomicnum, 0);
+                        }
 		if(nconf > 1) fprintf(fpout, "\n");
 		times++;
    	}
@@ -485,8 +500,9 @@ int main(int argc, char *argv[])
 				|| strcmp(argv[1], "-H") == 0)) {
 			printf("[31mUsage: respgen -i[0m input file name(ac)\n"
 				   "[31m               -o[0m output file name\n"
-				   "[31m               -l[0m maximum path length (default is -1, only recommand if the default setting\n"
-				   "                  taking long time and/or cause core dump. If applied, a value of 8 to 10 should good)\n"
+				   "[31m               -l[0m maximum path length (default is -1, only recommand to use\n"
+				   "                  when the program takes long time to finish or causes core dump.)\n"
+				   "                  If applied, a value of 8 to 10 should good)\n"
 				   "[31m               -f[0m output file format (resp1 or resp2) \n"
 				   "[32m                  resp0[0m - evaluation the current charges \n"
 				   "[32m                  resp1[0m - first stage resp fitting \n"
@@ -496,6 +512,7 @@ int main(int argc, char *argv[])
 				   "[32m                  iresp2[0m- second stage of i_resp fitting\n"
 				   "[32m                  resp3[0m - one-stage resp fitting\n"
 				   "[32m                  resp4[0m - calculating ESP from point charges\n"
+				   "[32m                  resp5[0m - no-equalization\n"
 				   "[31m               -e[0m equalizing atomic charge, default is 1\n"
 				   "[32m                  0[0m not use \n"
 				   "[32m                  1[0m by atomic paths\n"
@@ -508,8 +525,9 @@ int main(int argc, char *argv[])
 		if (argc != 7 && argc != 9 && argc != 11 && argc != 13 && argc != 15 && argc != 17) {
 			printf("[31mUsage: respgen -i[0m input file name(ac)\n"
 				   "[31m               -o[0m output file name\n"
-				   "[31m               -l[0m maximum path length (default is -1, only recommand if the default setting\n"
-				   "                  taking long time and/or cause core dump. If applied, a value of 8 to 10 should good)\n"
+				   "[31m               -l[0m maximum path length (default is -1, only recommand to use\n"
+				   "                  when the program takes long time to finish or causes core dump.)\n"
+				   "                  If applied, a value of 8 to 10 should good)\n"
 				   "[31m               -f[0m output file format (resp1 or resp2) \n"
 				   "[32m                  resp0[0m - evaluation the current charges \n"
 				   "[32m                  resp1[0m - first stage resp fitting \n"
@@ -519,6 +537,7 @@ int main(int argc, char *argv[])
 				   "[32m                  iresp2[0m- second stage of i_resp fitting\n"
 				   "[32m                  resp3[0m - one-stage resp fitting\n"
 				   "[32m                  resp4[0m - calculating ESP from point charges\n"
+				   "[32m                  resp5[0m - no-equalization\n"
 				   "[31m               -e[0m equalizing atomic charge, default is 1\n"
 				   "[32m                  0[0m not use \n"
 				   "[32m                  1[0m by atomic paths\n"
@@ -534,8 +553,9 @@ int main(int argc, char *argv[])
 				|| strcmp(argv[1], "-H") == 0)) {
 			printf("Usage respgen -i input file name(ac)\n");
 			printf("              -o output file name\n");
-			printf("	      -l maximum path length (default is -1, only recommand if the default setting\n");
-			printf("                 taking long time and/or cause core dump. If applied, a value of 8 to 10 should good)\n");
+			printf("              -l maximum path length (default is -1, only recommand to use\n");
+			printf("                 when the program takes long time to finish or causes core dump.)\n");
+		        printf("                 If applied, a value of 8 to 10 should good)\n");
 			printf("              -f output file format (resp1 or resp2)\n");
 		  	printf("	         resp0 - evaluation the current charges \n");
 			printf("                 resp1 - first stage resp fitting\n");
@@ -545,6 +565,7 @@ int main(int argc, char *argv[])
 			printf("                 iresp2- second stage of i_resp fitting \n");
 		        printf("                 resp3 - one-stage resp fitting\n");
 			printf("                 resp4 - calculating ESP from point charges \n");
+			printf("                 resp5 - no-equalization \n");
 			printf("	      -e equalizing atomic charge, default is 1\n"); 
 			printf("                  0 not use \n");
 		 	printf("                  1 by atomic paths\n");
@@ -557,8 +578,9 @@ int main(int argc, char *argv[])
 		if (argc != 7 && argc != 9 && argc != 11 && argc != 13 && argc != 15 && argc != 17) {
 			printf("Usage respgen -i input file name(ac)\n");
 			printf("              -o output file name\n");
-			printf("	      -l maximum path length (default is -1, only recommand if the default setting\n");
-			printf("                 taking long time and/or cause core dump. If applied, a value of 8 to 10 should good)\n");
+			printf("              -l maximum path length (default is -1, only recommand to use\n");
+			printf("                 when the program takes long time to finish or causes core dump.)\n");
+		        printf("                 If applied, a value of 8 to 10 should good)\n");
 			printf("              -f output file format (resp1 or resp2)\n");
 		  	printf("	         resp0 - evaluation the current charges \n");
 			printf("                 resp1 - first stage resp fitting\n");
@@ -568,6 +590,7 @@ int main(int argc, char *argv[])
 			printf("                 iresp2- second stage of i_resp fitting \n");
 		        printf("                 resp3 - one-stage resp fitting\n");
 			printf("                 resp4 - calculating ESP from point charges \n");
+			printf("                 resp5 - no-equalization \n");
 			printf("	      -e equalizing atomic charge, default is 1\n"); 
 			printf("                  0 not use \n");
 		 	printf("                  1 by atomic paths\n");
@@ -622,6 +645,10 @@ int main(int argc, char *argv[])
 			}
 			if (strcmp("iresp0", argv[i + 1]) == 0) 
 				method = 7;
+			if (strcmp("resp5", argv[i + 1]) == 0) {
+				method = 8;
+				weight = 0.0005;
+			}
 		}
 		if (strcmp(argv[i], "-w") == 0)
 			weight = atof(argv[i+1]); 

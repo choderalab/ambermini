@@ -1,0 +1,18 @@
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!    Sample header file for ADF quantum calculations  !
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!                                                     
+!                                                     !
+! paramfit will put in the sections about the input   !
+! structure, including the title and units. you need  !
+! to input information on a basis set if you want     !
+! one other than the default.                         ! 
+!                                                     !
+! set QM_ENERGY_UNITS=HARTREE in your job control     !
+! file!                                               !
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+BASIS
+  Type DZ
+  Core Large
+End
+!

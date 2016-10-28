@@ -172,15 +172,15 @@ install: all
 	mv XaLeap_wcl $(DATDIR)
 
 uninstall:
-	$(RM) -f $(BINDIR)/teLeap$(SFX)
-	$(RM) -f $(BINDIR)/xaLeap$(SFX)
-	$(RM) -f $(DATDIR)/XaLeap_wcl
+	-rm -f $(BINDIR)/teLeap$(SFX)
+	-rm -f $(BINDIR)/xaLeap$(SFX)
+	-rm -f $(DATDIR)/XaLeap_wcl
 
 installteLeap: t
 	mv teLeap$(SFX) $(BINDIR)
 
 uninstallteLeap:
-	$(RM) -f $(BINDIR)/teLeap$(SFX)
+	-rm -f $(BINDIR)/teLeap$(SFX)
 
 teLeap$(SFX): $(TLEAP_OBJ)
 	$(CC) $(CFLAGS) $(AMBERCFLAGS) $(LDFLAGS) $(AMBERLDFLAGS) \
@@ -209,15 +209,15 @@ utilLib2Pdb$(SFX): $(UL2P_OBJ)
 	$(CC) $(CFLAGS) $(AMBERCFLAGS) -o $@ $(UL2P_OBJ) $(LM)
 
 clean::
-	$(RM) -f *.o $(PROGS) *\~
-	$(RM) -f XaLeap_wcl
-	$(RM) -f *.gprof
-	$(RM) -f helptext.c parser.c
+	-rm -f *.o $(PROGS) *\~
+	-rm -f XaLeap_wcl
+	-rm -f *.gprof
+	-rm -f helptext.c parser.c
 
 parser.c:       parser.y parser.h
 	$(YACC) parser.y
 	@echo "(The warning 'conflicts: 6 shift/reduce' is normal)"
-	$(RM) -f parser.c
+	/bin/rm -f parser.c
 	mv y.tab.c parser.c
 
 helptext.c: helptext.text utilMakeHelp$(SFX)

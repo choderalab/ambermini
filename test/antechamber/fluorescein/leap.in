@@ -1,0 +1,5 @@
+source leaprc.gaff
+mods = loadamberparams frcmod
+loadamberprep fluorescein.prepin
+saveamberparm FLR prmtop prmcrd
+quit

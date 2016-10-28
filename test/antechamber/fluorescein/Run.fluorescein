@@ -1,0 +1,19 @@
+#!/bin/csh -f
+
+../../../bin/antechamber -i fluorescein.pdb -fi pdb -o fluorescein.mol2 \
+     -fo mol2 -c bcc -nc -2 >& antechamber.out || goto error
+
+../../../bin/parmchk2 -s 1 -i fluorescein.mol2 -f mol2 -o frcmod || goto error
+#  ../../../bin/tleap -s -f leap.in > leap.out
+
+../../dacdif -a 1.e-3  fluorescein.mol2.save fluorescein.mol2
+../../dacdif frcmod.save frcmod
+#  ../../dacdif -t 7 prmtop.save prmtop
+
+/bin/rm -f ANTE* ATOMTYPE.INF BCCTYPE.INF FOR* NEWPDB.PDB PREP.INF \
+      antechamber.out sqm.in sqm.out sqm.pdb
+exit(0)
+
+error:
+echo "  ${0}:  Program error"
+exit(1)

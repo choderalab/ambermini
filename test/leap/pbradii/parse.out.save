@@ -1,0 +1,170 @@
+
+          -------------------------------------------------------
+          Amber 16 SANDER                              2016
+          -------------------------------------------------------
+
+| Run on 04/12/2016 at 14:45:24
+
+|   Executable path: /home/droe/Amber/GIT/amber/bin/sander
+| Working directory: /home/droe/Amber/GIT/amber/AmberTools/test/leap/pbradii
+|          Hostname: adenine
+
+
+File Assignments:
+|  MDIN: pp.in                                                                 
+| MDOUT: parse.out                                                             
+|INPCRD: 1.rst7                                                                
+|  PARM: parse.parm7                                                           
+|RESTRT: restrt                                                                
+|  REFC: refc                                                                  
+| MDVEL: mdvel                                                                 
+| MDFRC: mdfrc                                                                 
+|  MDEN: mden                                                                  
+| MDCRD: mdcrd                                                                 
+|MDINFO: mdinfo                                                                
+|  MTMD: mtmd                                                                  
+|INPDIP: inpdip                                                                
+|RSTDIP: rstdip                                                                
+|INPTRA: inptraj                                                               
+
+
+ Here is the input file:
+
+single minimization step                                                       
+&cntrl                                                                         
+   imin = 1, ntx = 1, irest = 0, ntwx = 0,                                     
+   ntc = 1, ntf = 1, ntb = 0, cut = 9999.0,                                    
+   igb = 1, ntxo = 1, ioutfm = 0, ntwr = 500,                                  
+&end                                                                           
+
+--------------------------------------------------------------------------------
+   1.  RESOURCE   USE: 
+--------------------------------------------------------------------------------
+
+| Flags:                                                                        
+| New format PARM file being parsed.
+| Version =    1.000 Date = 04/12/16 Time = 14:45:24
+ NATOM  =     320 NTYPES =      14 NBONH =     155 MBONA  =     170
+ NTHETH =     351 MTHETA =     230 NPHIH =     721 MPHIA  =     696
+ NHPARM =       0 NPARM  =       0 NNB   =    1749 NRES   =      20
+ NBONA  =     170 NTHETA =     230 NPHIA =     696 NUMBND =      62
+ NUMANG =     146 NPTRA  =     179 NATYP =      31 NPHB   =       0
+ IFBOX  =       0 NMXRS  =      24 IFCAP =       0 NEXTRA =       0
+ NCOPY  =       0
+
+ Implicit solvent radii are Parse radii (parse)                                                             
+
+|     Memory Use     Allocated
+|     Real               30587
+|     Hollerith            982
+|     Integer            37973
+|     Max Pairs              1
+|     nblistReal             0
+|     nblist Int             0
+|       Total              391 kbytes
+
+| Note: 1-4 EEL scale factors are being read from the topology file.
+
+| Note: 1-4 VDW scale factors are being read from the topology file.
+| Duplicated    0 dihedrals
+| Duplicated    0 dihedrals
+
+--------------------------------------------------------------------------------
+   2.  CONTROL  DATA  FOR  THE  RUN
+--------------------------------------------------------------------------------
+
+ACE                                                                             
+
+General flags:
+     imin    =       1, nmropt  =       0
+
+Nature and format of input:
+     ntx     =       1, irest   =       0, ntrx    =       1
+
+Nature and format of output:
+     ntxo    =       1, ntpr    =      50, ntrx    =       1, ntwr    =     500
+     iwrap   =       0, ntwx    =       0, ntwv    =       0, ntwe    =       0
+     ioutfm  =       0, ntwprt  =       0, idecomp =       0, rbornstat=      0
+
+Potential function:
+     ntf     =       1, ntb     =       0, igb     =       1, nsnb    =      25
+     ipol    =       0, gbsa    =       0, iesp    =       0
+     dielc   =   1.00000, cut     =9999.00000, intdiel =   1.00000
+     saltcon =   0.00000, offset  =   0.09000, gbalpha=    1.00000
+     gbbeta  =   0.00000, gbgamma =   0.00000, surften =   0.00500
+     rdt     =   0.00000, rgbmax  =  25.00000  extdiel =  78.50000
+     alpb  =        0
+
+Frozen or restrained atoms:
+     ibelly  =       0, ntr     =       0
+
+Energy minimization:
+     maxcyc  =       1, ncyc    =      10, ntmin   =       1
+     dx0     =   0.01000, drms    =   0.00010
+|  INFO: Old style inpcrd file read
+
+
+--------------------------------------------------------------------------------
+   3.  ATOMIC COORDINATES AND VELOCITIES
+--------------------------------------------------------------------------------
+
+ACE                                                                             
+ begin time read from input coords =     0.000 ps
+
+ Number of triangulated 3-point waters found:        0
+
+--------------------------------------------------------------------------------
+   4.  RESULTS
+--------------------------------------------------------------------------------
+
+
+
+   NSTEP       ENERGY          RMS            GMAX         NAME    NUMBER
+      1       1.0319E+08     8.4829E+07     1.5372E+09     OD1       173
+
+ BOND    =       13.2244  ANGLE   =       43.5454  DIHED      =      208.7532
+ VDWAALS = *************  EEL     =    -1213.7690  EGB        =     -964.6706
+ 1-4 VDW =      112.1895  1-4 EEL =      841.0921  RESTRAINT  =        0.0000
+
+
+  Maximum number of minimization cycles reached.
+
+
+                    FINAL RESULTS
+
+
+
+   NSTEP       ENERGY          RMS            GMAX         NAME    NUMBER
+      1       1.0319E+08     8.4829E+07     1.5372E+09     OD1       173
+
+ BOND    =       13.2244  ANGLE   =       43.5454  DIHED      =      208.7532
+ VDWAALS = *************  EEL     =    -1213.7690  EGB        =     -964.6706
+ 1-4 VDW =      112.1895  1-4 EEL =      841.0921  RESTRAINT  =        0.0000
+
+--------------------------------------------------------------------------------
+   5.  TIMINGS
+--------------------------------------------------------------------------------
+
+|    Read coords time           0.00 ( 2.34% of Total)
+|    Fast Water setup           0.00 ( 0.03% of Total)
+|                Calc gb radii              0.00 (12.87% of Gen B)
+|                Calc gb diag               0.01 (25.75% of Gen B)
+|                Calc gb off-diag           0.02 (61.37% of Gen B)
+|                Other                      0.00 ( 0.01% of Gen B)
+|             Gen Born time              0.03 (100.0% of Nonbo)
+|          Nonbond force              0.03 (94.30% of Force)
+|          Bond/Angle/Dihedral        0.00 ( 5.63% of Force)
+|          Other                      0.00 ( 0.07% of Force)
+|       Force time                 0.03 (100.0% of Runmd)
+|    Runmd Time                 0.03 (65.41% of Total)
+|    Other                      0.01 (32.21% of Total)
+| Total time                 0.04 (99.85% of ALL  )
+
+| Number of list builds   :          0
+
+| Highest rstack allocated:          0
+| Highest istack allocated:          0
+|           Job began  at 14:45:24.461  on 04/12/2016
+|           Setup done at 14:45:24.475  on 04/12/2016
+|           Run   done at 14:45:24.505  on 04/12/2016
+|     wallclock() was called      46 times

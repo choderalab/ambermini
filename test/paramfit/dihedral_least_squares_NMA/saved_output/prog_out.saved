@@ -1,0 +1,262 @@
+
+                *****************************************************
+                * AMBER Bond Angle and Dihedral Parameter Optimiser *
+                *                                                   *
+                *                      v3.0.0                       *
+                *                                                   *
+                *                    Written by:                    *
+                *                 Robin Betz (2011)                 *
+                *                 Ross Walker (2004)                *
+                *          The Walker Molecular Dynamics Lab        *
+                *         University of California, San Diego       *
+                *            La Jolla, California, 92092            *
+                *                       USA                         *
+                *****************************************************
+
+*************************************************************************************
+                                Execution started at:
+|                             Tue Feb 28 15:56:32 2012
+
+|
+| Specified random seed = 5000
+ Reading job control file: Job_Control.in
+ Job Control: Read a total of 22 lines from job_control file. 15 options set.
+
+ Reading prmtop file: NMA.prmtop
+   Prmtop     (info): Successfully read in saved parameter information
+   Prmtop   (unique): Found 7 unique bonds.
+   Prmtop   (unique): Found 10 unique angles.
+   Prmtop   (unique): Found 13 unique dihedrals.
+ Reading mdcrd file: mdcrd_creation/mdcrd
+ Reading energy file: mdcrd_creation/amber_energy.dat
+        ---------------------------------------------------------------------
+        |                          OPTIONS SUMMARY                         |
+        |                          ---------------                          |
+        | Summary of Run Type Options:                                      |
+        |   Run Mode = FIT, Minimiser = GENETIC                             |
+        |   Function to be Fit = SUM_SQUARES_AMBER_STANDARD                 |
+        |                                                                   |
+        | Terms to be fit:                                                  |
+        |   UNIQUE_BONDS = 7, UNIQUE ANGLES = 10, UNIQUE DIHEDRALS = 13     |
+        |   NBONDS = 11, NANGLES = 18, NDIHEDRALS = 24                      |
+        |                                 Total dimensions of fit = 20      |
+        |                                                                   |
+        | Sample structures for least squares fit = 100                     |
+        |                                                                   |
+        | Energy Correction Term (K) = 0.00000000                           |
+        |                                                                   |
+        |     OPTIMIZATIONS =        250                                    |
+        |   MAX GENERATIONS =      50000                                    |
+        |                                                                   |
+        | Estimate Memory Usage (per cpu):                                  |
+        |  Coordinate info will be read from disk as required.              |
+        |                OPTION STORAGE = 419 bytes                         |
+        |                PRMTOP STORAGE = 293697 bytes                      |
+        |            COORDINATE STORAGE = 28800 bytes                       |
+        |                                                                   |
+        |                                                                   |
+        |  TOTAL ESTIMATED MEMORY USAGE = 322916 bytes                      |
+        |                                                                   |
+        ---------------------------------------------------------------------
+
+ * Input structures passed dihedral span check.
+      --------------------------------- INITIAL PARAMETERS ------------------------------
+   Initial parameters for force field equation: AMBER_STANDARD:
+   (* means parameter is NOT constant during fit)
+                         K = 0.000000 kcal/mol
+             (CT-HC) Kr = 340.0000 kcal/(mol A)^2, r_eq =   1.0900 A 
+             (CT-H1) Kr = 340.0000 kcal/(mol A)^2, r_eq =   1.0900 A 
+             (N -H ) Kr = 434.0000 kcal/(mol A)^2, r_eq =   1.0100 A 
+             (C -O ) Kr = 570.0000 kcal/(mol A)^2, r_eq =   1.2290 A 
+             (C -N ) Kr = 490.0000 kcal/(mol A)^2, r_eq =   1.3350 A 
+             (CT-C ) Kr = 317.0000 kcal/(mol A)^2, r_eq =   1.5220 A 
+             (N -CT) Kr = 337.0000 kcal/(mol A)^2, r_eq =   1.4490 A 
+        (C -N -H )*Kt =  50.0000 kcal/(mol rad)^2, *th_eq = 120.0001 deg 
+        (HC-CT-C ) Kt =  50.0000 kcal/(mol rad)^2,  th_eq = 109.5000 deg 
+        (HC-CT-HC) Kt =  35.0000 kcal/(mol rad)^2,  th_eq = 109.5000 deg 
+        (H1-CT-H1) Kt =  35.0000 kcal/(mol rad)^2,  th_eq = 109.5000 deg 
+        (H -N -CT) Kt =  50.0000 kcal/(mol rad)^2,  th_eq = 118.0401 deg 
+        (N -CT-H1) Kt =  50.0000 kcal/(mol rad)^2,  th_eq = 109.5000 deg 
+        (O -C -N )*Kt =  80.0000 kcal/(mol rad)^2, *th_eq = 122.9001 deg 
+        (C -N -CT)*Kt =  50.0000 kcal/(mol rad)^2, *th_eq = 121.9001 deg 
+        (CT-C -O )*Kt =  80.0000 kcal/(mol rad)^2, *th_eq = 120.4001 deg 
+        (CT-C -N )*Kt =  70.0000 kcal/(mol rad)^2, *th_eq = 116.6000 deg 
+       (O -C -N -H )*Kp =   2.0000 kcal/mol,  Np = 1.0000, *Phase =   0.0000 Deg 
+       (O -C -N -H )*Kp =   2.5000 kcal/mol,  Np = 2.0000, *Phase = 180.0001 Deg 
+       (C -N -CT-H1) Kp =   0.0000 kcal/mol,  Np = 2.0000,  Phase =   0.0000 Deg 
+       (HC-CT-C -O ) Kp =   0.8000 kcal/mol,  Np = 1.0000,  Phase =   0.0000 Deg 
+       (HC-CT-C -O ) Kp =   0.0800 kcal/mol,  Np = 3.0000,  Phase = 180.0001 Deg 
+       (HC-CT-C -N ) Kp =   0.0000 kcal/mol,  Np = 2.0000,  Phase =   0.0000 Deg 
+       (HC-CT-C -O ) Kp =   0.0000 kcal/mol,  Np = 2.0000,  Phase =   0.0000 Deg 
+       (CT-C -N -H ) Kp =   2.5000 kcal/mol,  Np = 2.0000,  Phase = 180.0001 Deg 
+       (H -N -CT-H1) Kp =   0.0000 kcal/mol,  Np = 2.0000,  Phase =   0.0000 Deg 
+   IMP (C -CT-N -H )*Kp =   1.1000 kcal/mol,  Np = 2.0000,  Phase = 180.0001 Deg 
+       (O -C -N -CT)*Kp =   2.5000 kcal/mol,  Np = 2.0000, *Phase = 180.0001 Deg 
+       (CT-C -N -CT)*Kp =   2.5000 kcal/mol,  Np = 2.0000, *Phase = 180.0001 Deg 
+   IMP (CT-N -C -O )*Kp =  10.5000 kcal/mol,  Np = 2.0000,  Phase = 180.0001 Deg 
+      -----------------------------------------------------------------------------------
+   Sum of squares for initial parameters =    0.0000002996 kcal^2/mol^2
+   R^2 value for initial parameters      =   1.000000
+   Calculated energy with initial parameters for structure 1 = -27.398985 KCal/mol
+
+   ---------------------------GENETIC ALGORITHM MINIMISATION ---------------------------
+   Minimising function SUM_SQUARES_AMBER_STANDARD, using the GENETIC ALGORITHM
+   ------------------------------------ CONVERGENCE ------------------------------------
+   Gen    0:  Best=  457.42078  	Mean= 1.0309e+07 Elapsed=         0/100
+   Gen    1:  Best=   68.55838  	Mean= 5.2704e+06 Elapsed=         1/100
+   Gen    2:  Best=   68.55838  	Mean= 1.7061e+06 Elapsed=         2/100
+   Gen    3:  Best=   29.62571  	Mean= 4.4279e+05 Elapsed=         3/100
+   Gen    4:  Best=   17.93084  	Mean= 2.8738e+05 Elapsed=         4/100
+   Gen    5:  Best=    9.28600  	Mean=     3989.5 Elapsed=         5/100
+   Gen    6:  Best=    6.80052  	Mean=     895.38 Elapsed=         6/100
+   Gen    7:  Best=    4.67258  	Mean=     712.13 Elapsed=         7/100
+   Gen    8:  Best=    1.61866  	Mean=     237.66 Elapsed=         8/100
+   Gen    9:  Best=    1.61866  	Mean=      176.5 Elapsed=         9/100
+   Gen   10:  Best=    1.61866  	Mean=     105.62 Elapsed=        10/100
+   Gen   11:  Best=    1.61866  	Mean=      69.71 Elapsed=        11/100
+   Gen   12:  Best=    1.43067  	Mean=     47.268 Elapsed=        12/100
+   Gen   13:  Best=    1.43067  	Mean=     39.519 Elapsed=        13/100
+   Gen   14:  Best=    1.33045  	Mean=     36.067 Elapsed=        14/100
+   Gen   15:  Best=    1.18377  	Mean=     36.001 Elapsed=        15/100
+   Gen   16:  Best=    1.14984  	Mean=     21.581 Elapsed=        16/100
+   Gen   17:  Best=    1.02174  	Mean=     16.878 Elapsed=        17/100
+   Gen   18:  Best=    0.94148  	Mean=      11.26 Elapsed=        18/100
+   Gen   19:  Best=    0.94148  	Mean=     4.0526 Elapsed=        19/100
+   Gen   20:  Best=    0.93680  	Mean=     11.727 Elapsed=        20/100
+   Gen   21:  Best=    0.90735  	Mean=     18.059 Elapsed=        21/100
+   Gen   22:  Best=    0.88490  	Mean=     21.039 Elapsed=        22/100
+   Gen   23:  Best=    0.86267  	Mean=     35.517 Elapsed=        23/100
+   Gen   24:  Best=    0.85020  	Mean=     22.879 Elapsed=        24/100
+   Gen   25:  Best=    0.83386  	Mean=     29.105 Elapsed=        25/100
+   Gen   26:  Best=    0.82514  	Mean=     17.683 Elapsed=        26/100
+   Gen   27:  Best=    0.78622  	Mean=     5.6536 Elapsed=        27/100
+   Gen   28:  Best=    0.77187  	Mean=     4.2185 Elapsed=        28/100
+   Gen   29:  Best=    0.76204  	Mean=       16.3 Elapsed=        29/100
+   Gen   30:  Best=    0.74867  	Mean=     30.137 Elapsed=        30/100
+   Gen   31:  Best=    0.74350  	Mean=     22.779 Elapsed=        31/100
+   Gen   32:  Best=    0.73825  	Mean=     60.427 Elapsed=        32/100
+   Gen   33:  Best=    0.73721  	Mean=     87.337 Elapsed=        33/100
+   Gen   34:  Best=    0.73572  	Mean=     86.349 Elapsed=        34/100
+   Gen   35:  Best=    0.73026  	Mean=     143.25 Elapsed=        35/100
+   Gen   36:  Best=    0.72817  	Mean=     185.95 Elapsed=        36/100
+   Gen   37:  Best=    0.71464  	Mean=     220.46 Elapsed=        37/100
+   Gen   38:  Best=    0.71334  	Mean=     235.77 Elapsed=        38/100
+   Gen   39:  Best=    0.71331  	Mean=     289.21 Elapsed=        39/100
+   Gen   40:  Best=    0.68668  	Mean=     310.84 Elapsed=        40/100
+   Gen   41:  Best=    0.68668  	Mean=     451.28 Elapsed=        41/100
+   Gen   42:  Best=    0.68668  	Mean=     366.43 Elapsed=        42/100
+   Gen   43:  Best=    0.68668  	Mean=     392.24 Elapsed=        43/100
+   Gen   44:  Best=    0.68479  	Mean=     298.62 Elapsed=        44/100
+   Gen   45:  Best=    0.68320  	Mean=     400.96 Elapsed=        45/100
+   Gen   46:  Best=    0.67890  	Mean=     339.78 Elapsed=        46/100
+   Gen   47:  Best=    0.67402  	Mean=     393.16 Elapsed=        47/100
+   Gen   48:  Best=    0.66888  	Mean=     231.93 Elapsed=        48/100
+   Gen   49:  Best=    0.66480  	Mean=     157.23 Elapsed=        49/100
+   Gen   50:  Best=    0.66284  	Mean=     121.46 Elapsed=        50/100
+   Gen   51:  Best=    0.65806  	Mean=     182.34 Elapsed=        51/100
+   Gen   52:  Best=    0.65078  	Mean=     222.83 Elapsed=        52/100
+   Gen   53:  Best=    0.64304  	Mean=     238.88 Elapsed=        53/100
+   Gen   54:  Best=    0.64304  	Mean=      343.6 Elapsed=        54/100
+   Gen   55:  Best=    0.64304  	Mean=     327.85 Elapsed=        55/100
+   Gen   56:  Best=    0.64304  	Mean=     364.39 Elapsed=        56/100
+   Gen   57:  Best=    0.64151  	Mean=     408.81 Elapsed=        57/100
+   Gen   58:  Best=    0.64151  	Mean=     389.61 Elapsed=        58/100
+   Gen   59:  Best=    0.64151  	Mean=     351.96 Elapsed=        59/100
+   Gen   60:  Best=    0.64151  	Mean=     370.08 Elapsed=        60/100
+   Gen   61:  Best=    0.63737  	Mean=     341.35 Elapsed=        61/100
+   Gen   62:  Best=    0.63737  	Mean=     323.78 Elapsed=        62/100
+   Gen   63:  Best=    0.63737  	Mean=     234.46 Elapsed=        63/100
+   Gen   64:  Best=    0.63498  	Mean=     166.08 Elapsed=        64/100
+   Gen   65:  Best=    0.63498  	Mean=     118.02 Elapsed=        65/100
+   Gen   66:  Best=    0.62566  	Mean=     66.083 Elapsed=        66/100
+   Gen   67:  Best=    0.58732  	Mean=     44.465 Elapsed=        67/100
+   Gen   68:  Best=    0.58616  	Mean=     28.069 Elapsed=        68/100
+   Gen   69:  Best=    0.57640  	Mean=     15.807 Elapsed=        69/100
+   Gen   70:  Best=    0.57306  	Mean=      23.98 Elapsed=        70/100
+   Gen   71:  Best=    0.57284  	Mean=     36.757 Elapsed=        71/100
+   Gen   72:  Best=    0.56547  	Mean=     30.774 Elapsed=        72/100
+   Gen   73:  Best=    0.56167  	Mean=     41.204 Elapsed=        73/100
+   Gen   74:  Best=    0.53621  	Mean=     43.572 Elapsed=        74/100
+   Gen   75:  Best=    0.53222  	Mean=      34.11 Elapsed=        75/100
+   Gen   76:  Best=    0.52465  	Mean=     43.985 Elapsed=        76/100
+   Gen   77:  Best=    0.51936  	Mean=     62.291 Elapsed=        77/100
+   Gen   78:  Best=    0.51936  	Mean=     100.54 Elapsed=        78/100
+   Gen   79:  Best=    0.51925  	Mean=     111.77 Elapsed=        79/100
+   Gen   80:  Best=    0.51925  	Mean=     160.46 Elapsed=        80/100
+   Gen   81:  Best=    0.51870  	Mean=     140.91 Elapsed=        81/100
+   Gen   82:  Best=    0.51870  	Mean=     213.45 Elapsed=        82/100
+   Gen   83:  Best=    0.51835  	Mean=     276.96 Elapsed=        83/100
+   Gen   84:  Best=    0.51755  	Mean=     209.54 Elapsed=        84/100
+   Gen   85:  Best=    0.51731  	Mean=     230.09 Elapsed=        85/100
+   Gen   86:  Best=    0.51695  	Mean=      228.1 Elapsed=        86/100
+   Gen   87:  Best=    0.51592  	Mean=     274.55 Elapsed=        87/100
+   Gen   88:  Best=    0.51592  	Mean=     309.53 Elapsed=        88/100
+   Gen   89:  Best=    0.51592  	Mean=     296.22 Elapsed=        89/100
+   Gen   90:  Best=    0.51419  	Mean=     356.41 Elapsed=        90/100
+   Gen   91:  Best=    0.51409  	Mean=     472.05 Elapsed=        91/100
+   Gen   92:  Best=    0.51409  	Mean=     534.94 Elapsed=        92/100
+   Gen   93:  Best=    0.51409  	Mean=     520.27 Elapsed=        93/100
+   Gen   94:  Best=    0.51409  	Mean=     377.88 Elapsed=        94/100
+   Gen   95:  Best=    0.51409  	Mean=     504.91 Elapsed=        95/100
+   Gen   96:  Best=    0.51409  	Mean=      619.1 Elapsed=        96/100
+   Gen   97:  Best=    0.51409  	Mean=     622.02 Elapsed=        97/100
+   Gen   98:  Best=    0.51409  	Mean=      561.7 Elapsed=        98/100
+   Gen   99:  Best=    0.51409  	Mean=     541.82 Elapsed=        99/100
+| Took    100 generations to converge.
+   Called the amber function 19050 times.
+   WARNING: CT-C -O  angle has no sample structures before it, nearest sample is 0.2363 radians after.
+   WARNING: CT-C -N  angle has no sample structures before it, nearest sample is 0.0351 radians after.
+
+
+   WARNING: Insufficient angle information in sample structures.   
+            Your settings require that sample data exist within    
+            0.157 radians of the algorithm's result.                
+            Either 1) Add the missing input data                 or
+                   2) Set ANGLE_LIMIT to a larger value          or
+                   3) Set BOUNDS_CHECK to warn (not recommended).  
+            Please read the help and/or documentation.             
+
+ * Result passed bond validity check.
+   ---------------------------------- FINAL PARAMETERS -------------------------------
+   Fitted parameters for force field equation: AMBER_STANDARD:
+   (* means parameter is NOT constant during fit)
+                         K = 0.000000 kcal/mol
+             (CT-HC) Kr = 340.0000 kcal/(mol A)^2, r_eq =   1.0900 A 
+             (CT-H1) Kr = 340.0000 kcal/(mol A)^2, r_eq =   1.0900 A 
+             (N -H ) Kr = 434.0000 kcal/(mol A)^2, r_eq =   1.0100 A 
+             (C -O ) Kr = 570.0000 kcal/(mol A)^2, r_eq =   1.2290 A 
+             (C -N ) Kr = 490.0000 kcal/(mol A)^2, r_eq =   1.3350 A 
+             (CT-C ) Kr = 317.0000 kcal/(mol A)^2, r_eq =   1.5220 A 
+             (N -CT) Kr = 337.0000 kcal/(mol A)^2, r_eq =   1.4490 A 
+        (C -N -H )*Kt =  51.0909 kcal/(mol rad)^2, *th_eq = 117.0127 deg 
+        (HC-CT-C ) Kt =  50.0000 kcal/(mol rad)^2,  th_eq = 109.5000 deg 
+        (HC-CT-HC) Kt =  35.0000 kcal/(mol rad)^2,  th_eq = 109.5000 deg 
+        (H1-CT-H1) Kt =  35.0000 kcal/(mol rad)^2,  th_eq = 109.5000 deg 
+        (H -N -CT) Kt =  50.0000 kcal/(mol rad)^2,  th_eq = 118.0401 deg 
+        (N -CT-H1) Kt =  50.0000 kcal/(mol rad)^2,  th_eq = 109.5000 deg 
+        (O -C -N )*Kt =  89.2606 kcal/(mol rad)^2, *th_eq = 122.1817 deg 
+        (C -N -CT)*Kt =  53.4051 kcal/(mol rad)^2, *th_eq = 122.0225 deg 
+        (CT-C -O )*Kt =  47.6191 kcal/(mol rad)^2, *th_eq = 104.9044 deg 
+        (CT-C -N )*Kt =  66.2022 kcal/(mol rad)^2, *th_eq = 113.1054 deg 
+       (O -C -N -H )*Kp =  -1.2943 kcal/mol,  Np = 1.0000, *Phase =  82.7972 Deg 
+       (O -C -N -H )*Kp =   0.5539 kcal/mol,  Np = 2.0000, *Phase =  76.5002 Deg 
+       (C -N -CT-H1) Kp =   0.0000 kcal/mol,  Np = 2.0000,  Phase =   0.0000 Deg 
+       (HC-CT-C -O ) Kp =   0.8000 kcal/mol,  Np = 1.0000,  Phase =   0.0000 Deg 
+       (HC-CT-C -O ) Kp =   0.0800 kcal/mol,  Np = 3.0000,  Phase = 180.0001 Deg 
+       (HC-CT-C -N ) Kp =   0.0000 kcal/mol,  Np = 2.0000,  Phase =   0.0000 Deg 
+       (HC-CT-C -O ) Kp =   0.0000 kcal/mol,  Np = 2.0000,  Phase =   0.0000 Deg 
+       (CT-C -N -H ) Kp =   2.5000 kcal/mol,  Np = 2.0000,  Phase = 180.0001 Deg 
+       (H -N -CT-H1) Kp =   0.0000 kcal/mol,  Np = 2.0000,  Phase =   0.0000 Deg 
+   IMP (C -CT-N -H )*Kp =   3.4024 kcal/mol,  Np = 2.0000,  Phase = 180.0001 Deg 
+       (O -C -N -CT)*Kp =   0.7604 kcal/mol,  Np = 2.0000, *Phase =  94.4324 Deg 
+       (CT-C -N -CT)*Kp =  -4.9248 kcal/mol,  Np = 2.0000, *Phase = 110.9637 Deg 
+   IMP (CT-N -C -O )*Kp =  -2.6009 kcal/mol,  Np = 2.0000,  Phase = 180.0001 Deg 
+   -----------------------------------------------------------------------------------
+   Function value with fitted parameters  =        0.5141, R^2 =       0.9938
+   Calculated energy with fitted parameters for structure 1 =    -27.4649 KCal/mol
+
+ * Saving energy file with 100 structures to energy.dat
+
+|             Program Execution Completed at: Tue Feb 28 15:57:15 2012
+|                            Elapsed Time = 43.00 seconds
+*************************************************************************************

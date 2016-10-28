@@ -28,6 +28,8 @@ module AmberNetcdf_mod
   character(14), parameter :: NCREMD_DIMENSION = "remd_dimension"
   character(12), parameter :: NCREMD_DIMTYPE = "remd_dimtype"
   character(12), parameter :: NCREMD_INDICES = "remd_indices"
+  character(11), parameter :: NCREMD_REPIDX = "remd_repidx"
+  character(11), parameter :: NCREMD_CRDIDX = "remd_crdidx"
   character(11), parameter :: NCREMD_GROUPS = "remd_groups"
   character(5), parameter  :: NCEPTOT = "eptot"
   character(4), parameter  :: NCBINS = "bins"
@@ -418,10 +420,11 @@ end function NC_define_var
 !> @param isRestart If true, netcdf restart.
 !> @param natomIn Number of atoms.
 !> @param hasCoords If true, file will have coordinates.
-!> @param hasVelocity If true, file will have velocity info.
+!> @param hasVelocity If true, file will have velocities.
 !> @param hasBox If true, file will have box information.
 !> @param hasTemperature If true, file will have temperature information
 !> @param hasTime If true, file will have time information.
+!> @param hasFrc If true, file will have forces.
 !> @param title Traj/restart title.
 !> @param ncid Resulting netcdf ID of file.
 !> @param timeVID Resulting VID of time.
@@ -661,7 +664,7 @@ logical function NC_setupMdcrd(ncid, title, nframes, ncatom, &
   endif
   ! Setup Time - Allowed to fail, these values are not needed for traj.
   if (NC_setupTime( ncid, timeVID )) then
-    write(mdout,'(a)'), 'Warning: NetCDF trajectory has no time values.'
+    write(mdout,'(a)') 'Warning: NetCDF trajectory has no time values.'
     timeVID = -1
   endif
   ! Setup box: If no box info cellLengthVID/cellAngleVID will be set to
@@ -744,14 +747,18 @@ end function NC_readReservoir
 !> MODULE AMBERNETCDF FUNCTION NC_DEFINEREMDINDICES
 !> @brief Create M-REMD index info in traj/restart file.
 logical function NC_defineRemdIndices(ncid, remd_dimension, indicesVID, &
-                                     remd_types, isRestart, frameDID,&
-                                     remd_groupsVID)
+                                      repidxVID, crdidxVID, &
+                                      remd_types, isRestart, isMREMD, &
+                                      frameDID, remd_groupsVID)
   use netcdf
   implicit none
   integer, intent(in)               :: ncid, remd_dimension
   integer, intent(out)              :: indicesVID
+  integer, intent(out)              :: repidxVID
+  integer, intent(out)              :: crdidxVID
   integer, dimension(:), intent(in) :: remd_types
   logical, intent(in)               :: isRestart
+  logical, intent(in)               :: isMREMD
   integer, optional, intent(in)     :: frameDID
   integer, optional, intent(out)    :: remd_groupsVID
   ! Local vars
@@ -767,46 +774,57 @@ logical function NC_defineRemdIndices(ncid, remd_dimension, indicesVID, &
   ! Place the netcdf file back into define mode
   if (NC_error(nf90_redef(ncid), &
                    'putting netcdf file back into define mode')) return
-  ! Define number of replica dimensions
-  if (NC_error(nf90_def_dim(ncid, NCREMD_DIMENSION, remd_dimension, &
+  ! Set up crdidx and repidx VIDs
+  if (isRestart) then
+    repidxVID = NC_define_var(ncid, NCREMD_REPIDX, NF90_INT, 0, dimensionID)
+    crdidxVID = NC_define_var(ncid, NCREMD_CRDIDX, NF90_INT, 0, dimensionID)
+  else
+    dimensionID(1) = frameDID
+    repidxVID = NC_define_var(ncid, NCREMD_REPIDX, NF90_INT, 1, dimensionID)
+    crdidxVID = NC_define_var(ncid, NCREMD_CRDIDX, NF90_INT, 1, dimensionID)
+  endif
+  if (isMREMD) then ! MREMD setup block
+    ! Define number of replica dimensions
+    if (NC_error(nf90_def_dim(ncid, NCREMD_DIMENSION, remd_dimension, &
                               remd_dim_id),&
                  'define replica dimension')) return
-  ! For each dimension, need to know the type
-  dimensionID(1) = remd_dim_id
-  remd_dimtype_var_id = NC_define_var(ncid, NCREMD_DIMTYPE, NF90_INT, &
-                                      1, dimensionID)
-  if (remd_dimtype_var_id.eq.-1) return ! 'define replica type for each dimension'
-  ! Need to store the indices of replica in each dimension each frame
-  if (isRestart) then
-    indicesVID = NC_define_var(ncid, NCREMD_INDICES, NF90_INT, &
+    ! For each dimension, need to know the type
+    dimensionID(1) = remd_dim_id
+    remd_dimtype_var_id = NC_define_var(ncid, NCREMD_DIMTYPE, NF90_INT, &
                                         1, dimensionID)
-    ! For restarts only, store replica groups. FIXME: Necessary?
-    if (.not.present(remd_groupsVID)) then
-      write(mdout,'(a)') 'Internal Error: NC_defineRemdIndices called without remd_groupsVID'
-      return
+    if (remd_dimtype_var_id.eq.-1) return ! 'define replica type for each dimension'
+    ! Need to store the indices of replica in each dimension each frame
+    if (isRestart) then
+      indicesVID = NC_define_var(ncid, NCREMD_INDICES, NF90_INT, &
+                                          1, dimensionID)
+      ! For restarts only, store replica groups. FIXME: Necessary?
+      if (.not.present(remd_groupsVID)) then
+        write(mdout,'(a)') 'Internal Error: NC_defineRemdIndices called without remd_groupsVID'
+        return
+      endif
+      remd_groupsVID = NC_define_var(ncid, NCREMD_GROUPS, NF90_INT, 1, dimensionID)
+    else
+      if (.not.present(frameDID)) then
+        write(mdout,'(a)') 'Internal Error: NC_defineRemdIndices called without frameDID'
+        return
+      endif
+      dimensionID(2) = frameDID 
+      indicesVID = NC_define_var(ncid, NCREMD_INDICES, NF90_INT, &
+                                          2, dimensionID)
     endif
-    remd_groupsVID = NC_define_var(ncid, NCREMD_GROUPS, NF90_INT, 1, dimensionID)
-  else
-    if (.not.present(frameDID)) then
-      write(mdout,'(a)') 'Internal Error: NC_defineRemdIndices called without frameDID'
-      return
-    endif
-    dimensionID(2) = frameDID 
-    indicesVID = NC_define_var(ncid, NCREMD_INDICES, NF90_INT, &
-                                        2, dimensionID)
-  endif
-  if (indicesVID.eq.-1) return ! 'define replica indices'
-  ! Eventually store temperature tables for each T dimension
-  
+    if (indicesVID.eq.-1) return ! 'define replica indices'
+    ! Eventually store temperature tables for each T dimension
+  endif ! End MREMD setup block
   ! Set NoFill and end definition mode
   if (NC_error(nf90_set_fill(ncid, NF90_NOFILL, old_mode), &
                     'set no fill')) return
   if (NC_error(nf90_enddef(ncid), 'end define')) return
-
-  ! Store the type of each replica dimension
-  if (NC_error(nf90_put_var(ncid, remd_dimtype_var_id, remd_types(:), &
+  if (isMREMD) then
+    ! Store the type of each replica dimension
+    if (NC_error(nf90_put_var(ncid, remd_dimtype_var_id, remd_types(:), &
                               start=(/ 1 /), count = (/ remd_dimension /)),&
                  'write replica type for each dimension')) return
+  endif
   ! All is well
   NC_defineRemdIndices=.false.
 end function NC_defineRemdIndices
@@ -991,11 +1009,13 @@ end function NC_checkTraj
 !> @param filename Restart file to read indices from.
 !> @param replica_indexes Array of replica indexes
 !> @param group_num Array of REMD communicators I belong to
+!> @param remd_repidx Overall replica index if present, -1 otherwise.
+!> @param remd_crdidx Overall coordinate index if present, -1 otherwise.
 !> @param remd_dimension Dimension of replica_indexes
 !> @return 0 if indices/groups successfully read, 1 if no indexes 
 !!         present, -1 if error or no BINTRAJ.
 integer function NC_readRestartIndices(filename, replica_indexes, group_num,&
-                                       remd_dimension)
+                                       remd_repidx, remd_crdidx, remd_dimension)
 # ifdef BINTRAJ
   use netcdf
 # endif
@@ -1003,11 +1023,15 @@ integer function NC_readRestartIndices(filename, replica_indexes, group_num,&
   character(*), intent(in)           :: filename
   integer, dimension(:), intent(out) :: replica_indexes
   integer, dimension(:), intent(out) :: group_num
+  integer, intent(out)               :: remd_repidx
+  integer, intent(out)               :: remd_crdidx
   integer, intent(in)                :: remd_dimension 
   ! local
-  integer ncid, indicesVID, groupsVID, ierr
+  integer ncid, indicesVID, groupsVID, repidxVID, crdidxVID, ierr
   
   NC_readRestartIndices=-1
+  remd_repidx=-1
+  remd_crdidx=-1
 # ifdef BINTRAJ
   ! Open file - exit cleanly if not netcdf
   if (nf90_open( filename, NF90_NOWRITE, ncid ) .ne. NF90_NOERR) return
@@ -1015,6 +1039,18 @@ integer function NC_readRestartIndices(filename, replica_indexes, group_num,&
   if (NC_checkConventions(ncid, .true.)) then
     call NC_close(ncid)
     return
+  endif
+  ! Get replica and coordinate indices if they are defined
+  if ( nf90_inq_varid(ncid, NCREMD_REPIDX, repidxVID) .eq. NF90_NOERR ) then
+    if (NC_error(nf90_get_var(ncid, repidxVID, remd_repidx),&
+                 'Getting overall replica index.'))&
+      return
+    if (NC_error(nf90_inq_varid(ncid, NCREMD_CRDIDX, crdidxVID),&
+                 'Getting overall coordinate index variable ID.'))&
+      return
+    if (NC_error(nf90_get_var(ncid, crdidxVID, remd_crdidx),&
+                 'Getting overall coordinate index.'))&
+      return
   endif
   ! Check Dimension, setup indices and groups VID
   ierr = NC_setupMultiD(ncid, remd_dimension, indicesVID, groupsVID)

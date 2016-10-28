@@ -8,6 +8,7 @@ addons:
       - g++
       - gfortran
       - bison
+      - csh
 
 install:
   - ./configure --prefix=$HOME/appveyor
@@ -17,4 +18,10 @@ script:
   - $HOME/appveyor/bin/sqm -h
   - $HOME/appveyor/bin/antechamber -h
   - $HOME/appveyor/bin/tleap -h
+  # Run tests
+  - cd $HOME/appveyor/test && make test.antechamber
+  - cd $HOME/appveyor/test && make test.sqm
+  - cd $HOME/appveyor/test && make test.leap
+  - cd $HOME/appveyor/test && make test.paramfit
+  - cd $HOME/appveyor/test && make clean
 

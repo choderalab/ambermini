@@ -1,0 +1,132 @@
+            --------------------------------------------------------
+                              AMBER SQM VERSION 1.0                 
+ 
+                                      By
+                              Ross C. Walker (SDSC)
+                                      and
+                             David A. Case (Rutgers)
+ 
+            --------------------------------------------------------
+ 
+
+--------------------------------------------------------------------------------
+  3.1 QM CALCULATION INFO
+--------------------------------------------------------------------------------
+
+QMMM: SINGLET STATE CALCULATION
+QMMM: RHF CALCULATION, NO. OF DOUBLY OCCUPIED LEVELS = 37
+
+| QMMM: Citation for AMBER QMMM Run:
+| QMMM: R.C. Walker, M.F. Crowley and D.A. Case, J. COMP. CHEM. 29:1019, 2008
+
+| QMMM: Parameter sets in use:
+| QMMM: H : M.J.S.DEWAR et al. JACS, 107, 3902, (1985)
+| QMMM: C : M.J.S.DEWAR et al. JACS, 107, 3902, (1985)
+| QMMM: O : M.J.S.DEWAR et al. JACS, 107, 3902, (1985)
+| QMMM: N : M.J.S.DEWAR et al. JACS, 107, 3902, (1985)
+
+| QMMM: *** Diagonalization Routine Information ***
+| QMMM: Pseudo diagonalizations are allowed.
+| QMMM: Auto diagonalization routine selection is disabled.
+| QMMM: Using internal diagonalization routine (diag_routine=1).
+
+  QMMM: QM Region Cartesian Coordinates (*=link atom) 
+  QMMM: QM_NO.   MM_NO.  ATOM         X         Y         Z
+  QMMM:     1        1      H        2.0000    1.0000    0.0000
+  QMMM:     2        2      C        2.0000    2.0900    0.0000
+  QMMM:     3        3      H        1.4860    2.4540    0.8900
+  QMMM:     4        4      H        1.4860    2.4540   -0.8900
+  QMMM:     5        5      C        3.4270    2.6410    0.0000
+  QMMM:     6        6      O        4.3910    1.8770    0.0000
+  QMMM:     7        7      N        3.5550    3.9700    0.0000
+  QMMM:     8        8      H        2.7330    4.5560    0.0000
+  QMMM:     9        9      C        4.8530    4.6140    0.0000
+  QMMM:    10       10      H        5.4080    4.3160    0.8900
+  QMMM:    11       11      C        5.6610    4.2210   -1.2320
+  QMMM:    12       12      H        5.8090    3.1410   -1.2410
+  QMMM:    13       13      H        5.1230    4.5210   -2.1310
+  QMMM:    14       14      C        7.0190    4.9190   -1.1950
+  QMMM:    15       15      O        7.9620    4.3130   -0.6200
+  QMMM:    16       16      O        7.0990    6.0520   -1.7410
+  QMMM:    17       17      H        7.9950    6.3870   -1.6530
+  QMMM:    18       18      C        4.7130    6.1290    0.0000
+  QMMM:    19       19      O        3.6010    6.6530    0.0000
+  QMMM:    20       20      N        5.8460    6.8350    0.0000
+  QMMM:    21       21      H        6.7370    6.3590    0.0000
+  QMMM:    22       22      C        5.8460    8.2840    0.0000
+  QMMM:    23       23      H        4.8190    8.6480    0.0000
+  QMMM:    24       24      H        6.3600    8.6480    0.8900
+  QMMM:    25       25      H        6.3600    8.6480   -0.8900
+
+--------------------------------------------------------------------------------
+   4.  RESULTS
+--------------------------------------------------------------------------------
+
+sqm energy:    10   -177.2892    1.278484
+sqm energy:    20   -179.2454    0.353342
+sqm energy:    30   -179.4703    0.213259
+sqm energy:    40   -179.5397    0.015122
+sqm energy:    50   -179.5406    0.000982
+ Final SCF energy is   -179.54064896524505     
+ 
+    Atomic Charges for Step       1 :
+  Atom    Element       Mulliken Charge
+     1      H                  0.119
+     2      C                 -0.241
+     3      H                  0.104
+     4      H                  0.105
+     5      C                  0.302
+     6      O                 -0.361
+     7      N                 -0.371
+     8      H                  0.241
+     9      C                  0.010
+    10      H                  0.157
+    11      C                 -0.173
+    12      H                  0.145
+    13      H                  0.137
+    14      C                  0.316
+    15      O                 -0.381
+    16      O                 -0.310
+    17      H                  0.249
+    18      C                  0.274
+    19      O                 -0.388
+    20      N                 -0.366
+    21      H                  0.253
+    22      C                 -0.079
+    23      H                  0.113
+    24      H                  0.077
+    25      H                  0.068
+ Total Mulliken Charge =      -0.000
+ 
+ Final Structure
+
+  QMMM: QM Region Cartesian Coordinates (*=link atom) 
+  QMMM: QM_NO.   MM_NO.  ATOM         X         Y         Z
+  QMMM:     1        1      H        2.1555    1.2977    1.0823
+  QMMM:     2        2      C        2.1276    2.1943    0.4161
+  QMMM:     3        3      H        1.4060    2.9370    0.8345
+  QMMM:     4        4      H        1.7831    1.8827   -0.5994
+  QMMM:     5        5      C        3.5121    2.7880    0.3475
+  QMMM:     6        6      O        4.4739    2.2911    0.9640
+  QMMM:     7        7      N        3.6825    3.8916   -0.4792
+  QMMM:     8        8      H        2.8751    4.3683   -0.8157
+  QMMM:     9        9      C        4.9042    4.6546   -0.4788
+  QMMM:    10       10      H        5.6058    4.2023    0.2911
+  QMMM:    11       11      C        5.6047    4.6207   -1.8515
+  QMMM:    12       12      H        5.4688    3.6170   -2.3399
+  QMMM:    13       13      H        5.1647    5.3922   -2.5387
+  QMMM:    14       14      C        7.0709    4.8715   -1.7224
+  QMMM:    15       15      O        7.7366    5.2163   -0.7392
+  QMMM:    16       16      O        7.7564    4.6811   -2.8835
+  QMMM:    17       17      H        8.7023    4.8507   -2.7370
+  QMMM:    18       18      C        4.6260    6.1439   -0.1332
+  QMMM:    19       19      O        3.5384    6.6762   -0.4429
+  QMMM:    20       20      N        5.6187    6.8235    0.5222
+  QMMM:    21       21      H        6.4980    6.3764    0.6663
+  QMMM:    22       22      C        5.5135    8.2086    0.8579
+  QMMM:    23       23      H        4.4620    8.5697    0.7002
+  QMMM:    24       24      H        5.7951    8.3532    1.9357
+  QMMM:    25       25      H        6.2073    8.8214    0.2204
+
+           --------- Calculation Completed ----------
+

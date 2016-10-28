@@ -1,0 +1,116 @@
+source leaprc.GLYCAM_06j-1
+
+## anomeric is C1
+
+#_Tv
+    m0 = sequence { 1Tv 2Tv 4Tv 0Tv }
+#_fB
+    m1 = sequence { 1fB 2fB 3fB 4fB 0fB }
+#_QA
+    m2 = sequence { 1QA 2QA 3QA 4QA 0QA }
+#_OA
+    m3 = sequence { 1OA 2OA 3OA 4OA 0OA }
+#_zB
+    m4 = sequence { 1zB 2zB 3zB 4zB 0zB }
+#_AD
+    m5 = sequence { 1AD 2AD 3AD 5AD 0AD }
+#_dU
+    m6 = sequence { 1dU 2dU 3dU 5dU 0dU }
+#_rD
+    m7 = sequence { 1rD 2rD 3rD 5rD 0rD }
+#_XU
+    m8 = sequence { 1XU 2XU 3XU 5XU 0XU }
+#_VA
+    m9 = sequence { 1VA 3VA 4VA 6VA 0VA }
+#_wB
+    m10 = sequence { 1wB 3wB 4wB 6wB 0wB }
+#_yA
+    m11 = sequence { 1yA 3yA 4yA 6yA 0yA }
+#_GA
+    m12 = sequence { 1GA 2GA 3GA 4GA 6GA 0GA }
+#_gB
+    m13 = sequence { 1gB 2gB 3gB 4gB 6gB 0gB }
+#_lA
+    m14 = sequence { 1lA 2lA 3lA 4lA 6lA 0lA }
+#_LB
+    m15 = sequence { 1LB 2LB 3LB 4LB 6LB 0LB }
+#_MA
+    m16 = sequence { 1MA 2MA 3MA 4MA 6MA 0MA }
+#_mB
+    m17 = sequence { 1mB 2mB 3mB 4mB 6mB 0mB }
+
+## anomeric is C2
+
+#_bU
+    m18 = sequence { 2bU 1bU 3bU 4bU 6bU 0bU }
+#_CD
+    m19 = sequence { 2CD 1CD 3CD 4CD 6CD 0CD }
+#_jU
+    m20 = sequence { 2jU 1jU 3jU 4jU 6jU 0jU }
+#_PU
+    m21 = sequence { 2PU 1PU 3PU 4PU 6PU 0PU }
+#_bA
+    m22 = sequence { 2bA 1bA 3bA 4bA 5bA 0bA }
+#_CB
+    m23 = sequence { 2CB 1CB 3CB 4CB 5CB 0CB }
+#_jB
+    m24 = sequence { 2jB 1jB 3jB 4jB 5jB 0jB }
+#_PB
+    m25 = sequence { 2PB 1PB 3PB 4PB 5PB 0PB }
+
+## no anomeric-anomeric linking
+
+#_BC
+    m26 = sequence { TBT 3BC 0BC }
+#_GL
+    m27 = sequence { TBT 4GL 7GL 8GL 9GL 0GL }
+#_SA
+    m28 = sequence { TBT 4SA 7SA 8SA 9SA 0SA }
+#_sB
+    m29 = sequence { TBT 4sB 7sB 8sB 9sB 0sB }
+
+##
+## Built 30 molecules
+##	Now, translate them away from each other
+##
+  translate m1  {  0.0  30.0   0.0 }
+  translate m2  {  0.0  60.0   0.0 }
+    translate m3  { 30.0   0.0   0.0 }
+    translate m4  { 30.0  30.0   0.0 }
+    translate m5  { 30.0  60.0   0.0 }
+      translate m6  { 60.0   0.0   0.0 }
+      translate m7  { 60.0  30.0   0.0 }
+      translate m8  { 60.0  60.0   0.0 }
+  translate m9  {  0.0   0.0  30.0 }
+  translate m10 {  0.0  30.0  30.0 }
+  translate m11 {  0.0  60.0  30.0 }
+    translate m12 { 30.0   0.0  30.0 }
+    translate m13 { 30.0  30.0  30.0 }
+    translate m14 { 30.0  60.0  30.0 }
+      translate m15 { 60.0   0.0  30.0 }
+      translate m16 { 60.0  30.0  30.0 }
+      translate m17 { 60.0  60.0  30.0 }
+  translate m18 {  0.0   0.0  60.0 }
+  translate m19 {  0.0  30.0  60.0 }
+  translate m20 {  0.0  60.0  60.0 }
+    translate m21 { 30.0   0.0  60.0 }
+    translate m22 { 30.0  30.0  60.0 }
+    translate m23 { 30.0  60.0  60.0 }
+      translate m24 { 60.0   0.0  60.0 }
+      translate m25 { 60.0  30.0  60.0 }
+      translate m26 { 60.0  60.0  60.0 }
+  translate m27 {  0.0   0.0  90.0 }
+  translate m28 {  0.0  30.0  90.0 }
+  translate m29 {  0.0  60.0  90.0 }
+
+xy1 = combine { m0 m1 m2 m3 m4 m5 m6 m7 m8 }
+xy2 = combine { m9 m10 m11 m12 m13 m14 m15 m16 m17 }
+xy3 = combine { m18 m19 m20 m21 m22 m23 m24 m25 m26}
+xy4 = combine { m27 m28 m29 }
+
+Chains = combine { xy1 xy2 xy3 xy4 }
+
+saveamberparm Chains Chains.parm7 Chains.rst7
+
+quit
+

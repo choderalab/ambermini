@@ -54,6 +54,7 @@
 #define CONTAINER_H
 
 
+# include       "objekt.h"
 # include       "displayer.h"
 # include       "matrix.h"
 # include       "stringExtra.h"

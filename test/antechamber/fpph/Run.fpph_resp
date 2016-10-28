@@ -1,0 +1,13 @@
+#!/bin/csh -f
+
+../../../bin/antechamber -i fpph.gout -fi gout -o fpph_resp.mol2 -fo mol2 \
+   -c resp -nc -3 -j 4 >& antechamber.out || goto error
+
+../../dacdif -a 2.e-5 fpph_resp.mol2.save fpph_resp.mol2
+
+/bin/rm -f ANTE* ATOMTYPE.INF BCCTYPE.INF PREP.INF prmcrd esout punch QOUT qout
+exit(0)
+
+error:
+echo "  ${0}:  Program error"
+exit(1)

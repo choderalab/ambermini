@@ -155,6 +155,76 @@ FILE *fp;
   return(1);
 }
 
+/*   alternate version of write_file for NEF files:  */
+int ndb_nef_write_file(fp)
+FILE *fp;
+{
+  int i, datablockId, categoryId, rowId, linePos, numColumn, numRow;
+  char itemValue[YYLMAX], itemName[MxNameLen], datablockName[MxNameLen];
+
+
+  /* Open input and output files */
+  if (fp == NULL ) {
+    return 0;
+  }
+
+  datablockId = ndb_cif_rewind_datablock();
+
+  // back to the beginning of the file:
+  cifFiles.curDatablock = 0;
+  cifFiles.datablocks[0].curCategory = 0;
+
+  do {
+    ndb_cif_current_datablock_name(datablockName);
+    fprintf( stderr, "Writing data block %s[%d of %d]\n",
+           datablockName,
+           ndb_cif_current_datablock(),
+           ndb_cif_count_datablock());
+    fprintf(fp, "save_%s\n", datablockName);
+    do {
+      categoryId = ndb_cif_current_category();
+      numColumn = ndb_cif_count_column();
+      numRow = ndb_cif_count_row();
+      if (numRow <=1) {
+        for (i=0; i< numColumn; i++) {
+          ndb_cif_get_item_name(i+1, itemName);
+          ndb_cif_print_item_name(fp, itemName, &linePos);
+          ndb_cif_get_item_value(i+1, itemValue, YYLMAX);
+          ndb_cif_print_item_value(fp, itemValue, &linePos);
+          if (linePos != 0) fprintf(fp, "\n");
+        }
+        fprintf(fp, "\n");
+      }
+      else {
+        fprintf(fp, "loop_\n");
+        for (i=0; i< numColumn; i++) {
+          ndb_cif_get_item_name(i+1, itemName);
+          ndb_cif_print_item_name(fp, itemName, &linePos);
+          fprintf(fp, "\n");
+        }
+        fprintf(fp, "\n");
+        do {
+          linePos = 0;
+          for (i=0; i< numColumn; i++) {
+            ndb_cif_get_item_value(i+1, itemValue, YYLMAX);
+            ndb_cif_print_item_value(fp, itemValue, &linePos);
+          }
+          if (linePos != 0) fprintf(fp, "\n");
+          rowId = ndb_cif_next_row();
+        }  while (rowId);
+        fprintf(fp, "stop_\n");
+      }
+      fflush(fp);
+      categoryId = ndb_cif_next_category();
+    } while (categoryId);
+    fprintf(fp, "save_\n\n");
+    fflush(fp);
+    datablockId = ndb_cif_next_datablock();
+  } while (datablockId);
+  ndb_cif_rewind_datablock();
+  return(1);
+}
+
 
 void ndb_cif_print_item_name(fp, itemName, linePos)
 FILE *fp;
@@ -179,16 +249,16 @@ int *linePos;
       (*linePos) +=1;
       fputs(null_char, fp);
       if (*linePos < MxNameLen -2) {
-	fprintf(fp, "  ");
-	(*linePos) +=2;
+        fprintf(fp, "  ");
+        (*linePos) +=2;
       }
       else {
-	fprintf(fp, "\n");
-	(*linePos) = 0;
+        fprintf(fp, "\n");
+        (*linePos) = 0;
       }
     }
     else {
-      fprintf(fp, "\n?  ");
+      fprintf(fp, "\n%c  ", null_char);
       (*linePos) = 3;
     }
     return;
@@ -220,7 +290,7 @@ int *linePos;
   }
   else {
     if ((!multipleWord && len + (*linePos) > MxNameLen) ||
-	(multipleWord && len + 2 + (*linePos) > MxNameLen)) 
+        (multipleWord && len + 2 + (*linePos) > MxNameLen)) 
       fprintf(fp, "\n");
     if (multipleWord) {
       fprintf(fp, "\'%s\'", itemValue);
@@ -440,7 +510,7 @@ int fieldLength;
     (*offset) += (str_len);
 
     /* If it need a newline at the end of value, put it */
-    if (newline_end) fprintf(outfile, "\n");
+    // if (newline_end) fprintf(outfile, "\n");
   }
 }
 

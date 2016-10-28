@@ -1,0 +1,19 @@
+Run PM3 minimization on ZnH+
+ &qmmm
+    qm_theory    = 'pm3',
+    qmcharge     = 1,
+    ! SCF settings
+    scfconv      = 1.0d-10, ! kcal/mol
+    errconv      = 1.d-06,  ! au
+    tight_p_conv = 0,
+    itrmax       = 100,
+    ! Geometry optimization settings
+    maxcyc       = 50,
+    grms_tol     = 0.002,   ! kcal/(mol*A)
+    ! Output
+    ntpr         = 51,
+    verbosity    = 0,
+ /
+ 30 Zn   0.0     0.0     0.1
+ 1  H    0.0     0.8    -0.5
+

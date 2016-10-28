@@ -1,0 +1,83 @@
+            --------------------------------------------------------
+                             AMBER SQM VERSION 14
+ 
+                                     By
+              Ross C. Walker, Michael F. Crowley, Scott Brozell,
+                         Tim Giese, Andreas W. Goetz,
+                        Tai-Sung Lee and David A. Case
+ 
+            --------------------------------------------------------
+ 
+
+--------------------------------------------------------------------------------
+  QM CALCULATION INFO
+--------------------------------------------------------------------------------
+
+| QMMM: Citation for AMBER QMMM Run:
+| QMMM: R.C. Walker, M.F. Crowley and D.A. Case, J. COMP. CHEM. 29:1019, 2008
+
+QMMM: SINGLET STATE CALCULATION
+QMMM: RHF CALCULATION, NO. OF DOUBLY OCCUPIED LEVELS =  5
+
+| QMMM: *** Selected Hamiltonian *** 
+| QMMM: PM3         
+
+| QMMM: *** Parameter sets in use ***
+| QMMM: C : J.J.P.STEWART, JCC, 10, 209 (1989)
+| QMMM: H : J.J.P.STEWART, JCC, 10, 209 (1989)
+
+| QMMM: *** SCF convergence criteria ***
+| QMMM: Energy change                :  0.1D-09 kcal/mol
+| QMMM: Error matrix |FP-PF|         :  0.1D-05 au
+| QMMM: Density matrix change        :  0.5D-06
+| QMMM: Maximum number of SCF cycles :      100
+
+| QMMM: *** Diagonalization Routine Information ***
+| QMMM: Pseudo diagonalizations are allowed.
+| QMMM: Auto diagonalization routine selection is disabled.
+| QMMM: Using internal diagonalization routine (diag_routine=1).
+
+  QMMM: QM Region Cartesian Coordinates (*=link atom) 
+  QMMM: QM_NO.   MM_NO.  ATOM         X         Y         Z
+  QMMM:     1        1      C       -0.4125    1.6782   -0.0000
+  QMMM:     2        2      C        0.4125    2.5616   -0.0000
+  QMMM:     3        3      H       -1.1320    0.8908   -0.0000
+  QMMM:     4        4      H        1.1347    3.3458   -0.0000
+
+--------------------------------------------------------------------------------
+  RESULTS
+--------------------------------------------------------------------------------
+
+ 
+ Final MO eigenvalues (eV):
+ -31.1840  -19.5810  -16.5238  -11.4508  -11.4508    1.9096    1.9099    2.8155
+   4.1557    6.5845
+
+ Heat of formation   =         51.16310397 kcal/mol  (        2.21859867 eV)
+
+ Total SCF energy    =      -6127.93483907 kcal/mol  (     -265.72719479 eV)
+ Electronic energy   =     -12424.26235485 kcal/mol  (     -538.75644399 eV)
+ Core-core repulsion =       6296.32751578 kcal/mol  (      273.02924920 eV)
+ 
+    Atomic Charges for Step       1 :
+  Atom    Element       Mulliken Charge
+     1      C                 -0.196
+     2      C                 -0.195
+     3      H                  0.196
+     4      H                  0.195
+ Total Mulliken Charge =      -0.000
+ 
+                  X        Y        Z     TOTAL  
+  QM DIPOLE     0.003   -0.004   -0.000    0.004
+ 
+ Final Structure
+
+  QMMM: QM Region Cartesian Coordinates (*=link atom) 
+  QMMM: QM_NO.   MM_NO.  ATOM         X         Y         Z
+  QMMM:     1        1      C       -0.4125    1.6782   -0.0000
+  QMMM:     2        2      C        0.4125    2.5616   -0.0000
+  QMMM:     3        3      H       -1.1320    0.8908   -0.0000
+  QMMM:     4        4      H        1.1347    3.3458   -0.0000
+
+           --------- Calculation Completed ----------
+

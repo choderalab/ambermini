@@ -1,0 +1,81 @@
+#!/bin/sh
+
+. ../program_error.sh
+
+# Pointing at custom $AMBERHOME dir
+AMBERHOME=../../
+DACDIF=../dacdif
+tleap=./tleap
+leaprc=$AMBERHOME/dat/leap/cmd/oldff/leaprc.ff10
+ion_params=$AMBERHOME/dat/leap/parm/frcmod.ionsjc_tip3p
+dry_prefix1=sys1
+dry_prefix2=sys2
+d_prefix=d_glu
+
+cat > leap.in << EOF
+# Source the force field
+source $leaprc
+loadamberparams $ion_params
+
+# Change the default PB radii
+set default pbradii mbondi2
+
+# Create 2 sequences
+sys = sequence {NALA ASP GLU LYS TYR HIP HIS HID MET THR TRP CYM NME}
+sys2 = sequence {ACE PHE ALA LEU ILE GLY SER GLN ASN VAL PRO CCYS}
+
+# Save a non-solvated PDB file (should have no CRYST1)
+savePdb sys alphabet.pdb
+savePdb sys2 alphabet2.pdb
+
+# Save a non-solvated topology
+saveamberparm sys $dry_prefix1.mbondi2.parm7 $dry_prefix1.mbondi2.rst7
+saveamberparm sys2 $dry_prefix2.mbondi2.parm7 $dry_prefix2.mbondi2.rst7
+
+# Change the default PB radii again
+set default pbradii mbondi
+
+# Translate the first system 10 units away, then combine the 2 sys's
+translate sys {10 0 0}
+total = combine {sys sys2}
+saveamberparm total ${dry_prefix1}_${dry_prefix2}.mbondi.parm7 ${dry_prefix1}_${dry_prefix2}.mbondi.rst7
+
+# Make a copy of GLU and reflect it in the xy-plane to create its stereoisomer,
+# then create a capped version of that amino acid
+dglu = copy GLU
+transform dglu {{1 0 0} {0 1 0} {0 0 -1}}
+d_amino = sequence {ACE dglu NME}
+
+# Set a new radii set, then save the d_amino topology
+set default pbradii bondi
+saveamberparm d_amino $d_prefix.bondi.parm7 $d_prefix.bondi.rst7
+
+# Solvate the system; trunc oct and cube
+solvateOct sys TIP3PBOX 10.0
+solvateBox sys2 TIP3PBOX 10.0
+
+savePdb sys alphabet_wet.pdb
+savePdb sys2 alphabet2_wet.pdb
+# quit
+quit
+EOF
+
+echo ""
+echo "         Test of several LEaP features"
+echo ""
+
+$tleap -f leap.in > leap2.log
+
+$DACDIF $dry_prefix1.mbondi2.parm7.save $dry_prefix1.mbondi2.parm7
+$DACDIF $dry_prefix2.mbondi2.parm7.save $dry_prefix2.mbondi2.parm7
+$DACDIF -a 1.e-6 $dry_prefix1.mbondi2.rst7.save $dry_prefix1.mbondi2.rst7
+$DACDIF ${dry_prefix1}_${dry_prefix2}.mbondi.parm7.save ${dry_prefix1}_${dry_prefix2}.mbondi.parm7
+$DACDIF -a 1.e-6 ${dry_prefix1}_${dry_prefix2}.mbondi.rst7.save ${dry_prefix1}_${dry_prefix2}.mbondi.rst7
+$DACDIF $d_prefix.bondi.parm7.save $d_prefix.bondi.parm7
+$DACDIF -a 1.e-6 $d_prefix.bondi.rst7.save $d_prefix.bondi.rst7
+$DACDIF alphabet.pdb.save alphabet.pdb
+$DACDIF alphabet2.pdb.save alphabet2.pdb
+$DACDIF alphabet_wet.pdb.save alphabet_wet.pdb
+$DACDIF alphabet2_wet.pdb.save alphabet2_wet.pdb
+
+/bin/rm -f leap.in leap.log leap2.log $dry_prefix2.mbondi2.rst7

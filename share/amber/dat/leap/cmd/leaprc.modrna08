@@ -9,7 +9,7 @@
 #
 # To use these residues, load this file into leap, after the Amber-FF, e.g.:
 #
-# > source leaprc.ff13SB
+# > source leaprc.ff14SB
 # > source leaprc.modrna08
 #
 

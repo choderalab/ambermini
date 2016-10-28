@@ -1,0 +1,46 @@
+source leaprc.GLYCAM_06j-1
+
+## Testing derivatives and some terminals.
+##
+##   See definitions in the script that created this file for details.
+##   Using a 6-linked DGlcpb 
+##
+# set 1
+  m0 = sequence { TBT 6GB MEX }
+  set m0.2.C6 charge +0.243
+  charge m0
+
+# set 2
+  m1 = sequence { TBT 6GB ACX }
+  set m1.2.C6 charge +0.290
+  charge m1
+
+# set 3
+  m2 = sequence { TBT 6GB SO3 }
+  set m2.2.O6 charge -0.427
+  charge m2
+
+## Testing residues made for linking to proteins.
+##
+##   Testing RES-ALA-RES-ALA-RES to ensure that we have tried a decent
+##       set of linkage environments.
+##   See definitions in the script that created this file for details.
+##
+# set 1 -- OLT
+# set 2 -- OLS
+# set 3 -- OLP
+# set 4 -- NLN
+
+##
+## Built 3 molecules
+##	Now, translate them away from each other
+##
+  translate m1  {  0.0  30.0   0.0 }
+  translate m2  {  0.0  60.0   0.0 } 
+ 
+Derivatives = combine { m0 m1 m2 }
+
+saveamberparm Derivatives Derivatives.parm7 Derivatives.rst7
+
+quit
+

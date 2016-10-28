@@ -14,8 +14,8 @@ CONF_NUM    	2
 ESP_FILE    	ala.esp
 
 #SEP_BOND: 	bonds that separate residue and caps, input in a format of (Atom_Name1 Atom_Name2), 
-#		where Atom_Name1 belongs to residue and Atom_Name2 belongs to a cap. 
-#		must show up twice times
+#		where Atom_Name1 belongs to the residue and Atom_Name2 belongs to a cap. 
+#		must not show up more than three times
 SEP_BOND    	N1 C2
 SEP_BOND 	C5 N2 
 

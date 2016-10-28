@@ -1,0 +1,132 @@
+#!/bin/sh
+
+. ../program_error.sh
+
+python=''
+if [ $# -ge 1 ]; then
+    python="$1"
+fi
+
+# Pointing at custom $AMBERHOME dir
+AMBERHOME=../../
+DACDIF=../dacdif
+tleap=./tleap
+
+cat > leap.in << EOF
+source oldff/leaprc.ff14SB
+loadAmberParams frcmod.ionsjc_tip3p
+
+# Create charged sequences
+l = sequence {NALA LYS LYS LYS LYS LYS LYS LYS CALA}
+k = sequence {NALA ASP ASP ASP ASP ASP ASP ASP CALA}
+
+# Solvate them
+solvateOct l TIP3PBOX 10.0
+solvateOct k TIP3PBOX 10.0
+
+# Show what their charges are (should be +/- 7)
+charge l
+charge k
+
+# Make copies to test them out
+l1 = copy l
+l2 = copy l
+l3 = copy l
+l4 = copy l
+l5 = copy l
+l6 = copy l
+
+k1 = copy k
+k2 = copy k
+k3 = copy k
+k4 = copy k
+k5 = copy k
+k6 = copy k
+
+# Check that the number of ions we add is correct
+addIons l Cl- 0
+
+set l1.2.NZ charge -0.3853
+addIons l1 Cl- 0
+
+set l2.2.NZ charge -0.3855
+addIons l2 Cl- 0
+
+addIonsRand l3 Cl- 0
+
+set l4.2.NZ charge -0.3853
+addIonsRand l4 Cl- 0
+
+set l5.2.NZ charge -0.3855
+addIonsRand l5 Cl- 0
+
+# Now do a negatively charged species.
+
+addIons k Na+ 0
+
+set k1.2.CG charge 0.7995
+addIons k1 Na+ 0
+
+set k2.2.CG charge 0.7993
+addIons k2 Na+ 0
+
+addIonsRand k3 Na+ 0
+
+set k4.2.CG charge 0.7995
+addIonsRand k4 Na+ 0
+
+set k5.2.CG charge 0.7993
+addIonsRand k5 Na+ 0
+
+saveAmberParm l reg_lys_addions.parm7 reg_lys_addions.rst7
+saveAmberParm l1 pos_lys_addions.parm7 pos_lys_addions.rst7
+saveAmberParm l2 neg_lys_addions.parm7 neg_lys_addions.rst7
+saveAmberParm l3 reg_lys_addionsrand.parm7 reg_lys_addionsrand.rst7
+saveAmberParm l4 pos_lys_addionsrand.parm7 pos_lys_addionsrand.rst7
+saveAmberParm l5 neg_lys_addionsrand.parm7 neg_lys_addionsrand.rst7
+
+saveAmberParm k reg_asp_addions.parm7 reg_asp_addions.rst7
+saveAmberParm k1 pos_asp_addions.parm7 pos_asp_addions.rst7
+saveAmberParm k2 neg_asp_addions.parm7 neg_asp_addions.rst7
+saveAmberParm k3 reg_asp_addionsrand.parm7 reg_asp_addionsrand.rst7
+saveAmberParm k4 pos_asp_addionsrand.parm7 pos_asp_addionsrand.rst7
+saveAmberParm k5 neg_asp_addionsrand.parm7 neg_asp_addionsrand.rst7
+
+quit
+EOF
+
+echo ""
+echo "         Checking that addIons neutralizes as well as possible"
+echo ""
+
+$tleap -f leap.in > leap2.log
+
+$DACDIF neg_lys_addions.parm7.save neg_lys_addions.parm7
+
+cat > check.py << EOF
+try:
+    from chemistry.amber.readparm import AmberParm
+    from ParmedTools import netCharge
+except ImportError:
+    import sys
+    import os
+    sys.path.append(os.path.join("$AMBERHOME", "AmberTools", "src", "parmed"))
+    from chemistry.amber.readparm import AmberParm
+    from ParmedTools.ParmedActions import netCharge
+
+import glob
+
+for parm in glob.glob('???_???_addions*.parm7'):
+    print('Checking addIons on prmtop %s' % parm)
+    chg = netCharge(AmberParm(parm)).execute()
+    if abs(chg) <= 0.00011:
+        print('PASSED')
+    else:
+        print('  net charge is %s' % chg)
+        print('Possible FAILURE')
+    print('='*62)
+EOF
+
+test -z $python || $python check.py
+
+/bin/rm -f ???_lys_addions*.*7 ???_asp_addions*.*7 leap.in leap2.log check.py

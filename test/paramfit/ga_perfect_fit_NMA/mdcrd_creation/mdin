@@ -1,0 +1,9 @@
+Water Sim
+ &cntrl
+  imin = 0, ntb = 0,
+  igb = 0, ntpr = 1, ntwx = 1,
+  ntt = 3, gamma_ln = 1.0,
+  tempi = 10.0, temp0 = 300.0
+  nstlim = 20001, dt = 0.0005,
+  cut = 999
+ /

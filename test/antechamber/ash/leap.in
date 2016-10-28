@@ -1,0 +1,6 @@
+verbosity 1
+source leaprc.gaff
+mods = loadamberparams frcmod
+loadamberprep ash.prepin
+saveamberparm ACE prmtop prmcrd
+quit

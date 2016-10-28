@@ -1,0 +1,60 @@
+#!/bin/sh
+
+. ../program_error.sh
+
+# Pointing at custom $AMBERHOME dir
+AMBERHOME=../../
+DACDIF=../dacdif
+tleap=./tleap
+leaprc=$AMBERHOME/dat/leap/cmd/oldff/leaprc.ff10
+ion_params=$AMBERHOME/dat/leap/parm/frcmod.ionsjc_tip3p
+dry_prefix=trx
+wet_prefix=trx.solv
+
+cat > leap.in << EOF
+# Source the force field
+source $leaprc
+loadamberparams $ion_params
+
+# Change the default PB radii
+set default pbradii mbondi2
+
+# Load the PDB
+prot = loadpdb trx.pdb
+
+# Save a non-solvated topology
+saveamberparm prot $dry_prefix.parm7 $dry_prefix.rst7
+
+# Solvate, add ions, and save a new topology file
+solvateoct prot TIP3PBOX 10.0
+
+addions prot NA 0
+addions prot CL 0
+
+saveamberparm prot $wet_prefix.parm7 $wet_prefix.rst7
+
+# quit
+quit
+EOF
+
+echo ""
+echo "         Creating a new-style (Amber 7) topology file "
+echo ""
+
+$tleap -f leap.in > leap2.log
+
+$DACDIF $dry_prefix.parm7.save $dry_prefix.parm7
+$DACDIF $wet_prefix.parm7.save $wet_prefix.parm7
+
+$tleap -f - >/dev/null << EOF
+source leaprc.gaff
+loadOFF gaff_wildcrd.off
+system = loadPDB gaff_wildcrd.pdb
+saveAmberParm system gaff_wildcrd.parm7 gafF_wildcrd.rst7
+quit
+EOF
+
+$DACDIF gaff_wildcrd.parm7.save gaff_wildcrd.parm7
+
+/bin/rm -f leap.in leap.log leap2.log $dry_prefix.rst7 $wet_prefix.rst7
+

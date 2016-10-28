@@ -21,8 +21,8 @@ size_t build_path(char *path, const char *subdir, const char *fname,
 	char *quote = NULL;
     size_t c = 1;
     path[0] = '\0';
-	if (for_system && strchr(amberhome, ' ') != NULL) {
-		if (strchr(amberhome, '"') == NULL)
+	if (for_system && index(amberhome, ' ') != NULL) {
+		if (index(amberhome, '"') == NULL)
 			quote = "\"";
 		else
 			quote = "'";
@@ -1803,3 +1803,60 @@ void adjust_sequence_order(int atomnum, ATOM atom[], int bondnum, BOND bond[])
 	}
 }
 
+void read_blba_parm (char *parmfile, BLF_PARM blf_parm[], int* nblf_parm, BAF_PARM baf_parm[]) {
+FILE *fp;
+char type[10];
+char elem[10];
+char elem1[10];
+char elem2[10];
+char line[MAXCHAR];
+int  i;
+int  id;
+int  id1;
+int  id2;
+int  nblf = 0;
+double f1, f2;
+
+	if ((fp = fopen(parmfile, "r")) == NULL) {
+		fprintf(stdout, "Cannot open the blba parm file %s to read, exit\n", parmfile);
+		return;
+	}
+	for(i=0;i<120;i++) {
+		baf_parm[i].anglec=0;		
+		baf_parm[i].anglez=0;		
+		baf_parm[i].id=0;		
+		strcpy(baf_parm[i].elem, "");
+	}
+	for (;;) {
+		if (fgets(line, LINELEN_MAX, fp) == NULL)
+			break;
+		if (strncmp(line, "PARM", 4) == 0) {
+			sscanf(&line[4], "%s", type); 
+			if(strcmp(type, "PC") == 0) 
+				sscanf(&line[4], "%s%lf", type, &blf_exp_const);
+			if(strcmp(type, "BL") == 0) {
+				sscanf(&line[4], "%s%s%d%s%d%lf%lf", type, elem1, &id1, elem2, &id2, &f1, &f2);
+				strcpy(blf_parm[nblf].elem1, elem1);
+				strcpy(blf_parm[nblf].elem2, elem2);
+				blf_parm[nblf].id1 = id1;
+				blf_parm[nblf].id2 = id2;
+				blf_parm[nblf].refbondlength = f1;
+				blf_parm[nblf].bfkai = f2;
+				nblf ++;
+				if(nblf >= MAXBLFPARM) {
+                                	fprintf(stderr, "Too many parameters, increase MAXBLFPARM and recompile parmchk2!\n");
+					exit(1);
+				}
+			}
+			if(strcmp(type, "BA") == 0) {
+				sscanf(&line[4], "%s%s%d%lf%lf", type, elem, &id, &f1, &f2);
+				strcpy(baf_parm[id].elem, elem);
+				baf_parm[id].id = id;
+				baf_parm[id].anglec = f1;
+				baf_parm[id].anglez = f2;
+			}
+		}
+	}
+	*nblf_parm = nblf;
+fclose(fp);
+}

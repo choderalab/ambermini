@@ -309,7 +309,7 @@ Oh-Cg-Cg-Cj   1   -0.11          0.0            -3          SCEE=1.0 SCNB=1.0 Li
 Os-Cj-Cj-Cg   1  -13.00          0.0             2          SCEE=1.0 SCNB=1.0 copy of Os-Ck-Ck-Cg
 Os-Ck-Ck-Cg   1  -13.00          0.0             2          SCEE=1.0 SCNB=1.0 Lipids, from 1-propenylmethylether
 Ck-Cj-Cj-Ha   1  -15.00          0.0             2          SCEE=1.0 SCNB=1.0 copy of Cj-Ck-Ck-Ha
-Cj-Ck-Ck-Ha   1  -15.00          0.0             2	    SCEE=1.0 SCNB=1.0  
+Cj-Ck-Ck-Ha   1  -15.00          0.0             2          SCEE=1.0 SCNB=1.0  
 Cg-Os-Cj-Ha   1    0.08          0.0            -3          SCEE=1.0 SCNB=1.0 copy of Cg-Os-Ck-Ha, coupled to Cg-Os-Cj-Cj
               1    0.22          0.0            -2          SCEE=1.0 SCNB=1.0
               1    0.40          0.0             1          SCEE=1.0 SCNB=1.0
@@ -329,11 +329,11 @@ Cg-Cg-Os-Ck   1   -0.01          0.0            -3          SCEE=1.0 SCNB=1.0 Li
 Cg-Os-Cj-Cj   1   -0.87          0.0            -3          SCEE=1.0 SCNB=1.0 copy of Cg-Os-Ck-Ck
               1   -3.99          0.0            -2          SCEE=1.0 SCNB=1.0
               1   -0.25          0.0             1          SCEE=1.0 SCNB=1.0
-Cg-Os-Ck-Ck   1   -0.87          0.0            -3	    SCEE=1.0 SCNB=1.0  
+Cg-Os-Ck-Ck   1   -0.87          0.0            -3          SCEE=1.0 SCNB=1.0  
               1   -3.99          0.0            -2          SCEE=1.0 SCNB=1.0
               1   -0.25          0.0             1          SCEE=1.0 SCNB=1.0
-Cj-Ck-Ck-Cj   1   -2.00          0.0             2	    SCEE=1.0 SCNB=1.0  
-Ck-Cj-Cj-Ck   1   -2.00          0.0             2	    SCEE=1.0 SCNB=1.0  
+Cj-Ck-Ck-Cj   1   -2.00          0.0             2          SCEE=1.0 SCNB=1.0  
+Ck-Cj-Cj-Ck   1   -2.00          0.0             2          SCEE=1.0 SCNB=1.0  
 Ck-Cg-Ck-Ck   1   -0.04          0.0            -3          SCEE=1.0 SCNB=1.0 Lipids, from 1,4-Pentadiene
               1   -0.68          0.0            -2          SCEE=1.0 SCNB=1.0
               1   -0.21          0.0             1          SCEE=1.0 SCNB=1.0
@@ -775,12 +775,12 @@ Notes:
 2.  It may be used in conjunction with ff99 and ff99SB.  
     Known conflicts: 
 
-	The atom type Cy conflicts.  
-		-- 99, 99SB:  nitrile carbon 
-		-- Glycam_06:  used in sialic acid 
+        The atom type Cy conflicts.  
+                -- 99, 99SB:  nitrile carbon 
+                -- Glycam_06:  used in sialic acid 
 
-	The angle Os-P-Os has a different equilibrium value.
-		-- The Glycam value is recommended.
+        The angle Os-P-Os has a different equilibrium value.
+                -- The Glycam value is recommended.
 
     See leaprc.GLYCAM06-99SB for usage details
 

@@ -52,20 +52,19 @@ _REAL_ t,dt,temp0,tautp,pres0,comp,taup,temp,tempi, & !9
       gbalpha,gbbeta,gbgamma,cut_inner,clambda,saltcon,  & !38
       solvph,rgbmax,fsmax,restraint_wt, &  !42
       skmin,skmax,vfac,gbneckscale,v11,v12,v22,kevb,evbt,Arad, & !52
-      gbalphaH,gbbetaH,gbgammaH, & !55 igb 8 pars
+      gbalphaH,gbbetaH,gbgammaH, & !55
       gbalphaC,gbbetaC,gbgammaC, & !58
       gbalphaN,gbbetaN,gbgammaN, & !61
       gbalphaOS,gbbetaOS,gbgammaOS, & !64 
       gbalphaP,gbbetaP,gbgammaP, &    !67
-      Sh,Sc,Sn,So,Ss,Sp, &  ! 73 end igb 8 pars
-      gamma_ten, & !74
-      gb_alpha_hnu, gb_beta_hnu, gb_gamma_hnu, & !77 ! GBneck2nu pars
+      Sh,Sc,Sn,So,Ss,Sp, gamma_ten, & !74
+      gb_alpha_hnu, gb_beta_hnu, gb_gamma_hnu, & !77
       gb_alpha_cnu, gb_beta_cnu, gb_gamma_cnu, & !80
       gb_alpha_nnu, gb_beta_nnu, gb_gamma_nnu, & !83
       gb_alpha_osnu, gb_beta_osnu, gb_gamma_osnu, & !86
       gb_alpha_pnu, gb_beta_pnu, gb_gamma_pnu, &    !89
       screen_hnu, screen_cnu, screen_nnu, screen_onu, & !93
-      screen_pnu    !94 ! end GBneck2nu pars
+      screen_pnu, fswitch, sinrtau  !96
 
 common/mdr/t,dt,temp0,tautp,pres0,comp,taup,temp,tempi, &             !9
       tol,taur,dx0,drms,vlimit,rbtarg,tmass,tmassinv, &               !25
@@ -73,22 +72,21 @@ common/mdr/t,dt,temp0,tautp,pres0,comp,taup,temp,tempi, &             !9
       gbalpha,gbbeta,gbgamma,cut_inner,clambda,saltcon, &             !38
       solvph,rgbmax,fsmax,restraint_wt,skmin,skmax,vfac,gbneckscale, &!46
       v11,v12,v22,kevb,evbt,Arad, & !52
-      gbalphaH,gbbetaH,gbgammaH,   & !55    !igb 8 pars
+      gbalphaH,gbbetaH,gbgammaH,   & !55
       gbalphaC,gbbetaC,gbgammaC, &   !58
       gbalphaN,gbbetaN,gbgammaN, &   !61
       gbalphaOS,gbbetaOS,gbgammaOS, & !64
       gbalphaP,gbbetaP,gbgammaP, & !67
-      Sh,Sc,Sn,So,Ss,Sp, & !73 end igb 8 pars
-      gamma_ten, & !74
-      gb_alpha_hnu, gb_beta_hnu, gb_gamma_hnu, & !77 ! GBneck2nu pars
+      Sh,Sc,Sn,So,Ss,Sp, gamma_ten, & !74
+      gb_alpha_hnu, gb_beta_hnu, gb_gamma_hnu, & !77
       gb_alpha_cnu, gb_beta_cnu, gb_gamma_cnu, & !80
       gb_alpha_nnu, gb_beta_nnu, gb_gamma_nnu, & !83
       gb_alpha_osnu, gb_beta_osnu, gb_gamma_osnu, & !86
       gb_alpha_pnu, gb_beta_pnu, gb_gamma_pnu, &    !89
       screen_hnu, screen_cnu, screen_nnu, screen_onu, & !93
-      screen_pnu    !94 ! end GBneck2nu pars
+      screen_pnu, fswitch, sinrtau !96
 
-parameter (BC_MDR=94) ! Number of elements in the common block;
+parameter (BC_MDR=96) ! Number of elements in the common block;
                       ! Be sure to update if you change things
 
 ! ... strings:

@@ -1,0 +1,8 @@
+source leaprc.GLYCAM_06EPb
+
+m = sequence { OME 0GA }
+solvatebox m TIP5PBOX 8.0 iso
+
+saveamberparm m Solvate.parm7 Solvate.rst7
+
+quit

@@ -62,11 +62,11 @@ sys2.a:            $(OBJ)
 
 install: new2oldparm$(SFX)
 		mv new2oldparm$(SFX) $(BINDIR)
-		$(RM) -f
+		/bin/rm -f 
 		
 clean:
-	$(RM) -f malloc_test new2oldparm$(SFX) *.o  *.a
+		rm -f malloc_test new2oldparm$(SFX) *.o  *.a
 
 uninstall:
-	$(RM) $(BINDIR)/new2oldparm$(SFX)
+	-rm -f $(BINDIR)/new2oldparm$(SFX)
 

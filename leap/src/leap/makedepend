@@ -1,0 +1,44 @@
+#!/usr/bin/env python
+
+import collections
+import glob
+import os
+import re
+
+if not hasattr(collections, 'OrderedDict'):
+    depend = dict()
+else:
+    depend = collections.OrderedDict()
+incre = re.compile(r'#[\s]*include[\s]*"(.*)"')
+
+for fname in glob.glob('*.c'):
+    basename = os.path.splitext(fname)[0]
+    obj = basename + '.o'
+    depend[obj] = [fname]
+    f = open(fname, 'r')
+    try:
+        for line in f:
+            rematch = incre.match(line)
+            if rematch:
+                inc = rematch.groups()[0]
+                if os.path.exists(inc):
+                    depend[obj].append(inc)
+    finally:
+        f.close()
+
+for fname in glob.glob('*.h'):
+    depend[fname] = []
+    f = open(fname, 'r')
+    try:
+        for line in f:
+            rematch = incre.match(line)
+            if rematch:
+                inc = rematch.groups()[0]
+                if os.path.exists(inc):
+                    depend[obj].append(inc)
+    finally:
+        f.close()
+
+for f in depend:
+    if not depend[f]: continue
+    print('%s: %s' % (f, ' '.join(depend[f])))

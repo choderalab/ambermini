@@ -1,0 +1,216 @@
+source leaprc.GLYCAM_06j-1
+
+#ASB
+  m0 = sequence { ROH ASB }
+    set m0 tail m0.2.O9
+    m0 = sequence { m0 0Tv }
+    set m0 tail m0.2.O8
+    m0 = sequence { m0 0Tv }
+    set m0 tail m0.2.O7
+    m0 = sequence { m0 0Tv }
+    set m0 tail m0.2.O4
+    m0 = sequence { m0 0Tv }
+
+#BsB
+  m1 = sequence { ROH BsB }
+    set m1 tail m1.2.O9
+    m1 = sequence { m1 0Tv }
+    set m1 tail m1.2.O8
+    m1 = sequence { m1 0Tv }
+    set m1 tail m1.2.O7
+    m1 = sequence { m1 0Tv }
+
+#CgL
+  m2 = sequence { ROH CgL }
+    set m2 tail m2.2.O9
+    m2 = sequence { m2 0Tv }
+    set m2 tail m2.2.O8
+    m2 = sequence { m2 0Tv }
+    set m2 tail m2.2.O4
+    m2 = sequence { m2 0Tv }
+
+#DSA
+  m3 = sequence { ROH DSA }
+    set m3 tail m3.2.O9
+    m3 = sequence { m3 0Tv }
+    set m3 tail m3.2.O7
+    m3 = sequence { m3 0Tv }
+    set m3 tail m3.2.O4
+    m3 = sequence { m3 0Tv }
+
+#ESB
+  m4 = sequence { ROH ESB }
+    set m4 tail m4.2.O8
+    m4 = sequence { m4 0Tv }
+    set m4 tail m4.2.O7
+    m4 = sequence { m4 0Tv }
+    set m4 tail m4.2.O4
+    m4 = sequence { m4 0Tv }
+
+#FgL
+  m5 = sequence { ROH FgL }
+    set m5 tail m5.2.O9
+    m5 = sequence { m5 0Tv }
+    set m5 tail m5.2.O8
+    m5 = sequence { m5 0Tv }
+
+#GsA
+  m6 = sequence { ROH GsA }
+    set m6 tail m6.2.O9
+    m6 = sequence { m6 0Tv }
+    set m6 tail m6.2.O7
+    m6 = sequence { m6 0Tv }
+
+#HSA
+  m7 = sequence { ROH HSA }
+    set m7 tail m7.2.O8
+    m7 = sequence { m7 0Tv }
+    set m7 tail m7.2.O7
+    m7 = sequence { m7 0Tv }
+
+#IGL
+  m8 = sequence { OME IGL }
+    set m8 tail m8.2.O9
+    m8 = sequence { m8 0Tv }
+    set m8 tail m8.2.O4
+    m8 = sequence { m8 0Tv }
+
+#JsB
+  m9 = sequence { OME JsB }
+    set m9 tail m9.2.O8
+    m9 = sequence { m9 0Tv }
+    set m9 tail m9.2.O4
+    m9 = sequence { m9 0Tv }
+
+#KSB
+  m10 = sequence { OME KSB }
+    set m10 tail m10.2.O7
+    m10 = sequence { m10 0Tv }
+    set m10 tail m10.2.O4
+    m10 = sequence { m10 0Tv }
+
+#PlA
+  m11 = sequence { OME PlA }
+    set m11 tail m11.2.O6
+    m11 = sequence { m11 0Tv }
+    set m11 tail m11.2.O4
+    m11 = sequence { m11 0Tv }
+    set m11 tail m11.2.O3
+    m11 = sequence { m11 0Tv }
+    set m11 tail m11.2.O2
+    m11 = sequence { m11 0Tv }
+
+#QTA
+  m12 = sequence { OME QTA }
+    set m12 tail m12.2.O6
+    m12 = sequence { m12 0Tv }
+    set m12 tail m12.2.O4
+    m12 = sequence { m12 0Tv }
+    set m12 tail m12.2.O3
+    m12 = sequence { m12 0Tv }
+
+#RgA
+  m13 = sequence { OME RgA }
+    set m13 tail m13.2.O6
+    m13 = sequence { m13 0Tv }
+    set m13 tail m13.2.O4
+    m13 = sequence { m13 0Tv }
+    set m13 tail m13.2.O2
+    m13 = sequence { m13 0Tv }
+
+#SkB
+  m14 = sequence { OME SkB }
+    set m14 tail m14.2.O6
+    m14 = sequence { m14 0Tv }
+    set m14 tail m14.2.O3
+    m14 = sequence { m14 0Tv }
+    set m14 tail m14.2.O2
+    m14 = sequence { m14 0Tv }
+
+#TrA
+  m15 = sequence { OME TrA }
+    set m15 tail m15.2.O4
+    m15 = sequence { m15 0Tv }
+    set m15 tail m15.2.O3
+    m15 = sequence { m15 0Tv }
+    set m15 tail m15.2.O2
+    m15 = sequence { m15 0Tv }
+
+#UWA
+  m16 = sequence { OME UWA }
+    set m16 tail m16.2.O6
+    m16 = sequence { m16 0Tv }
+    set m16 tail m16.2.O4
+    m16 = sequence { m16 0Tv }
+
+#VMB
+  m17 = sequence { OME VMB }
+    set m17 tail m17.2.O6
+    m17 = sequence { m17 0Tv }
+    set m17 tail m17.2.O3
+    m17 = sequence { m17 0Tv }
+
+#WhB
+  m18 = sequence { OME WhB }
+    set m18 tail m18.2.O4
+    m18 = sequence { m18 0Tv }
+    set m18 tail m18.2.O3
+    m18 = sequence { m18 0Tv }
+
+#XlA
+  m19 = sequence { OME XlA }
+    set m19 tail m19.2.O6
+    m19 = sequence { m19 0Tv }
+    set m19 tail m19.2.O2
+    m19 = sequence { m19 0Tv }
+
+#YAA
+  m20 = sequence { OME YAA }
+    set m20 tail m20.2.O4
+    m20 = sequence { m20 0Tv }
+    set m20 tail m20.2.O2
+    m20 = sequence { m20 0Tv }
+
+#ZZB
+  m21 = sequence { OME ZZB }
+    set m21 tail m21.2.O3
+    m21 = sequence { m21 0Tv }
+    set m21 tail m21.2.O2
+    m21 = sequence { m21 0Tv }
+
+##
+## Built 22 molecules
+##	Now, translate them away from each other
+##
+  translate m1  {  0.0  30.0   0.0 }
+  translate m2  {  0.0  60.0   0.0 }
+    translate m3  { 30.0   0.0   0.0 }
+    translate m4  { 30.0  30.0   0.0 }
+    translate m5  { 30.0  60.0   0.0 }
+      translate m6  { 60.0   0.0   0.0 }
+      translate m7  { 60.0  30.0   0.0 }
+      translate m8  { 60.0  60.0   0.0 }
+  translate m9  {  0.0   0.0  30.0 }
+  translate m10 {  0.0  30.0  30.0 }
+  translate m11 {  0.0  60.0  30.0 }
+    translate m12 { 30.0   0.0  30.0 }
+    translate m13 { 30.0  30.0  30.0 }
+    translate m14 {  30.0  60.0  30.0 }
+      translate m15 { 60.0   0.0  30.0 }
+      translate m16 { 60.0  30.0  30.0 }
+      translate m17 { 60.0  60.0  30.0 }
+  translate m18 {  0.0   0.0  60.0 }
+  translate m19 {  0.0  30.0  60.0 }
+  translate m20 {  0.0  60.0  60.0 }
+    translate m21 { 30.0   0.0  60.0 }
+
+xy1 = combine { m0 m1 m2 m3 m4 m5 m6 m7 m8 }
+xy2 = combine { m9 m10 m11 m12 m13 m14 m15 m16 m17 }
+xy3 = combine { m18 m19 m20 m21 }
+
+Branches = combine { xy1 xy2 xy3 }
+
+saveamberparm Branches Branches.parm7 Branches.rst7
+
+quit
+

@@ -144,7 +144,7 @@ int rmol2(char *filename, int *atomnum, ATOM atom[], int *bondnum,
 			numatom++;
 			if (numatom >= (*cinfo).maxatom && overflow_flag == 0) {
 				printf
-					("\nThe atom number exceeds the MAXATOM, reallocate memory");
+					("\nThe atom number exceeds the MAXATOM, reallocate memory\n");
 				overflow_flag = 1;
 			}
 		}
@@ -270,12 +270,12 @@ void wmol2(char *filename, int atomnum, ATOM atom[], int bondnum,
 	fprintf(fpout, "@<TRIPOS>ATOM\n");
 	for (i = 0; i < atomnum; i++) 
 		fprintf(fpout,
-			"%7d %-8s%10.4lf%10.4lf%10.4lf %-6s%5d %-8s%9.6lf\n",
+			"%7d %-8s %10.4lf %10.4lf %10.4lf %-6s %5d %-8s %9.6lf\n",
 			i + 1, atom[i].name, atom[i].x, atom[i].y, atom[i].z,
 			atom[i].ambername, atom[i].resno, atom[i].aa, atom[i].charge);
 	fprintf(fpout, "@<TRIPOS>BOND\n");
 	for (i = 0; i < bondnum; i++) {
-		fprintf(fpout, "%6d%5d%5d", i + 1, bond[i].bondi + 1, bond[i].bondj + 1);
+		fprintf(fpout, "%6d %5d %5d", i + 1, bond[i].bondi + 1, bond[i].bondj + 1);
 		bondi = bond[i].bondi;
 		bondj = bond[i].bondj;
 		if (bond[i].type == 1) {

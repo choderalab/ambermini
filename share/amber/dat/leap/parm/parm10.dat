@@ -705,13 +705,18 @@ X -C4-CT-X    6    0.00          0.0             3.         JCC,7,(1986),230
 X -C4-N*-X    4    7.40        180.0             2.         JCC,7,(1986),230
 CT-OS-CT-CI   1    0.383         0.0            -3.
 CT-OS-CT-CI   1    0.100       180.0             2.
+H1-CI-CT-OS   1    0.00          0.0            -3.
 H1-CI-CT-OS   1    0.250         0.0             1.
+H1-CI-CT-OH   1    0.000         0.0            -3.
 H1-CI-CT-OH   1    0.250         0.0             1.
+H1-CT-CI-OS   1    0.00          0.0            -3.
 H1-CT-CI-OS   1    0.250         0.0             1.
+H1-CT-CI-OH   1    0.00          0.0            -3.
 H1-CT-CI-OH   1    0.250         0.0             1.
 CI-CT-CT-CT   1    0.180         0.0            -3.
 CI-CT-CT-CT   1    0.250       180.0            -2.
 CI-CT-CT-CT   1    0.200       180.0             1.
+OP-P -OS-CA   1    0.0         180.0            -3.         phosphotyrosine
 OP-P -OS-CA   1    0.0         180.0             1.         phosphotyrosine
 CC-NA-P -OP   1    0.24          0.0             3.         phosphohistidine
 CR-NA-P -OP   1    0.00          0.0             3.         phosphohistidine

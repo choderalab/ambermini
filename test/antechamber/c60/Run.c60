@@ -1,0 +1,29 @@
+#!/bin/csh -f
+
+../../../bin/antechamber -i buckyball.pdb -fi pdb -o buckyball.mol2 -fo mol2 \
+   >& antechamber.out || goto error
+
+../../../bin/antechamber -i buckyball.pdb -fi pdb -o buckyball.gzmat -fo gzmat \
+   >& antechamber.out || goto error
+
+../../../bin/antechamber -i buckyball.pdb -fi pdb -o buckyball.jcrt -fo jcrt \
+   >& antechamber.out || goto error
+
+../../../bin/antechamber -i buckyball.gzmat -fi gzmat -o buckyball.prepi \
+   -fo prepi >& antechamber.out || goto error
+
+../../../bin/antechamber -i buckyball.jcrt -fi jcrt -o buckyball.ac -fo ac \
+   >& antechamber.out || goto error
+
+../../dacdif buckyball.mol2.save buckyball.mol2
+../../dacdif buckyball.gzmat.save buckyball.gzmat
+../../dacdif buckyball.jcrt.save buckyball.jcrt
+../../dacdif -s buckyball.prepi.save buckyball.prepi
+../../dacdif buckyball.ac.save buckyball.ac
+
+/bin/rm -f ANTE* ATOMTYPE.INF BCCTYPE.INF FOR* NEWPDB.PDB PREP.INF
+exit(0)
+
+error:
+echo "  ${0}:  Program error"
+exit(1)

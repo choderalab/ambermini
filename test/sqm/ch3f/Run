@@ -1,0 +1,39 @@
+#!/bin/csh -f
+
+set SQM = ../../../bin/sqm
+set SPDIFF = ../../dacdif
+set GODIFF = "../../dacdif -a 0.001"
+set SPTESTS = (ch3f.pm3.sp ch3f.pm6.sp)
+set GOTESTS = (ch3f.pm3.go ch3f.pm6.go)
+
+# single point tests
+foreach i ($SPTESTS)
+    set input = $i.in
+    set output = $i.out
+    $SQM -O -i $input -o $output || goto error
+    $SPDIFF $output.save $output
+end
+
+# geometry optimization tests
+# do not check the electronic energy and
+# core repulsion energy, they are too sensitive!
+# Also, do not check the final geometry since small numerical
+# differences on different platforms can result in different
+# Cartesian coordinates although the internal coordinates are OK
+foreach i ($GOTESTS)
+    set input = $i.in
+    set output = $i.out
+    $SQM -O -i $input -o $output || goto error
+    grep -v 'Electronic energy' $output > tmp
+    grep -v 'Core-core repulsion' tmp > tmp2
+    grep -v 'DIPOLE' tmp2 > tmp
+    sed -e "/Final Structure/,/Calculation Completed/d" tmp > $output
+    rm tmp tmp2
+    $GODIFF $output.save $output
+end
+
+exit(0)
+
+error:
+echo "  ${0}:  Program error"
+exit(1)

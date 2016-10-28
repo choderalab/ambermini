@@ -1,0 +1,9 @@
+This test uses a 5ps md simulation of NMA in vacuum where the the coordinates
+are recorded every 250fs. Thus the mdcrd file contains 20 structures.
+
+The job should run and create 5 gaussian input files using the settings shown
+in the Job Control file.
+
+Check that the files written match the saved files.
+
+

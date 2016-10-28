@@ -8,19 +8,24 @@ endif
 
 PROGS=antechamber$(WRAPPER_SFX) acdoctor$(SFX) am1bcc$(SFX) antechamber_pvt$(SFX) \
 		atomtype$(SFX) bondtype$(SFX) charmmgen$(SFX) database$(SFX) espgen$(SFX) \
-		parmcal$(SFX) parmchk$(WRAPPER_SFX) parmchk2$(WRAPPER_SFX) prepgen$(SFX) \
-		residuegen$(SFX) sqm$(SFX) teLeap$(SFX) tleap$(WRAPPER_SFX) translate$(SFX) \
+		match$(SFX) match_atomname$(SFX) parmcal$(SFX) parmchk$(WRAPPER_SFX) \
+		paramfit$(WRAPPER_SFX) parmchk2$(WRAPPER_SFX) prepgen$(SFX) residuegen$(SFX) respgen$(SFX) sqm$(SFX) \
+		teLeap$(SFX) tleap$(WRAPPER_SFX) translate$(SFX)  \
+		paramfit_pvt$(SFX) \
 		parmchk_pvt$(SFX) parmchk2_pvt$(SFX)
 
 all: prep libs
 	$(MAKE) antechamber
 	$(MAKE) leap
+	$(MAKE) paramfit
 	$(MAKE) sqm
 
 install: all
 	$(MKDIR) -p $(PREFIX)/bin $(PREFIX)/share
 	cd bin && mv $(PROGS) $(PREFIX)/bin
 	cp -r share/amber/dat $(PREFIX)
+	cp -r test $(PREFIX)
+	cp config.h $(PREFIX)/test
 
 prep:
 	$(MKDIR) -p bin
@@ -30,6 +35,9 @@ antechamber::
 
 leap::
 	cd leap && $(MAKE) install
+
+paramfit::
+	cd paramfit && $(MAKE) install
 
 sqm::
 	cd sqm && $(MAKE) install

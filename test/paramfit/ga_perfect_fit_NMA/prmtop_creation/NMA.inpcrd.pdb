@@ -1,0 +1,15 @@
+REMARK  NMA                                                         
+ATOM      1 1HH3 ACE     1       1.903   0.539   1.460
+ATOM      2  CH3 ACE     1       1.129   1.061   0.946
+ATOM      3 2HH3 ACE     1       1.545   1.793   0.224
+ATOM      4 3HH3 ACE     1       0.436   1.574   1.617
+ATOM      5  C   ACE     1       0.330   0.027   0.210
+ATOM      6  O   ACE     1      -0.884  -0.095   0.425
+ATOM      7  N   NME     2       1.052  -0.834  -0.534
+ATOM      8  H   NME     2       1.999  -0.650  -0.758
+ATOM      9  CH3 NME     2       0.344  -1.872  -1.331
+ATOM     10 1HH3 NME     2      -0.229  -1.348  -2.117
+ATOM     11 2HH3 NME     2       1.064  -2.583  -1.791
+ATOM     12 3HH3 NME     2      -0.343  -2.349  -0.716
+TER   
+END   

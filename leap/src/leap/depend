@@ -1,0 +1,100 @@
+amber.o: amber.c basics.h vector.h classes.h leap.h tools.h amber.h defaults.h sort.h zMatrix.h cmap.h
+assoc.o: assoc.c basics.h classes.h
+atom.o: atom.c basics.h defaults.h classes.h elements.h
+avl.o: avl.c avl.h
+bag.o: bag.c basics.h bag.h
+basics.o: basics.c basics.h defaults.h zMatrix.h cmap.h varArray.h
+block.o: block.c basics.h block.h
+build.o: build.c basics.h vector.h matrix.h zMatrix.h classes.h chirality.h minimizer.h parmLib.h model.h build.h sort.h graphUtil.h
+byteArray.o: byteArray.c basics.h classes.h
+chirality.o: chirality.c basics.h classes.h chirality.h
+collection.o: collection.c basics.h classes.h
+commands.o: commands.c basics.h vector.h matrix.h classes.h dictionary.h database.h library.h parmLib.h pdbFile.h help.h parser.h tools.h amber.h commands.h defaults.h leap.h octree.h tripos.h build.h zMatrix.h unitio.h mol2File.h mol3File.h minimizer.h
+container.o: container.c basics.h vector.h classes.h container.h
+database.o: database.c basics.h dictionary.h database.h stringExtra.h
+dictionary.o: dictionary.c basics.h hash.h dictionary.h
+displayer.o: displayer.c basics.h displayer.h
+elements.o: elements.c basics.h elements.h
+fortran.o: fortran.c basics.h stringExtra.h
+function.o: function.c basics.h varArray.h function.h
+getline.o: getline.c getline.h
+graphUtil.o: graphUtil.c basics.h classes.h graphUtil.h sort.h
+hash.o: hash.c basics.h hash.h
+help.o: help.c basics.h dictionary.h help.h
+hybrid.o: hybrid.c basics.h
+internal.o: internal.c basics.h classes.h ring.h
+library.o: library.c basics.h classes.h dictionary.h database.h parmLib.h library.h
+list.o: list.c basics.h classes.h
+loop.o: loop.c basics.h classes.h
+mathop.o: mathop.c basics.h vector.h matrix.h classes.h
+matrix.o: matrix.c basics.h vector.h matrix.h
+mess.o: mess.c basics.h function.h mess.h
+minimizer.o: minimizer.c basics.h varArray.h nVector.h classes.h minimizer.h
+model.o: model.c basics.h classes.h chirality.h model.h sort.h atom.h zMatrix.h
+mol2_to_off.o: mol2_to_off.c basics.h classes.h library.h tripos.h
+mol2File.o: mol2File.c basics.h classes.h dictionary.h database.h pdb.h varArray.h avl.h sort.h matrix.h model.h minimizer.h leap.h defaults.h atom.h tripos.h parmLib.h unitio.h
+mol3File.o: mol3File.c basics.h classes.h dictionary.h database.h pdb.h varArray.h avl.h sort.h matrix.h model.h minimizer.h leap.h defaults.h atom.h tripos.h parmLib.h unitio.h mol2File.h
+molecule.o: molecule.c basics.h classes.h
+nVector.o: nVector.c basics.h nVector.h
+objekt.o: objekt.c basics.h classes.h
+octree.o: octree.c classes.h octree.h
+oDouble.o: oDouble.c basics.h classes.h
+oInteger.o: oInteger.c basics.h classes.h
+oString.o: oString.c basics.h classes.h
+parmLib.o: parmLib.c basics.h classes.h parmLib.h
+parmSet.o: parmSet.c basics.h classes.h dictionary.h database.h amber.h
+pdb_format.o: pdb_format.c pdb_int.h
+pdb_read.o: pdb_read.c basics.h pdb_int.h
+pdb_sprntf.o: pdb_sprntf.c
+pdb_sscanf.o: pdb_sscanf.c
+pdb_write.o: pdb_write.c pdb_int.h unit.h
+pdbFile.o: pdbFile.c basics.h classes.h dictionary.h database.h pdb.h varArray.h avl.h sort.h matrix.h model.h minimizer.h leap.h defaults.h build.h atom.h
+residue.o: residue.c basics.h classes.h build.h
+restraint.o: restraint.c basics.h classes.h restraint.h
+rgb2hls.o: rgb2hls.c
+ring.o: ring.c basics.h ring.h
+select.o: select.c basics.h classes.h minimizer.h select.h graphUtil.h build.h
+sort.o: sort.c basics.h
+stringExtra.o: stringExtra.c basics.h
+StrToPmap.o: StrToPmap.c ../Xpm/xpm.h
+sysdepend.o: sysdepend.c basics.h
+test_dataBase.o: test_dataBase.c basics.h database.h
+test_parmSet.o: test_parmSet.c basics.h classes.h database.h amber.h
+test_varArray.o: test_varArray.c basics.h varArray.h
+tLeap.o: tLeap.c basics.h classes.h dictionary.h parser.h block.h leap.h block.h getline.h
+tools.o: tools.c basics.h vector.h matrix.h classes.h dictionary.h database.h parser.h leap.h tools.h mathop.h sort.h
+tripos.o: tripos.c basics.h classes.h tripos.h parmLib.h
+unit.o: unit.c basics.h vector.h classes.h restraint.h bag.h dictionary.h database.h parmLib.h unitio.h defaults.h
+unitio.o: unitio.c basics.h vector.h classes.h restraint.h bag.h dictionary.h database.h parmLib.h avl.h defaults.h tools.h fortran.h mathop.h sort.h cmap.h
+utilConvertWaterBox.o: utilConvertWaterBox.c basics.h classes.h dictionary.h database.h library.h
+utilCrd2Off.o: utilCrd2Off.c basics.h vector.h varArray.h dictionary.h fortran.h database.h
+utilDescribeTopology.o: utilDescribeTopology.c basics.h vector.h varArray.h dictionary.h fortran.h
+utilExtractDocs.o: utilExtractDocs.c basics.h
+utilFixOff.o: utilFixOff.c
+utilLib2Pdb.o: utilLib2Pdb.c basics.h classes.h library.h pdbFile.h
+utilMakeHelp.o: utilMakeHelp.c basics.h
+utilWrapRes.o: utilWrapRes.c basics.h
+varArray.o: varArray.c basics.h varArray.h
+variables.o: variables.c basics.h classes.h dictionary.h leap.h
+vector.o: vector.c basics.h vector.h
+x3d.o: x3d.c basics.h vector.h threed.h varArray.h classes.h x3d.h
+xaAngleParmTable.o: xaAngleParmTable.c basics.h varArray.h classes.h xaTable.h ../Xraw/table.h ../Wc/WcCreate.h
+xaAtomParmTable.o: xaAtomParmTable.c basics.h varArray.h classes.h amber.h elements.h hybrid.h xaTable.h
+xaAtomTable.o: xaAtomTable.c basics.h varArray.h classes.h defaults.h xaTable.h xaAtomTable.h ../Wc/WcCreate.h
+xaBondParmTable.o: xaBondParmTable.c basics.h varArray.h classes.h xaTable.h ../Xraw/table.h
+xaCommand.o: xaCommand.c ../Xmu/Atoms.h ../Xmu/Misc.h ../Xraw/List.h ../Xraw/AsciiText.h ../Xraw/AsciiSrc.h ../Xraw/Label.h ../Xraw/Toggle.h basics.h classes.h dictionary.h leap.h block.h parser.h xaLeap.h xaTools.h xaCommand.h ../Wc/WcCreate.h
+xAction.o: xAction.c basics.h build.h vector.h matrix.h threed.h classes.h select.h varArray.h xTank.h xAction.h
+xaHBondParmTable.o: xaHBondParmTable.c basics.h varArray.h classes.h xaTable.h ../Xraw/table.h
+xaImproperParmTable.o: xaImproperParmTable.c basics.h varArray.h classes.h xaTable.h
+xaLeapc.o: xaLeapc.c ../Wc/WcCreate.h ../Xpm/xpm.h basics.h xaLeap.h classes.h xaTools.h xTank.h xaUnitEditor.h xaCommand.h xaTable.h parser.h block.h ../Xraw/Command.h ../Xraw/3d.h
+xaParmEditor.o: xaParmEditor.c basics.h classes.h varArray.h xaTools.h xaLeap.h xaCommand.h xaAtomParmTable.h xaBondParmTable.h xaAngleParmTable.h xaTorsionParmTable.h xaHBondParmTable.h ../Wc/WcCreate.h
+xaTable.o: xaTable.c ../Xraw/ScrolledTable.h ../Xraw/Scrollbar.h ../Xraw/Table2.h ../Wc/WcCreate.h ../Xraw/3d.h basics.h varArray.h xaTable.h xaTools.h xaLeap.h
+xaTools.o: xaTools.c basics.h dictionary.h xaLeap.h xaTools.h ../Wc/WcCreate.h xaLogo.xbm exclaim.xbm
+xaTorsionParmTable.o: xaTorsionParmTable.c basics.h varArray.h classes.h xaTable.h
+xaUnitEditor.o: xaUnitEditor.c ../Xraw/SmeBSB.h basics.h classes.h commands.h varArray.h minimizer.h xTank.h select.h build.h model.h graphUtil.h leap.h xaTools.h xaLeap.h xaCommand.h xaUnitEditor.h xaAtomTable.h ../Wc/WcCreate.h
+xaUtilMessageFilter.o: xaUtilMessageFilter.c basics.h ../Wc/WcCreate.h varArray.h function.h mess.h
+xBasics.o: xBasics.c basics.h
+xcursor.o: xcursor.c xaLeap.h xcursor.h
+XrawRegistr.o: XrawRegistr.c ../Wc/WcCreateP.h ../Xraw/ArrowP.h ../Xraw/AsciiSinkP.h ../Xraw/AsciiSrcP.h ../Xraw/AsciiTextP.h ../Xraw/BoxP.h ../Xraw/ClockP.h ../Xraw/CommandP.h ../Xraw/DialogP.h ../Xraw/FormP.h ../Xraw/FrameP.h ../Xraw/GripP.h ../Xraw/LabelP.h ../Xraw/ListP.h ../Xraw/LogoP.h ../Xraw/MailboxP.h ../Xraw/MenuButtoP.h ../Xraw/PanedP.h ../Xraw/RepeaterP.h ../Xraw/SeparatorP.h ../Xraw/ScrollbarP.h ../Xraw/ScrolledTableP.h ../Xraw/SimpleMenP.h ../Xraw/SimpleP.h ../Xraw/SmeBSBP.h ../Xraw/SmeLineP.h ../Xraw/SmeP.h ../Xraw/StripCharP.h ../Xraw/TableP.h ../Xraw/TextP.h ../Xraw/TextSinkP.h ../Xraw/TextSrcP.h ../Xraw/ToggleP.h ../Xraw/ViewportP.h XrawRegistr.h
+xTank.o: xTank.c basics.h vector.h threed.h classes.h varArray.h parser.h xAction.h xTank.h drawSource.xbm drawMask.xbm eraseSource.xbm eraseMask.xbm selectSource.xbm selectMask.xbm
+zMatrix.o: zMatrix.c basics.h vector.h matrix.h zMatrix.h dictionary.h container.h vector.h elements.h objekt.h collection.h dictionary.h parmSet.h list.h assoc.h vector.h container.h atom.h bag.h block.h loop.h unit.h minimizer.h byteArray.h classes.h minimizer.h loop.h basics.h vector.h varArray.h objekt.h assoc.h oString.h oInteger.h oDouble.h collection.h list.h byteArray.h parmSet.h container.h atom.h residue.h molecule.h unit.h internal.h loop.h parmLib.h varArray.h objekt.h displayer.h matrix.h stringExtra.h dictionary.h basics.h hash.h varArray.h basics.h varArray.h ring.h parmLib.h amber.h dictionary.h database.h vector.h basics.h varArray.h atom.h classes.h hash.h database.h parmLib.h basics.h pdb.h minimizer.h classes.h atom.h bag.h restraint.h dictionary.h parmLib.h basics.h threed.h hash.h basics.h hash.h basics.h hash.h basics.h hash.h basics.h XrawRegistr.h varArray.h xaLeap.h varArray.h hash.h basics.h varArray.h x3d.h xTankP.h elements.h varArray.h threed.h x3d.h vector.h

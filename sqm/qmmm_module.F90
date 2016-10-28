@@ -739,7 +739,7 @@ contains
     type(qmmm_vsolv_type) , intent(inout) :: qmmm_vsolv
     type(qm2_params_type), intent(inout) :: qm2_params
 
-    integer :: ier=0
+    integer :: ier = 0
 
     !If this is a parallel run the non master threads will only have
     !allocated this memory if LES is on since otherwise QM calc is
@@ -816,9 +816,14 @@ contains
        REQUIRE(ier == 0)
     end if
     if (qmmm_nml%idc==0) then
-       if (qm2_struct%n_peptide_links>0) then
-          deallocate ( qm2_struct%peptide_links, stat=ier )
-          REQUIRE(ier == 0)
+       if (qm2_struct%n_peptide_links > 0) then
+          ! should qm2_struct%n_peptide_links be set to 0 ? srb 4-2015
+          ! I'm not sure so test for association status.  srb 4-2015
+          if ( associated( qm2_struct%peptide_links ) ) then
+             deallocate ( qm2_struct%peptide_links, stat=ier )
+             REQUIRE(ier == 0)
+             nullify( qm2_struct%peptide_links )
+          end if
        end if
        if (.not. qmmm_nml%qmtheory%DFTB) then
           deallocate ( qm2_struct%eigen_vectors, stat=ier )
@@ -833,10 +838,12 @@ contains
        if (qmmm_scratch%lapack_dc_real_scr_aloc /= 0) then
           deallocate ( qmmm_scratch%lapack_dc_real_scr, stat=ier)
           REQUIRE(ier == 0)
+          qmmm_scratch%lapack_dc_real_scr_aloc = 0
        end if
        if (qmmm_scratch%lapack_dc_int_scr_aloc /= 0) then
           deallocate ( qmmm_scratch%lapack_dc_int_scr, stat=ier)
           REQUIRE(ier == 0)
+          qmmm_scratch%lapack_dc_int_scr_aloc = 0
        end if
        if (qmmm_nml%allow_pseudo_diag .and. qmmm_mpi%commqmmm_master) then
           deallocate(qmmm_scratch%pdiag_scr_norbs_norbs, &
@@ -870,8 +877,6 @@ contains
        deallocate ( qm2_struct%den_matrix, stat = ier )
        REQUIRE(ier == 0)
 
-
-
        if (qmmm_nml%density_predict == 1) then
           !We are using Niklasson et al density matrix prediction algorithm.
           deallocate ( qm2_struct%md_den_mat_guess1, stat = ier )
@@ -892,15 +897,12 @@ contains
           REQUIRE(ier == 0)
        end if
 
-       !+TJG 01/26/2010  Hm.  You should check association before deallocate()
-       ier = 0
-       IF ( ASSOCIATED( qm2_struct%diis_fock ) ) DEALLOCATE( qm2_struct%diis_fock , stat = ier )
+       if ( associated( qm2_struct%diis_fock ) ) deallocate( qm2_struct%diis_fock , stat = ier )
        REQUIRE(ier == 0)
-       IF ( ASSOCIATED( qm2_struct%diis_errmat ) ) DEALLOCATE( qm2_struct%diis_errmat , stat = ier )
+       if ( associated( qm2_struct%diis_errmat ) ) deallocate( qm2_struct%diis_errmat , stat = ier )
        REQUIRE(ier == 0)
-       IF ( ASSOCIATED( qm2_struct%diis_mat ) ) DEALLOCATE( qm2_struct%diis_mat , stat = ier )
+       if ( associated( qm2_struct%diis_mat ) ) deallocate( qm2_struct%diis_mat , stat = ier )
        REQUIRE(ier == 0)
-       !-TJG 01/26/2010
 
        call delete(qm2_params, qmmm_nml%qmtheory, qmmm_struct%PM3MMX_INTERFACE)
 

@@ -7,55 +7,79 @@
 #include "../include/dprec.fh"
 subroutine qm2_setup_orb_exp
 
-      use constants, only : A_TO_BOHRS, A2_TO_BOHRS2, A3_TO_BOHRS3
-      use qmmm_module, only : qm2_params, qmmm_struct
-      use ElementOrbitalIndex, only: MaxAngularQuantumNumber, MaxGaussianExpansion
-      implicit none
+     use constants, only : A_TO_BOHRS, A2_TO_BOHRS2, A3_TO_BOHRS3
+     use qmmm_module, only : qm2_params, qmmm_struct
+     use ElementOrbitalIndex, only: MaxAngularQuantumNumber, MaxGaussianExpansion
+     implicit none
 
 !Local
-      _REAL_:: ALLC(MaxGaussianExpansion,MaxGaussianExpansion,MaxAngularQuantumNumber+1)
-      _REAL_:: ALLZ(MaxGaussianExpansion,MaxGaussianExpansion,MaxAngularQuantumNumber+1)
-      integer:: ni,nqn
-      integer:: i,j,k,l,ier
-      integer::ng, np
-      _REAL_:: xi(1:MaxAngularQuantumNumber+1)
+     _REAL_:: ALLC(MaxGaussianExpansion,MaxGaussianExpansion,MaxAngularQuantumNumber+1)
+     _REAL_:: ALLZ(MaxGaussianExpansion,MaxGaussianExpansion,MaxAngularQuantumNumber+1)
+     integer:: ni, NQN
+     integer:: i,j,k,l,ier
+     integer:: ng, np
+     _REAL_:: xi(1:MaxAngularQuantumNumber+1)
 
 !For pre-computing the overlap equations used in energy and derivative calculation.
       
-      _REAL_, pointer, dimension(:,:) :: atom_orb_cc_s_by_type
-      _REAL_, pointer, dimension(:,:) :: atom_orb_cc_p_by_type      
-      _REAL_, pointer, dimension(:,:) :: atom_orb_cc_d_by_type
-      _REAL_, pointer, dimension(:,:) :: atom_orb_zz_s_by_type
-      _REAL_, pointer, dimension(:,:) :: atom_orb_zz_p_by_type
-      _REAL_, pointer, dimension(:,:) :: atom_orb_zz_d_by_type
-            
-      _REAL_:: atom_orb_cc_s_x_s, atom_orb_zz_s_x_s
-      _REAL_:: atom_orb_cc_s_x_p, atom_orb_zz_s_x_p
-      _REAL_:: atom_orb_cc_s_x_d, atom_orb_zz_s_x_d
-      _REAL_:: atom_orb_cc_p_x_p, atom_orb_zz_p_x_p 
-      _REAL_:: atom_orb_cc_p_x_d, atom_orb_zz_p_x_d
-      _REAL_:: atom_orb_cc_d_x_d, atom_orb_zz_d_x_d               
-      _REAL_:: atom_orb_zz_one_s_a_s, atom_orb_zz_one_s_a_p, atom_orb_zz_one_s_a_d
-      _REAL_:: atom_orb_zz_one_p_a_p, atom_orb_zz_one_p_a_d, atom_orb_zz_one_d_a_d     
-      _REAL_:: atom_orb_sp_eqn, atom_orb_sd_eqn, atom_orb_pp_eqn, atom_orb_pd_eqn, atom_orb_dd_eqn    
+     _REAL_, pointer, dimension(:,:) :: atom_orb_cc_s_by_type
+     _REAL_, pointer, dimension(:,:) :: atom_orb_cc_p_by_type      
+     _REAL_, pointer, dimension(:,:) :: atom_orb_cc_d_by_type
+     _REAL_, pointer, dimension(:,:) :: atom_orb_zz_s_by_type
+     _REAL_, pointer, dimension(:,:) :: atom_orb_zz_p_by_type
+     _REAL_, pointer, dimension(:,:) :: atom_orb_zz_d_by_type
+           
+     _REAL_:: atom_orb_cc_s_x_s, atom_orb_zz_s_x_s
+     _REAL_:: atom_orb_cc_s_x_p, atom_orb_zz_s_x_p
+     _REAL_:: atom_orb_cc_s_x_d, atom_orb_zz_s_x_d
+     _REAL_:: atom_orb_cc_p_x_p, atom_orb_zz_p_x_p
+     _REAL_:: atom_orb_cc_p_x_d, atom_orb_zz_p_x_d
+     _REAL_:: atom_orb_cc_d_x_d, atom_orb_zz_d_x_d
+     _REAL_:: atom_orb_zz_one_s_a_s, atom_orb_zz_one_s_a_p, atom_orb_zz_one_s_a_d
+     _REAL_:: atom_orb_zz_one_p_a_p, atom_orb_zz_one_p_a_d, atom_orb_zz_one_d_a_d
+     _REAL_:: atom_orb_sp_eqn, atom_orb_sd_eqn, atom_orb_pp_eqn, atom_orb_pd_eqn, atom_orb_dd_eqn
 
-      _REAL_ temp_real
+     _REAL_ temp_real
 
+! Zero-out some of the arrays, since not all elements get set
+     ALLZ(:,:,:) = 0.d0
+     ALLC(:,:,:) = 0.d0
+     xi(:) = 0.d0
+
+     atom_orb_cc_s_x_s = 0.0d0
+     atom_orb_zz_s_x_s = 0.0d0
+     atom_orb_cc_s_x_p = 0.0d0
+     atom_orb_zz_s_x_p = 0.0d0
+     atom_orb_cc_s_x_d = 0.0d0
+     atom_orb_zz_s_x_d = 0.0d0
+     atom_orb_cc_p_x_p = 0.0d0
+     atom_orb_zz_p_x_p = 0.0d0
+     atom_orb_cc_p_x_d = 0.0d0
+     atom_orb_zz_p_x_d = 0.0d0
+     atom_orb_cc_d_x_d = 0.0d0
+     atom_orb_zz_d_x_d = 0.0d0
      atom_orb_zz_one_s_a_s = 0.0d0
      atom_orb_zz_one_s_a_p = 0.0d0
      atom_orb_zz_one_s_a_d = 0.0d0
      atom_orb_zz_one_p_a_p = 0.0d0
      atom_orb_zz_one_p_a_d = 0.0d0
      atom_orb_zz_one_d_a_d = 0.0d0
+     atom_orb_sp_eqn = 0.0d0
+     atom_orb_sd_eqn = 0.0d0
+     atom_orb_pp_eqn = 0.0d0
+     atom_orb_pd_eqn = 0.0d0
+     atom_orb_dd_eqn = 0.0d0
 
 !This routine fills atom_orb_cc_s, atom_orb_cc_p, atom_orb_zz_s, atom_orb_zz_p
 !with the STO-6G orbital expansion data. It then de-allocates the no longer
 !needed qm2_params%s_orb_exp and p_orb_exp. For this reason it should be called
 !once and only once per run.
 
-!  The coefficients are from 
-!Calculate Overlap Integrals using a Gaussian Expansion
-!STO-6G BY R.F. STEWART, J. CHEM. PHYS., 52 431-438, 1970
+! Calculate Overlap Integrals using a Gaussian STO-6G Expansion
+! The coefficients are mostly from
+! R.F. STEWART, J. CHEM. PHYS., 52 431-438, 1970
+! this only presents 1s through 5g; from where are the 6s and 6p ?
+! and why is there no 6d below ? srb 4-2015
 
 !     SET-UP THE STEWART'S STO-6G EXPANSIONS
 !                                      1S
@@ -280,13 +304,13 @@ subroutine qm2_setup_orb_exp
        ni = qmmm_struct%qm_type_id(i)
        if(NI.LT.2) then
          NQN=1
-      elseif(NI.LT.10)then
+       elseif(NI.LT.10)then
          NQN=2
-      elseif(NI.LT.18)then
+       elseif(NI.LT.18)then
          NQN=3
-      elseif(NI.LT.36)then
+       elseif(NI.LT.36)then
          NQN=4
-      elseif(NI.LT.54)then
+       elseif(NI.LT.54)then
          NQN=5
        else
          NQN=6
@@ -379,8 +403,8 @@ subroutine qm2_setup_orb_exp
      !to avoid divide by zeros.
      do k=1,np
        do l=1,np
-         do i=1,6
-           do j=1,6
+         do i=1,ng
+           do j=1,ng
              atom_orb_cc_s_x_s = atom_orb_cc_s_by_type(i,k)*atom_orb_cc_s_by_type(j,l)
              atom_orb_zz_s_x_s = atom_orb_zz_s_by_type(i,k)*atom_orb_zz_s_by_type(j,l)
 

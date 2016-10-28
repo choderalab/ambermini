@@ -34,6 +34,7 @@ char *amberhome;
 #define MAX_FF_IMPROPER 500
 #define MAX_EQU_VDW 20
 #define MAX_EQU_VDW_NUM 50
+#define debug 0
 
 typedef struct {
 	int atid1;
@@ -95,6 +96,7 @@ typedef struct {
 	double phase;
 	double force;
 	int mul;
+	int numX;
         char flag;
 } IMPROPER;
 
@@ -151,6 +153,7 @@ int improperparmnum;
 /*H-1, C-2, N-3, O-4, F-5, Cl-6, Br-7, I-8, S-9, P-10*/
 
 int *improperindex;
+int pformat = 1;
 
 CORR *corr;
 ATOMTYPE   *atomtype;
@@ -167,6 +170,13 @@ int equ_vdw_num = 0;
 FILE *fp, *fpout, *ffout, *fhout;
 
 char resname[MAXCHAR];
+
+/* reading parameters for calculating bl and ba parameters*/
+int iread_blbaparm = 0;
+int nblf_parm = 0;
+char blba_parmfile[MAXCHAR];
+
+int  ffset = 1;
 
 void improper_prediction(void)
 {
@@ -279,6 +289,259 @@ void improper_id2()
 		}
 }
 
+void readfrcmod(char *filename) {
+int mindex = 0;
+int bindex = 0;
+int aindex = 0;
+int tindex = 0;
+int iindex = 0;
+int vindex = 0;
+int pos_tor = 0;
+int tmpnum  = 0;
+char line[MAXCHAR];
+char tmpc[MAXCHAR];
+char tmpc1[MAXCHAR];
+char tmpc2[MAXCHAR];
+char tmpc3[MAXCHAR];
+char tmpc4[MAXCHAR];
+	if ((fp = fopen(filename, "r")) == NULL) {
+		fprintf(stdout, "Cannot open file %s in readparm(), exit\n", filename);
+		exit(1);
+	}
+	for (;;) {
+		if (fgets(line, MAXCHAR, fp) == NULL)
+			break;
+		if (strncmp(line, "MASS", 4) == 0) {
+			mindex = 1;
+			continue;
+		}
+		if (strncmp(line, "BOND", 4) == 0) { 
+			bindex = 1;
+			continue;
+		}
+		if (strncmp(line, "ANGLE", 5) == 0){ 
+			aindex = 1;
+			continue;
+		}
+		if (strncmp(line, "DIHE", 4) == 0) { 
+			pos_tor= ftell(fp);
+			tindex = 1;
+			continue;
+		}
+		if (strncmp(line, "IMPROPER", 8) == 0) { 
+			iindex = 1;
+			continue;
+		}
+		if (strncmp(line, "NONBON", 6) == 0) { 
+			vindex = 1;
+			continue;
+		}
+		if (strlen(line) <= 2) {
+			if(mindex == 1) mindex = 0;
+			if(bindex == 1) bindex = 0;
+			if(aindex == 1) aindex = 0;
+			if(tindex == 1) {
+				fseek(fp,pos_tor,0);
+				tindex = 2;
+				continue;
+			}
+			if(tindex == 2) tindex = 0;
+			if(iindex == 1) iindex = 0;
+			if(vindex == 1) vindex = 0;
+			continue;
+		}
+                if (mindex == 1) {
+                        sscanf(line, "%s%lf%lf", atomtype[atomtypenum].name,
+                                   &atomtype[atomtypenum].mass,
+                                   &atomtype[atomtypenum].pol);
+                        atomtypenum++;
+                        if (atomtypenum >= maxatomtype) {
+                                maxatomtype += MAX_FF_ATOMTYPE;
+                                atomtype =
+                                        (ATOMTYPE *) realloc(atomtype,
+                                                                                 sizeof(ATOMTYPE) * maxatomtype);
+                                if (atomtype == NULL) {
+                                        fprintf(stdout,
+                                                        "memory allocation error for *atomtype\n");
+                                        exit(1);
+                                }
+                        }
+                }
+                if (bindex == 1) {
+                        bondparm[bondparmnum].name1[0] = line[0];
+                        bondparm[bondparmnum].name1[1] = line[1];
+                        bondparm[bondparmnum].name2[0] = line[3];
+                        bondparm[bondparmnum].name2[1] = line[4];
+                        sscanf(&line[5], "%lf%lf", &bondparm[bondparmnum].force,
+                                   &bondparm[bondparmnum].length);
+                        bondparmnum++;
+                        if (bondparmnum >= maxbondparm) {
+                                maxbondparm += MAX_FF_BOND;
+                                bondparm =
+                                        (BOND_PARAM *) realloc(bondparm,
+                                                                                sizeof(BOND_PARAM) * maxbondparm);
+                                if (bondparm == NULL) {
+                                        fprintf(stdout,
+                                                        "memory allocation error for *bondparm\n");
+                                        exit(1);
+                                }
+                        }
+                }
+                if (aindex == 1) {
+                        angleparm[angleparmnum].name1[0] = line[0];
+                        angleparm[angleparmnum].name1[1] = line[1];
+                        angleparm[angleparmnum].name2[0] = line[3];
+                        angleparm[angleparmnum].name2[1] = line[4];
+                        angleparm[angleparmnum].name3[0] = line[6];
+                        angleparm[angleparmnum].name3[1] = line[7];
+                        sscanf(&line[8], "%lf%lf", &angleparm[angleparmnum].force,
+                                   &angleparm[angleparmnum].angle);
+                        angleparmnum++;
+                        if (angleparmnum >= maxangleparm) {
+                                maxangleparm += MAX_FF_ANGLE;
+                                angleparm =
+                                        (ANGLE *) realloc(angleparm,
+                                                                          sizeof(ANGLE) * maxangleparm);
+                                if (angleparm == NULL) {
+                                        fprintf(stdout,
+                                                        "memory allocation error for *angleparm\n");
+                                        exit(1);
+                                }
+                        }
+                }
+                if (tindex == 1) { /*we first only read special torsional angle parameters*/
+                        if(line[0] == 'X' || line[3] == 'X' || line[6] == 'X' || line[9] == 'X')
+                                continue;
+                        torsionparm[torsionparmnum].name1[0] = line[0];
+                        torsionparm[torsionparmnum].name1[1] = line[1];
+                        torsionparm[torsionparmnum].name2[0] = line[3];
+                        torsionparm[torsionparmnum].name2[1] = line[4];
+                        torsionparm[torsionparmnum].name3[0] = line[6];
+                        torsionparm[torsionparmnum].name3[1] = line[7];
+                        torsionparm[torsionparmnum].name4[0] = line[9];
+                        torsionparm[torsionparmnum].name4[1] = line[10];
+                        sscanf(&line[11], "%d%lf%lf%lf",
+                                   &torsionparm[torsionparmnum].mul,
+                                   &torsionparm[torsionparmnum].force,
+                                   &torsionparm[torsionparmnum].phase,
+                                   &torsionparm[torsionparmnum].fterm);
+                        torsionparmnum++;
+                        if (torsionparmnum >= maxtorsionparm) {
+                                maxtorsionparm += MAX_FF_TORSION;
+                                torsionparm =
+                                        (TORSION *) realloc(torsionparm,
+                                                                                sizeof(TORSION) * maxtorsionparm);
+                                if (torsionparm == NULL) {
+                                        fprintf(stdout,
+                                                        "memory allocation error for *torsionparm\n");
+                                        exit(1);
+                                }
+                        }
+                }
+                if (tindex == 2) {
+                        if(line[0] != 'X' && line[3] != 'X' && line[6] != 'X' && line[9] != 'X')
+                                continue;
+                        torsionparm[torsionparmnum].name1[0] = line[0];
+                        torsionparm[torsionparmnum].name1[1] = line[1];
+                        torsionparm[torsionparmnum].name2[0] = line[3];
+                        torsionparm[torsionparmnum].name2[1] = line[4];
+                        torsionparm[torsionparmnum].name3[0] = line[6];
+                        torsionparm[torsionparmnum].name3[1] = line[7];
+                        torsionparm[torsionparmnum].name4[0] = line[9];
+                        torsionparm[torsionparmnum].name4[1] = line[10];
+                        sscanf(&line[11], "%d%lf%lf%lf",
+                                   &torsionparm[torsionparmnum].mul,
+                                   &torsionparm[torsionparmnum].force,
+                                   &torsionparm[torsionparmnum].phase,
+                                   &torsionparm[torsionparmnum].fterm);
+                        torsionparmnum++;
+                        if (torsionparmnum >= maxtorsionparm) {
+                                maxtorsionparm += MAX_FF_TORSION;
+                                torsionparm =
+                                        (TORSION *) realloc(torsionparm,
+                                                                                sizeof(TORSION) * maxtorsionparm);
+                                if (torsionparm == NULL) {
+                                        fprintf(stdout,
+                                                        "memory allocation error for *torsionparm\n");
+                                        exit(1);
+                                }
+                        }
+                }
+                if (iindex == 1) {
+                        tmpnum = 0;
+                        tmpc1[0] = line[0];
+                        tmpc1[1] = line[1];
+                        tmpc1[2] = '\0';
+                        tmpc2[0] = line[3];
+                        tmpc2[1] = line[4];
+                        tmpc2[2] = '\0';
+                        tmpc3[0] = line[6];
+                        tmpc3[1] = line[7];
+                        tmpc3[2] = '\0';
+                        tmpc4[0] = line[9];
+                        tmpc4[1] = line[10];
+                        tmpc4[2] = '\0';
+                        if(line[0] == 'X') tmpnum++;
+                        if(line[3] == 'X') tmpnum++;
+                        if(line[6] == 'X') tmpnum++;
+                        if(line[9] == 'X') tmpnum++;
+                        if(strcmp(tmpc1, tmpc2) > 0)  {
+                                strcpy(tmpc, tmpc2);
+                                strcpy(tmpc2, tmpc1);
+                                strcpy(tmpc1, tmpc);
+                        }
+                        if(strcmp(tmpc1, tmpc4) > 0)  {
+                                strcpy(tmpc, tmpc4);
+                                strcpy(tmpc4, tmpc1);
+                                strcpy(tmpc1, tmpc);
+                        }
+                        if(strcmp(tmpc2, tmpc4) > 0)  {
+                                strcpy(tmpc, tmpc4);
+                                strcpy(tmpc4, tmpc2);
+                                strcpy(tmpc2, tmpc);
+                        }
+                        strcpy(improperparm[improperparmnum].name1, tmpc1);
+                        strcpy(improperparm[improperparmnum].name2, tmpc2);
+                        strcpy(improperparm[improperparmnum].name3, tmpc3);
+                        strcpy(improperparm[improperparmnum].name4, tmpc4);
+                        sscanf(&line[11], "%lf%lf%lf",
+                                   &improperparm[improperparmnum].force,
+                                   &improperparm[improperparmnum].phase,
+                                   &improperparm[improperparmnum].fterm);
+                        improperparm[improperparmnum].mul = 1; 
+                        improperparm[improperparmnum].numX = tmpnum; 
+                        improperparmnum++;
+                        if (improperparmnum >= maximproperparm) {
+                                maximproperparm += MAX_FF_IMPROPER;
+                                improperparm =
+                                        (IMPROPER *) realloc(improperparm,
+                                                                                 sizeof(IMPROPER) *
+                                                                                 maximproperparm);
+                                if (improperparm == NULL) {
+                                        fprintf(stdout,
+                                                        "memory allocation error for *improperparm\n");
+                                        exit(1);
+                                }
+                        }
+                }
+                if (vindex == 1) {
+                        sscanf(line, "%s%lf%lf", vdwparm[vdwparmnum].name,
+                                   &vdwparm[vdwparmnum].radius, &vdwparm[vdwparmnum].pot);
+                        vdwparmnum++;
+                        if (vdwparmnum >= maxvdwparm) {
+                                maxvdwparm += MAX_FF_VDW;
+                                vdwparm =
+                                        (VDW *) realloc(vdwparm, sizeof(VDW) * maxvdwparm);
+                                if (vdwparm == NULL) {
+                                        fprintf(stdout,
+                                                        "memory allocation error for *vdwparm\n");
+                                        exit(1);
+                                }
+                        }
+                }
+
+}
+}
 
 void readparm(char *filename)
 {
@@ -293,6 +556,7 @@ void readparm(char *filename)
 	int i, j, k;
 	int flag;
 	int vdwparmnum_old;
+	int pos_tor = 0;
 	FILE *fp;
 	char line[MAXCHAR];
 	char tmpc[MAXCHAR];
@@ -330,9 +594,15 @@ void readparm(char *filename)
 		if (aindex == 1 && spaceline(line) == 1) {
 			aindex = 0;
 			tindex = 1;
+			pos_tor= ftell(fp);
 			continue;
 		}
 		if (tindex == 1 && spaceline(line) == 1) {
+			tindex = 2;
+			fseek(fp,pos_tor,0);
+			continue;
+		}
+		if (tindex == 2 && spaceline(line) == 1) {
 			tindex = 0;
 			iindex = 1;
 			continue;
@@ -415,7 +685,9 @@ void readparm(char *filename)
 				}
 			}
 		}
-		if (tindex == 1) {
+		if (tindex == 1) { /*we first only read special torsional angle parameters*/
+			if(line[0] == 'X' || line[3] == 'X' || line[6] == 'X' || line[9] == 'X')
+				continue;
 			torsionparm[torsionparmnum].name1[0] = line[0];
 			torsionparm[torsionparmnum].name1[1] = line[1];
 			torsionparm[torsionparmnum].name2[0] = line[3];
@@ -442,7 +714,37 @@ void readparm(char *filename)
 				}
 			}
 		}
+                if (tindex == 2) {
+			if(line[0] != 'X' && line[3] != 'X' && line[6] != 'X' && line[9] != 'X')
+				continue;
+                        torsionparm[torsionparmnum].name1[0] = line[0];
+                        torsionparm[torsionparmnum].name1[1] = line[1];
+                        torsionparm[torsionparmnum].name2[0] = line[3];
+                        torsionparm[torsionparmnum].name2[1] = line[4];
+                        torsionparm[torsionparmnum].name3[0] = line[6];
+                        torsionparm[torsionparmnum].name3[1] = line[7];
+                        torsionparm[torsionparmnum].name4[0] = line[9];
+                        torsionparm[torsionparmnum].name4[1] = line[10];
+                        sscanf(&line[11], "%d%lf%lf%lf",
+                                   &torsionparm[torsionparmnum].mul,
+                                   &torsionparm[torsionparmnum].force,
+                                   &torsionparm[torsionparmnum].phase,
+                                   &torsionparm[torsionparmnum].fterm);
+                        torsionparmnum++;
+                        if (torsionparmnum >= maxtorsionparm) {
+                                maxtorsionparm += MAX_FF_TORSION;
+                                torsionparm =
+                                        (TORSION *) realloc(torsionparm,
+                                                                                sizeof(TORSION) * maxtorsionparm);
+                                if (torsionparm == NULL) {
+                                        fprintf(stdout,
+                                                        "memory allocation error for *torsionparm\n");
+                                        exit(1);
+                                }
+                        }
+                }
 		if (iindex == 1) {
+			tmpnum = 0;
 			tmpc1[0] = line[0];
 			tmpc1[1] = line[1];
                         tmpc1[2] = '\0';
@@ -455,6 +757,10 @@ void readparm(char *filename)
 			tmpc4[0] = line[9];
 			tmpc4[1] = line[10];
                         tmpc4[2] = '\0';
+			if(line[0] == 'X') tmpnum++;
+			if(line[3] == 'X') tmpnum++;
+			if(line[6] == 'X') tmpnum++;
+			if(line[9] == 'X') tmpnum++;
 	                if(strcmp(tmpc1, tmpc2) > 0)  {
        	                	strcpy(tmpc, tmpc2);
        	                	strcpy(tmpc2, tmpc1);
@@ -479,6 +785,7 @@ void readparm(char *filename)
 				   &improperparm[improperparmnum].phase,
 				   &improperparm[improperparmnum].fterm);
 			improperparm[improperparmnum].mul = 1; 
+			improperparm[improperparmnum].numX = tmpnum; 
 			improperparmnum++;
 			if (improperparmnum >= maximproperparm) {
 				maximproperparm += MAX_FF_IMPROPER;
@@ -502,8 +809,8 @@ void readparm(char *filename)
 			while (flag) {
 				flag = 0;
 				sscanf(&line[tmpnum], "%s",
-					   equ_vdw[equ_vdw_num].name[equ_vdw[equ_vdw_num].
-												 num++]);
+					   equ_vdw[equ_vdw_num].name[equ_vdw[equ_vdw_num].num]);
+					   equ_vdw[equ_vdw_num].num++;
 				if (equ_vdw[equ_vdw_num].num >= MAX_EQU_VDW_NUM) {
 					printf
 						("\nError: number of equivalent vdw atoms exceeds MAX_EQU_VDW_NUM, exit\n");
@@ -526,7 +833,7 @@ void readparm(char *filename)
 			}
 			if (equ_vdw[equ_vdw_num].num >= 2)
 				equ_vdw_num++;
-			if (equ_vdw_num >= MAX_EQU_VDW_NUM) {
+			if (equ_vdw_num >= MAX_EQU_VDW) {
 				printf
 					("\nError: number of equivalent vdw parameters exceeds MAX_EQU_VDW, exit\n");
 				exit(1);
@@ -567,33 +874,37 @@ void readparm(char *filename)
 					}
 			}
 	}
+	if(debug == 1) {
+		printf("\nMASS\n");
+		for(i=0;i<atomtypenum;i++)
+ 			printf("\n%s %9.4lf %9.4lf", atomtype[i].name, atomtype[i].mass,atomtype[i].pol);
 
-/*
-for(i=0;i<atomtypenum;i++)
- printf("\n%s %9.4lf %9.4lf", atomtype[i].name, atomtype[i].mass,atomtype[i].pol);
+		printf("\n\nBOND\n");
+		for(i=0;i<bondparmnum;i++)
+ 			printf("\n%s %s %9.4lf %9.4lf", bondparm[i].name1, bondparm[i].name2, 
+        		bondparm[i].force, bondparm[i].length);
 
-for(i=0;i<bondparmnum;i++)
- printf("\n%s %s %9.4lf %9.4lf", bondparm[i].name1, bondparm[i].name2, 
-        bondparm[i].force, bondparm[i].length);
+		printf("\n\nANGLE\n");
+		for(i=0;i<angleparmnum;i++)
+ 			printf("\n%s %s %s %9.4lf %9.4lf", angleparm[i].name1, angleparm[i].name2, 
+        		angleparm[i].name3, angleparm[i].force, angleparm[i].angle);
 
-for(i=0;i<angleparmnum;i++)
- printf("\n%s %s %s %9.4lf %9.4lf", angleparm[i].name1, angleparm[i].name2, 
-        angleparm[i].name3, angleparm[i].force, angleparm[i].angle);
+		printf("\n\nTORSION\n");
+		for(i=0;i<torsionparmnum;i++)
+ 			printf("\n%s %s %s %s %9.4lf %9.4lf %9.4lf", torsionparm[i].name1, 
+        		torsionparm[i].name2, torsionparm[i].name3,torsionparm[i].name4,
+        		torsionparm[i].phase, torsionparm[i].force, torsionparm[i].fterm);
 
-for(i=0;i<torsionparmnum;i++)
- printf("\n%s %s %s %s %9.4lf %9.4lf %9.4lf", torsionparm[i].name1, 
-        torsionparm[i].name2, torsionparm[i].name3,torsionparm[i].name4,
-        torsionparm[i].phase, torsionparm[i].force, torsionparm[i].fterm);
-
-for(i=0;i<improperparmnum;i++)
- printf("\n%s %s %s %s %9.4lf %9.4lf %9.4lf", improperparm[i].name1, 
-        improperparm[i].name2, improperparm[i].name3,improperparm[i].name4,
-        improperparm[i].phase, improperparm[i].force, improperparm[i].fterm);
-for(i=0;i<vdwparmnum;i++)
- printf("\n%s %9.4lf %9.4lf", vdwparm[i].name, vdwparm[i].radius, vdwparm[i].pot);
-*/
+		printf("\n\nIMPROPER\n");
+		for(i=0;i<improperparmnum;i++)
+ 			printf("\n%s %s %s %s %9.4lf %9.4lf %9.4lf", improperparm[i].name1, 
+        		improperparm[i].name2, improperparm[i].name3,improperparm[i].name4,
+        		improperparm[i].phase, improperparm[i].force, improperparm[i].fterm);
+		printf("\n\nVDW\n");
+		for(i=0;i<vdwparmnum;i++)
+ 			printf("\n%s %9.4lf %9.4lf", vdwparm[i].name, vdwparm[i].radius, vdwparm[i].pot);
+	}
 }
-
 void readcorr(char *filename)
 {
 	FILE *fp;
@@ -703,7 +1014,7 @@ void prepare(void)
 }
 
 int empangle(char *tmpc1, char *tmpc2, char *tmpc3, char *name1,
-			 char *name2, char *name3, int id1, int id2, int id3)
+             char *name2, char *name3, int id1, int id2, int id3)
 {
 	int num1 = -1, num2 = -1;
 	double bondlength1 = 0.0;
@@ -711,6 +1022,27 @@ int empangle(char *tmpc1, char *tmpc2, char *tmpc3, char *name1,
 	double cparm, dparm, zparm1, zparm2;
 	double angle;
 	double force;
+
+	if(iread_blbaparm == 0) {
+		iread_blbaparm = 1;
+		if(ffset == 1) 
+    			build_dat_path(blba_parmfile, "PARM_BLBA_GAFF.DAT",
+    				sizeof blba_parmfile, 0);
+		if(ffset == 2) 
+    			build_dat_path(blba_parmfile, "PARM_BLBA_GAFF2.DAT",
+    				sizeof blba_parmfile, 0);
+		read_blba_parm (blba_parmfile, blf_parm, &nblf_parm, baf_parm); 
+		if(debug == 1) {
+			for(i=0;i<nblf_parm;i++)
+				printf("BL %5d %5s %5d %5s %5d %9.4lf %9.4lf\n", i+1, blf_parm[i].elem1, 
+					blf_parm[i].id1, blf_parm[i].elem2, blf_parm[i].id2,
+					blf_parm[i].refbondlength, blf_parm[i].bfkai);
+			for(i=0;i<120;i++)
+				printf("BA %5d %5s %5d %9.4lf %9.4lf\n", i+1, baf_parm[i].elem, 
+					baf_parm[i].id, baf_parm[i].anglec, baf_parm[i].anglez); 
+			printf("PC %9.4lf\n", blf_exp_const);
+		}
+	}
 
 	if (tmpc1[1] == '\0') {
 		tmpc1[1] = ' ';
@@ -781,71 +1113,9 @@ int empangle(char *tmpc1, char *tmpc2, char *tmpc3, char *name1,
 		return 0;
 
 	/* calculate the bond angle force  */
-	zparm1 = 0.0;
-	if (id1 == 1)
-		zparm1 = 0.784;
-	if (id1 == 6)
-		zparm1 = 1.183;
-	if (id1 == 7)
-		zparm1 = 1.212;
-	if (id1 == 8)
-		zparm1 = 1.219;
-	if (id1 == 9)
-		zparm1 = 1.166;
-	if (id1 == 17)
-		zparm1 = 1.272;
-	if (id1 == 35)
-		zparm1 = 1.378;
-	if (id1 == 53)
-		zparm1 = 1.398;
-	if (id1 == 15)
-		zparm1 = 1.620;
-	if (id1 == 16)
-		zparm1 = 1.280;
-
-	zparm2 = 0.0;
-	if (id3 == 1)
-		zparm2 = 0.784;
-	if (id3 == 6)
-		zparm2 = 1.183;
-	if (id3 == 7)
-		zparm2 = 1.212;
-	if (id3 == 8)
-		zparm2 = 1.219;
-	if (id3 == 9)
-		zparm2 = 1.166;
-	if (id3 == 17)
-		zparm2 = 1.272;
-	if (id3 == 35)
-		zparm2 = 1.378;
-	if (id3 == 53)
-		zparm2 = 1.398;
-	if (id3 == 15)
-		zparm2 = 1.620;
-	if (id3 == 16)
-		zparm2 = 1.280;
-
-	cparm = 0.0;
-	if (id2 == 1)
-		cparm = 0.0;
-	if (id2 == 6)
-		cparm = 1.339;
-	if (id2 == 7)
-		cparm = 1.300;
-	if (id2 == 8)
-		cparm = 1.249;
-	if (id2 == 9)
-		cparm = 0.0;
-	if (id2 == 17)
-		cparm = 0.0;
-	if (id2 == 35)
-		cparm = 0.0;
-	if (id2 == 53)
-		cparm = 0.0;
-	if (id2 == 15)
-		cparm = 1.448;
-	if (id2 == 16)
-		cparm = 0.906;
+	zparm1 = baf_parm[id1].anglez;
+	zparm2 = baf_parm[id3].anglez;
+	cparm  = baf_parm[id2].anglec;
 
 	dparm = (bondlength1 - bondlength2) * (bondlength1 - bondlength2);
 	dparm =
@@ -3576,44 +3846,58 @@ int main(int argc, char *argv[])
 		if (argc == 2
 			&& (strcmp(argv[1], "-h") == 0
 				|| strcmp(argv[1], "-H") == 0)) {
-			printf("[31mUsage: charmmgen -i[0m input file name\n"
-				   "[31m                 -o[0m frcmod file name\n"
-				   "[31m                 -f[0m input file format (prepi, prepc, ac ,mol2) \n"
-				   "[31m                 -p[0m ff parmfile\n"
-				   "[31m                 -r[0m residue name\n"
-				   "[31m                 -c[0m atom type correspondening file, default is ATCOR.DAT\n");
+			printf("[31mUsage: charmmgen -i [0m input file name\n"
+				   "[31m                 -o [0m frcmod file name\n"
+				   "[31m                 -f [0m input file format (prepi, prepc, ac ,mol2) \n"
+			           "[31m                 -s [0m ff parm set, it is suppressed by \"-p\" option\n"
+			           "[34m                    1:[0m gaff (the default)\n"
+			           "[34m                    2:[0m gaff2 \n"
+				   "[31m                 -p [0m ff parmfile\n"
+				   "[31m                 -pf[0m parmfile format, 1 for amber FF data file (the default) and 2 for additional force field parameter file\n"
+				   "[31m                 -r [0m residue name\n"
+				   "[31m                 -c [0m atom type correspondening file, default is ATCOR.DAT\n");
 			exit(1);
 		}
-		if (argc != 7 && argc != 9 && argc != 11 && argc != 13) {
-			printf("[31mUsage: charmmgen -i[0m input file name\n"
-				   "[31m                 -o[0m frcmod file name\n"
-				   "[31m                 -f[0m input file format (prepi, prepc, ac ,mol2) \n"
-				   "[31m                 -p[0m ff parmfile\n"
-				   "[31m                 -r[0m residue name\n"
-				   "[31m                 -c[0m atom type correspondening file, default is ATCOR.DAT\n");
+		if (argc != 7 && argc != 9 && argc != 11 && argc != 13 && argc != 15 && argc != 17 && argc !=19) {
+			printf("[31mUsage: charmmgen -i [0m input file name\n"
+				   "[31m                 -o [0m frcmod file name\n"
+				   "[31m                 -f [0m input file format (prepi, prepc, ac ,mol2) \n"
+			           "[31m                 -s [0m ff parm set, it is suppressed by \"-p\" option\n"
+			           "[34m                    1:[0m gaff (the default)\n"
+			           "[34m                    2:[0m gaff2 \n"
+				   "[31m                 -p [0m ff parmfile\n"
+				   "[31m                 -pf[0m parmfile format, 1 for amber FF data file (the default) and 2 for additional force field parameter file\n"
+				   "[31m                 -r [0m residue name\n"
+				   "[31m                 -c [0m atom type correspondening file, default is ATCOR.DAT\n");
 			exit(1);
 		}
 	} else {
 		if (argc == 2
 			&& (strcmp(argv[1], "-h") == 0
 				|| strcmp(argv[1], "-H") == 0)) {
-			printf("Usage: charmmgen -i   input file name\n");
-			printf("                 -o   frcmod file name\n");
-			printf("                 -f   input file format (prepi, prepc, ac) \n");
-			printf("                 -p   ff parmfile\n");
-			printf("                 -r   residue name \n");
-			printf("                 -c   atom type correspondence file \n");
-			printf("                      (default is ATCOR.DAT)\n");
+			printf("Usage: charmmgen -i  input file name\n"
+			       "                 -o  frcmod file name\n"
+			       "                 -f  input file format (prepi, prepc, ac ,mol2) \n"
+			       "                 -s  ff parm set, it is suppressed by \"-p\" option\n"
+			       "                     1: gaff (the default)\n"
+			       "                     2: gaff2 \n"
+			       "                 -p  ff parmfile\n"
+			       "                 -pf parmfile format, 1 for amber FF data file (the default) and 2 for additional force field parameter file\n"
+			       "                 -r  residue name\n"
+			       "                 -c  atom type correspondening file, default is ATCOR.DAT\n");
 			exit(1);
 		}
-		if (argc != 7 && argc != 9 && argc != 11 && argc != 13) {
-			printf("Usage: charmmgen -i   input file name\n");
-			printf("                 -o   frcmod file name\n");
-			printf("                 -f   input file format (prepi, prepc, ac) \n");
-			printf("                 -p   ff parmfile\n");
-			printf("                 -r   residue name \n");
-			printf("                 -c   atom type correspondence file \n");
-			printf("                      (default is ATCOR.DAT)\n");
+		if (argc != 7 && argc != 9 && argc != 11 && argc != 13 && argc != 15 && argc != 17 && argc !=19) {
+			printf("Usage: charmmgen -i  input file name\n"
+			       "                 -o  frcmod file name\n"
+			       "                 -f  input file format (prepi, prepc, ac ,mol2) \n"
+			       "                 -s  ff parm set, it is suppressed by \"-p\" option\n"
+			       "                     1: gaff (the default)\n"
+			       "                     2: gaff2 \n"
+			       "                 -p  ff parmfile\n"
+			       "                 -pf parmfile format, 1 for amber FF data file (the default) and 2 for additional force field parameter file\n"
+			       "                 -r  residue name\n"
+			       "                 -c  atom type correspondening file, default is ATCOR.DAT\n");
 			exit(1);
 		}
 	}
@@ -3624,6 +3908,8 @@ int main(int argc, char *argv[])
 			strcpy(ifilename, argv[i + 1]);
 		if (strcmp(argv[i], "-p") == 0)
 			strcpy(pfilename, argv[i + 1]);
+                if (strcmp(argv[i], "-pf") == 0)
+                        pformat = atoi(argv[i+1]);
 		if (strcmp(argv[i], "-o") == 0) {
        			strcpy(ofilename, argv[i + 1]);
 			strcpy(ffilename, argv[i + 1]);
@@ -3648,8 +3934,22 @@ int main(int argc, char *argv[])
 			if (strcmp(argv[i + 1], "mol2") == 0)
 				format = 3;
 		}
+		if (strcmp(argv[i], "-s") == 0) {
+			if (strcmp(argv[i + 1], "gaff") == 0)
+				ffset = 1;
+			if (strcmp(argv[i + 1], "GAFF") == 0)
+				ffset = 1;
+			if (strcmp(argv[i + 1], "1") == 0)
+				ffset = 1;
+			if (strcmp(argv[i + 1], "gaff2") == 0)
+				ffset = 2;
+			if (strcmp(argv[i + 1], "GAFF2") == 0)
+				ffset = 2;
+			if (strcmp(argv[i + 1], "2") == 0)
+				ffset = 2;
+		}
 	}
-
+        if(pformat != 1 && pformat !=2) pformat = 1;
 	if (cindex == 0) {
 		build_dat_path(cfilename, "ATCOR.DAT", sizeof cfilename, 0);
 		cindex = 1;
@@ -3874,7 +4174,8 @@ int main(int argc, char *argv[])
 
 	if (cindex == 1)
 		readcorr(cfilename);	/*atom type *corresponding file */
-	readparm(pfilename);		/*principle parameter file */
+        if(pformat == 1) readparm(pfilename);           /*principle parameter file */
+        if(pformat == 2) readfrcmod(pfilename);         /*principle parmaeter file in frcmod format*/
 
 	if (format == 0 || format == 1)
 		improper_id1(ifilename);

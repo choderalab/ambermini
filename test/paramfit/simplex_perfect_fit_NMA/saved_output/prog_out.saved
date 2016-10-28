@@ -1,0 +1,170 @@
+
+                *****************************************************
+                * AMBER Bond Angle and Dihedral Parameter Optimiser *
+                *                                                   *
+                *                      v3.0.0                       *
+                *                                                   *
+                *                    Written by:                    *
+                *                 Robin Betz (2011)                 *
+                *                 Ross Walker (2004)                *
+                *          The Walker Molecular Dynamics Lab        *
+                *         University of California, San Diego       *
+                *            La Jolla, California, 92092            *
+                *                       USA                         *
+                *****************************************************
+
+*************************************************************************************
+                                Execution started at:
+|                             Tue Feb 28 13:38:53 2012
+
+|
+| Specified random seed = 5000
+ Reading job control file: Job_Control.in
+ Job Control: Read a total of 27 lines from job_control file. 20 options set.
+
+ Reading prmtop file: prmtop
+   Prmtop     (info): Successfully read in saved parameter information
+   Prmtop   (unique): Found 7 unique bonds.
+   Prmtop   (unique): Found 10 unique angles.
+   Prmtop   (unique): Found 13 unique dihedrals.
+ Reading mdcrd file: mdcrd_creation/mdcrd
+ Reading energy file: mdcrd_creation/amber_energy.dat
+        ---------------------------------------------------------------------
+        |                          OPTIONS SUMMARY                         |
+        |                          ---------------                          |
+        | Summary of Run Type Options:                                      |
+        |   Run Mode = FIT, Minimiser = SIMPLEX                             |
+        |   Function to be Fit = SUM_SQUARES_AMBER_STANDARD                 |
+        |                                                                   |
+        | Terms to be fit:                                                  |
+        |   UNIQUE_BONDS = 7, UNIQUE ANGLES = 10, UNIQUE DIHEDRALS = 13     |
+        |   NBONDS = 11, NANGLES = 18, NDIHEDRALS = 24                      |
+        |                                 Total dimensions of fit = 19      |
+        |                                                                   |
+        | Sample structures for least squares fit = 1000                    |
+        |                                                                   |
+        | Energy Correction Term (K) = 0.00000000                           |
+        |                                                                   |
+        |           BONDFC_dx =     5.0000                                  |
+        |           BONDEQ_dx =     0.0200                                  |
+        |          ANGLEFC_dx =     1.0000                                  |
+        |          ANGLEEQ_dx =     0.0500                                  |
+        |       DIHEDRALBH_dx =     0.2000                                  |
+        |        DIHEDRALN_dx =     0.0100                                  |
+        |        DIHEDRALG_dx =     0.0500                                  |
+        |                                                                   |
+        | Convergence requested to within 1.0000E-01                        |
+        |                                                                   |
+        | Estimate Memory Usage (per cpu):                                  |
+        |  Coordinate info will be read from disk as required.              |
+        |                OPTION STORAGE = 404 bytes                         |
+        |                PRMTOP STORAGE = 293697 bytes                      |
+        |            COORDINATE STORAGE = 288000 bytes                      |
+        |         SIMPLEX ARRAY STORAGE = 3912 bytes                        |
+        |                                                                   |
+        |  TOTAL ESTIMATED MEMORY USAGE = 586013 bytes                      |
+        |                                                                   |
+        ---------------------------------------------------------------------
+
+   WARNING: HC-CT-C -O  dihedral is missing 7 data points in the range 0.3142 to 3.1416 radians.
+   WARNING: HC-CT-C -O  dihedral is missing 7 data points in the range 0.3142 to 3.1416 radians.
+   WARNING: HC-CT-C -N  dihedral is missing 8 data points in the range 0.3142 to 3.1416 radians.
+   WARNING: HC-CT-C -O  dihedral is missing 8 data points in the range 0.3142 to 3.1416 radians.
+ * Input structures passed dihedral span check.
+      --------------------------------- INITIAL PARAMETERS ------------------------------
+   Initial parameters for force field equation: AMBER_STANDARD:
+   (* means parameter is NOT constant during fit)
+                         K = 0.000000 kcal/mol
+             (CT-HC)*Kr = 340.0000 kcal/(mol A)^2, r_eq =   1.0900 A 
+             (CT-H1)*Kr = 340.0000 kcal/(mol A)^2, r_eq =   1.0900 A 
+             (N -H )*Kr = 434.0000 kcal/(mol A)^2, r_eq =   1.0100 A 
+             (C -O ) Kr = 570.0000 kcal/(mol A)^2, r_eq =   1.2290 A 
+             (C -N ) Kr = 490.0000 kcal/(mol A)^2, r_eq =   1.3350 A 
+             (CT-C ) Kr = 317.0000 kcal/(mol A)^2, r_eq =   1.5220 A 
+             (N -CT) Kr = 337.0000 kcal/(mol A)^2, r_eq =   1.4490 A 
+        (C -N -H ) Kt =  50.0000 kcal/(mol rad)^2,  th_eq = 120.0001 deg 
+        (HC-CT-C ) Kt =  50.0000 kcal/(mol rad)^2,  th_eq = 109.5000 deg 
+        (HC-CT-HC) Kt =  35.0000 kcal/(mol rad)^2,  th_eq = 109.5000 deg 
+        (H1-CT-H1) Kt =  35.0000 kcal/(mol rad)^2,  th_eq = 109.5000 deg 
+        (H -N -CT)*Kt =  50.0000 kcal/(mol rad)^2,  th_eq = 118.0401 deg 
+        (N -CT-H1)*Kt =  50.0000 kcal/(mol rad)^2,  th_eq = 109.5000 deg 
+        (O -C -N )*Kt =  80.0000 kcal/(mol rad)^2,  th_eq = 122.9001 deg 
+        (C -N -CT) Kt =  50.0000 kcal/(mol rad)^2,  th_eq = 121.9001 deg 
+        (CT-C -O ) Kt =  80.0000 kcal/(mol rad)^2,  th_eq = 120.4001 deg 
+        (CT-C -N ) Kt =  70.0000 kcal/(mol rad)^2,  th_eq = 116.6000 deg 
+       (O -C -N -H )*Kp =   2.0000 kcal/mol,  Np = 1.0000, *Phase =   0.0000 Deg 
+       (O -C -N -H )*Kp =   2.5000 kcal/mol,  Np = 2.0000, *Phase = 180.0001 Deg 
+       (C -N -CT-H1) Kp =   0.0000 kcal/mol,  Np = 2.0000,  Phase =   0.0000 Deg 
+       (HC-CT-C -O )*Kp =   0.8000 kcal/mol,  Np = 1.0000, *Phase =   0.0000 Deg 
+       (HC-CT-C -O )*Kp =   0.0800 kcal/mol,  Np = 3.0000, *Phase = 180.0001 Deg 
+       (HC-CT-C -N ) Kp =   0.0000 kcal/mol,  Np = 2.0000, *Phase =   0.0000 Deg 
+       (HC-CT-C -O )*Kp =   0.0000 kcal/mol,  Np = 2.0000, *Phase =   0.0000 Deg 
+       (CT-C -N -H ) Kp =   2.5000 kcal/mol,  Np = 2.0000,  Phase = 180.0001 Deg 
+       (H -N -CT-H1) Kp =   0.0000 kcal/mol,  Np = 2.0000,  Phase =   0.0000 Deg 
+   IMP (C -CT-N -H ) Kp =   1.1000 kcal/mol,  Np = 2.0000,  Phase = 180.0001 Deg 
+       (O -C -N -CT) Kp =   2.5000 kcal/mol,  Np = 2.0000, *Phase = 180.0001 Deg 
+       (CT-C -N -CT)*Kp =   2.5000 kcal/mol,  Np = 2.0000,  Phase = 180.0001 Deg 
+   IMP (CT-N -C -O ) Kp =  10.5000 kcal/mol,  Np = 2.0000,  Phase = 180.0001 Deg 
+      -----------------------------------------------------------------------------------
+   Sum of squares for initial parameters =    0.0000034784 kcal^2/mol^2
+   R^2 value for initial parameters      =   1.000000
+   Calculated energy with initial parameters for structure 1 = -27.398985 KCal/mol
+
+   ----------------------------- SIMPLEX MINIMISATION ----------------------------
+   Minimising function SUM_SQUARES_AMBER_STANDARD, using the SIMPLEX METHOD
+   ---------------------------------- CONVERGENCE --------------------------------
+   Step     0: Conv=  2.0000E+00 min=      0.0000,max=    408.7696 avg     22.9213
+   Step     1: Conv=  1.8120E-04 min=      0.0000 max=      0.0000 avg=      0.0000
+   -------------------------------------------------------------------------------
+
+   Convergence ratio of   1.8120E-04 is better than
+   convergence criteria of   1.0000E-01.
+   Function Converged - Total function evaluations = 764
+
+   Convergence to 1.0000E-01 in Simplex routine achieved after 475 cycles.
+   (475 INNER x 1 OUTER CYCLES)
+
+ * Result passed angle validity check.
+ * Result passed bond validity check.
+   ---------------------------------- FINAL PARAMETERS -------------------------------
+   Fitted parameters for force field equation: AMBER_STANDARD:
+   (* means parameter is NOT constant during fit)
+                         K = 0.000000 kcal/mol
+             (CT-HC)*Kr = 340.0017 kcal/(mol A)^2, r_eq =   1.0900 A 
+             (CT-H1)*Kr = 340.0019 kcal/(mol A)^2, r_eq =   1.0900 A 
+             (N -H )*Kr = 433.9982 kcal/(mol A)^2, r_eq =   1.0100 A 
+             (C -O ) Kr = 570.0000 kcal/(mol A)^2, r_eq =   1.2290 A 
+             (C -N ) Kr = 490.0000 kcal/(mol A)^2, r_eq =   1.3350 A 
+             (CT-C ) Kr = 317.0000 kcal/(mol A)^2, r_eq =   1.5220 A 
+             (N -CT) Kr = 337.0000 kcal/(mol A)^2, r_eq =   1.4490 A 
+        (C -N -H ) Kt =  50.0000 kcal/(mol rad)^2,  th_eq = 120.0001 deg 
+        (HC-CT-C ) Kt =  50.0000 kcal/(mol rad)^2,  th_eq = 109.5000 deg 
+        (HC-CT-HC) Kt =  35.0000 kcal/(mol rad)^2,  th_eq = 109.5000 deg 
+        (H1-CT-H1) Kt =  35.0000 kcal/(mol rad)^2,  th_eq = 109.5000 deg 
+        (H -N -CT)*Kt =  50.0005 kcal/(mol rad)^2,  th_eq = 118.0401 deg 
+        (N -CT-H1)*Kt =  49.9997 kcal/(mol rad)^2,  th_eq = 109.5000 deg 
+        (O -C -N )*Kt =  80.0016 kcal/(mol rad)^2,  th_eq = 122.9001 deg 
+        (C -N -CT) Kt =  50.0000 kcal/(mol rad)^2,  th_eq = 121.9001 deg 
+        (CT-C -O ) Kt =  80.0000 kcal/(mol rad)^2,  th_eq = 120.4001 deg 
+        (CT-C -N ) Kt =  70.0000 kcal/(mol rad)^2,  th_eq = 116.6000 deg 
+       (O -C -N -H )*Kp =   2.0000 kcal/mol,  Np = 1.0000, *Phase =  -0.0010 Deg 
+       (O -C -N -H )*Kp =   2.4999 kcal/mol,  Np = 2.0000, *Phase = 180.0003 Deg 
+       (C -N -CT-H1) Kp =   0.0000 kcal/mol,  Np = 2.0000,  Phase =   0.0000 Deg 
+       (HC-CT-C -O )*Kp =   0.8000 kcal/mol,  Np = 1.0000, *Phase =  -0.0014 Deg 
+       (HC-CT-C -O )*Kp =   0.0800 kcal/mol,  Np = 3.0000, *Phase = 179.9984 Deg 
+       (HC-CT-C -N ) Kp =   0.0000 kcal/mol,  Np = 2.0000, *Phase =   0.8561 Deg 
+       (HC-CT-C -O )*Kp =  -0.0000 kcal/mol,  Np = 2.0000, *Phase =   0.8173 Deg 
+       (CT-C -N -H ) Kp =   2.5000 kcal/mol,  Np = 2.0000,  Phase = 180.0001 Deg 
+       (H -N -CT-H1) Kp =   0.0000 kcal/mol,  Np = 2.0000,  Phase =   0.0000 Deg 
+   IMP (C -CT-N -H ) Kp =   1.1000 kcal/mol,  Np = 2.0000,  Phase = 180.0001 Deg 
+       (O -C -N -CT) Kp =   2.5000 kcal/mol,  Np = 2.0000, *Phase = 179.9997 Deg 
+       (CT-C -N -CT)*Kp =   2.5000 kcal/mol,  Np = 2.0000,  Phase = 180.0001 Deg 
+   IMP (CT-N -C -O ) Kp =  10.5000 kcal/mol,  Np = 2.0000,  Phase = 180.0001 Deg 
+   -----------------------------------------------------------------------------------
+   Function value with fitted parameters  =        0.0000, R^2 =       1.0000
+   Calculated energy with fitted parameters for structure 1 =    -27.3990 KCal/mol
+
+
+|             Program Execution Completed at: Tue Feb 28 13:39:10 2012
+|                            Elapsed Time = 17.00 seconds
+*************************************************************************************

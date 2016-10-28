@@ -1,0 +1,22 @@
+Remark line goes here
+MASS
+
+BOND
+c3-nx  293.60   1.499       same as c3-n4, penalty score=  0.0
+hn-nx  369.00   1.033       same as hn-n4, penalty score=  0.0
+
+ANGLE
+c3-nx-hn   46.190     110.110   same as c3-n4-hn, penalty score=  0.0
+c3-nx-c3   62.840     110.640   same as c3-n4-c3, penalty score=  0.0
+hx-c3-nx   49.020     107.910   same as hx-c3-n4, penalty score=  0.0
+
+DIHE
+hx-c3-nx-c3   9    1.400         0.000           3.000      same as X -c3-n4-X , penalty score=  0.0
+hx-c3-nx-hn   9    1.400         0.000           3.000      same as X -c3-n4-X , penalty score=  0.0
+
+IMPROPER
+
+NONBON
+
+
+

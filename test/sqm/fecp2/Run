@@ -1,0 +1,19 @@
+#!/bin/csh -f
+
+set SQM = ../../../bin/sqm
+set SPDIFF = ../../dacdif
+set SPTESTS = (fecp2.pm6.sp)
+
+# single point tests
+foreach i ($SPTESTS)
+    set input = $i.in
+    set output = $i.out
+    $SQM -O -i $input -o $output || goto error
+    $SPDIFF $output.save $output
+end
+
+exit(0)
+
+error:
+echo "  ${0}:  Program error"
+exit(1)

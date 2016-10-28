@@ -369,6 +369,9 @@ contains
     REQUIRE(ier == 0) 
     allocate (self%d_orb_exp_by_type(qm_ntypes), stat=ier )
     REQUIRE(ier == 0)     
+    self%s_orb_exp_by_type(:) = 0.d0
+    self%p_orb_exp_by_type(:) = 0.d0
+    self%d_orb_exp_by_type(:) = 0.d0
  
     allocate (self%s_orb_exp_tail_by_type(qm_ntypes), stat=ier )
     REQUIRE(ier == 0) 
@@ -376,6 +379,9 @@ contains
     REQUIRE(ier == 0) 
     allocate (self%d_orb_exp_tail_by_type(qm_ntypes), stat=ier )
     REQUIRE(ier == 0)  
+    self%s_orb_exp_tail_by_type(:) = 0.d0
+    self%p_orb_exp_tail_by_type(:) = 0.d0
+    self%d_orb_exp_tail_by_type(:) = 0.d0
         
   end subroutine allocate_qm2_params_type
 

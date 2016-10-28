@@ -1,0 +1,5 @@
+  short vacuum minimzation
+ &cntrl
+   imin=1, maxcyc=3, ntpr=1,
+   ntb=0, cut=999.,
+ /   

@@ -1,0 +1,68 @@
+            --------------------------------------------------------
+                             AMBER SQM VERSION 14
+ 
+                                     By
+              Ross C. Walker, Michael F. Crowley, Scott Brozell,
+                         Tim Giese, Andreas W. Goetz,
+                        Tai-Sung Lee and David A. Case
+ 
+            --------------------------------------------------------
+ 
+
+--------------------------------------------------------------------------------
+  QM CALCULATION INFO
+--------------------------------------------------------------------------------
+
+| QMMM: Citation for AMBER QMMM Run:
+| QMMM: R.C. Walker, M.F. Crowley and D.A. Case, J. COMP. CHEM. 29:1019, 2008
+
+| QMMM: DFTB Calculation - Additional citation for AMBER DFTB QMMM Run:
+| QMMM:   Seabra, G.M., Walker, R.C. et al., J. PHYS. CHEM. A., 111, 5655, (2007)
+
+
+QMMM: SINGLET STATE CALCULATION
+QMMM: RHF CALCULATION, NO. OF DOUBLY OCCUPIED LEVELS =  4
+
+| QMMM: *** SCF convergence criteria ***
+| QMMM: Energy change                :  0.1D-09 kcal/mol
+| QMMM: Error matrix |FP-PF|         :  0.1D-05 au
+| QMMM: Density matrix change        :  0.5D-06
+| QMMM: Maximum number of SCF cycles :      100
+ DFTB: Number of atom types =    2
+
+ Parameter files:
+     TYP (AT)  TYP (AT)     SK integral FILE
+|  1  1  (S )   1  (S )     /Users/andi/sources/amber/dat/slko/S-S.skf
+|  2  1  (S )   2  (H )     /Users/andi/sources/amber/dat/slko/S-H.skf
+|  3  2  (H )   1  (S )     /Users/andi/sources/amber/dat/slko/H-S.skf
+|  4  2  (H )   2  (H )     /Users/andi/sources/amber/dat/slko/H-H.skf
+
+
+--------------------------------------------------------------------------------
+  RESULTS
+--------------------------------------------------------------------------------
+
+  ... geometry converged !
+ 
+ Final MO eigenvalues (au):
+  -0.6464   -0.3577   -0.3078   -0.2458   -0.0434   -0.0011    0.0337    0.0337
+   0.0337    0.4186    0.6284
+
+ Heat of formation   =       -198.38878157 kcal/mol  (       -8.60278312 eV)
+
+ Total SCF energy    =      -1977.52590041 kcal/mol  (      -85.75195787 eV)
+ 
+    Atomic Charges for Step       1 :
+  Atom    Element       Mulliken Charge
+     1      S                 -0.302
+     2      H                  0.151
+     3      H                  0.151
+ Total Mulliken Charge =      -0.000
+ 
+                  X        Y        Z     TOTAL  
+ 
+ Final Structure
+
+
+           --------- Calculation Completed ----------
+

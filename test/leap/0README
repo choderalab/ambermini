@@ -1,0 +1,30 @@
+--------------- Leap tests
+
+These tests compare Leap output with that of previous versions
+of the same runs, and when there is a difference, energies are
+calculated and compared with the previous version.
+
+When comparing Leap output with previous runs of Leap, normally 
+there should be no differences at all, or at most very small 
+differences in the last digits of decimal numbers, due to floating 
+point math implementations on different machines. The big exception
+is solvation, which can result in different numbers of waters being
+added due to subtle differences in machine precision.
+
+(There are also tests for comparing sander energies for molecules
+built by Leap with those for the same molecules built by the
+older Prep, Link, Edit, and Parm programs ('plep'); these are
+more for developers than users wanting to validate compilation.
+These are documented and run in the test/leap/plep/ subdirectory.)
+
+The first tests duplicate the generation of residue libraries from
+the old 'prep.in' format, comparing the results with the canonical
+versions in $AMBERHOME/dat/leap/lib/. These tests are followed by
+setups of various AMBER jobs; if the resulting prmtop,prmcrd files 
+from one of these differs from the canonical output in the appropriate 
+ff* subdirectory, an energy calculation is run to help assess the 
+practical import of the difference.
+
+
+
+

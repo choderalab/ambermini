@@ -133,22 +133,22 @@ int	i;
 		PonNode->vCorner.dX, PonNode->vCorner.dY, PonNode->vCorner.dZ);
 	if ( PonNode->iDepth == iMaxDepth  &&  PonNode->iStatus == OCT_PARTIAL) {
 		fprintf(stderr, " bad node\n");
-		#if (!defined WIN32)
+#if (!defined WIN32)
 		kill(0,5);
-		#endif
+#endif
 	}
 	if ( PonNode->iStatus == OCT_PARTIAL  &&  PonNode->PonChildren == NULL ) {
 		fprintf(stderr, "partial without children\n");
-		#if (!defined WIN32)
+#if (!defined WIN32)
 		kill(0,5);
-		#endif
+#endif
 	}
 	if ( PonNode->PonChildren != NULL ) {
 		if ( PonNode->iDepth >= iMaxDepth ) {
 			fprintf(stderr, "children too deep\n");
-			#if (!defined WIN32)
+#if (!defined WIN32)
 			kill(0,5);
-			#endif
+#endif
 		}
 		for (i=0; i<8; i++) 
 			dumpNode( &PonNode->PonChildren[i] );

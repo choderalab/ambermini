@@ -14,4 +14,4 @@ libXaw.a:  $(OBJS)
 	$(RANLIB) $@
 
 clean:
-	$(RM) -f *.o *.a
+	/bin/rm -f *.o *.a

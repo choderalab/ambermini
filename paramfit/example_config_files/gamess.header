@@ -1,0 +1,21 @@
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! Sample header file for GAMESS quantum calculations  !
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!                                                     
+!                                                     !
+! paramfit will put in the sections about the input   !
+! structure, including the title and units. you need  !
+! to input information on a basis set, as well as     !
+! system-specific options if you desire.              !
+!                                                     !
+! Set QM_ENERGY_UNITS=HARTREE in your Job Control!    !
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+ $SYSTEM
+ $END
+!
+! Standard basis set to be used - you *must* specify one yourself
+ $BASIS
+  GBASIS=STO
+  NGAUSS=3 
+ $END
+! 

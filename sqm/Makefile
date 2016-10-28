@@ -24,6 +24,7 @@ include ../config.h
 # Sqm Fortran source files are free format
 LOCALFLAGS = $(FREEFORMAT_FLAG)
 
+SHELL=/bin/sh
 VPATH=
 
 #SQMOBJ = Objects specific to the standalone SQM
@@ -81,9 +82,9 @@ QMOBJ = qm2_allocate_e_repul.o qm2_calc_charges.o qm2_calc_dipole.o \
 install: sqm$(SFX)
 	mv sqm$(SFX) $(BINDIR)
 
-sqm$(SFX): $(SQMOBJ) $(QMOBJ) sys
-	$(CC) $(FPPFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o sqm$(SFX) $(SQMOBJ) $(QMOBJ) \
-		$(FLIBS) ../lib/sys.a $(LDFLAGS) $(AMBERLDFLAGS)
+sqm$(SFX): $(SQMOBJ) $(QMOBJ) netlib sys
+	$(FC) $(FPPFLAGS) $(FFLAGS) $(AMBERFFLAGS) -o sqm$(SFX) $(SQMOBJ) $(QMOBJ) \
+		-L$(LIBDIR) $(FLIBSF) ../lib/sys.a $(LDFLAGS) $(AMBERLDFLAGS)
 
 #-----------LIBS
 
@@ -98,14 +99,19 @@ $(LIBDIR)/libsqm.a: $(QMOBJ) $(LIBQMOBJ)
 	mv libsqm.a $(LIBDIR)
 
 sys:
-	cd ../lib && $(MAKE) sys.a
+	cd ../lib; $(MAKE) sys.a
+
+netlib:
+	cd ../lapack; $(MAKE) $(LAPACK)
+	cd ../blas; $(MAKE) $(BLAS)
+	cd ../arpack && $(MAKE) install
 
 clean:
-	$(RM) -f *.o  *.mod *.d sqm$(SFX)
+	/bin/rm -f *.o  *.mod *.d sqm$(SFX)
 
 uninstall:
-	$(RM) -f $(BINDIR)/sqm$(SFX)
-	$(RM) -f $(LIBDIR)/libsqm.a
+	-rm -f $(BINDIR)/sqm$(SFX)
+	-rm -f $(LIBDIR)/libsqm.a
 
 depend::
 	./makedepend > depend

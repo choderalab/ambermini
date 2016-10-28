@@ -1,4 +1,4 @@
-AMBER Lipid 2011 Force Field (v1.0), A.Skjevik, B. Madej, K.Teigen & R.C.Walker
+** Warning: Lipid11 is deprecated. Please refer to Amber Lipid14 for more information ** AMBER Lipid 2011 Force Field (v1.0), A.Skjevik, B. Madej, K.Teigen & R.C.Walker
 cC 12.01                             carbonyl sp2 carbon (GAFF c -)
 cB 12.01                             aliphatic sp2 carbon (GAFF c2-)  
 cA 12.01                             sp3 carbon (GAFF c3-)

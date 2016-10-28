@@ -1787,6 +1787,29 @@ PdbWrite( FILE *fOut, UNIT uUnit )
         }
 
         zPdbFileBegin( &pwFile, fOut );
+        /*
+         * If we use periodic boundary conditions, write the CRYST1 record
+         */
+        if (bUnitUseBox(uUnit)) {
+            VP0(("   printing CRYST1 record to PDB file with box info\n" ));
+            pdb_record p;
+            double a, b, c;
+            UnitGetBox(uUnit, &a, &b, &c);
+            p.pdb.cryst1.a = a;
+            p.pdb.cryst1.b = b;
+            p.pdb.cryst1.c = c;
+            p.pdb.cryst1.alpha = dUnitBeta(uUnit) / DEGTORAD;
+            p.pdb.cryst1.beta = dUnitBeta(uUnit) / DEGTORAD;
+            p.pdb.cryst1.gamma = dUnitBeta(uUnit) / DEGTORAD;
+            p.pdb.cryst1.space_grp[0] = 'P';
+            p.pdb.cryst1.space_grp[1] = ' ';
+            p.pdb.cryst1.space_grp[2] = '1';
+            p.pdb.cryst1.space_grp[3] = '\0';
+            p.pdb.cryst1.z = 1;
+            p.record_type = PDB_CRYST1;
+            pdb_write_record(pwFile.fPdbFile, &p, NULL, 0);
+        }
+
         if ( GDefaults.pdbwritecharges ) {
                 pdb_record      p;
 

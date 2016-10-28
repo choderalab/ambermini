@@ -1,0 +1,12 @@
+NMA 5ps
+ &cntrl
+   imin =0,irest=0,
+   nstlim=5000, dt=0.001,
+   ntwx=250,
+   nscm=100,tempi=300.0,
+   temp0=300.0,
+   scee=1.2, ntpr=250,
+   ntb=0, cut=999.,
+   ntt=0,
+ /
+
